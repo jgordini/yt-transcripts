@@ -1,0 +1,577 @@
+hello and welcome to the apl quest see
+apl wiki for details
+today's quest is called floaty boat
+we are to select
+the numbers from a vector of numbers
+that are floating point or none integers
+and this is problem seven from the 2013
+apl problem solving competition
+it's a bit of an interesting
+thing
+that it's not well defined what exactly
+constitutes a floating point number or a
+non-integer number
+because in apl a number is a number
+there's not really any good distinction
+but we'll do our best and any of these
+solutions would be considered correct
+let's start off by creating some data
+for ourselves
+what constitutes a and a number that
+isn't an integer well
+there are various ways to approach this
+a very simple one and probably the best
+method really um is to compare the
+number to what would happen to it if we
+were to round it so any number that's
+integer stays the same when rounded and
+any number that isn't integer would
+change
+so
+the floor
+of this vector
+gives us these integers
+and then we can compare
+and these gives us
+the integers but we're actually
+interested in the non-integers so let's
+go change
+that and then we can use this
+to filter
+and this gives us the non-integers we
+can put this into a function let's call
+that f
+and use the
+name of the argument
+and there you go
+somebody who participated in the live
+chat event
+noticed that this can actually be
+written as an entirely derived function
+not even a train but a tested derived
+function that is a function that
+entirely com composed of
+operators and
+functions together
+and we can see how we can transform f
+into such a thing so let's
+have this tested form
+first we want to compare the argument
+with
+its own floor
+so the way we can do it is we want to
+use the function
+unequal dyadically using the same
+argument
+on both sides so that means we need a
+selfie or
+commute
+operator here
+and let's get rid of some of this noise
+um and then
+we want to pre-process the right
+argument to unequal using the floor
+keeping the left argument just
+the
+the outer argument itself so this places
+the same argument on both sides and we
+flow the right side and then we feed it
+into
+unequal i like to think of the
+jot or compose or beside and as
+preprocessed the right argument so this
+is unequal while pre-processing the
+right argument
+with a floor
+using the same argument on both sides
+and we can use that
+to filter and so this is the same
+pattern again
+we have this
+filtering function
+and we want to use the same argument
+but the right side is preprocessed by
+this function
+and the left argument is just the way it
+is so we can do the same thing again so
+we use the preprocessing
+the right argument operator with
+parentheses like that and then use
+commute to
+put the same argument over on both sides
+so this is a fully tested
+version of
+f
+however i don't consider this very
+readable it's perfectly correct it's
+more for exercise sake that we do this
+conversion
+now as i mentioned there are some
+interesting questions regards to what
+exactly is considered a non-integer and
+what exactly do we mean by floating
+point let's create some interesting data
+let's say we take a very small value
+1 times 10 to the power of negative 13
+and we add it to the numbers 1 through
+15.
+if we print these numbers then they look
+like integers and that is because by
+default apl will round to
+about 10 digits of precision
+and then
+because we've only added 10 to the power
+of negative 13 to each one of these we
+don't notice this however if we
+format using
+14 decimals
+then we can see that there is actually
+more to it
+we could also of course say
+and w minus the floor of w
+and then we can see that there's a bit
+of a difference there it isn't exactly
+ones 1 times 10 to the power of and
+and that is because
+um
+there are some floating point
+inaccuracies at that level
+and this is where things gotta be
+interesting should these numbers in w be
+considered floating point or not well if
+you try double to apply a function f on
+w
+then you can see it says oh the numbers
+1 through 9 are considered non-integers
+but the numbers 10 through 15
+are considered integers which is of
+course
+interesting and and odd the reason is
+that apl by default has something called
+the comparison tolerance which
+is a multiplicative fuzz factor allowing
+comparison as long as
+the ratio to each other does not differ
+by
+more than uh
+1 to the power of negative 14 or 1 plus
+1 to the time 10 to the power of
+negative 14. this
+first factor can be set the comparison
+tolerance but this is the default value
+um and that is why i chose uh 1 times 10
+to the power of negative 13. so as soon
+as we hit 10 or more then we have we now
+reached the factor of
+14 orders of magnitude and their numbers
+are considered equal so when we're
+comparing the floor with the original
+number they are now considered equal and
+therefore they are filtered
+away
+now we can counteract that by sending
+making a version of f say let's say the
+comparison tolerance
+including version and where we
+temporarily locally set the comparison
+tolerance to zero
+and after that we
+use the formula as before
+now when we use fc on w then all 15
+numbers are considered to be floating
+point because we are now exact in what
+we're doing
+so this is the one definition that they
+compare to each other another definition
+is the internal representation normally
+in apl you don't care much about how
+things are represented internally unless
+possibly you're doing some performance
+optimizations but usually not for the
+values themselves but we can actually
+ask apl what is the data representation
+of
+such values and then if we go back to v
+we can see that
+v which we have here is stored as a
+six four five six four five and the six
+four means the 64 bit per element and
+five means it's floating point a binary
+floating point so this is a 64 bit
+binary float array however quad dr also
+tries to compact every argument you give
+it before it tells you what the data
+type is and if we apply
+quite the r on each of these
+then we can see that trying separately
+on each element to compact them as much
+as possible
+the first number can fit in a 64-bit
+float only and the second number 4 can
+fit in 8-3 that means 8-bit and 3 means
+integer so that's an 8 bit integer or 1
+byte integer
+and we can exploit this then we can
+create a function g that selects the
+argument
+filtered by whether or not 645 is equal
+to the data representation of each
+element
+and this will work on
+on v
+and if we try it on w
+then we'll see that it also considers
+all these numbers to be
+flowing point values because they're in
+fact restored as floating point even
+when they're compacted the most because
+they have this additional
+1 times 10 to the power of negative 13
+added to them so here comparison
+tolerance doesn't matter at all
+and let's make an if an interesting
+one
+if we take the values from v and we also
+add
+a very large value and it should be
+noted that if i ask what is the data
+representation of 1 times 10 to the
+power of 400
+it answers 1287.
+this is not a 64-bit float because
+64-bit floats do not reach such large
+magnitudes instead it is a 128-bit
+float and the 7 here indicates that it's
+not a binary that would be 5 and 3 is
+integer
+but rather a decimal float so this is
+using a 128-bit decimal float
+representation for the large magnitude
+and of course this gives a problem so
+now we have we have our x
+and if we try to run g on x
+then
+things fail spectacularly
+and the reason is
+that apl will internally upgrade all of
+these numbers to be decimal floats and
+then they get stuck there and we compare
+them
+so if you say the data representation of
+each one of x
+then
+we can see that the floats all became
+decimal floats and the integers are
+filtered away of course and then since
+we're only looking for binary floats
+we're not finding anything
+but we can amend
+this function so let's say we have a g
+which is also children for decimal
+values and for that we just check for
+membership in 645 or 1287
+and
+now we can run gd on x
+and it
+matches all of these so this considers 1
+times 10 to the power 400
+floating point which is correct as to
+the internal representation however the
+problem specification also said none
+integer
+and i'm sure you'll agree that 1 times
+10 to the power 400 is very much an
+integer
+not in non-integer but this is depends
+on how exactly you understand
+the problem so a very simplistic
+understanding would be
+from a human perspective well it's an
+integer if it's just a bunch of digits
+together possibly negative and it's not
+an integer if you need a decimal point
+in order to write out the number and we
+can write this in apl as well
+so
+what we'll do is we'll format each
+number to a character vector
+and then and we can look whether or not
+there is a dot
+in each of these
+and if there's a dot in the character
+representation of the number then it
+would be a
+non-integer number this is not going to
+work when you use this
+scaled format with an e inside but for
+normal numbers it's going to work you
+can also combine these two instead of
+running two loops we can fuse the loops
+by saying we want membership but we want
+the right argument to membership to be
+preprocessed with format so this is is a
+dot member of the format for each one of
+the numbers
+and
+if there's a dot then we want them
+otherwise we discard them so we simply
+filter by that
+and and now we can try this on x and we
+can see that
+the 1 times 10 to the power 400 is going
+to be filtered away
+however if we run x on our w from before
+remember w where these numbers from 1 to
+15 were a little bit added and it
+considers none of them to be
+non-integers so it's in a way it's more
+tolerant
+of being close to integer
+and the reason for that is because when
+we format the numbers
+in w they they look like this
+but we can actually give a left argument
+to the format function which is the
+number of
+decimals to add so if we add say 14
+decimals to it then we can see that
+we get this one at
+inside the decimals
+so we could depend uh amend uh the
+function to do this
+um if we ask for too much then it's
+going to add some underscores
+for digits that it cannot figure out
+based on the internal representation
+another way is using something called
+the print precision which by default is
+10 which is why we by default we'll get
+10
+significant digits in
+in our printouts and if we change quad
+pp to something large say 17 then doing
+the same expression will give us more so
+there's an implicit argument
+to the format function let's change that
+back to 10 here and
+then we can
+write our function h as before but this
+time we make a local change to pp and
+i'll set it to the maximum value that's
+allowed even for decimal floats it would
+be 34 digits so we take omega filter
+that with whether or not a dot is a
+member in the format of each of the
+argument
+and
+now we can try it on w and now it
+considers all these
+near integers to be non-integers
+i should probably have
+given this a new name i'll do that in
+the in the code that i post
+okay and so much for regular ways let's
+let's look at a little bit more exotic
+ways of
+of solving this problem
+and here's one
+let's say we have these these numbers v
+we can take the division remainder
+with
+one so this is also known as modulus one
+or what is left over if i do if i was to
+try to
+create this number just by adding ones
+together and that is um a non-integer uh
+if the number is non-integer and zero if
+it is an integer because you can create
+any zero any integer by
+multiplying an integer
+with one
+of course that same number
+and that means
+that we can
+compare with zero so wherever we have
+zero we want to get rid of that and
+whenever we have a positive value and
+none nonzero then we want to keep it
+so we could com you do just a comparison
+with zero however we can also just take
+the sign
+or signum of this because we'll never
+have any negative results from
+the division remainder or modulus
+and so this gives us our mask and we can
+select
+the values based on that
+let's put this into a function
+i
+there we go
+and now we can try it
+um on these values so here we can see we
+hit hit this problem again with
+near integers
+um and we could solve this by changing
+the comparison tolerance locally so
+let's do
+ic
+with comparison tolerance
+so we can set that to zero
+and then we have the same form as before
+ic and w and now it works for all these
+values and then there is a tricky thing
+um which is
+the represent
+or
+um
+encode
+and in code with a
+takes a
+so encourages is the downtake it takes a
+possibly mixed radix as on the left and
+represents the number or numbers on the
+right as
+um
+in this base
+however here we're not actually
+interested in a full representation
+we're not even interested in um
+in any representation the only thing we
+want to to know is that if
+um
+if the smallest unit in the base is a
+one then would there or would there not
+be a
+one there and how many
+ones would there be it's a bit
+interesting to explain like this but
+let's have a look at what it looks like
+with v
+and you can
+notice that this is exactly the same as
+division remainder which is
+it actually makes sense because when
+you're trying to convert to a base then
+you keep subtracting as large units as
+possible and then
+the remainder is left over here so
+what's happening here is that
+we end we how many
+ones are there that cannot be
+represented in the larger unit um and
+then we end up with a division remainder
+now what's interesting with and with
+encode is that it doesn't care about
+comparison tolerance it's always precise
+so we could actually
+um
+use
+abuse
+this
+and
+write it exactly the same way
+without specifying comparison tolerance
+and then
+it would work even for these
+near integers
+however um i don't think this is very
+clear don't write this in your
+production code it's much better to set
+quad ct to zero to tell the reader
+what is you're actually trying to do
+another way to work around it is
+remember i mentioned that quad ct is
+like a multiplicative uh
+fuzz factor
+and it's it's used to measure
+relative difference between things now
+if you multiply by zero of course you
+get zero and the consequence of this is
+that any comparison with a true zero
+it the comparison tolerance doesn't
+matter so even a value that is very very
+small say 1 times 10 to the power of
+negative 300 is not going to be
+considered the same as 0.
+how can we use this well if we take
+these values and we subtract
+their floor like we
+spoke about in the beginning
+and
+then we can compare this to zero
+and this gives us also a true comparison
+so we can write now a
+subtraction based version of f
+that uses this system
+and we can try fs on our special w and
+uh
+oops sorry this is wrong this should be
+an unequal of course we want the ones
+that are on floats there we go
+and we can see that all of these near
+integers are now considered
+um to be
+non-integers and that is because the
+difference between them and
+their
+their floor is
+very small but
+it but is not equal to zero
+and finally just for a bit of a joke
+solution
+um
+if we
+try to use the argument as left argument
+to replicate but we're not actually
+interested in using
+any value so we can just replicate the
+empty vector which will always give the
+empty vector
+then the function is subject to the
+limitations in domain of the replicate
+function
+now the replicate function can take any
+integer
+positive or negative including 0 as
+argument
+this means that it will error if any
+element
+is
+not an integer and that's exactly what
+we're looking for so we can set up
+a
+error guard that says that if any error
+happens it's really the main error but
+let's just do any error for now
+if any error happens
+that means that the test
+that the
+argument is
+non-integer and we want it
+otherwise we replicate the empty vector
+which gives us the empty vector
+let's let's try this first so if we do
+this on on v
+then we get we can see the gap here so
+we get an empty vector for every um
+for every integer and we get the integer
+and they get the number itself for
+numbers that are not integers
+and all we need to do now
+is enlist
+and that
+collapses all the empty vectors away and
+we just get the result we want
+so
+this solution also works it has horrible
+performance it's completely abusing the
+system
+and it fails on numbers of very large
+magnitude
+but well
+it works
+subject to comparison tolerance again
+like before and we now know how we can
+deal with that if we want to
+but that's it joking solution please
+don't do this

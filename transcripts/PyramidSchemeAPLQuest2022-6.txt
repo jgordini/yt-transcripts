@@ -1,0 +1,67 @@
+hi we constructing concentric rings of
+numbers where we're given a number as
+argument and that goes in the middle and
+then we keep decreasing the numbers as
+rings around it until we reach
+one
+and we can do this um by generating
+first the sequence that we want want
+going from the
+um outside to the inside so let's say
+the argument is
+five and then we want a ring in the
+middle well that's which is just a
+single number which is five and then
+ring around that for four and then three
+around that two around that one around
+that so it's going to be um large like
+this okay let's um start working on this
+as a uh tested function that takes us
+argument uh the this sequence that we
+generating because we want the sequence
+itself and we also want it then in
+Reverse to uh decrease once we pass the
+center so we can reverse it and we can
+get its um
+identity and we can concatenate these
+together
+oops but now we get a duplicated middle
+element which we don't want so we can
+drop the first one of the Reversed
+argument the Reversed sequence and that
+gives us the middle row or middle column
+in the final Matrix that we
+want so all we now need to do is expand
+this to become a matrix where we um sort
+of say uh rotate around the
+middle and one way we can do this is and
+as if we were making a multiplication
+table so for a moment let's try make a
+multiplication table that's J J jut do
+times uh selfie or commute so this is an
+outer product and then we are using uh
+the commute to take this argument over
+here on both sides and this gives us a
+multiplication
+table so we can see that five can 25 in
+the middle and then this is 4 * 5 is 20
+over here all the way up to 1 * 2 and uh
+2 * 1 and then one over here of course
+we don't actually need a multiplication
+table what we want is that uh the lowest
+value from the rows or the columns
+should Prevail so over here we want it
+to be a one and over here we also want
+the one and here we want the two and so
+on then five in the middle so we want
+the minimum function so the minimum
+function is written like this it's like
+uh a vertical bar with an indicator line
+that shows the minimum uh
+value
+and then that gives us exactly the
+result we want now this is an expression
+but we can easily convert this to a
+function f and then we can apply F and
+that solves our problem thank you for
+watching

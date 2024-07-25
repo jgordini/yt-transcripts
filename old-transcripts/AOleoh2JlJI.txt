@@ -1,0 +1,124 @@
+hey
+we're going to take a list of elements
+and fit it into a square
+now the number of elements might not
+exactly be a square number so it won't
+fill the square array results exactly
+and in that case we need to pad with
+appropriate padding
+so let's for example
+start with the numbers one two three
+four and five
+so they can't fit into a three by three
+they uh
+sorry they can fit into a three by three
+Matrix so that would give us one two
+three on the first row four five in the
+second and then the rest is petting f a
+zero and then a whole row of zeros they
+cannot fit into a square that's two by
+two because the five would be left out
+obviously we need to base ourselves on
+the number of elements here's a function
+at even a Lambda if you want
+and the argument is denoted by Omega the
+right most element of the Greek alphabet
+for the right argument this is a
+Telemark counting how many elements
+there are there are five
+and we need to find a square number that
+can fit here so we can take this
+count of elements and take the square
+root of that which is the same thing as
+raising it to the power of f so raising
+it to the power of a half APL functions
+have long write scope so this power
+takes everything on this right as its
+right argument and the Magnetic one
+argument form of the division symbol is
+this reciprocal you could also say that
+division symbol has
+one as its left argument default just
+like minus has zero as its left argument
+default
+okay so this gives us the square root of
+5. and obviously not a whole number so
+we need to round up because we need to
+need the square to be at least fitting
+or bigger
+that gives us three we can give this a
+name
+so that we can multiply it by itself
+and that gives us nine nine will then be
+the number of elements that we will have
+in our final array
+so we need to pad with additional
+elements and we can do that using the
+take function but the take function
+takes the number of elements on the left
+and the data on the right so we swap
+around the argument and have the
+argument over here
+now we have the nine elements and the
+only thing that's needed then is to take
+the shape which of the final
+array which is going to be S rows and S
+columns
+and reshape done
+but we can refine this definition a
+little bit
+um
+so one thing that we can do is we can
+see this whole expression here
+as being in terms of s which is the
+result of the expression over on the
+right
+so we can express this instead using a
+tested function
+where we
+um
+multiply
+s with itself
+so this is the S the comes in this
+argument so this is self multiplication
+that's the square and we need that to
+take from the outer argument which is
+the Omega constant so we use the same
+symbol here three different ways first
+we used it to swap the arguments and
+then we use it here to apply a function
+with the same argument on both sides and
+finally we're using it as to generate a
+constant function from a constant
+so this gives us the square number of
+elements that is 9 in this case and we
+take and pad on the original argument
+from outside
+and then we just need to reshape and we
+need to reshape into the shape of the
+concatenation with itself it's just like
+we have the self multiplication we'd
+have the self
+concatenation
+and
+here we go
+this is just a style thing really
+whether you want to express it one way
+or the other but note that we have a
+self multiplication and also a self
+concatenation here which means if we had
+s on out here we could Supply S as a
+left argument and then we don't need to
+do this self thing it will pair up S
+from the left with s from the right
+for the concatenation and for the
+multiplication over here
+um so this is another way to do it and
+finally we already know that we can
+apply a function with the same argument
+on both sides by using that frowny
+symbol until the derus is so we can use
+that instead of using the name s
+and
+this is a very neat way of writing it
+thank you for watching

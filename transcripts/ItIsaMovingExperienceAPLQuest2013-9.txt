@@ -1,0 +1,398 @@
+hi and welcome to the apl quest c apl
+wiki for details
+today's quest
+is the ninth problem from the 2013 round
+of the fpl problem solving competition
+the problem is to find
+the average over a sub-period of a
+year's worth
+of data of numbers
+so starting off with some data these are
+some cells
+the obvious approach here is to use
+n-wise reduction
+and maybe the simplest at least for
+simple data way to visualize
+invoice reduction is using the addict
+reduction
+using concatenation
+so we have the sales
+and then we can say for example a
+three-wise reduction
+of the sales
+using concatenation where that just
+concatenates together
+groups of three elements moving over one
+step each time
+you can see we get these
+little windows
+and now what we want is the average of
+each one of those so we can use
+the very idiomatic epl expression for an
+average
+which is the sum divided by the length
+and apply it to each one of those and
+that gives us the solution where the
+left argument is three and the right
+argument is sales
+however we should really package this as
+a proper function
+so we can do that these are two function
+applications there's
+the
+comma slash using the 3s left argument
+and we should probably use slash bars to
+make this more general for a higher rank
+in general
+arrays
+and then there is
+the post-processing which is the
+average function on each one so the
+three can go outside here and then we
+have on the top
+the
+ny's reduction is applied between these
+arguments between three and sales and
+then the average each is applied to the
+result
+of that so this is a basic solution but
+by far
+not the
+best solution
+and this is because we can actually go
+in and apply
+something directly to each one
+because what we do when we do uh to each
+sub
+sequence
+what we do here when we compute the
+average is again and again we take
+something of length three sum it
+together and then divide count its
+length which is always three of course
+and then divide the sum by the length
+instead what we could do
+is we could
+we could just do the
+three wise reductions
+and then all of those could be divided
+by three
+that was would give us the same
+and we can express this as a little
+defend
+so what we want is
+the left argument which is the size
+that wise reduction over the right
+argument
+and then we divide that by the left
+argument
+that gives us the result and this is a
+much better way to do it
+and certainly much more efficient
+and we can even express this as a tested
+function because it comes out very
+nicely that we have
+a function applied diatically between
+the left argument and the right argument
+and
+a middle function and then
+a selection of the left or right
+which can be expressed in terms of
+function application as the left
+function
+applied between the left and right
+argument and that is a fork so we can
+simply get rid of all these mentions of
+the argument
+and
+get this beautiful solution
+and that is as as good as it gets for
+the specific way that this problem has
+been stated
+however there's an interesting edge case
+which uh
+the testing framework if you look on
+problems.trypl.com it does sorry
+probably the tribally dot org does not
+include but we could say that
+the n the window size is larger than a
+year
+so for 12 we get the entire year
+averaged for 13 we get no averages
+and for 14 we get an error so how do we
+handle
+things that are
+so window sizes that are more than one
+step larger than the entire data that
+we've got and there are many different
+ways we could go about this i will have
+a look at
+some of them for this particular problem
+an average obvious approach
+would be to go back here and simply
+clamp
+the argument so we have the left
+argument but the under no circumstances
+will should it be larger than 13 if it's
+larger than 13 then we just want it to
+be 13. so we take the smallest value
+of
+the left argument and 13
+and
+and replace it with that
+and
+this works like normal as long as the
+left argument is small
+and it works fine with 13 and it works
+fine with greater values
+as well
+now you could observe of course that
+when we're dividing by a number
+if ever the left argument is 13 or
+greater then that
+means that what's on the left of the
+division sign is an empty vector in
+which case it doesn't matter at all we
+divide by there are no divisions going
+on so we can remove this clamping from
+the right and it will still work
+we can also generalize this of course so
+that it works on any number of
+elements in cells
+and we would do that by
+simply adding one to the length of the
+cells so this is a more
+general purpose
+solution
+we could also use our original
+formulation
+and using
+the
+little train that we had before we
+simply used the clamping size on the
+left
+and then
+the fork which was the end wise
+reduction divided by
+left
+and then the data on the right
+and this will work as well and it works
+for
+these values that we have been using as
+well
+and we can if we want we can
+get rid of this parenthesis by moving
+things around
+so we can put
+this plane argument on over here and we
+can put this formula on the right and
+then we could swap here
+and this would work
+however um since the only thing that's
+inside this train is a tech right or
+left
+and another function we can also move
+this
+over on
+and
+on this function and simply turn the
+tech around to be on the right and that
+will still work
+we can also unroll the whole thing
+because we can see that
+what's actually happening here is that
+the n-wise reduction
+where this is the n
+and then over this and finally we divide
+by the left argument so we don't even
+need a train here inside the stephen
+then we can go ahead and make this tacit
+if we want
+and there are various different ways we
+can do that but here we can say we want
+the tally of the right argument
+and this is the left argument
+we want the n-wise reduction over the
+right argument and then here's division
+by the left argument and this would be
+the uh that's acid equivalent
+it's not necessarily better but it's
+possible to write it like this
+and then there is a
+a code golf trick for those that want to
+make the show the code as short as
+possible and that is when we
+add one to the length
+then
+we could
+actually get that out here where we are
+anyway applying the function
+tally
+atop
+the selection of the right argument
+we can include this one plus by
+concatenating the arguments since the
+left argument here is always going to be
+a single number concatenating it to the
+right argument gives something that's
+not meaningful but it has the right
+length namely one longer than the
+original right argument and so we can
+save a little bit of code here
+by doing it this way but it's obscure
+and we are and it's not efficient either
+because we are
+we are inserting an element at the
+beginning uh of potentially a larger
+amount of data um but if short code is
+what you strive for and you want people
+to and not understand what it is you've
+written then this is the way to go
+a whole different approach to dealing
+with
+with this problem of the length error is
+to simply try it and then catch the
+error when things go wrong
+so we can
+again write our formula as we did before
+uh where we say that we
+divide by the left argument and then we
+have this n wise reduction on the right
+argument and that works fine but when we
+do something that gets too big
+then we get a length error now length
+error
+is
+error number five
+and so we can say we set up an error
+guard whenever any error number five
+happens return the empty vector
+and then it will return the empty vector
+but this you might also wish for
+a specialized operator
+and one that allows you to choose what
+happens when an error
+happens how should we react to that so
+here we had an explicit
+guard but we could also use a
+function that can't handle the error and
+instead combine it together with some
+kind of error handling function for an
+overall function that does handle
+an error
+and this exists for example in the j
+language where it's called adverse and
+we can actually use apple cart to find a
+definition for adverse
+and we find this definition i have to go
+into exactly what it is but we can just
+give it a name
+adverse
+and now we can use it with any
+definition that we had from before so we
+can say we want the sum divided by the
+left argument
+but
+if anything goes wrong then instead we
+apply a function which returns the empty
+vector
+and so this works as before as long as
+nowhere error happens and when an error
+happens then we apply the empty vector
+function
+and we get an empty vector result
+however
+i prefer when i do apl to not rely on
+catching an error and continuing rather
+i test my
+my input and make sure that everything
+is okay with it so i would do that in
+this case by writing
+an
+assumption that if
+the left argument
+is greater than
+the length of the right argument
+then return the empty vector
+otherwise we can do whatever we've been
+doing before
+and that works um as well no error
+handling include involved here
+finally there's an issue here if
+the
+if the input has higher rank we're
+already using slash bar instead of slash
+in order to handle higher rank things
+but
+if the length doesn't uh is too large
+and we end up with this guard the
+results from the guard
+then the result isn't actually correct
+yes it has to be empty but not the empty
+vector
+say that we have the sales
+in a matrix
+with a single column
+and then we're doing this uh
+with this
+end wise
+average
+down the columns
+that means we are
+reducing the number of rows in the table
+but the table is still a one column
+table
+this means if the left argument is too
+large we should be getting a zero row
+table but not
+a empty list
+so if we make
+sales into a one column table then
+it might look okay
+but if we look at the shape of it it
+isn't quite right whereas if we do 13
+here
+um
+yeah so this is also too large and 12
+would be
+a one by one table
+if instead we redefined our function
+such that
+and
+that it can be
+larger than one because we know that
+when it's one
+one larger than so
+then it's the end wise reduction still
+works
+if we define the function to only go
+into the special guard when it is more
+than one
+with the left argument is more than one
+larger than the length of the right
+argument then we can observe here that
+we get notice there's no blank line um a
+zero row one column table
+and that this function doesn't work work
+for
+the problem is of course that we
+universally just return the empty vector
+if
+the left argument exceeds the length of
+the right argument what we really should
+do is preserve the entire shape of the
+argument only compressing the
+height of the table to have no rows
+if it's a two dimensional table or if
+it's a larger array we want to compress
+the first axis to have no content and
+the way we can do that is instead of
+returning this empty vector blanket we
+use zero to compress along the first
+axis the leading axis and the right
+argument and then we will see that
+it now works even for large arguments so
+this is the
+ultimate
+industrial solution
+thank you for watching

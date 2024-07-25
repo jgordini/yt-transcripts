@@ -1,0 +1,113 @@
+hi we're giving an area and we're
+supposed to make a
+rectangle which could even be a
+square that has that
+area the Restriction is that the length
+of the rectangle the size of the
+rectangle must be integer and then if
+there it's not a square then the
+smallest side has to be listed
+first so let's take 12 as an example
+it's a good example because there are
+many different ways to multiply two
+integers together to get 12 say 1 * 12
+or 6 * 2 and there's only one result
+that's valid here and that is 3 * 4 it's
+not a 12 not a square so we can't be um
+well a square um but 3 * 4 are as close
+to each other as possible another ways
+other way to describe this is that we
+want to make the rectangle as Square as
+possible okay let's start by looking at
+our candidates these are all the
+integers that could come into
+question um of course it can't be larger
+than 12 there's nothing you can multiply
+with to get 12 it can't be zero unless
+our actual uh area that we need to get
+to is zero as
+well and then we want
+to find out which of these numbers
+actually divide 12 evenly um so we can
+take the division remainder or
+modulus and this takes the whole
+range
+and
+dividing the number
+itself and then we get these remainders
+so we can see that 1 2 3 and four they
+divide 12 cleanly five gives us a lift
+over of two cuz 2 * 5 is 10 and then
+missing two and so on
+[Music]
+um we are not interested in what the
+remains are we interested in whether or
+not it divides so 0 equal to that and
+that gives us a mask showing the uh the
+numbers indicating the numbers that
+divide
+12 the next step is then to find out
+what these are and choose the middle
+ones of these numbers so we can see that
+there are six of them 1 2 3 four 1 2 3
+four and six and 12 and if we were to
+put them together then three and four
+would be the middle two and that's the
+method we're going to use it's going to
+be a little bit inefficient to do it
+this way but it makes it kind of
+neat so the first thing uh we can do is
+find out what these numbers are and we
+can do that by asking where are the ones
+which are the indices of the ones which
+are the same thing as the numbers that
+we started off
+with so 1 two three uh four six and 12
+and and the middle two are three and
+four and now we could try to compute the
+length and get the middle but there's a
+much easier way to do that and that is
+replicating all of these so we've got
+two of
+each and we also know the length of this
+which was and which is
+six and now if we remove the first six
+from here that's a 1 one 2 to um 3 three
+then we get to over here um so then if
+we take the next two elements after
+moving the first six we get four four so
+all we need to do is either subtract one
+or we could just insert a Dy element at
+the beginning and then would get us 34
+and it's a good way to do this as well
+to not try to index in because if the
+list is empty because the argument is
+zero or if the list has too few elements
+because uh well actually maybe that's
+not problem but if it's zero then then
+uh if you try to index it we get an
+index error but if we uh if we drop some
+elements and take the next ones then we
+can overshoot and will p with zero which
+is exactly the result that we
+want so let's um pad with an element
+that's going to be removed in a moment
+so then and now we can remove the first
+six from here 1 2 3 4 5 six and the next
+two are going to be three and four how
+do we get the number six uh remember
+we're passing in The Mask here and
+finding the indices here we don't need
+to find the indices to get the length of
+the IND es because we there are as many
+ones in this list as the list of indices
+so the sum of this is going to be the
+length so we could take the
+sum and
+drop some number of
+elements and then we just need to take
+the first
+two there you go that's our solution and
+it works for um for zero as well which
+is all nice
+thank you for watching by

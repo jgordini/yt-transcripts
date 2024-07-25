@@ -1,0 +1,268 @@
+hey this Quest
+is
+to take arguments that would be
+arguments to the dyadic transpose
+function
+and see if the left argument is valid
+given the red argument
+I have prepared some test list arguments
+and some tests write arguments
+we can use the example function that is
+outlawed
+to try these out
+What's Happening Here is that we have a
+Lambda a function
+and we set up an error guard that says
+if any error happens then we return 0
+meaning it's an invalid left argument
+otherwise we're going to return one we
+do that by actually trying to do the
+transpose
+discarding the result and then returning
+one so if this works out without giving
+an error then we return one
+and so we can see that
+um in this two by five table of test
+cases
+the entire top row are the ones that are
+valid and the ones at the bottom row are
+invalid now the actual content
+of
+the right argument and even the size of
+the
+or shape of the right argument isn't
+irrelevant the only thing that is
+relevant is how many dimensions it has
+and that has to match up with the left
+argument so let's try putting these next
+to each other
+we put the left arguments next to the
+right arguments but we are going to take
+the
+shape of
+the right argument
+oh sorry it should be the shape of each
+one of the red ligament here we go
+okay
+so
+we can see here that in order to be
+valid
+then the left argument must have the
+same number of elements as the shape of
+the right argument
+so that's one Criterion the other
+Criterion is that the left argument
+must enumerate X's that we want to map
+the existing X's to and the X's had to
+be consecutive counting up from one but
+in any order and we allowed duplicates
+so we can see some example of valid ones
+this is of course just a permutation
+Vector so here we're just changing the
+order of the X's
+this one we are mapping two x's the
+first and the left axes to X is two here
+we asked we are mapping both X's to a
+single axis
+down here
+this is almost okay but we're not
+mapping anything to the first axis and
+there has to be a first axis in the
+result so that's invalid and here the
+problem the left argument isn't is valid
+but only for a Rank 2 array a two
+dimensional array but the actual right
+argument has three dimensions
+over here we're not using integers so
+that's invalid you can't
+enumerate the X's with fractional
+indices
+here we have too many and here we have
+two
+uh to few
+because the red argument is empty it has
+length zero but it's empty along that
+one axis that it's empty along but we
+don't have any
+X's
+on the left
+we could also combine this with the the
+tally of the X's
+and this just gives us the count the
+number of dimensions in the right
+arguments we can see here that this is
+this has is a Zero Dimensional array but
+we're trying to pair it up with a list
+of x's that has one element so we're
+trying to map an axis that doesn't exist
+just as an example
+okay now let's get started so there are
+two parts to this there is the part
+about being a kind of permutation Vector
+but possibly with duplicates
+and then there's the the part where the
+number of elements in the left has to
+match the number of dimensions on the
+right
+foreign
+the first part whether or not the
+argument is a preventation vector
+possibly with duplicates so these are
+all our left arguments and we're trying
+to compute something on each one of them
+so we have the Lambda and the each
+now
+again two parts to this sub problem
+there's the permutation part and then
+there are the duplicates part
+the easiest thing is to get rid of is
+duplicates
+that we can just do with
+the unique function on the right
+argument so this gives us rid of all the
+duplicates and then we have to check
+whether or not it is a permutation
+for that we have to go ahead go explore
+the grade primitive a bit
+so this is grade up let's try some
+argument for that what grade does is it
+Returns the indices that you would need
+to use in order to sort
+so what this is saying is in order to
+for this to become sorted we need the
+third element first then the first
+element then the second element and
+finally the fourth element
+we're not going to saw it
+but what is interesting here is that if
+you grade again
+this is already a permutation vector and
+asking for the indices that would sort
+implementation Vector is the same thing
+as asking instead of
+um which element should I take in order
+in order to get things sorted then where
+we're getting instead where should I
+send this element in order to get things
+sorted
+so if we try this it says send this
+element to the second position send this
+element to the third position this one
+goes to the first position and this one
+stays in the fourth position
+why is this relevant well even actually
+we already have a permutation vector
+so
+this is a presentation of extra because
+it contains all the numbers from 1 to
+its length for
+and we grade that
+so
+this gives us again
+which element should we take in order to
+get this to be sorted so we want element
+number two element number four element
+number one and element number three
+now if you do the grade again which is
+the inversion of the permutation
+notice that we get back to where we were
+before
+well it makes sense if this is invert a
+permutation and we invert the
+permutation twice we should get back to
+where we were
+that means we can write a function that
+checks whether or not a given Vector is
+a permutation vector by comparing the
+original Vector to the grade of the
+grade
+so we can write this as the argument
+matches the grade of the grade of the
+argument and we can try this
+this is a permutation vector
+this is not a permutation vector
+the only thing we're now missing is that
+we want to look at the unique elements
+not just all the elements if we try this
+first on x
+um oh right uh some of the
+um some of the elements of X are
+scalar
+but we can fix this by reveling the
+argument
+right so here we have some that are
+valid according to this Criterion and
+some of the invalid ones are also value
+to put this criteria it's going to fill
+the other one but some of the valid ones
+are invalid
+marked as in value because not being
+permutations let's look at X again
+and we can see that that's because they
+have duplicates
+now let's try to compare
+with the uniques instead and we don't
+need to Revel anymore because unique
+itself would Revel if the argument is
+scalar
+this works
+we can beautify this a little bit and
+make a little bit more efficient we only
+need to compute the unique elements once
+let's assign those to U and then we can
+just use U
+right this takes care of the one
+argument
+is the one criteria which is that
+the left argument must be a permutation
+Vector although it is allowed to have
+duplicates the other criteria is that it
+had to match its length to the length of
+the shape of the right government
+argument that is the rank of the right
+argument
+now let's include the right argument
+we want the length of the left argument
+to be equal to
+the length of
+the shape
+of the right argument
+this worked right away but we can
+beautify this as well
+notice how the quality is between two
+lengths
+this calls for the over operator which
+pre-processes both arguments to a
+function
+with some other function before the main
+operation is done
+foreign
+now we see that we have two arguments
+being given to this main function
+but one of them is being pre-processed
+by the shape
+that we can use the beside operator
+which pre-processes only the right
+argument to the main function with a
+preprocessing function
+and finally we just have a single
+derived function
+which is wrapped in a different Lambda
+now that means we can just take away the
+wrapping
+this is the other part this checks
+whether the left argument
+is has equal length to the shape of the
+right argument now all we need to do is
+combine the two
+criteria we want this one to be true
+and we want
+the unique elements
+matching the grade of the grade of the
+unique Elements which are
+the unique of the left argument
+this is our solution we can give it a
+name
+and now we can write
+using this name
+thank you for watching

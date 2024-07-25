@@ -1,0 +1,398 @@
+welcome to the apl quest see apl wiki
+for details
+today's quest is the first from the 2015
+round of the apl problem-solving
+competition
+we are given two character vectors
+and are to check whether or not these
+are anagrams
+here's a simple test case
+what we need to do is we want to compare
+these two character vectors to see if
+they're the same
+but we want to ignore
+a lot of aspects of the character
+vectors we want to ignore capitalization
+punctuation
+and spacing
+in other words we just want to look at
+the actual letters that are present
+let's start to do so by filtering
+the letters so we want the letters
+where
+those letters are members
+of
+the alphabet
+but
+they can be members of uppercase
+alphabet or lowercase alphabet so we
+want to do this membership case
+insensitively
+finally
+we also want
+to paste fold these letters so that we
+can compare the ones from the two
+different character vectors
+but we could observe that filtering by a
+membership that's actually the
+definition of intersection
+so we can substitute this phrase
+with the case insensitive intersection
+and gives us the same result
+now we need to
+give put these letters into some given
+universal order
+so that if we do so with two letters
+that are scrambles of each other
+shuffles of each each other so sets or
+letters so to say
+then they end up being the same order
+and we can compare them so one order is
+the sort order that works fairly well so
+if we call these the letters and then we
+index the letters by their grade
+that gives us a sort of them
+and we get the same thing on x
+and so we can define a function
+with this definition
+but we it's not enough of course to just
+do this normalization we want to compare
+them so we want to compare the two
+arguments
+pre-processed by
+this normalization
+x
+and y are now considered the same they
+are anagrams of each other
+and this might well be the shortest
+solution that we can come up with
+however it does have some issues that we
+can have a look at
+for example
+um
+grading can be a rather expensive
+operation while sorting can be done
+faster in order to get the fastest sort
+we want to use
+one of the idioms for sorting
+so here's an example of that
+we can see it gets colored differently
+because we
+are going to use the fast algorithm for
+sorting
+so
+this works as well
+furthermore
+um if there's a lot of punctuation
+then we are case folding the punctuation
+in order to look at the intersection
+with the alphabet when it wasn't
+actually necessary to case for that
+so we could look at the intersection
+first and only case fold afterwards
+for that purpose
+we would have to
+look at intersection with both the
+uppercase and lowercase letters and we
+could do that by taking the
+lowercase letters and then putting the
+uppercase letters before that
+and finally notice that we are computing
+the
+this total alphabet
+of letters every time we run the
+function if you were to run the function
+multiple times
+then it's kind of wasteful to compute
+that alphabet so we might want to do
+that once and for all
+one way to do that is using a tested
+definition
+so by changing this
+brace here into a
+parenthesis now it's a tested function
+and we have to modify a little bit
+what's inside here so we don't want to
+mention the argument it's tested but we
+can take this
+constructed alphabet and tie it as an
+argument
+right argument to the intersection so
+this is one magnetic function that's
+being applied then we have another
+magnetic function being applied and the
+third magnetic function being applied
+you can't do three magnetic functions in
+a row like this but if we
+compose these two together then it will
+be just fine
+so this should save us a little bit of
+uh of work if we're using the function
+many times let's uh let's give it a try
+and see how they stack up against each
+other so supposedly
+a b c d they should become faster and
+faster if i've done the thinking
+correctly okay let's start by
+constructing some large test case here
+um we can start off with letters the
+alphabet and let's both have some
+uppercase and lowercase letters so if we
+if we concatenate the alphabet to its
+lowercase then we get this so these are
+all the letters
+then we can put in some punctuation
+and
+that gives us that gives us this
+then we're going to
+have a lot of that let's do a thousand
+characters in that so this just repeats
+them over and over again
+but we also want to shuffle them around
+and we want to add some spaces as well
+so we can do that with a little function
+so we want to
+take the argument
+and add some
+spaces around
+so we can just overtake it by let's say
+we add
+20 spaces
+on the length
+and then
+we might want to
+round that off so we don't end up with
+fractional characters um
+this would allow us to to change this to
+a number that would
+cause trouble
+so
+this just gives us a
+a bunch of non-spaces with a bunch of
+spaces afterwards so now we can
+um
+we can make a proper anagram of those by
+shuffling them so we take
+the argument and then
+we take all the indices but in any order
+of its length
+on t
+and let's create something
+that's not an anagram
+and of it and we'll do that
+by putting in the dash which is not
+something we had before at the first
+position and in in t
+so now they are
+not
+and against each other
+copy in cmpx from the defense workspace
+for the timing comparison
+and then let's construct the uh
+expressions that we're going to use
+so
+we want to compare
+we want to run these functions a lot of
+times because that was one of the things
+that the d was a benefit over and over c
+so we can start off by saying we have a
+thousand
+and copies cyclically of t a and t b so
+these are the endograms and the and the
+nut anagrams
+we want to run on each of these
+and then we want to have the functions a
+b c d
+and concatenated to the entirety of
+those that gives us these expressions
+here
+and then we want as left argument and
+you want a constant so we can say we're
+binding t
+and as
+left argument
+to each of these it gives us these four
+expressions here
+and then we can run cmpx on that
+and it will take a little while
+but if i have done my thinking correctly
+then we should get
+progressively better and better
+performance and that's in that indeed
+what we did get so we can see that we
+got
+some speed ups more and more
+however and
+here's the thing
+an anagram
+is
+not so obviously just looking at the
+letters
+it's actually over defined in the
+problem specification
+it says using all the letters
+and it also says ignoring spacing
+civilization and punctuation could have
+said using only the letters or they
+could have said
+just
+an anagram of a string
+and ignores word spacing capitalization
+implementation so there's actually some
+freedom to interpret this whichever way
+we want
+but that let's uh have some
+more
+interesting examples
+here i'm using some letters uh that are
+not so in the first two
+character figures here there are some
+letters that are
+not in the just plain latin upcase and
+lowercase alphabet
+as well as
+writing
+with some punctuation here
+but the important part is that i'm
+adding digits
+and digits are not letters
+so we could say that they shouldn't be
+included because
+they're not letters but if you're only
+removing
+spacing and
+punctuation capitalization
+you can't say that digits are spacing
+you can't say that they're punctuation
+and they're certainly not capitalization
+either
+so it could be
+either one of these
+in either one of these definitions of it
+so how can we do this
+right um
+there are a lot
+of
+characters out there and we don't want
+to
+write a list of all of the characters
+that
+have different properties luckily
+unicode does define a whole table of
+properties for every character and we
+can hook into those kind of sneakily by
+using an quad r or quite s because they
+allow
+pcre or pearl style regex's including
+character properties and those are
+exactly the unicode
+properties
+so what we can do here is
+we can say and it's nice to state it in
+the negative because we want to not ex
+we can't really extract the letters as
+much as we can easily remove letters
+so we are going to remove letters from
+from say from u and we and we can remove
+any character that does not have the
+property of being a letter so the
+uppercase p here means the opposite a
+normal lowercase p is having the
+property of being a letter but here
+we're removing things we want to keep
+the ones other letters so we are
+removing anything that is not with the
+property of being a letter
+and we can do the same thing for b
+of course
+so we can see that
+both the punctuation and digits are
+considered not letters but the special
+characters that are not in the latin
+alphabet those are still considered
+letters and they are being kept and we
+can incorporate this into a function
+similar to what we had before so we want
+comparison
+over and then some preprocessing so we
+start off with the sorting idiom
+and then we want to
+case bold so that we are case and
+sensitive
+and sensitive but instead of doing the
+intersection we are now keeping this
+function here
+which is
+just extracting anything that's the
+letters and removing everything that is
+non-letters
+so that's one way of
+understanding it and we can try this
+oops sorry we should have an each here
+so what we can see is that and the first
+two are obviously different because
+they're using different letters
+the next two
+removing the punctuation
+and capitalization then they are
+considered the same even though they are
+using letters that are
+and not in the latin alphabet
+and then
+we have the the two that are using
+digits
+both of them are considered anagrams of
+each other so the first one is pretty
+obvious the one two three three two one
+the order doesn't matter percent and
+minors are considered punctuation second
+one are entirely different digits and
+that's because we have removed all the
+none letters and all digits are not
+letters and therefore the only there's
+nothing remaining even the dot goes away
+because as punctuation we're comparing
+two empty character vectors to each
+other and then they're considered the
+same
+but we can also define some define it
+the other way where we are
+not interested in actually what's a
+letter what's not a letter
+rather we are looking at
+and what is
+uh at removing certain types of
+characters
+so we want to remove characters of a
+certain class there are multiple things
+we want to remove any character that has
+the property of being a
+mark
+and so this
+is like a spacing mark things that
+adjust the spacing
+um so that's part of being spaces
+we want to remove anything that has a
+property of
+being a space in itself
+of course and then we want to remove
+anything that has the property of being
+punctuation
+punctuation
+and we can use look at and what happens
+when
+well we can we should before we run this
+we should really take this and try it
+out
+so here we can see that we kept all the
+digits for example
+and now we can try it
+and now we can see that the last one so
+let's look at u and v again
+the last ones are considered different
+from each other because we now keep the
+digits even though the punctation has
+been removed
+and i think that's all there is to say
+about this problem thank you for
+watching

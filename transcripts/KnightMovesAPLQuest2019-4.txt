@@ -1,0 +1,150 @@
+hi
+we're going to find out where a
+chess Knight can move from a given
+starting position
+the different ways to attack this
+problem
+and they fall into two main categories
+we could start with the starting
+position and compute all the places
+where the Knight can move or we can
+consider every possible position on the
+board and ask ourselves whether the
+Knight can move there and this letter
+method leads to simpler solution so
+let's try that
+as an example case we're given position
+five four but let's not actually use
+that for now we just generating
+a chessboard
+this is a Lambda and the index generator
+which generates
+an array of shape 88 that is eight rows
+eight columns
+and every element is
+the position of that element or the
+indices of that element
+so every element is a vector of two
+elements because there are two
+dimensions
+and it has then the index for that
+position
+now if we subtract
+from every element the entire argument
+we get the distance
+vertically and horizontally from each
+position to the starting position
+and we can spot our starting position
+here by being 0 0 of course there is no
+difference between the starting position
+and the position where well we are
+starting and neither
+vertically nor horizontally
+and what we're after are the valid moves
+for a night which you could see as
+moving One Step In One Direction and
+then two steps in the orthogonal
+direction or the opposite it's the same
+thing of course it's an L shape so we
+could move one step right and two steps
+up or we could look at it as two steps
+up one step right
+or we could go one step up two steps
+right and so on two steps to the right
+and one step down
+what is common for all of these we can
+spot is that
+um not that one that one is that they
+all have a difference from a starter
+position that has the numbers two and
+one although they may be negative or not
+so we could generate the list of all the
+differences so we would start with
+negative 2 negative one and then
+negative two one and then negative one
+two and so on and so on there will be
+very long list and we could then look up
+to see if
+for each difference whether it's a
+member of that list of permitted
+distances
+um but since that list is very long we
+can shorten it a bit by taking the
+absolute value of first
+now all the places you can move to are
+either one two or two one so we can look
+with membership
+but we want the lookup array on the left
+so we swap the arguments of the
+membership function and then it has to
+be either one two or two one so now for
+every absolute value differences in this
+table of differences we look up if it's
+a member of that and that gives us a
+Boolean array
+indicating
+the positions where our knights from the
+middle here can move
+of course we're not interested in this
+Boolean array we want the indices where
+it is true that it can move and for that
+we have
+the where function which gives us the
+indices of the truths
+and this is a solution which is pretty
+elegant
+but I think actually there is a needed
+solution
+so if we cut back again to where we have
+our distance table
+then we can use a little bit of
+mathematics the Pythagorean theorem says
+that in a right triangle
+the
+two shorter sides
+if you take the length and square them
+then if you add them together you get
+the square of the diagonal
+oh this might not look like we're
+dealing with triangles but actually to
+move from the starting position and up
+here we can see this moving at a
+triangle with a side that has length one
+it's one step to the right here and the
+side that has length two which two steps
+up and so on the order of them doesn't
+matter because it's just a sum
+um so we can start by
+squaring
+the
+distances here and then it doesn't
+matter which sign they have either
+because you square a negative number it
+becomes positive two so one way to
+square is to multiply by itself so
+multiplication and then the same symbol
+that we used for commuting the arguments
+or swapping the arguments we can also
+use for what I like to call a selfie
+because it looks a little bit like a
+selfie face
+um so this is self multiplication
+so now all the values have been squared
+and we can see here that now we're
+looking for all the places that have a
+four and a one or one and a four
+now we can sum so this is a plus
+reduction each one of them
+and here we can see that the places we
+can move to are the ones that
+have five as the total sum so we're not
+actually interested in the length
+of the diagonal
+we're just interested to see if it's
+Square length is 5.
+so we compare all these values with five
+and that gives us our Boolean mask and
+then as just as before we ask where are
+these ones
+and that gives us our solution
+thank you for watching

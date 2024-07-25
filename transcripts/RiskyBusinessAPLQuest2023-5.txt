@@ -1,0 +1,130 @@
+hi this Quest is based on the game Risk
+if you're not familiar with the game
+Risk then I suggest you pause the video
+right here and read through
+this now we are going to generalize the
+rules of dice throws in risk and so we
+have two integer
+vectors and and uh the left one is the
+attacker and the right one is the
+defender and we have to find out how
+many armies the two players
+lost so we're going to have a large
+example where the attacker attacks with
+five armies as if that was allowed and
+throws five
+dice
+and the
+defender uh defends with three
+Dice and so uh we want to find out how
+many uh each player loses so we can see
+here that uh the attacker matches over
+here so the attacker
+loses and
+then the attacker has more than the
+defender so the attacker uh wins that
+means the Defender loses and then the
+third one the attacker has less than the
+defender so that clearly uh the attacker
+loses an army here so all in all we only
+considering the first three the attacker
+loses two and the defender loses um this
+one now let's compute that um the rule
+is that the attacker wins if uh the dice
+show if the attacking die shows more
+than the defending
+die uh we giving given our um throws
+here already sorted so that makes things
+easier but we need to take care of this
+discrepancy in length potential
+discrepancy in length between them um
+and it's an inefficient but elegant way
+of doing this is to Simply compare all
+values so this isn't out of product it's
+not really a product it's really a
+comparison we are comparing all the
+values here with all the values over
+here even though we actually only want
+the corresponding values
+compared and that gives us a comparison
+table and
+where uh we have the rows here
+correspond to the six uh and six and
+four 2 1 and then the columns here
+compared to the uh six five and five and
+so we can and this is one for true and
+zero for false so we can see here that
+uh this is the right comparison with the
+six and the six and it's not greater
+than this is the six and the five it is
+greater than and this is the four and
+the five that uh is not greater than so
+we want the
+diagonal um and we can get the diagonal
+in APL by using a transpose a
+generalized transpose so a normal
+transpose
+um that just flips the
+axis but the generalized transpose we
+take a mapping as the left argument to
+the to the transpose function and we can
+say where we want the particular AIS to
+go so uh if I want the first axis to
+become the first axis and the second
+axis to become the second axis that has
+no effect if I want the second axis to
+become the first uh the first actually
+to become the second one and the second
+one to become the first one um then we
+get that normal
+transposing however if I M both of them
+to the same axis that means as we
+Traverse this
+array and instead of traversing first uh
+along a a major uh the major a leading
+ax the rows and then along uh The
+Columns every time we take one step down
+we also take one step right so
+essentially we're collapsing the two A's
+into one and taking the diagonal between
+them and that gives us this diagonal
+that we were looking for now this is uh
+who wins but we're actually interested
+in who loses so we want the opposite of
+uh the greater than Which is less than
+or equal
+to okay now we want to know how many
+there are so really what we want to know
+is um how many ones are there and how
+many zeros are there because the on
+indicates that the attacker lost and the
+zero indicates that the uh Defender
+lost
+and we can do this in in various ways
+and you can see the uh description for
+this video to go to the chat the event
+that happened and it has other ways to
+do this but I'm just going to show you
+uh one way to do that here I'm going to
+make this uh list this Vector into a
+column and then I'm also going to negate
+it and I'm going to concatenate them
+together so this is a function
+of the result of uh this function where
+we're taking the uh colonized form and
+concatenating the negated
+form so this column represents the
+attacker's losses and this column
+represents the defender losses and now
+we can see all we need to do is sum The
+Columns and that's exactly what we're
+going to do with the leading first X's
+uh plus reduction
+and that gives us 21 which is exactly
+the result we were looking for so we can
+take this whole
+construct give it a
+name and then we can go in and
+substitute it in here then the whole
+thing reads a little bit
+nicer thank you for watching

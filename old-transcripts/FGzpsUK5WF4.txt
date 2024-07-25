@@ -1,0 +1,811 @@
+welcome to the apl quest cap wiki for
+details
+today's task
+is the fourth from the 2015 round of the
+apl problem-solving competition
+we are to implement what's traditionally
+called progressive dyadic iota or
+progressive index off
+it's just like normal index of
+but
+instead of finding the first occurrence
+of
+every element on the right in the array
+on the left
+it consumes
+the elements on the left so it's like
+without replacement index of without
+replacement
+and this is a classic problem in apl and
+it has been
+discussed and documented for decades
+the most commonly used traditional
+formulation for this
+is very well explained in the apl
+cultivations
+and there's also a link there
+to a video where i explain this
+so i'm not going to spend too much time
+and energy on this just to show that it
+works and
+how we can update the traditional
+formulation to the modern times
+let's have some sample data
+we got landon and finnegan
+and our task is then to find the indices
+without replacement
+so f isn't found and there are six
+elements in london
+which means that it should get a
+b index seven because that's how iota
+works same thing goes for i
+n finds this match in
+position is three but that means this n
+is consumed and the second end has to go
+all the way to element 6.
+e and g are not found so they're going
+to be 7 as well
+a goes to the a in london and the final
+n while there are ends in london both of
+them have now been consumed by the
+previous ends and it will be as if there
+are no more ends and we also get seven
+so the traditional formulation in
+question um
+goes like this
+and if we try it
+um on the arguments
+oops
+made a mistake here
+oh um yes
+it has they're missing and
+no another and um
+reshape here here okay um
+then we get these results as we uh as we
+said seven seven for the f and i
+three and six those are the two first
+two ends consuming the two ends in
+london seven seven the e and g two is
+the a and seven is the final end which
+cannot find its match because the two
+ends have already been consumed
+and this all works very nicely
+however if we change our arguments into
+matrices
+by applying table to both of them
+and then we get an error
+and this is because this traditional
+formulation is using trailing axes
+and other inappropriate functions
+for such a thing but we can quite easily
+update it to handle such cases the
+problem here is we're consistently in
+the wrong way we want to add more major
+cells so we need to concastenate first
+and then we are taking indices here from
+this
+vector of indices and but this uses the
+shape of
+the right argument and we only want the
+number of major cells from the
+arguments
+and that solves our problem for higher
+rank arrays now we can notice some
+symmetry here it looks almost identical
+what we have on the right and of the
+left of the middle
+iota
+and so we could express this in terms of
+a single function with that with slight
+multiplication becomes the same
+for
+or the equivalent for these two sides
+the only difference here is that we have
+swapped arguments on the concatenation
+and then we switch which
+argument
+is being used for the telly
+so let's express it like this we have
+the right argument
+and the left argument and the right
+argument we want to do this
+preprocessing on both arguments
+but that doesn't work because it's not
+exactly the same function
+so instead we're going to make it into
+a train
+and the train is going to
+we're going to create a function on the
+right
+which we are then going to
+use in commuted form on the left that
+commution
+takes because that's commuting takes
+care of flipping the arguments of
+the
+congratulation here
+but this one is always already backwards
+it's right argument on left left
+argument all right so we commute it here
+and it's going to be commuted right back
+again when we apply r over here
+then
+we have two grades that are magnetic so
+we apply those with our tops
+and then we want
+the tally off the right argument and
+then of course when we flip the
+arguments it's going to be a tally of
+the left argument which is exactly what
+you want here on the left side of the
+omega
+so
+this is our solution
+a
+somewhat shorter
+modern solution
+so this is the uh the modernized fin ipl
+solution let's call that f
+and there's also an alternative
+formulation listed in the field in the
+api's
+idiom list
+which is much the same and if you go
+through the explanations for for this
+one
+then you will probably be able to go to
+have a look at this one and reason about
+why it's
+the equivalent so i'm not going to
+explain that one in detail here either
+it goes like this
+and then we have something very similar
+to what we have here on the left which
+we're going to put on the right
+but we have some the right argument
+indices being generated over here and
+swapped arguments of the congratulation
+over here this alpha stays constant it's
+always the left argument i mean let's
+try this
+the basic principle here is that we are
+using
+left argument as a constant um
+lookup so that
+the indices that we are generating for
+the cells are corresponding to each
+other and then we are pairing them up so
+we have unique identities for the
+indices in each array
+being paired up
+gives us the same result
+and just as before it doesn't work on
+high rank arrays and just as before we
+can fix this by replacing
+shape with tally
+and
+last axis of concatenation with first
+axis concatenation
+and just as before
+we can
+get rid of this
+repetition of very similar code
+by using the reversed
+function from the right
+the function on the right
+is
+we have to make it
+fit into the the syntax of a train here
+so here we have
+the tally of the right argument and then
+that's going to be the left argument
+when we're on the left as as we want up
+here
+and then we want the indices of that so
+we use another top
+and here we have the backwards
+concatenation do the swap there
+look up into the constant that's an agh
+train and then we have
+a top will grade
+over here
+some people and i myself included prefer
+not to have too many parentheses and too
+many nested levels of parenthesis and by
+observing that we have a single though
+derived function on the right here of
+the iota and
+a
+function that is
+a 4 train on the left so there's an agh3
+train with another train that's a
+fortran on the left
+and then
+we can see that if we swap it over swap
+the arguments of this middle iota we get
+a single function derived on the left
+and that doesn't need parenthesization
+and we can avoid the parentheses
+parenthesis
+of here as well
+so let's swap that over
+and remember to commute the arguments of
+iota and put this fortrain in problem is
+of course that this is a magnetic
+function so
+we can pre-process the
+right argument of
+the middle ioto commute with that
+another way we could do it would be to
+do a post-processing um
+of the result of iota but i like the
+other style a little bit more because
+this iota is going to use this argument
+and
+the grade atop is just in the way it
+just separates the the function here
+from its its arguments so you find it
+easier to read
+like this and that works as well and we
+can well if the other one is f let's
+call this one g
+and we can even do a performance
+comparison between these two let's
+generate some test data
+um so
+alphabet uh let's take
+a hundred letters from here
+or yeah let's do a thousand for now um
+to see a proper effect
+and we do that make a right argument
+which is another random thousand
+letters there
+and then
+we can copy in cmpx from the defense
+workspace
+and run the two against each other
+well
+in this case and
+f was significantly faster than g and
+i've tried all kinds of cases turns out
+that
+in general f is either somewhat or
+significantly faster so that's the one i
+would recommend
+using
+okay with that practical thing aside
+let's look at some and
+other approaches to this that i'll then
+explain fully
+one way to go about this is to start
+with um
+a comparison table
+between these two names
+so here we have uh one row for every
+letter of um
+landon and one column for every letter
+of
+finnegan let's turn this on its side one
+way we can
+we can do that is by just putting in a
+different flipping arguments alpha and
+omega so alpha is on the right and omega
+is on left
+and what's the significance of this
+table well it maybe becomes a little bit
+easier to see if we stick and
+landon on top
+and we stick finnegan on uh left we just
+have to
+make sure that we add another element
+which is going to go up here in this
+corner
+and where they meet so just put a blank
+there
+so what's happening here is that
+finnegan is and has the letters that
+need to be given positions in landon
+and these vectors here
+they represent kind of an identity for
+our the letters in finnegan in relation
+to the letters in london so this is
+saying f in finnegan does not find any
+match anywhere in london
+and so to i and that's right because
+both f and i are going to eventually get
+a 7 not found
+the ends
+identify with
+these two ends here these are the ends
+that they want to consume and they both
+want that so they're going to get
+eventually um
+distributed these two ends here need to
+be distributed to these two ends
+then e and g are just like f and i
+a
+will take
+one of the a's which is only one and
+then we have another and here down down
+here which is a contender for the a's
+for the ends in london but it's not
+going to get any because they're going
+to be consumed by the first
+two ends
+okay
+so
+we want to put all the all the ends
+together and we want to put all the
+letters together that are um that are
+not matched so that we can
+we can start matching up the available
+letters with the ones that are looking
+for them
+and for this kind of grouping that's
+where key comes into the picture
+so let's just do a simple application of
+key just to see what are the arguments
+to the operand um for key
+no we're missing an uh an a on the left
+here we go so these are the uh these are
+the unique rows so this this row is the
+not found row this is the n row this is
+the
+um
+this is the a row
+and there are four letters
+the letters in positions
+1
+2
+5
+and 6
+that are of the not found type and then
+there are three letters in position
+three four and eight
+that are of the
+type where this mask indicates the
+letters that they can consume in
+london
+um
+for now we're not so interested in the
+in the mask but we want to know where
+are those letters and how many of them
+are there so let's replace
+the alpha with the where of alpha
+this gives us the indices that
+will need to be distributed
+so these are the letters in finnegan
+that are asking for these letters in
+london
+these are the letters in finnegan that
+are asking for well there aren't any
+these letters in london etc
+let's move things around a little bit
+and
+look at the count because we need to see
+how many there are
+and if there are enough
+so you can still put an
+omega here and
+this this table here
+says that there are four that's the
+count of these and there are four
+letters that need
+to
+consume these letters over here there
+are three letters that need to consume
+these there is one letter that needs to
+consume these
+and so we can use
+take here
+to take as many elements as we need
+those are the ones that are
+corresponding now when we do that
+then we and we don't have enough we're
+padding with zeros
+so this indicates that
+three
+the the third letter in finnegan is
+going to get the index three
+the fourth letter in in
+um finnegan is going to get index 6
+that's the last n in
+london
+and the 8th letter in finnegan which is
+another n
+won't be matched
+so we can already kind of see our
+solution and the result here is already
+in here all the information for it let's
+make it a little bit easier um to access
+so what we're going to do is we're going
+to take and pair up so this one
+corresponds to this 0 and this 2
+corresponds to this
+0 over here
+if we make what we have on the right
+here
+into a
+into a matrix and one column matrix and
+concatenate it to what's on the left
+then we get a two column matrix
+um
+if we just do it like this then
+key is going to pad with a lot of
+elements because they're not the same
+shape so let's enclose it just so we can
+see what this is we're doing
+see we can see that
+um element one gets not found element
+two gets not found
+element three gets a three element four
+gets a four limit five gets not found so
+we need to combine these tables and then
+we need to
+just put them in the correct order
+combining them
+we can do by concatenating them along
+the first axis
+that's going to also enclose them so we
+disclose them
+and now we have all the information that
+we need we just need to put it in the
+right order we need to sort it by the
+first column
+so let's do that
+we could do the first column sort we can
+also just sort by the whole table
+because it doesn't matter when the first
+column are all unique elements we're
+never going to look at the second column
+at all
+now they're in the right order and
+here's our result actually just we need
+to adjust these zeros to sevenths
+eventually and we don't actually need
+the left column either we just needed it
+for the sorting so this means we're
+getting all the columns and we just want
+column two
+and then we need to transform our zeros
+into
+into sevenths so seven meaning one
+beyond the last element
+position
+in
+the left argument so one beyond
+the length of
+the left argument
+replaces the values
+at
+those values where they are
+where zero equals them
+and that gives us our solution
+now
+there is an additional problem that is
+again high rank
+comes to haunt us a bit
+um
+right what's happening here things are
+going very wrong and this would also
+happen if our rays were nested and that
+is because we're using a scalar function
+equality here this tries to compare all
+the elements rather than compare the
+individual major cells
+not only that if they were nested it
+would also dig in and create a nested
+structure of booleans assuming
+the length would be matching everywhere
+and we this could even error
+so we need to
+to write this out a product but in terms
+of
+match and we can do that um so what we
+want is
+we want
+every major cell from an omega here
+com and needs to
+be compared to all the major cells
+from an alpha
+and
+so
+we can pair up first the major cells
+from
+from omega
+so that's rank negative one with the
+entire alpha so we give it 99 as a big
+value that's bigger than the rank of
+of alpha
+so now
+what match would see is um in our case a
+row on the left and entire matrix on the
+right and now it needs to again traverse
+that and compare um
+the major cells
+so on the right
+need to be paired up with the entire one
+cell which is a corresponding cell
+on the left
+and then we get our proper result
+so let's call this
+k for key because it's the keybased
+approach the key is doing the heavy
+lifting here
+okay um a final
+approach to this
+um it's not going to be an aple approach
+but
+it's a different way of expressing the
+way we might think about this problem
+and for this let's use london as a left
+argument but i'm also going to use a
+different argument which is just going
+to be nine for now and it will
+expand on that later so nin
+the first n consumes here that becomes a
+three then we should get a
+two and then we should get a
+six at the end we can confirm that we
+can try that with uh with k that we've
+just defined
+so three two six
+right
+what we're going to do is we're going to
+literally
+go through and consume letters the way
+we've been talking about it now we are
+not allowed to change anything in the
+left argument of a defense so let's make
+instead a copy of it that we are allowed
+to change in whichever way we'll call
+that a
+because it's like
+alpha um
+and now that that's initialized we're
+going to
+traverse
+all the elements in the right side
+and for each of them
+and we're going to
+consume an element of a what does that
+mean consume well let's change it into
+something that won't match so
+the first n in landon which if you
+change that into something that's not a
+n
+then when we get around to the second
+end in then
+it won't match that end anymore you'll
+have to go to the second one so then it
+has been consumed
+and
+how do we find which element to consume
+or we can just look up
+the element the first match
+because once we have consumed it it
+won't be a match anymore and we change
+that into some kind of symbol that
+indicates that it's been consumed
+this is an assignment so everything here
+is going to be be very quiet
+but
+we can
+discard these assignments every
+assignment here is going to result in
+the symbol so that's not very
+interesting
+instead we discard that and instead we
+return
+this modified array
+a
+and we can see that the
+a and the n and the n have been consumed
+we can even
+look at what exactly is going on every
+time around the loop by printing this
+current state of a before
+it gets updated
+and here we can see the evolution first
+we've got the pristine landon and then
+we're consuming an n consuming an a and
+consuming the final n
+however we're not actually interested in
+what london looks like when it's being
+consumed we're interested in
+the indices instead
+and it is a well they're they're the
+ones right here so we can
+print that instead
+and uh
+we can see that we're getting our three
+two and six and then these are the ones
+that are being consumed now we don't
+want to print them we want to return
+them so let's give them a name
+and then
+every time around the loop here we have
+a new value for i so we let the
+the function return that instead and
+those are the values that we want so we
+don't need
+our a being printed at the end anymore
+and that gives us
+our result
+but there are some issues that we're
+going to fix what happens if i add an
+element here that's not found
+we get an index error the reason is
+because already this
+lookup
+we
+we're going to get
+and not found which is one element
+beyond which is one index beyond the
+last index and one index beyond the lens
+index is not a valid index for a
+what can we do about that
+well we can create a new position in a
+which is like a sacrificial position we
+just we're going to override it whenever
+we need to overwrite something that's
+not in a
+so let's just add one more element we
+can use the same symbol for that doesn't
+matter it's probably going to be
+overwritten anyway
+and then when we look up here we have to
+watch out because now a has one more
+element and we can we'll get an index
+that's too large so we'll
+um drop that before we do the lookup
+you can see that s got a seven as it
+should
+further complications well what happens
+if this element that we have chosen
+as our um sacrificial element or or a
+marker for something have been consumed
+what happens if that itself
+appears
+in the array
+that does not look right what's
+happening
+we remember how we when we are consuming
+things we overwrite that element
+with the special symbol
+and so by the time we have consumed n
+and a and n our landon looks like this
+now we come and look for that same
+element we're going to find that in this
+position too
+so we need a value that's not going to
+match
+itself at all
+and here's a special trick
+a kind of nasty one
+and namespace we can create a new
+namespace
+and though a namespace is equal to
+itself
+even two namespaces that are created
+under the same circumstances and are
+otherwise identical regards to their
+content
+they are
+passed around in apl by reference and
+they have an identity so they don't
+match each other
+this means that we can use namespaces
+that are being
+generated
+we will make a new namespace um
+we could make a new namespace every time
+and then we ensure that this namespace
+that we are generating here
+will never appear in any array because
+every namespace has its own identity and
+this one has never existed before
+we could actually
+also just use a single namespace as the
+as the
+namespace that we're blurring out with
+but this itself would work
+if you wanted to use a single one that
+then we could define it outside and say
+put it here
+we can use that here as well it doesn't
+matter
+because that we have it in the lookup
+array because we never have any um
+any array coming in where we want to
+look for this nice space because
+namespace doesn't exist yet we're only
+creating it once here so this would work
+as well
+and then
+as the error lasting trouble and
+it would be a problem if we had high
+rank arrays
+there are multiple problems here
+and
+with the first problem we're hitting um
+apparently but there's actually
+something going on before that is uh the
+lookup
+um and the problem is that we're
+consuming elements one by one rather
+than going and
+major cell by major cell so we should
+change this into a rank negative one
+over here
+and another issue is that we're
+concatenating the wrong way we should
+add another major cell which would then
+be filled with uh with this element
+and finally we're doing uh indexing over
+here with square brackets which isn't uh
+general we can't index into a general
+array using a single call with square
+brackets because we would potentially
+need training semicolons over here
+and that doesn't work so we'll change it
+into using the index function instead
+right
+here
+like that
+and now we're getting the result we want
+um
+using high rank arrays as well
+so let's call this
+n
+for using the namespace
+and
+if we look at
+these solutions we found that f was
+the
+the fastest ones of f f and g and we had
+the
+the one that was based on key and then
+we have the one
+the user's namespaces
+this over here was an outer product and
+that's going to be problematic for very
+large
+very large data let's say that both
+arguments have a thousand elements that
+gives us a million elements a million
+comparisons
+there so that's going to be very
+inefficient so we should
+change our test cases to something
+smaller
+let's just do a hundred then
+and a new y as well
+and then we can
+we can
+compare them all
+so we have x f
+y and x
+k y
+and x
+and y
+and well it's very clear that
+the right way is the old way
+so
+when you want to do this kind of
+allocation which can be used for example
+to
+con to
+[Music]
+fulfill orders or warehouse with a limit
+a limited amount on a first-come
+first-served basis or allocate seats in
+the airplane with various classes of
+seats then
+use the modernized expression from
+the
+finae pill idiom list and for the full
+explanation of that have a look at
+the links in the description for the
+video
+thank you for watching

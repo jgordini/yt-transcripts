@@ -1,0 +1,1345 @@
+welcome to the apl quest see apl wiki
+for details
+today's quest is the fourth
+from the 2014
+edition of the apl problem solving
+competition
+the idea is that we're given a text and
+it may have spacing that we don't want
+and we want to normalize this in the
+sense that any training
+spaces that spaces at the end of the
+text
+are removed any leading spaces that's
+spacing
+at the beginning spaces at the beginning
+of the text
+are removed and also if any words are
+separated by more than one space and
+that will be compacted down to be a
+single space
+so let's start with a sample
+what we the basic thing that we want to
+do here is we want to compare adjacent
+spaces uh in order to remove those extra
+spaces in the middle and then we need to
+take care of the spaces at the very end
+because they might not be addition to
+another space if there's just
+one space or rather if we don't do
+anything but remove adjacent spaces then
+we also reduce the leading and training
+spaces into a single space
+but and let's get started
+so
+the first thing we want to find out is
+where are our non-spaces
+and then and
+what we can do is we want to make sure
+to catch also the spaces at
+the end
+so we want to make sure
+um
+we want to make sure that as if the last
+space is also adjacent to another space
+and so that would be an extra zero at
+the end
+and now we can do adjacent that be a
+pairwise reduce or two wise
+reduce and we want to see if any of
+those
+are
+none spaces
+so a space that's next to nonespace is
+something we'd want to keep
+so that gives us
+that gives us this we can see that we
+we start off with a couple of two spaces
+and then we have a space which is
+adjacent to the t in this
+and then we have the four letters of
+this and then the the first space and
+there is some a
+and then
+and we have the
+um
+and then we continue on with and we can
+see that we have ones for num spaces and
+also for the single spaces of between
+the words and then we have the training
+spaces
+okay now we can use this
+to
+filter and
+the text
+and that almost solves the problem now
+there are no spaces here at the end
+because we made sure to add that extra
+zero at the at the end but there is a
+problem of a leading space
+and we can drop this conditionally
+if we know
+that the text begins with a single space
+and with one or more spaces that means
+we also have to drop and one more space
+that otherwise wasn't caught
+so we can easily check that
+if a space is equal to the first off
+and
+of the the argument text
+then we drop it so this would give one
+if it is we could also we could also
+invert for me here just by negating
+the vector credit here but this is very
+very little work to do the only real
+work that we have here is dropping that
+leading space because that would mean
+rewriting everything in memory
+so
+that solves the problem let's give this
+the name a because we're going to have a
+lot of different solutions here
+okay
+and
+let's
+then for our next solution
+take this and generalize it i mean
+and
+and while we're making it also test it
+just to see some some possibilities what
+do you mean by generalize it is that
+instead of taking space as this element
+that needs to be removed from beginning
+at the end
+and deduplicate it in the middle and
+we're going to
+allow you to specify that character as a
+left argument and then we can bind space
+as left argument in order to make it do
+our specific task so to make this tested
+is actually
+quite simple
+because we're going to put out the space
+as
+as a left argument
+and that means that this different from
+is just going to be
+a different from like this and then we
+have to of course this is becoming a
+test function another defense
+and the rest of this will just work this
+is a dyadic function here the static
+function here there's one problem is
+that
+replicate or compress here doesn't
+behave like a function when it is next
+to
+another function
+and the right tag here but we can fix
+that with a right tag top
+and then here we have
+uh the left argument and the right
+argument and that means that we
+essentially have it equal except we want
+to pre-process the right argument of
+equal with
+a first and we can
+write that just with a uh
+with the beside the composition
+so that's what the entire thing comes
+out to here we can try it with our
+sample text
+and that means we can give this a name
+and just remember to either bind a left
+argument here or we could have put a
+right tack on the right to make it
+a fork
+it'll be interesting maybe to see which
+one is faster of these two so let's try
+that and at the same time let's also
+generate some
+some test data and test data is going to
+be a bit interesting um
+because we want to
+try all the different cases that may be
+with
+so there'll always be some internal
+duplicator spaces but we also want some
+with some leading spaces and some with
+some training spaces and and all the
+combinations of that
+so how might we do that well
+and there are different ways we can do
+it but let's start by generating some uh
+some spaces so we want no spaces and uh
+yes spaces
+and we can't actually see those but we
+can
+it helps maybe to do it like this
+right so we got no spaces and and yes
+spaces um and then we want all the
+combinations of that so that be an outer
+product
+of all of those
+and it's still not really going to
+be very visible here
+but
+now we're going to use these as prefixes
+and suffixes
+so on the left we have the prefixes and
+on the right we have the suffixes and
+then we're going to have some
+garbled text in the middle um let's take
+4d overtake on the alphabet that gives
+us the alphabet with a bunch of spaces
+at the end and then we just want some
+some random numbers
+there
+and let's say just for now for the
+display we're taking 20 reshape
+40
+so yeah not again not very visible
+um
+this up oops
+there and this helps a little bit
+actually we should probably use display
+as to to see it entirely
+um so here we can see yeah it goes over
+the edge of the of the screen but we can
+see that
+we have added spaces in the beginning
+and the end
+um but the problem is that our
+randomness here it caused us to have
+some space in the beginning that we
+didn't want to so how can we make sure
+that we have a non-space in the
+beginning and the end well we can just
+stick an a at the beginning and the end
+right there
+and actually let's turn rows on
+as well so that we don't
+so we don't run over the edge of the
+screen
+and maybe make these a little bit
+shorter also so we can see it
+there we go so now we have our test data
+we have and
+one that doesn't have any spaces
+beginning in the end and one and and
+then we have
+uh one that has only beginning one at
+the end one at the beginning and the end
+and we can see we're getting some
+internal space here of course uh in the
+first three cases there are no multiple
+internal spaces because they're very
+very short but we're going to generate a
+giant test data
+um
+so that's not a problem it'll definitely
+be multiple internal spaces so that's it
+so then we're going to to test things
+when um for
+speed comparison then we'll be testing
+it all four of these
+i'm copying in the
+performance comparison from the defense
+workspace and then we can run cmpx a on
+each of these four cases and b on each
+of these four cases
+and we can see the a is
+somewhat faster so maybe it wasn't so
+good to try to test it after all
+okay
+another a whole different way of doing
+this instead of
+using this adjacent uh with the
+difference from from a space we could
+also rotate things around and that gives
+us uh so if we compare the ebola vector
+with it it's rotated by one step that
+also gives us this adjacency but it at
+the same time allows us to rotate uh
+cyclically and that
+lets us get rid of um
+of
+having to deal with it with the edges
+so especially
+so we can try this
+um let's take our our sample here and we
+start off with the exact same way
+um
+actually we can we can start even making
+it general so let's just put it outside
+so this gives us our
+vector of
+none spaces
+and we have the same thing with adding
+one at
+the edge
+now the important thing that we're going
+to do next is we when we rotate this and
+one step
+here then
+because we've added
+a zero at the beginning we know that
+when we rotate it one step to the end we
+are now getting a zero at the end
+instead
+so if we um if we now take
+these two together so we want the one
+rotate and also the original and we can
+write that
+um like this
+let's uh let's actually begin with well
+so we want to combine combine these two
+but let's just stack them on top of each
+other first
+um so we can do that with
+mix up top comma over in close
+we can see these are the two that we're
+going to combine so now what we want to
+do is we want
+where to preserve anything
+that
+um is
+true in either one or the other so
+either it is a non-space or it is an
+adjacent to a non-space
+so these are the ones we want to
+want to keep
+and then we just need to to do the same
+thing as before
+and remember to stick an
+attack on top of that
+of that slash
+now there's one problem here that we've
+added one element and that means that
+what we can't just do is compress
+because it will be a length there we
+want to
+take the not the right argument but
+rather the concatenation of the space
+and the right argument
+and that gives us this and because we've
+added a space on the left then we need
+to drop that and we can do that
+like this
+okay let's
+give this a name this is going to be c
+don't forget to
+bind the argument here to the function
+so that's one way of doing it uh
+cyclically but there are other ways that
+we could do it let's uh
+let's look at this again
+so uh we can we can optimize the
+performance here there's a problem that
+we uh are concatenating and with a big
+argument on the right it's going to be
+expensive having to write over the data
+in memory um all again and we could
+possibly um save ourselves and some of
+this work
+by working on the
+on the boolean vector over here removing
+one element from um from that
+and instead then we don't need to
+concatenate we can just take that
+right argument and like this
+only problem is then we're back to and
+so that's uh
+we are back to
+another problem that we get that space
+at the beginning um if the first element
+is a space if it's not
+then we don't get a space because now
+we're not considering uh
+the spaceness or not spaceness of the of
+the first element in
+anymore and the way we can we can fix
+that is much like we did we did before
+namely that
+if space the left recommend is equal to
+the first element
+of the argument then we drop from there
+so
+that
+then this works and let's give that the
+name and d
+okay um but
+there are plenty of uh of ways to do
+this we can also
+start by the concatenation and and go
+with that so
+let's start by having this the left
+argument here this the space
+and then concatenate it in the beginning
+of
+um
+beginning of the argument the right
+argument the main argument that we're
+working on
+and then we're going to generate a
+vector
+the compression vector for this
+entire thing
+so we can we can start by saying there
+we
+which they're different
+um and then adding a zero
+on the front like we're doing before we
+could say give that a name for a mask
+and then rotate it and then use
+um
+or that so this is this would be just a
+different
+it's it's an explicit version of what
+we've done before
+um
+this is of
+c
+and then
+we're doing it doing one drop and on
+that
+so things look a little bit different
+when we can assign temporary variables
+like this
+okay this is e
+and now again we have a problem that
+we're concatenating on the left and we
+know that that's potentially slow
+canceling on the right when the
+interpreter will reserve additional
+space for the array to grow and then it
+can just write into that space so that's
+going to be much cheaper than rewriting
+the whole thing
+so how can we
+reformulate this
+to concatenate on the right instead so
+we're concatenating here on the right on
+the space on the right
+and then that just means that we have to
+move our corresponding zero over um on
+the right as well
+and that and then similarly we have to
+rotate the other direction
+and then dropping
+from the opposite direction
+and then no more spaces here at the end
+so that potentially should be faster f
+should be faster than
+than e
+okay there are even more ways we can we
+can play we've got plenty of ways to
+write this so
+um
+let's
+start off with again our normal
+comparison
+and now we're adding uh that
+um that spaces as
+as always
+so it's it's a space indicator in our
+boolean vector so
+zero
+and then we're going to to process that
+in much the same way as
+we've done before
+we are
+rooting it rotating it one step and then
+doing an or with itself so so far
+so good that's the same as what we've
+been doing before we're just writing it
+in line here rather than taking the one
+um outside
+but the trick i want to get here is this
+gives us this gives us this
+um
+then
+we also want to make sure
+to
+to not catch anything at the beginning
+so if we start here with
+um
+well i'm going to explain this
+this is a test
+so the these are all fine
+um
+but if we have one space here
+that's not right because it's adjacent a
+a um
+a space adjacent to a none space and we
+want to get rid of that if we have more
+spaces
+then we start detecting that it's a
+space addition to another space that's
+not okay so
+the cheap way of of fixing this
+is
+by saying that any space
+any character that appears before the
+first
+none space
+shouldn't be regarded at all and of
+course any character before the first
+nonspace is going to be a space
+and
+we can do that
+by
+taking the
+running
+and
+i'm sorry no the running uh running or
+and because we have we have our our
+comparison vector here are the num
+spaces so that means we start with zeros
+for all the spaces and then we get a one
+so
+so this means as soon as going from the
+left as soon as we hit the first one
+then any character after that
+will also have a one
+and and similarly any
+character up to
+uh the first one has then a zero so this
+is a strict condition we can then take
+that and put it up here that we only
+want
+we only want the ones here but we have
+remember we have this problem here with
+this one
+if it's also true that it comes after
+the first one
+so now this gives us a good mask that we
+can work on
+and then we just use this
+to filter our argument
+we can try that with uh with s we had
+before
+uh what am i doing wrong here oh yeah of
+course um we have to drop
+the
+drop the zero from the end after we're
+done with our with our logic
+here we go
+alrighty then
+we could also
+use this kind of method of this
+cumulative or
+or scan and to
+in a way spell out all our conditions
+so starting with that same vector here
+let's spell out um our conditions and
+then
+we don't need to worry about this
+cyclical thing
+and the way we're going to uh to
+spell it out
+is again we're saying that it is
+this is the adjacency to a uh to a
+non-space
+so it so it has to be
+um a non-space
+or
+adjacent to unknown space
+and we all and it also has to come after
+the first non-space
+and it
+and
+it also
+has to come before the last
+non-space so the last known space we can
+write as as a little defend itself we
+reverse the argument and then we do our
+and
+or
+scan and then reverse it back again
+so here we've just spelled out
+with the conditions for keeping a
+character
+is that it is adjacent to a non-space or
+it's a non-space
+and it comes after the first one and it
+comes before
+the last one
+okay and one final way that we can
+you could potentially use this
+is if we take this uh the non-spaces as
+always
+and then and we let's give that an a
+name the mask
+and then we
+we use the less than scan it's a bit of
+a a tricky one you kind of have to
+know this but what it does is it turns
+off
+all ones that appear after the first uh
+one so let's say let's say we have the
+the mask like this
+um
+oh
+yeah sorry uh here's our mask and we can
+see that it it leaves only a one at the
+first one and all the all other ones in
+this whole vector are turned off so
+that's uh that's what we're doing
+now and then we can specify that we
+some for something to be preserved it
+has to be a non-space
+and it's and it
+now what we're going to do is we're
+going to say a non-space
+and not
+but and not is only so we could write an
+end
+not like this
+but and not is only true
+if this is one
+and
+this over here is zero and so for
+boolean that just means that it is
+strictly greater than so that's a way to
+write and not
+so effectively what happens here is it's
+exactly the same vector as before the
+different from space vector except that
+we have
+forced the first one that's there to
+become a zero
+and now we can use this to cyclically
+rotate and that is safe because we know
+that the first element cannot be a one
+that means that
+when we rotate it one step we for sure
+get a zero added at the end
+and then we can compare that with our
+mask
+and
+now compare that and combine that with
+our with our mask so it has to be at and
+on space
+or adjacent to a non-space as before but
+adjacent to does not
+wrap around
+so it looks much like what we had before
+but we don't have the problem of
+wrapping around and messing with uh with
+the training
+and
+the training ones rather and
+we we're wrapping a zero around there
+and then we can use that to filter it
+over here
+and and
+even and even if we use something that
+doesn't have spaces at the end that it
+doesn't matter they're not um
+it does nothing interferes here because
+they they are still adjacent to the neck
+to none space that's being rotated one
+step to the left we're not
+nulling that out
+okay
+that's i
+so now we for for comparison of all
+these different ways of with using the
+cyclic rotation
+um that were all the letters from c to i
+let's instead of having to spell those
+out let's use another utility from the
+defense workspace
+and
+it's the generalized iota and not only
+does it handle non-numeric data it also
+handles a start point and an end point
+rather than starting always at one or
+zero if you're using code i zero
+so that means that we can write for
+example
+k to
+iota
+g
+w we get all the letters
+from k to j w
+inclusive
+and that means that we can say uh we
+want letters from c
+you would say uh iota g and we want them
+all the ones to i
+and then we want each one of them
+concatenated to
+an each
+and
+the t
+that gives us all our the expression
+that we want to run and then we can run
+cmpx and on that
+and it's pretty clear that it's our last
+one here the the
+clever one that avoids
+the problem of this of rotating the
+wrong data around that is and the
+fastest one
+good to know
+okay hey how about regex we can pretty
+much guess that right it's going to be
+slow but there are different ways of
+doing it they're interesting to to see
+how we could do that
+so
+for regular solution
+um
+one way we can do it is by defining
+exactly
+which spaces to remove and which spaces
+to condense so the ones that need to be
+removed
+are
+in the beginning of
+and our text
+any number of spaces or
+any number of spaces at the end of the
+text
+the only thing that leaves us is getting
+rid of the multiple internal spaces so
+now we can say once all of those are
+gone
+then we also want to remove
+any
+any run of spaces
+with a single space
+we could also say any space followed by
+um by any number of spaces but it's
+probably not going to make a big
+difference so that solves the problem
+um and let's call that j
+another way we could do it is using a
+single pattern just to specify all the
+spaces that need to be removed
+so
+these this just moves
+all of them replaces with nothing but
+what exactly
+is a space that we want to
+remove well we can start off like we did
+before
+any number of spaces in the beginning or
+any number of spaces
+at the end
+um but there's one more possibility
+that's the internal spaces that are uh
+that are redundant what does it mean
+that there are redundant it means that
+they're adjacent to another space just
+like we've been using
+pure apl to do before so we have a space
+and then we want to look ahead and see
+that
+there's another space so if there is
+another space coming up but not included
+in this match
+then we should remove that space and
+that just leaves the last space in every
+group of spaces
+so this solves
+our
+problem as well
+and finally
+we can make a solution where
+we
+i call it like exception
+pattern solution
+and that's when i start off by
+protecting certain things
+in that i replace them with themselves
+and then anything that's left over using
+a different pattern and is then
+changed
+so what we want to and what we want to
+keep
+those are
+spaces that are in between
+two non-spaces so how do we and how can
+we do that well
+we could use a look behind and look
+ahead and but that it doesn't really
+matter
+and so if we have
+a nun space
+followed by a space
+followed a and an upcoming
+so that's a look ahead
+any number of characters
+so
+the problem here is that uh
+this could be the last character the
+last letter
+in our text and it will be followed by a
+space and then we say any number of um
+of characters that come after that
+and that will also match that there
+should that um
+a space at the very end
+but we don't want uh we don't want to
+keep that so and we need to to make sure
+that something follows and after and we
+can't
+because consume a non-space because then
+that we then uh you might have
+non-space space non-space
+space and we need that middle uh
+non-space to be used to justify both of
+the
+of the spaces that are adjacent to it
+but what we can say is that follows any
+number of uh
+of characters
+look ahead
+and and then there is something
+somewhere after that which is also a nun
+space
+and then and
+and those are the spaces we want to
+preserve any other space that we want to
+uh you want to remove
+let's just try this out
+like that
+um
+we could also say that
+well you might think that we could also
+say that that we want any spay any
+number space followed by space by any
+non-space
+um but that would only preserve those
+places that are
+just a single space
+but we don't want that we want to
+preserve one of each of the spaces that
+are in sequences of
+of spaces as well but so this is this is
+another way
+of doing it with regex so three
+different ways of doing it
+the first one
+was to
+to do two different patterns to do the
+two transformations leading leading
+training and then we had and then
+separately treat multiple spaces and
+make them one there's the one where we
+are specifying exactly which spaces to
+be removed using
+well it's an ore and three different
+patterns and then there's this one where
+we are accepting the spaces that we want
+to keep and then removing all other
+spaces
+so
+let's try that and we want
+and
+j
+each of
+uh
+k a h of t and
+k each of t and l each of t
+three different ways of doing regex and
+and to see which one is faster in our
+case well yeah pretty clear that
+using the two transformations would be
+faster in our case this might not be
+true in every case
+okay now
+here's a fun thing
+because of our problem being very
+specific we're only dealing with spaces
+and none spaces and we want to get rid
+of any runs or spaces other than them
+being a single uh space inserted there
+then we can use a little trick
+um and that is using the classic way of
+of splitting on spaces
+or on any other character really so we
+partition
+by where we have none spaces
+and
+the
+because
+none spaces are indicated by zeros and
+any element that corresponds to zero is
+removed
+um
+using when we're using partition that
+means that all the spaces
+are removed
+leading trailing all the internal ones
+now we remove too much because we want
+to
+to have exactly one space between each
+word
+but that's not so bad
+because what we can do then is join on
+spaces adjoined with spaces
+we could write that as
+the left argument followed by space
+followed by and right the right argument
+but this will fail um if we have an
+empty vector because that will attempt
+to that will need the identity element
+for this uh function of for which uh
+there isn't one because well firstly api
+can't figure it out for none primitive
+functions but secondly there is no
+argument you can give to this
+on one side so that we preserve the
+argument from the other side because it
+always adds a single space
+so we can see we get an error there
+instead what we can do
+um is we can and just add a space to
+each one
+and it we know that it's probably faster
+to add things on the right so instead of
+just doing
+doing this space concatenated to each
+one will bind the space on the right
+side of congratulations so this just
+adds a training space to each one we
+could also use commute for this but but
+this will work
+oops yeah we should use our sample of
+course
+and now we just need to
+flatten it all down
+and and
+then we have a training space that comes
+out here and we just need because we've
+added a space to each one so we
+and
+drop the last one we know that's going
+to be a space
+and that gives us
+um our results right there
+so this is one way to split and join
+um
+given it i didn't give a name to this
+one this should be good and while it's
+not really valid but it'll be
+interesting to see if there's a
+difference in in speed as well between
+join on spaces and add a space to each
+one
+and then
+flatten it all out and removing one so
+we can still compare them even if we
+know that it's not really valid
+should be
+okay
+it should really be the other way around
+the alphabet there yeah let's fix that
+okay
+fine let's uh let's
+try to generalize this in a little bit
+that's that's really trivial if we take
+uh this one then
+we can just
+use the left argument here and a left
+argument here
+um so that would
+um that would be a generalization of it
+just to show how we can do that so this
+is actually a kind of useful thing to be
+able to bind an argument
+with a function it's just what i want to
+demonstrate
+um but
+this form also has a uh
+an additional benefit and that it is
+extremely amenable uh to uh
+becoming tested
+okay so how might we write this as a in
+tested form
+well this is just application between
+the arguments and this is uh the right
+argument so we could write this as a a
+right tech here
+but since we're just flipping and the
+arguments of the partition and we have a
+single primitive over here then there's
+no point in writing it like that so we
+can just in in flipping them around so
+we can write that in the proper order
+and now
+we want to add and the left argument
+concatenated
+on each
+but flipped around
+and then we uh we
+flatten this
+and then we uh okay we need to to change
+our
+braces to parenthesis
+and then we could combine this
+um
+so because this is a magnetic function
+so we're just pre-pressing the red
+argument to the negative one but instead
+of that we can actually just let it be
+on the top i find it on the top here so
+we have this fork here which has a fork
+right right argument a right time and
+then a single function so that's on the
+top and then we can just state the
+negative one drop um outside as well
+so it saves us from this
+somewhat awkward
+um we call it composition
+of it
+so we can try this
+and this this works as well in a test
+form
+so these were all
+based on splitting and
+joining
+let's
+compare them with each other
+so let's do
+this was
+m
+g
+p
+and each one is with an
+enclosed and each of t
+so these are all the split and john
+they're probably not going to be fast
+but we can still uh compare them with
+each other
+oh something is wrong here and what i've
+been doing oh yeah of course um the
+reason um it's wrong is of course it's
+not it's not actually wrong the problem
+is
+no is it hold on
+um
+oh
+i miss missing something
+ms up here
+join on these
+what did i mess up here
+oh this this looks right you join on
+this on the sample
+oh of course yeah silhouette and we're
+doing a reduction here so we and we
+should so this becomes an enclosed
+that's that's what it's trying to to
+show us here with the extra space it's
+been enclosed so we need to disclose
+that of course
+there we go
+that's m
+okay so this is a good feature of cmpx
+that
+it indicates that an
+element an iron result is different from
+the other
+results
+okay now the matches are there and now
+you can see that
+first one was very slow that's the one
+that's doing the reduction and it wasn't
+completely right anyway because it could
+handle the empty argument so that's good
+and the other ones are much faster than
+that
+finally
+a function that's often overlooked is
+the find function and the find function
+and
+indicates the beginning of any sub array
+in them in a an array so we've got our s
+here
+and then we can say we want to find
+places where we have doubled spaces
+so this is we can see that we have three
+spaces at the beginning
+and that means there are two instances
+of
+double spaces here there's a double
+space over here and then there are all
+the trailing spaces that that cause
+double spaces at the end
+and uh we can use this
+so let's start off with with something
+uh that
+just like we've been doing uh doing it
+before
+different from um
+from space and then we're going to uh to
+do something like that and then so here
+when we have different space we are we
+want to look at places where we got
+zero zero so this corresponds to
+and where to what we're doing over here
+we just do it using it on the boolean
+instead of using it directly on our text
+okay now and we'll we'll come back to
+this uh let's just do the basic thing
+and first which is going to be
+that we want to make sure that we so so
+this will yeah this this thing will take
+care of the double spaces eventually we
+can we can see that already here so if
+we negate this
+then that indicates all the
+and all the places except for a space
+that is followed by another space which
+are the redundant spaces so if you use
+this already to compress here that gets
+rid of our double spaces but doesn't get
+rid of our
+leading and training spaces other than
+compressing them down to become single
+spaces but we can fix this
+and
+leading a chinese spaces
+we can get rid of by with the same
+method we did before
+with the scan so we want to find any
+thing that that is
+that follows the first one but not
+anything before that and anything that
+comes before
+the last one
+so
+we can and
+any we can do this reversal and then we
+do it in or
+on that and then we do
+and reversal again that gives us a mask
+show indicating ones all the way up onto
+the very last one
+and that's that takes care of all the
+training spaces and then we can combine
+it with a with a regular uh or scan so
+we want both of these to be true it has
+to be true this after the first one and
+before the last one
+oops
+uh yeah we need to bind these together
+as well so too because this is a
+magnetic so we need to pre use
+we do that by pre-processing the right
+argument to end
+and that gives us the internals there
+and then the only thing we want to also
+be true
+is
+that
+it isn't
+a a space which is followed by another
+space
+oops we forgot to bind by the argument
+to that
+and
+um oh yeah this is um this is wrong
+anyway because we want
+this has to be false it has to be not a
+space that's next to another space and
+this has to be true it has to be in the
+internal part so we so it's like we the
+the end not but backwards so the mean so
+this has to be on the right has to be
+greater than what's on the left
+and that gives us our and our mask and
+then we can use that to filter the
+argument and that gives us our result we
+call that q
+okay um another idea we can use now that
+we know how to take care of duplicate
+spaces
+then we are free to explore other ways
+of getting rid of
+of leading and training spaces and now
+there's this thing called idiom
+recognition where certain phrases are
+and are not actually taken at face value
+but are um
+interpreted as a single kind of are seen
+as a single token and then the
+interpreter internally
+uses a very fast algorithm for doing the
+same work that this function would have
+done
+and one of them is actually exactly this
+to remove spaces apparently that's
+something apls do a lot and they
+and they want
+and to run fast so if we type this up
+notice that it turned a different color
+here that is indicating that this is an
+idiom and therefore going to run very
+fast
+and the problem is of course this only
+removes leading spaces this is exactly
+that mask on the leading
+leading nun spaces
+and we also want to do it from the
+reverse but we can do that simply by um
+reversing our argument
+and then
+applying this which removes leading
+spaces and then reversing it again back
+again to how it was before and removing
+the leave space meaning that this whole
+thing
+just has to run twice
+um
+and once that's done so we can try this
+on our sample so this gets rid of all
+leading and training spaces then we can
+apply atop that
+this exact method that we had before we
+want the argument where it is not true
+that we have adjacent
+a space that's adjacent to another space
+on its right
+that gets rid of that so this may be
+fast because we're using this idiom for
+the in
+for the leading and training spaces even
+though we're using find for the uh
+for the
+middle spaces that need to be removed
+let's call this r
+and then
+finally let's
+let's try to use an
+a bit you work with if we'll find
+straight on the bit mask
+in a bit different way
+what we're going to do here
+is
+we're going to start for once with
+things that are spaces
+so this is exactly the opposite of what
+we what we did before
+and but the good thing about it is that
+we can then
+do an
+n scan
+that gives us
+all the leading spaces
+and
+then we can do the one one find that
+gives us
+um all the
+duplicated spaces
+and we don't want any of those
+so neither this nor that
+we can try this
+in fact let's put it in here that's what
+we're going to do
+so
+um
+so all the
+all the leading spaces
+were removed and all and now we only
+have training spaces it's a little bit
+hard to see that we've got training
+spaces here but if we use display
+and then we can see that we've got a
+training space there'll only ever be one
+training space because we've reduced any
+runs or spaces to a single space
+that means that the only thing we need
+to do is remove
+a trailing element which is a very fast
+operation
+if
+we the last character of our input is a
+space
+so how can we find uh the last character
+of uh
+of the input well if we reverse it
+and then uh take the first that's the
+the last and then we need to to drop one
+if that's true so that since it's from
+the end we can do negate
+on top of that
+now and
+this might be a bit faster if we allow
+the interpreter to use its idiom like
+this
+but we can't do that when it's uh when
+it's tested
+so let's just write it
+like this instead
+and now it should be and it should be
+able to recognize it as an it's
+interesting it's really not written
+yeah
+it thinks it's not an idiom when there's
+a
+an adjacent space it seems like a bug in
+the syntax color
+um okay so this finds uh the the
+trailing space and
+um
+bit attack here just a piece oh
+oh so interesting okay it wants a space
+there
+oh well this should be fast anyway
+um so if we have an a the last element
+being a um in this vector of indicating
+where their spaces then we negate that
+if it's zero it just stays zero and then
+we drop that many elements on the right
+and that should and we can try to
+display here we can see that there are
+no spaces at the end
+and we'll call this s
+and then we are
+ready to test our find based methods
+so this is cmpx and we've got a qh on t
+and rh on t
+and
+sh on t
+and we can see that r is by far the
+fastest one of these which one was r
+and that was the one where we were using
+the idioms
+to remove leading and training spaces
+so that's interesting to know okay so in
+each category we found out which one was
+the fastest one
+and if i recall correctly those were a
+from the category of
+um
+adjacent characters it was i
+from the cyclical rotation
+um actually we can have a look at them
+it was
+k
+from the regex it was p
+from where we're splitting and joining
+and now we had r here where we are using
+defined
+so that that's these
+we'll take
+these and compare them to each other
+oops
+missing a comma there
+and
+that shows us that a and i are fastest
+but they're so close to each other and
+that it's kind of hard to decide when
+when it's being drowned out by other
+things
+so let's try to just do these two
+and turns out that a very first solution
+and
+is actually the fastest one
+very nice
+thank you so much for watching

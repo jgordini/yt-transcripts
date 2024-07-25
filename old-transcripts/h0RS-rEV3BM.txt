@@ -1,0 +1,142 @@
+hi here we are to find the difference in
+area
+[Music]
+between a square that's inscribed inside
+a
+circle and the Outer Circle so it's
+actually the Outer Circle area minus the
+inner squares uh
+area and there's not much to figure out
+here with regards to algorithm these are
+known formulas so this video is going to
+be a little bit different than usual in
+that it's mainly going to be a symbolic
+reasoning in tacd
+APL so first a little bit of um Theory
+we going to find out what are the areas
+of these two components the circle and
+the square and what the the input that
+we're given is the diameter of the Outer
+Circle so if that's the diameter of the
+Outer Circle and the square inside is as
+big as possible that means the square
+inside is exactly touching with its
+corners on the
+circle also means that the diameter of
+the circle is the diagonal in the Square
+it's a straight line that goes from one
+corner to the opposing corner
+diagonally okay so with that in
+mind we have the Pythagorean theorem
+that states that the square of the
+length of the longest side in a right
+angle triangle is equal to the sum of
+the squares of the shorter
+sides however here we know it's a square
+so the two shorter sides are identical
+in length
+now we're going to do this entirely
+symbolically so let's do this with a
+comment we're going to say
+that the
+square which is the same thing as the
+multiplication of self so multiply by
+itself um of
+the
+diameter of the circle which is the
+diagonal in the Square
+is equal
+to the sum of the squares of the smaller
+sides but since they're the same it's
+then it is also the same as twice that
+so if we take the squares of the smaller
+sides and multiply that by the constant
+two so this is a two that's made into a
+constant function and and we're
+multiplying that with the self
+multiplication which is the square then
+the equality
+holds now we don't actually want to
+compute it this direction we want to go
+uh the other direction we want to to
+find the um the smaller
+sides such that we
+can compute the area which is just the
+small sides multiply by each other oh
+but since they are identical then the
+same thing as the square of the smaller
+side and that's in fact what we're
+getting here so in order to make this
+work remember on the left we had the the
+term that represents the diameter or
+diagonal and on the right is we have the
+squares for the smaller
+sides all we need to do then is
+eliminate this doubling on the
+right so we can do that by dividing by
+two on both sides that eliminates this
+one and instead we divide by two
+constant on the
+left this equal sign is not to be taken
+as a function here we just stating that
+these two things are equivalent the
+diameter diagonal and of the circle
+square divided by the constant two is
+and so the square of that diameter
+divided by the constant two gives us the
+square of the smaller sides the square
+of the smaller sides that is the area
+that we want so this formula is what we
+need to apply to the original argument
+in order to get the area of the
+square okay now we need to get the area
+of the circle here we don't use PR
+Pythagoras we use Archimedes and
+Archimedes says that the given the
+diameter of um a circle the area of that
+circle is going to be pi
+times the
+square so the self multiplication again
+divided by four it could also be stated
+simpler in terms of the radius but given
+that we have given the diameter this is
+what we
+get right then the next step is going to
+be
+to combine these two areas we want the
+area of the
+circle
+minus the area of the
+square and now we want to combine these
+two
+things and we can observe a pattern here
+but it's not exactly the same because
+we've got here the square of the
+argument divided by the constant four
+and the square divided by the constant
+two if we change this two into a four
+then we have made it half as big as it
+needs to be but we can compensate by
+that by doubling it and while we could
+write two times this we can also observe
+the doubling just like squaring is the
+self mul ation doubling is the self
+addition right now we have these two
+parts that are exactly the same so we
+have for whatever this gives the squares
+divided by four we have pi times that
+minus the doubling of that so we can
+break
+out this part of the expression outside
+a
+parenthesis
+let take that part and we put it here
+and then we apply pi times
+that minus twice
+that and that gives us um our for our
+finished formula which is very elegant
+we can try
+it and then we get the expected results
+so very elegant formulation and an
+example of reasoning entirely in tested
+APL thank you for watching

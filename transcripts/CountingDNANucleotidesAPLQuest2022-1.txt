@@ -1,0 +1,84 @@
+hi we have to count how many of each of
+the letters a c g t there are in a given
+character vector or scaler that's
+important
+here so I've redefined uh this sample
+DNA string
+and this is actually very simple a c GT
+we want to compare each one of them with
+the entire string so this is an outer
+product so this does a all combinations
+of elements from the left with elements
+from the right this gives us this
+Boolean table and all we need to know is
+how many ones are there in each row so
+we can just reduce here now there is a
+problem um and that is if we just have a
+single letter say a single C then this
+outo product gives us a vector not a
+matrix and then when we sum them uh then
+we get a single number instead of one
+number for all of them so we can fix
+this by reveling this forces the scaler
+to become a vector and it has no effect
+on a vector and that gives us the result
+that we
+wanted so we can make this whole thing
+into a single tested function uh like
+this and it also works on our DNA
+string another way we could do this is
+using the key operator but that one has
+a problem that things might not come out
+in the right order so if you try this
+with a key operator the way it works is
+that it
+returns uh for every element unique
+element the element as a left argument
+to the to the Opera function and then
+the indices on the right so that means
+we can count the indices and find out
+how many of each there are and we can
+see this is is almost right except for
+the ordering here and in fact if there
+weren't all the
+letters then we would be missing things
+so how can we fix this well if we insert
+acgt before our data then we know that
+they will be encountered in the right
+order and we know there will be at least
+one of
+each and all we need to do then
+is
+subtract one from oops subtract one from
+the result of course uh not from the
+with the letters we to get rid of those
+um and that gives us our right result so
+here's another way that we could write
+this bonus I actually have an idea for
+an extension to key such that we would
+be able to write this much
+neater and we can import the model for
+this as follows we want to get from from
+GitHub from my
+account you want this dialogue
+vision and the symbol that we want the
+model for is quad
+equal it's an
+operator okay now let's rename that a
+bit to something that looks a little bit
+more like a symbol
+and now we can try it so the way it
+works is that instead of taking a
+um function as upper end it takes a
+vocabulary as upper end so AC
+GT is our
+vocabulary and then
+key on the DNA and it Returns the lists
+of
+indices just like this would have
+returned if we didn't count them inside
+the upper end which means we just need
+to get the length of each list of
+indices that would be the whole thing if
+key was extended like I think it should
+be thank you for watching

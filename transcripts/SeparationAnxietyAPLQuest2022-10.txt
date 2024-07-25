@@ -1,0 +1,184 @@
+hi we're going to insert separators
+between uh groups of three digits so
+that's like the thousands in an integer
+that's given to us as a character
+Vector I'm going to go through a few
+different approaches three approaches
+here but there are many other ways to
+solve this so have a look at the link to
+the chat event in the video description
+for more
+okay let's first generate some test
+data um so it doesn't really matter what
+the digits are let's raise 10 to the
+power of 0 through
+9 and then we can make each one of these
+numbers into a character Vector you
+can't actually see the difference for
+that
+um but yeah they become boxed like
+this and that's called that t
+and then the separator doesn't matter
+what it is just any one character here's
+a
+comma okay so um whichever way we do
+this we have to start kind of from the
+right finding groups of three
+digits so um let's apply this Anonymous
+Lambda to each one of the T with S as
+left argument um and then we reverse the
+argument
+that that allows us to work from the
+left
+instead and what we actually want here
+is a grouping so we can use the petition
+enclos function to group and the way it
+works here is that we're giving it a
+mask so we're going to generate one 0
+one0 0 and and as a mask and the ones
+indicate beginning a new
+section and how many elements do we want
+well if we take the number of elements
+in the right
+argument um that gives us the length and
+if we then replace uh if we then
+reshape this and reshape a one 0 0 then
+we will use those numbers cyclically so
+this gives us one and then one 0 1 0 0 1
+0 0 1 and so on and that's exactly what
+we want uh for our partition in close
+and we just have to remember to do it on
+the Reversed
+digits so this gives us our
+groups now we can
+add a separator to the front of every
+group in list this and then we just need
+to um remove
+one from it because we we have one more
+separated at the end that we don't want
+and the last step is then reversal again
+and that gives us uh the results we want
+so let's call this one
+F so this is one way to do it it's just
+making these
+groups another way to do it is to reach
+for the regx
+sublanguage so let's try
+that again we want to work from the rear
+we could use the regx engine to uh with
+um lookaheads and look behinds in order
+to work from the rare but it's much
+easier to just reverse and then we want
+to replace and we want to replace any
+sequence of three characters which is
+just going to be digits so there's no
+reason to specify they have to be digits
+except for the very
+end so this is a negative look ahead to
+say so we look look for any three
+characters that is not followed by the
+end of everything replace that with the
+match followed by the
+separator that gives us this reverse
+thing and then we can just reverse and
+be
+done let's call this
+G and finally um a more AP way of doing
+this so let's uh let's look at what
+happens here again we need to work from
+the
+reverse but now we're going to split up
+into groups while keeping this flat so
+it's going to be similar to the
+um to the partition
+inclose but we're going to and reshape
+into a matrix so we're going to have
+three
+columns and then the number of rows how
+many rows do we want well it might not
+be divisible by three we can certainly
+divide the length into three and then we
+need to run up to make sure that we have
+all the
+digits
+o uh was missing a reshape
+here okay so now we can see that we have
+been we have uh reshaped and reused the
+digit so if there's only one digit it
+gets filled out into to three here this
+is a 10 this is 100 and here's 1,000 the
+last three zeros followed by one over
+here and then we're recycling the digits
+over here but we're going to strip those
+extra digits at uh when we're
+done okay now that we have a matrix we
+can take the separator and concatenate
+on the
+right so it gives us a column of
+separators and then we just need to
+flatten
+everything and remove some trailing
+characters we can see here we need to
+remove three characters here two here
+one here and then three and then
+two and then one okay so we need to find
+out how many characters do we need to
+remove now let's just concatenate that
+number as we Computing it well it has
+something to do with the length as we
+can see and it goes in periods of
+three but this counts the wrong way here
+this says remove one remove two remove
+zero 1 two 0 we really want to go down
+because we want to do 3 2
+1 and uh we could do this with a
+subtraction but we could also um just
+negate the right argument to uh the
+remainder so so now we it says we need
+to remove
+two that and one and zero so this is
+just off by one so we just need to add
+one more to
+this however uh in order to remove from
+the rare we need to use the drop
+function and in then we need to have a
+negative left argument so instead of
+doing one plus this we can do -1 minus
+this
+and that
+strips the excessive characters and then
+we can
+reverse it gives us our
+result okay so which method is better
+this one is a bit more involved and
+depending what you need um if you just
+need brevity or uh maybe some clarity
+straightforward way or maybe you need
+high performance uh then you can choose
+between these let's look at how the
+performance Compares
+so um we're copying in the cmpx facility
+from the defense
+workspace and then we need to have a uh
+a very long number so we can we actually
+need to split up into a lot of digits um
+let's
+say a million dig um
+digits so yeah let's just take the first
+digit of that you can see this are the
+the it's just Z one two 3 it doesn't
+matter because it's just any
+characters okay and then we need to
+compare the execution uh of separator FN
+and separator
+GN and separator
+hn just need to wait for it to actually
+do
+this and we you can see that using the
+array based approach the flat array
+based is definitely the fastest thing
+you can do then uh if you have to use
+nested arrays do that and resort to regx
+if you really can't figure out a
+different way to do it without regx
+thank you for watching

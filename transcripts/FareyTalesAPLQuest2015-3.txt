@@ -1,0 +1,913 @@
+welcome to the apl quest capl
+wiki for details
+today's quest is the third from the 2015
+round of the apl problem solving
+competition
+we are to generate the fairy sequence of
+order n
+fairy sequence
+is
+the sequence of
+fully reduced fractions from
+0 to 1
+where
+these fractions only consist of
+enumerators and denominators that are
+between 0 and
+n
+and they have to be given in ascending
+order by their value
+and so we can see here an example for n
+equals five we start off with zero which
+is zero holes and a fifth a quarter a
+third
+not
+a half yet because two-fifths comes in
+between
+a third
+and a half
+and there are various ways to
+generate the sequence we'll have a look
+at a few of them
+so
+let's indeed start with this example of
+five
+and
+one way we can generate
+the sequence is by generating all the
+possible fractions using the numbers
+between
+one and five the zero is a little bit
+special and then
+we can
+get rid of the ones that are not what we
+want
+so one way we can generate all these
+all these pairs of numbers that
+represent fractions is to think of an
+array of the shape five by five
+and so all the valid indices in such an
+array
+are all the different pairings these are
+all the combinations of numbers between
+one and five and this contains all these
+fractions that we are interested in
+plus some that and we don't want because
+they are invalid so for example um
+2 2 and 3 3 represent the same value as
+1 1
+but they're not fully reduced and some
+of them are larger than one like four
+halves or
+and
+five thirds and so on
+so
+we start off with this we don't need it
+to be a matrix so we can start by
+reveling that
+and then
+and we need to
+and figure out
+what uh quotients they represent so if
+we divide
+we do division reduction to dividing the
+first element by the second element in
+each one of
+these that gives us our quotients
+and now
+we
+want to find out which elements are the
+ones
+that are valid and unique we don't need
+duplicates so we can see for example
+here that one divided by one gives one
+and two divided by two
+also gives one
+and we only want the first occurring one
+that's the one that's the most that's
+fully reduced as it uses the smallest
+numbers
+so we can use a unique mask this gives
+us exactly what we want we a a boolean
+vector with a 1 for the first occurrence
+of every value and 0 for all the
+duplicates
+which we can then use to get the indices
+of
+the elements that we want to keep
+that's one criteria
+the other criteria is
+that the fraction is represents a number
+that is less than or equal to
+one
+so we can say one is greater than or
+equal to this values and that gives us
+this boolean mass and then we can find
+out
+the indices of the elements that we want
+and they
+so we can see that many of them are okay
+to begin with but here we've got
+element number six is valid in the sense
+that it's not a duplicate
+but it's not valid in the sense that
+it is less than equal to
+one so here third fourth fifth sixth
+that would be
+two wholes that's two and indeed that is
+invalid so what you want are just the
+indices that are in both groups that is
+the intersection
+of the indices
+for the mask indicating which ones that
+are less than or equal to 1
+and the unique mask
+so this is the subset
+the intersection of
+these two
+and now
+we can use these
+indices
+to index into our question so let's give
+our question the name
+and then we use that to index into
+the quotients that gives us just the
+quotients that we're after and then we
+can grade that
+this gives us the order that we want to
+put the fractions into the fractions we
+generated over here
+let's give that a name
+and then
+we want
+just
+the fractions that are
+by by these indices that we generate
+over here
+and we want them put into
+this order
+and the only thing we're missing now
+is
+the zero
+so
+we can stick that in front and and
+have that
+and separately either way we do it we
+can say
+zero one concatenated the only problem
+is that we have a nested array on the
+right and a simple
+two element vector on the left but if we
+do this
+over
+the nest function this function make
+sure that the result is nested if
+possible
+so this is going to enclose the left but
+not
+the right it's also known as enclose if
+simple
+and that gives us
+this function that's able to run all of
+this and we can even do it with zero
+and that gives us just the zero as the
+problem statement states so let's give
+this a name
+and this is we'll call this
+i
+for
+we generated all the indices and then
+another i because we were using
+indices to select subset that we want
+we can also create a very slight
+variation in this by making an
+observation
+that the
+intersection of indices
+between these two masks
+that is
+the indices
+where both of these masks are true so we
+both want them to be
+that one is greater than or equal to
+and
+the unique
+and we can actually see
+the relationship between this set
+function
+and
+the boolean function and they both have
+the same
+kind of general shape
+just like or and
+union do
+and so instead of finding the indices
+first we can find the combined mask
+where both of them are true and then we
+find the indices that are true for both
+of them
+and such a slight variation in code can
+actually make
+quite a difference in performance as we
+will see
+copying in the cmpx utility for
+comparing execution
+time
+we're going to call it an ii on a
+thousand
+and i j on a thousand
+and then we can see that we got a
+tremendous speed up from this very
+slight variation where we just prefer to
+work on boolean masks instead of working
+on
+indices and that is in general true for
+apl
+so we are still
+and using indices after we use our
+boolean masks we might think that we can
+get even better performance
+by eliminating the use of indices as
+much as possible so over here where
+we
+get the indices in order to select a
+subset of the quotients we could also
+just use the mask directly to filter
+the quotients
+we need
+an indexing in order to do the sorting
+but now that we don't have i anymore for
+in the indices we instead can use the
+mask to filter also
+the
+fractions
+and so let's call this i using
+masks all together
+and then we can compare the performance
+of our best
+indices type
+solution and the one that's using only
+masks
+but we see that that doesn't really make
+a significant difference so it's not
+always that eliminating indices and
+using masks
+or better
+um
+but for some cases and it's good to do
+these performance comparisons
+okay
+a different approach
+let's instead think of about this in a
+more number three right equal way
+so we are beginning with the indices
+from one to five
+and then and we'll
+do all these combinations the same way
+that we generated all the combinations
+using iota omega omega
+we can do an outer product using the
+same argument on left and right
+and in here we state our criteria
+for
+being
+chosen
+and so what are our criteria well we
+want our fractions to be fully
+reduced and we want them to represent a
+number that's less than or equal
+to
+one
+so fully reduced what does that mean it
+means that they are relatively co-prime
+um
+or relatively prime
+that is there is no number
+that we can use that we divide the
+enumerator and the denominator by to
+reduce the fraction further that is to
+say that the
+greatest common divisor
+is just one
+so that we don't get any further by
+dividing it
+so that has to be true
+and also it has to be true
+and that
+one is
+uh oh it also has to be true that the
+number that is represented by this
+fraction is less than or equal to one
+and that's only true if uh the
+enumerator
+is less than or equal to
+the denominator so with this outer
+product we're having enumerators on the
+left and denominators on the right and
+so we just need to make sure that they
+are the left side is less than or equal
+to
+the right side
+and that gives us this
+boolean matrix
+and here we can go in and find directly
+what the pairs are with where
+so these are all the ones where and it
+is true
+now what's missing is that we need to
+sort them so we can sort them in the
+same way as before
+so we can
+do the division over each one of them
+and
+grade that
+and this gives us
+the order we want to put these fractions
+into
+all the fractions are given
+here
+and so we
+sort the fractions by this
+and that gives us the proper order
+and the only thing that's missing
+as before is the one for zero
+and we add that in exactly the same way
+as before
+so um
+let's call this one
+um
+g for we're finding the
+greatest common
+divisor
+and then and there's a trick we can do
+here we're having an
+out of product
+but it's a custom outer product it's not
+just using a primitive like uh
+times and just less than equal to
+and by
+unrolling this into
+a s into simple
+and other products then we can take
+advantage of optimizations in the
+interpreter so what's actually happening
+here is we're combining two things
+with an end
+we have the outer product with less than
+or equal to
+and we have the outer product with the
+or
+and so this is unrolled g into
+two outer products
+and that can actually make quite a
+difference so if we compare
+g on a thousand
+and g two under a thousand
+we can see that
+that little change of unrolling the
+complex
+outer product into simple outer products
+gives us
+tremendous performance
+advantages
+okay
+here's an entirely different way of
+doing it
+so far we've been generating all these a
+enumerate enumerators and denominators
+only then to
+reduce with division over them all to
+get our
+our quotients what if we started by
+generating the quotients
+so here is an outer product
+of
+the numbers themselves so this gives us
+all the quotients
+right away
+and then we can rather that into a
+simple vector
+and now we just need to eliminate all
+the invalid ones so what does that mean
+that means
+anything that is greater than one needs
+to be eliminated
+we can do that by clamping it to 1. so
+we take the minimum of 1 and
+all these values so we can see that the
+2 now became 1
+and 3 become 1 as well 1.5 also became
+one so you get a bunch of ones there
+then we want to get rid of the
+duplicates and we can do that with
+unique
+so here are all the uh the quotients
+that we want but they are not in the
+correct order yet
+now the only thing we need to do with
+them is to sort them we don't need to
+grade one thing and use that to reorder
+something else so we can use the short
+idiom which is going to have
+an performance advantage as well
+now they're
+sorted
+and we just need to transform them into
+into their
+corresponding
+fractions
+and we can do that quite
+cleverly
+because
+we can
+use the greatest common
+divisor
+on
+non-integers
+to
+find the number
+that
+would
+that we can divide with and still get it
+to be the result to be an
+uh integer and so if we just divide by
+that number that gives us um our integer
+and we want the greatest common divisor
+with
+with one
+on each of these and what we want to
+divide
+is
+both
+these numbers
+themselves
+and one so that will give us the
+enumerator and the denominator
+so these are our
+and our fractions
+and then the only thing as
+as always is where we need a zero as
+well
+um now we could stick in zero and like
+we did before just concatenating that
+but since we're anyway converting two
+fractions we can also just put
+another zero over here on the left and
+that takes care of the zero case
+as well
+so this is the one that uses quotients
+right away
+now
+even here is a bit of a trick so
+everything up onto the sorting looks
+very nice and flat
+but then we have a very explicit loop
+we're doing each we're applying this
+derived function on each element
+and we can avoid that by thinking of it
+in higher rank arrays
+so
+we still want the one and on the right
+but let's instead of doing for each one
+of them we generate a pair like this
+let's generate a two column
+matrix
+so
+one is the right
+right argument to this
+train the fork
+but we need to
+make this vector into a
+column so we
+concatenate rank 0. we want every
+scalar in our
+list
+over here concatenated with another
+scalar to become a two-element vector
+with a scalar one
+and that give means that every cell
+which
+every major cell and also every cell
+which was before a scalar becomes a
+vector and the result becomes a matrix
+now we get a
+a two column matrix we can we can try
+this
+and then we need to
+divide these
+rows
+by
+the corresponding
+greatest common divisor so we can still
+do the greatest common divisor like like
+before and we just need to divide the
+rows
+of
+this matrix
+so the rows have rank one
+with
+the scalars
+of
+the
+let's go this is upside down the scalar
+is of the greatest common divisor
+and that gives us this matrix and these
+are in fact our fractions with one
+fraction on each row however the problem
+statement is it should be a vector of
+vectors so the last thing we do is to
+split that
+and that gives us our vectors of vectors
+so we we try to stay flat
+as long as possible
+um only changing to a nested
+representation at the very end so let's
+call this using quotients as before but
+the flat edition
+and then
+let's compare the performance
+of the quotients on 1000
+and the quotient flat edition on 1000
+you know it's a little bit more involved
+using
+rank over doing the each but
+well the result speaks for itself
+okay
+finally
+in all these cases we generated
+too much we generated
+all the different combinations
+in order to filter them down to the ones
+we wanted
+maybe we can
+instead
+generate
+exactly
+the
+fractions that we want
+and turns out
+that
+there is in fact
+a formula
+to go from
+um
+from
+existing
+sub part
+and the leading part of the sequence
+to the next element so much like
+fibonacci numbers are constructed by the
+sum of the last two elements
+generated
+so far
+so too
+the ferry sequence can be generated um
+by looking at the last two elements
+before so we only every ferry sequence
+begins very simply we begin with a zero
+and then we begin with 1 over n 1 nth
+that so in our example with 5 we start
+with zero zero whole and then one fifth
+that's always going to be the smallest
+possible fraction
+and then if we look at
+um
+or we can name our fractions in sequence
+so the the next to last one that we have
+so far
+will be a
+b's or a over b
+and then
+last one we have so far is c over d
+and then the next one coming up is
+p over q
+and these p's and q's can be
+computed where they're not too difficult
+formula
+just in terms of
+a b c and d
+and the n which is the type of sequence
+that we are generating right now and so
+we can do that right from the start we
+know that the first two elements are
+have a a equals 0 and b equals 1
+and
+c equals 1 and d equals n
+and that allows us to compute
+the next
+term the third one and then the fourth
+one and so on until we're done and the
+stop condition for the sequence would
+then be
+when
+uh
+they are the same when we've reached one
+hole
+so
+let's try to state this
+it's it's going to be a bit of a bose
+but
+it's not really very complicated in
+itself
+so first we want to generate the start
+sequence
+let's say for
+for five so we know that the first one
+is going to be
+0
+1 because it's always 0 1
+and the second one is going to be 1
+and n which is our argument here
+now there's since this is what we're
+starting with and then we're going to
+add more elements there's
+one issue
+which is when we have when n is zero
+then
+um
+we don't want to have the one and n
+that will give us one zero
+[Music]
+so we want to eliminate
+the second element only take the first
+element of this
+when an n is zero
+so what we can do is
+we can take
+how many elements
+from this well there are only two
+um
+and we so we want to uh
+or we can drop the last one when n is 0
+or we can add 1
+to n
+so for 0 this gives us 1
+and for 1 and this gives us 2 and for
+any number higher than 1
+that gives us more than two and then we
+can clamp that down to two by taking the
+minimum
+so for five
+this will give us two and for every
+number it gives us two except for zero
+where it will give us one so this is one
+way to to restrict it like that
+and then we want to apply the
+transformation
+um over and over again until our stop
+condition is met
+so we're going to write the
+transformation eventually let's just put
+in the stop condition so we use the
+power operator
+for that
+and
+we want to continue applying this
+transformation of adding one more
+element to our sequence one more
+fraction to our sequence of
+fractions
+until
+the
+what we have generated
+the last element
+it is
+uh it is true
+that
+um
+the fraction
+is
+is finished
+so it is the last last one so
+it should be
+one and
+one over
+one or we could even say if it's more
+than that if it becomes uh positive
+that's then we are also long finished so
+if the
+numerator is greater than or equal to
+the denominator
+then
+we're done
+now
+there's yet another problem
+the power operator will always apply the
+function at least once but what if
+our n is zero in that case we don't want
+it to apply at all
+so this derived function which is and
+apply until a
+certain condition
+is fulfilled
+we can say we want to apply this either
+once
+or no times depending on whether we have
+n equals 0 or not
+so we want to apply it
+once
+if
+n is greater than
+oh it's not even just one even even
+not even just zero for zero we don't
+want to apply it at all for one we also
+don't want to apply it because we
+already have
+the full sequence zero and 1.
+so for any number that is greater than 1
+this evaluates to 1 and then we apply
+this whole derived functions
+once and for 0 and 1
+this value is 0 and we don't apply this
+function
+at all and that gives us our secrets we
+want
+this is an array
+this is also an array so we just need to
+separate the two of them
+okay and now for translation of
+of this whole
+sequence
+we also have to remember that in that
+formula that we had
+you can go back and
+look at it for a moment
+we are using the last two elements
+of the sequence
+and we're using n itself
+so n itself that was the right argument
+here we're feeding it in as a constant
+left argument
+to this transformation function
+then we take the last two elements of
+the sequence that we've generated so far
+and then let's
+pick that apart into these names a b c
+and d so
+a and b
+is the second to last fraction and c and
+d
+is the last fraction
+so we are unpacking that
+and then
+and we just need to translate
+all the mathematics and that's pretty
+much an um mechanical translation
+so we take
+n plus
+and b goes the formula
+and then we're dividing
+that by d
+we need to
+run that up
+off and multiply by multiply c and
+d by that
+and then we need to subtract
+a and b
+and that gives us our new
+term in the sequence so we can take
+the existing sequence and concatenate
+this new element to that
+so
+we run it
+and we got the sequence that we want so
+we now we generated
+just the fractions that we were after
+without generating anything else
+just in order by computing the next term
+in terms of the terms that we already
+have uh created
+so let's call this p for power
+we're using power to iterate over it
+and then uh we'll make one little
+enhancements to this for performance
+sake because here
+we were
+again dealing with nested arrays we
+started off with a two-element
+vector of
+vectors that's already nested and then
+we kept
+appending more
+nested elements to that
+and we should really avoid doing so as
+much as possible so let's try again to
+generate this two-column matrix that we
+saw before
+um and then only as a very less step
+split that into vectors of vectors
+and so uh we want these four numbers in
+a matrix two by two
+however um if
+and so we can we can reshape that you
+could reshape it into a two by two
+however if our n
+is
+0
+then we want it to be a 1 by 2. we only
+want the very first
+ones as a single row
+matrix so we can use that same formula
+as before and
+we can clamp
+two with one plus
+omega um
+and that gives us in all other cases
+then zero it will give us um a
+two and then for the zero case it gives
+us a one
+and now we have a two by two matrix and
+we're going to add
+more rows to this and so all the
+conditions everything is the same
+here
+we were looking at the last element we
+don't want to use the last element
+anymore now we want to use the last
+major cell other than that it stays the
+same and the formula here is all the
+same
+instead of
+concatenating an enclosure we we just do
+a leading axis concatenation we add one
+more row
+and over here where omega is
+a matrix with two columns
+negative two take will give us
+a a two by two matrix again
+we can just revel that and assign
+to
+all these four names in a flat way so
+this is the same power based
+solution
+but
+the flat addition and then we have to
+remember to split at the end so that we
+get a result that is a vector of vectors
+we can try this on five and see where
+you get exactly the same result so
+ever so slight variation to make it use
+flat arrays as long as possible how does
+the uh compare
+how does the comparison
+how does the performance compare um we
+have p and i'm not going to run it on
+1000 because i happen to know
+already that this is not a fast approach
+in apl
+so let's just do it on
+100
+and and
+we can see that staying flat as long as
+possible
+was a really good idea that saves us a
+lot of performance um but on the other
+hand um
+we can see that if you compare to the
+queue that we have above that they don't
+uh
+the way we were doing is for a thousand
+instead of
+uh 100 it doesn't look very promising
+and let's take the best of every
+category and put them against
+each other
+so
+and we'll just do it with 100 this time
+so the best we had was
+from was using indices
+and we wanted to use the mask whether we
+use the mask all the way through or
+whether we only use the mask initially
+to select which elements was not very
+important but we can
+we can use the one that uses the mask
+that was the one that had best
+performance
+then
+we had the version that used the the
+greatest common divisor
+and we found that by
+splitting our
+outer product into two outer products we
+got significant
+performance improvement
+then we had
+the solution that did the quotients
+right away and of course staying flat
+was a good idea
+and finally we have
+the power approach where we keep
+extending our sequence and again the
+flat one was the fastest one
+let's compare all of these
+and so we can see that and computing the
+quotients
+was
+indeed the fastest way by far
+although and using the
+two outer products with a
+number theory the greatest
+common divisor was not a bad approach
+and either
+thank you for watching

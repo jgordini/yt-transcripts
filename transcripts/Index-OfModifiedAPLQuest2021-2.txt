@@ -1,0 +1,134 @@
+hi we're going to write a cover for the
+diic Iota or index of primitive in
+APL which behaves exactly like the
+original except one thing so when we use
+D goota to look up things from the right
+argument in the collection that's the
+left argument and what we're looking for
+isn't found it will
+give the next index after the last
+position to indicate that something is
+not found this is a really useful
+Behavior because it allows us to take
+indices where things are found and use
+those to index into another substitution
+collection so we can do a mapping from
+one thing to another and then we can add
+another element at the end which all
+missing elements will be mapped
+to but the problem here is to change
+that behavior so instead of getting the
+next index um after the last element we
+are getting a zero which um only makes
+sense when we using one based indexing
+which is what APL does by default um
+because that means that zero will also
+be a unique result it will indicate an
+element before the first one instead of
+after the last
+one and there are a couple of different
+ways that uh we can do this let's first
+look at
+just the normal behavior so here we've
+got the adota we have character
+vectors and we can see
+that the a was found at position three
+that's this one and then there are six
+letters on the left we're looking for p
+there aren't any so we are indicating
+position seven and then position four
+for the L over
+here okay so there are a couple
+different ways ways that we could
+approach this and one of the ways is to
+Simply check whether or not the
+um index that we get is larger than the
+length of the left
+argument so we can do this if we say
+that uh the index that we
+got is
+larger than the length of the left
+argument and then we can use this to map
+the seven to a zero so an easy way to do
+it would be using multiplication but
+then it's doing the wrong thing because
+we're multiplying the three and the four
+here with zeros if we instead invert
+this uh conditional so instead of being
+greater than and then not greater than
+that's the same thing as less than or
+equal to
+and then we can take this and multiply
+it with the indices themselves over here
+so this goes from the right to left it
+binds like this that is the length of
+the left argument and then we have the
+index and then we have the comparison
+then we multiply that with the index
+itself and that gives us a result that
+we want however there's a bit of an
+inefficiency here in that we actually
+finding the indices twice and we can fix
+that in various
+ways one of the ways would be to take a
+new function that takes as arguments the
+indices and the length
+of the length left argument which are
+all the data we need we don't actually
+need access to our original arguments
+and apply a function to those
+so here we have the indices and the
+length of the left
+argument and then we want to have the
+same formulas we had above but instead
+of taking the indices and the length of
+the left argument we can just refer to
+those arguments so here less than or
+equal to that is applied between these
+two arguments and then we multiply by
+the left
+argument so this is one way it could be
+written we we could also have passed in
+the left
+argument directly and then we could have
+this was still referred to the indices
+then we could have compared the indices
+which come from the left with the length
+of the right argument that means we
+would want to take this function and
+apply it between these two arguments
+versus the left argument and the indices
+but pre-processing the right argument to
+the comparison function with the length
+so we can do that as follows and it will
+still
+work a whole different way to do it is
+to
+postprocess the indices that we
+get
+so essentially what we want to do here
+is we want to wrap around when we hit
+the limit which is the length of the
+left argument and we want to wrap around
+to zero and this is exactly what modulus
+or division remainder
+does so if we take the
+indices and then we want to wrap around
+where the cut off is one more than the
+length of the left argument so we could
+write that in a tested Form 1 plus the
+length of the left
+argument and this would still
+work um we could also eliminate this
+parenthesis by swapping the argument of
+the modulus
+function so this operator modifies this
+function such that it takes the
+arguments in reversed order and then we
+take the indices like
+that another way to do it is to Simply
+Define this as an explicit
+function and that might actually read
+nicer and it's no longer
+so these are some good solutions to the
+problem thank you for watching

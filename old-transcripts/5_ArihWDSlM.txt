@@ -1,0 +1,158 @@
+welcome to the APL Quest see APL Wiki
+for details
+today's Quest is the 9th from the 2016
+round of the APL problem solving
+competition
+we are taking a text in and we're going
+to split it
+but there's a catch
+we're splitting and are not just one
+delimiter but on any of a set of
+delimiters
+let's start
+by having a sample text
+right so what's going on here is we have
+two different types of delimiters we
+have both comma and semicolon and we
+also have consecutive delimiters which
+we must respect so we have to have an
+empty segment coming out here
+that means as left argument we're going
+to have a comma and semicolon
+and so these are our two arguments and
+APL has these uh infix functions
+user defined functions this is a Lambda
+type function known as a definite and in
+here the left argument is denoted Alpha
+as the leftmost letter in the Greek
+alphabet
+and the rightmost letter is an Omega and
+that denotes the right argument so we
+can see this just puts them next to each
+other
+and what we want to want to do here is
+first identify where we have delimiters
+in our text
+so we can use membership for that and
+that vectorizes so we're looking at
+every element of the right argument to
+see if it's equal to any element of the
+left argument
+that gives us a Boolean mask
+and this Boolean mask
+indicates where we're going to start our
+segments and we can see the two ones
+here after five characters corresponds
+to the two commas over here
+however there's a problem
+and we we could start splitting here
+um so
+if we use this partition function
+then using this mask as left argument
+and using the text as write argument
+then we lose
+the hello
+because it begins a petition
+every time there is a one
+we need to
+um
+we need to start off with a position
+right from the beginning so we need to
+insert
+a delimiter at the very beginning of our
+text first
+before we do that I just want to go my
+uh Crusade against parenthesis I really
+don't like using parenthesis for
+ordering execution
+and the problem here is that apl's
+functions are all uh and they all have
+long write scope so everything towards
+the right of a function
+um is the right argument and what's
+immediately to the left is the left
+argument and so because we have a
+complex left argument that's the whole
+expression to this partitioning function
+then we need to parenthesize it if only
+we had a function that was exactly like
+partition but with swapped arguments
+then we wouldn't have this problem
+because the right argument is not a
+complex expression and it's just a
+single array value and we don't have
+that kind of function but we do have a a
+modifier or a magnetic operator we call
+it in APL terms which goes in the media
+rate of a function
+and then modifies that function
+to
+have swapped arguments so now I can take
+the Omega on the left
+and the Omega member of alpha on the
+right and we get the same effect as
+before
+okay so far so good but we still have
+this problem that we need a delimiter at
+the front so there really there should
+be
+an extra deliver to any one of them of
+course would do and that will solve our
+problem
+so how can we do that well we can
+substitute
+um the Omega for a variable that we
+create
+so let's create it first and we use
+Diamond to separate statements in APL
+because diamonds are Unbreakable
+so this should be the normal Omega but
+we want to prepend
+a
+um a delimiter so we can use the first
+function that's this one
+um applied on Alpha that gives us just
+one of them of course any one of them
+would be good but there's always a first
+one and if we concatenate then that's
+going to put it at the end but if you
+swap the arguments then we put it on the
+front
+so this gives us all the say oh we need
+to go and remove this comma here that I
+inserted this gives us all the segments
+that we want but they all have the
+delimiter included so we need to drop
+one so from each so this is the again a
+modifier which is like a map that
+modifies the drop function which
+otherwise would just drop one element
+um so this drops one element from each
+and that shows our problem
+however we can write this a little more
+in a little bit more compact way
+we can combine these two statements and
+if we had T at the very end of this
+expression then we could just do a
+random expression because this
+has t
+um as the final result and we can do
+that because by swapping the membership
+here this is T member of alpha so we can
+say
+the membership swapped with t on the
+right so this will still give the same
+result but now that we have an
+expression over here that has t on the
+far right and we have expression here
+that has t on the far left then we can
+just move it over
+um to here we still need the assignment
+because we're going to use T later
+but this allows us to write this as a
+single expression like this
+we could also give it of course a name
+and then we can write
+like this
+or we could choose to split on vowels
+thank you for watching

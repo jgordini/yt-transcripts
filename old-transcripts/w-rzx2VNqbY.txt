@@ -1,0 +1,611 @@
+hello and welcome to this apl quest
+episode c apl wiki for details
+today's quest is the last problem from
+the 2013 round of the apl problem
+solving competition
+we are simply given a set of linear
+equations
+and
+the values that
+those equations add up to and then we
+are to find the solution for the
+variables
+let's start by creating this
+equation system
+so we'll have a simple example of just
+three equations with three variables
+so this is saying um
+four
+x plus one y plus z
+and
+two of each and then six x plus three
+y plus z
+and they should add up to a result which
+is two
+six four
+so four x plus
+one y plus then 3z
+equals 2 and 2x plus 2y plus 2z equals 6
+and so on
+and a solution to that is if
+um
+x is
+negative one
+and
+y is three and z is one
+and we can check this so
+um
+we have the matrix
+and then we'll multiply
+each
+row
+by
+these values
+and then we can sum them up
+and we can see that
+we got these results so indeed
+four times and x where x is negative one
+plus one times y where y is uh three
+plus three times z where z is one gives
+two just like we're supposed to have it
+we can write this and a little bit
+neater
+as a
+inner product
+and so
+the problem here is that we don't know
+this result negative 1 3
+1. we want to compute it what we do know
+are these values
+2 6 and 4.
+so in other words we want to find
+a v
+and
+such that
+m plus dot times
+this value
+gives
+2 6
+and the missing right it gives 2 6 4.
+yeah
+so this matches an r
+and luckily
+we can actually
+write this up so we can say we want
+um
+we want to apply this negative one time
+to get this value
+this is a
+power negative one applying a function
+in reverse applying it negative one
+times really asks this question
+what argument in this case right
+argument we're giving it the left
+argument over here what right argument
+can we give to m plus that times
+such that we get
+r
+and that solves the problem
+now in
+in the problem specification and r go is
+the left argument and m is the right
+argument so we can type up our solution
+as plus the times
+operator negative one
+commute just swap the two arguments like
+that and then the matrix goes on the
+right and
+the vector
+goes on the left and that's a proper
+solution
+however
+um
+we
+um and we can check this of course we
+can check that that v matches uh matches
+this oops
+however
+this matrix multiplicity multiplication
+um in reverse it's actually the same as
+multiplying by
+the inverse
+so
+we can and the inverse of a matrix we
+have in apl as a primitive
+we can
+then state this instead as multiplying
+by and
+the
+inverse
+yeah
+the inverse like that and then we can
+glue them together
+so it's the same thing as
+the explicit formula like this but for
+now we'll have it in a proper assignable
+function um like this so this is a
+multiplication by the inverse and the
+dyadic form of uh
+of this character which is often
+nicknamed domino it looks like a one one
+domino
+is actually exactly that
+so the entire solution
+can just be that
+in other words
+this problem has a one character
+solution in apl
+now that's of course uh lots of
+and fun but it would be nice to see how
+we could really solve this without apl
+just doing all the work for us
+and there are a couple of ways to do
+this there's a really clever
+way to do it
+called the hoteling buddhic scheme if i
+pronounce that correctly
+and it states that we can do an
+iterative approach to approximate better
+and better uh
+the correct solution to an inverse
+of a matrix and as we had before if we
+it's easy to do matrix multiplication so
+if you have the inverse then the problem
+is basically solved
+and it states like this
+that
+we're going to
+to iterate
+um
+with
+this um
+result
+where every iteration depends on the
+previous value
+and the previous and
+we are going and and the formula looks
+like this i'm not going to go into
+exactly
+how
+why this works but this is what they
+state you can see look up their paper
+so this is um this is what they say
+that
+the next iteration is the previous
+iteration
+matrix multiplied by
+two times the
+identity matrix minus um
+the
+the
+grand matrix that the original matrix um
+that has been multiplied by the previous
+iteration
+and we can rearrange this
+formula a little bit
+and we can
+take this vi here and so to say multiply
+into the um into the parenthesis
+so that gives us
+2vi
+because the vi multiplied by the
+identity matrix is
+just vi of course minus and then and
+vi times
+a which is the original matrix times
+v i again
+and we can then state this in apl the
+way we would write that is it's we can
+write 2vi or
+we can
+so
+2 times
+vi
+minus vi
+plus dot times which is the matrix
+multiplication
+and a
+plot plus times
+and vi
+and we can
+break this
+avoid the parenthesis simply by having
+two v i's here instead
+it'll be the same thing as multiplying
+it by two
+and now we can make this a function of
+the original matrix on
+one side so we have a
+and then we make a function and we have
+the previous iteration as the right
+argument so we'll do it as a test
+function so we start from the right here
+build it up first we want the matrix
+multiplication of them plus the times
+and then we want to multiply by vi again
+so vi is the right argument plus that
+times that
+and then we want to subtract this from
+vi that's the right argument minus that
+and then we add another one of the right
+arguments we can write it up like this
+so here's a
+a tested way to compute this and this is
+one iteration of it
+um
+however we actually want to keep doing
+this until it becomes stable
+and the way we would then
+write that
+we could take it as a function
+where the right argument function of the
+original matrix here called a so that
+becomes
+fed into
+our
+inner function as a left argument and
+then we keep iterating
+with the power operator until two
+consecutive iterations are the same
+and so we then we just need to apply
+this whole thing uh on our initial guess
+and that's the next problem so
+the problem is it's kind of hard to find
+an initial guess which will
+work out for us but recently someone
+named solemani came up with a surefire
+way to determine
+an initial guess
+and
+what he stated was that
+transpose of the array divided by the
+trace
+of
+of the matrix
+times its transpose is a good starting
+guess that will always come up and again
+see his paper if you want the details of
+how exactly that works out
+so
+we
+again the trace
+of the
+matrix times its transpose and then we
+divide the transpose
+by that so first we do the trace of the
+matrix times its transpose
+we can
+have this matrix m
+and
+we can transpose it
+and then we can
+do it matrix multiplication with itself
+and then we want the trace the trace is
+the sum of the major diagonal from top
+left to bottom right and that we can do
+as a 1 1 transpose that's the trace of
+that
+and then we sum
+sum that up so for our matrix m here
+that magic value that we want to divide
+by is 84 and then we would go ahead and
+and divide the transpose of
+of m by 84 and that would be a good
+starting value now
+this can be we could use this but it can
+actually be simplified a little bit and
+for that we need to observe some
+characteristics of doing exactly this
+the trace of the um
+of the matrix multiplied by its
+transpose
+so what we're going to do is we'll start
+with a um a matrix that is easy to
+recognize where the bits and pieces are
+going
+and instead of doing an actual
+multiplication with itself
+we are going to
+to take
+and
+model the plus and
+the times as functions that are just
+saying what they would do
+rather than actually
+doing them
+oops there should be a times over here
+okay so so this is
+this will show us that we give great
+little boxes are showing us what's going
+on and we need to multiply
+it with itself with the right argument
+to the matrix multiplication being
+transposed
+so here
+we can see
+all the results that we're getting but
+we're only interested in the diagonal
+so um
+we're taking the one one transpose of
+that
+and now we can observe exactly what's
+going on right and remember we the trace
+is the
+is the sum of these so really what will
+happen is we're going to add all these
+together all these little boxes and
+notice that is
+1 1
+multiplied by each other and 2 2 3 3 and
+so on
+that means
+every element of the entire matrix
+gets
+multiplied by itself squared
+and then
+we just sum all these
+squares together
+which means we can state this much
+easier we can just
+revel the uh the matrix
+square it
+and sum it or we could
+we could of course square it first revel
+at the summit um
+many different ways
+of doing that
+we can also combine
+this
+summing and the multiplication
+into an inner product
+and that means that if we're doing going
+to write in the training we want this as
+short as possible then we can write the
+revel cluster times the revel of the
+matrix and that gives us that and um and
+now
+we just need to take the transpose of
+the matrix and divide by that
+so we can take the transpose divide by
+this and that gives us
+our starting value which isn't
+very interesting
+to look at but let's put all of this
+together
+so what we
+let's go up in and get it from up here
+we had this formula right here
+and we stick it in here
+and this is
+then the inverse
+that we get we can compare this
+with the inverse primitive and see we
+got the exact same value
+and now remember how we solve this with
+with v
+so we can go in and
+say
+[Music]
+v plus that times
+this inverse
+oops sorry
+it should be must be like the other way
+around
+what am i doing wrong
+here oh
+here we go
+um or instead
+and this is a solution but it we want to
+glue these two things together to be a
+single function so this is this right
+part here is the inversion of the matrix
+and the left part is the
+um
+is the matrix multiplication so we
+multiply with the uh
+with the inverse and that gives us our
+solution
+and we can and remember this is an
+iterative thing so here inside here is
+the uh the power match which just runs
+over and over again until two
+consecutive things and match each other
+it would actually be neat to see how
+this
+would look
+we can do that by doing each iteration
+separately now i happen to know that we
+only need to go through 11 iterations so
+on
+for every one of
+numbers from
+1 to 11 we're going to apply it that
+many times
+and that then we can see the progression
+of better and better values for x y and
+z
+to solve this system until
+we're done it becomes
+stable
+so this is a a modern computational
+approach to this
+traditional way that you might have
+learned in school
+is the ghost jordan method
+and you can find it in the defense
+workspace
+here is an adapted
+version of what you found what you can
+find there
+i'll try to explain it a little bit
+what it's doing here it
+if you learned in the school you would
+have learned that um
+there are these various actions you can
+take on your matrix together with uh the
+the result values
+to slowly uh
+build up diagonal matrix and then you
+um
+have the solution
+when we running it as computer code then
+we we don't can't go by by a feeling of
+what's in what's easier instead we just
+go through all the steps every time so
+what we're building up here
+at the bottom is this is our equation
+system these are the uh the final values
+that we're putting next to it and then
+these are the reversed indices because
+uh reduction runs from the right to left
+so that's what this comment is trying to
+say that this is what we're going to
+to reduce over so this just eliminate
+here eliminate here eliminate here in
+this order
+and every time we eliminate
+we choose before precision reasons
+we choose
+the row that have has the largest
+magnitude so this gives us
+a specific column and we start so
+because we don't going down diagonals so
+first we start the first column
+and then
+we get rid of the the first few elements
+that have already been
+those for those columns that have
+already been
+taken care of
+of course with the first one that means
+we're dropping zero notice that the
+index origin is zero up here
+and then we look at the magnitudes and
+choose the largest one and that's what
+we call our pivot row
+and then we swap things around so where
+we're up to in the nth row and the pivot
+row
+we're taking those and just flipping
+them there's just two of them
+so then reverse just swaps the two
+around
+and now we've got um
+a matrix that's modified by having these
+two uh swapped around
+and then we want to um to normalize such
+that in that corner or should we say of
+of the
+sub matrix missing rows and columns that
+is uh on the
+intersection of the nth column and the
+negan's
+row that's why we have alpha semicolon
+alpha here and we we divide that we
+divide all the other values
+there so that
+we get a 1.
+and then finally we we have the step of
+adding or subtracting
+and the way it's been done implemented
+here is we are adding subtracting not
+just for that single
+for single row but we're doing the
+entire
+matrix so it's built up using masks
+essentially
+we when we add or subtract
+0
+then
+nothing happens and we're using a mask
+so
+2
+that's right here these are all the
+indices for all the
+all the rows and then we have a specific
+row number here which gets uh
+so wherever it's different from we get
+zeros and that means we only get one on
+this
+uh single uh single row
+the then we pick out from the uh from
+that column there
+and uh and create a matrix
+with
+all the values that are in this
+particular row
+and then that effectively just we have a
+bunch of zeros and we subtract the right
+values in the right place
+once that that's done since we've done a
+reduction we have enclosed so we open
+that up
+and we're not we're not interested in
+the entire matrix with uh result values
+rather we can chop those away
+so that's what this is doing
+and
+then just in case they were all
+identical we used a single value we just
+reshape it to have the right shape
+and that's how the gauss jordan method
+works we can try that it solves the
+whole thing immediately and like this in
+exactly the same way
+and then i i happened to look up in an
+old uh the old paper on apl 360
+and
+it was actually interesting it brought
+us an example of of code and this
+function which is a inversion of a
+matrix
+but implemented in um in old style apr
+i'm not going to go
+through and explain this you can do it
+on your own it's really very much it is
+the ghost jordan method it's very much
+the same but in a
+you know old style without using any of
+the new and new operators i've altered
+one slight thing you can see a capital a
+in there
+and that was an original function in apl
+360. they it had some functions called
+alpha and omega which were prefix and
+suffix vectors so uh
+alpha or which i've changed to an a here
+because alpha is now meaning something
+else
+and you can define it like this
+in the in our case here
+where it's so the left argument is the
+length of the vector and the right
+argument is the number of leading
+ones in that boolean vector
+in our case it could just be a take but
+i suppose uh overtake meaning you can
+take more elements than there are in
+array wasn't uh supported yet in at that
+time
+so you can actually replace these a's
+just with an up arrow
+and this gives us our an
+inverted matrix as we can see from
+before
+same thing as the primitive
+and that means that we could
+we can do the same thing
+here
+with uh
+multiplying the result of the inversion
+with
+our result
+our desired result values
+and that gives us our values for x y
+and z in the very oldest of fashions
+so this concludes the first
+year of
+apl problem solving competitions
+and we're now going to continue next
+time with the problems from 2014.
+thank you for watching

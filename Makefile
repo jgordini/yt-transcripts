@@ -1,11 +1,9 @@
-MAINDIR := $(shell find . -type f -name 'main.go' -printf '%h\n')
+iMAINDIR := cmd/yt-transcripts
 APPNAME := $(shell basename $(MAINDIR))
 TARGET := $(shell echo ${PWD}/bin/$(APPNAME))
-
 VERSION := $(shell git describe --tags --abbrev=0)
 BUILD := $(shell git rev-list -1 $(VERSION))
 LDFLAGS := -ldflags "-X=main.Version=$(VERSION) -X=main.Appname=$(APPNAME)"
-
 
 .PHONY: install build run clean uninstall test check
 

@@ -1,0 +1,344 @@
+hi we're going
+to take a character
+Vector that contains a notation custom
+notation for multiple key value Pairs
+and then we're going to parse it and
+create a matrix with a key column and a
+value
+column here's an example of such a
+notation customized such that uh the key
+value pairs like this key value pair are
+separated with slashes and the keys are
+separated from the slashes by
+colons this really calls for a very
+commonly used short uh so-called
+Fork which uh Cuts text or really any
+data this is how it
+works let's say we want to cut on these
+slashes so we have the slashes left
+argument
+and then we can do an unequal with this
+and that gives us a Boolean mask that
+has ones for all the characters that are
+different from the Slash and zero for
+the characters that are equal to slash
+that is the slashes so these ones here
+um of which we start with uh 10 it
+corresponds to these 10 characters and
+so on okay now we can also take in an
+identity
+function
+this is the right function it just
+returns Its Right
+argument and then we can put this all
+together with a partition
+function so what happens here is that we
+compute The Mask we compute the right
+argument you can call that compute it's
+just the right argument and then the
+partition function isolates runs of
+characters from the right
+according to runs of ones from the left
+and the separators that are indicated
+with zero those are descried but they
+still cut at that point so we can see
+how that works over
+here now and we're not done yet because
+we also need to cut each
+individual and key value
+pair so we can we can copy this and
+whole expression
+and use a colon here but this time we
+want to apply this whole thing to each
+we have an each operator a higher order
+function and be cutting each
+one and this gives us um a vector or
+list of key value pairs but it isn't
+quite a matrix yet so the last step to
+make it into a matrix is the so-called
+mix it takes the outer axis there's one
+outer axis um and it takes the inner
+axis that we have here and combine them
+into an overall
+array uh that has two
+x's and so the rank the number of
+Dimensions increases which is what the
+up Arrow tries to indicate that we are
+upping the rank the dimensionality and
+we do that by consuming inner axes and
+adding them as trailing AES to the outer
+axis
+and that's the result we're looking for
+but this isn't a function yet in order
+to make it a function and we have to
+take this slash and colon as our left
+argument as the
+specification and then we put braces
+around the whole thing uh right argument
+is um represented by Omega left argument
+is represented by Alpha so here we want
+the second element of Alpha and here we
+want the first element of
+Alpha and this solves the problem but it
+bothers me a bit this code duplication
+can you really see there's a a pattern
+here that's being
+repeated so what can we do about this
+well isn't entirely identical because we
+have the each here which we don't have
+over here but but I think we can fix
+that so let's for now just remove this
+part we but remember we want the right
+part to also have an each and still do
+what it's supposed to
+do so this gives us these uh key value
+pairs that haven't been pared yet we
+want to put an each here but really
+there isn't an each to apply we don't
+want to apply on each of these
+characters so how can we make this work
+if we enclose the entire right argument
+now it's one thing but it's still a
+collection of um of character vectors
+it's just a collection that's Dimension
+that doesn't have any dimensions and the
+each will then go into this inclosure
+and apply the
+function and then this works but we have
+this extra level of uh of enclosing that
+happened now we don't want that so we
+can do a disclose
+and now we're back to the um original
+which means we can uh we can go up and
+fetch this thing that we that we removed
+before and insert it
+here okay now um maybe we should uh we
+should give this right argument a bit uh
+key value pairs so it's not so wide
+okay uh let's try this again just for
+good order so now we have the same
+function
+here um
+except we we can't just apply this over
+and over again because there's there's
+this disclose in between
+them but over here we have a mix the
+funny thing actually is that this close
+and mix is exactly the same when applied
+to a scalar and that's exactly what we
+have here we have a single thing without
+any dimensions that's a scaler why is
+that because dis close just takes that
+first and only element and opens it up
+whereas mix remember I said and it
+concatenates the outer Axis or in this
+case outer axis with the inner axes
+which here there aren't any in AES so
+that just means that we take all the
+data from inside and bring it out one
+level and and there aren't any more X's
+being added because there were zero X's
+to begin with so we can replace this uh
+disclose or actually first we call it uh
+with a mix and it still
+works now we have exactly the same
+pattern over here but it's not one
+function it's two functions there's this
+train within each and then there's uh
+the mix and it would be nice if we could
+like combine
+these but we can't immediately just take
+this mix and stick it in here because
+then that would make the mix also
+subject to the
+each now the thing is that we actually
+don't need the each on uh the whole
+function we only really need it on uh
+the partitioning function why because uh
+the inequality is a so-called scalar
+function it penetrates all structure and
+that means that explicitly trying to go
+into each element doesn't make make any
+difference and the right function well
+it just Returns the right argument and
+it doesn't matter uh if it's each
+element separately or if it's and just
+the collection of and of elements so we
+can move in the each into this
+expression right here and it will still
+work and now that the whole parenthesis
+isn't subject to the each anymore we can
+safely take the mixes and stick in
+here now we truly have three elements
+the inclosed
+argument followed and on its left the
+first element from the left argument and
+on its left uh the second element from
+the argument and we simply sticking this
+function in between that looks a lot
+like a
+reduction so in order for this to be a
+an a proper reduction we have
+to to put all these elements together
+first so we'll take this function make
+it into a reduction now this also means
+that the reduction reduces the number of
+dimensions and there's one because it's
+a list of the second element from left
+argument the first element from the left
+argument and then the enclosed right
+argument and you're going to reduce that
+to a scaler binding closure so we have
+to disclose it as
+well um so then we have the second
+element and the first element and then
+finally we have the
+enclosed and right argument so we can
+see this this also works this is of
+course a bit uh silly we can uh we can
+get the second element the first element
+in one go and then we can concatenate
+that with uh a first further enclosed
+right argument enclosure of the right
+argument we need a double enclos because
+the element we want is the enclosed
+right argument and here we're
+concatenating a two element Vector with
+it has to then be concatenated with one
+more item and that is the enclosure uh
+then of this enclosed right
+argument now being that the left
+argument only has two elements we can
+also write this as the Reversed left and
+argument and that and it's a pretty neat
+solution and if I may say so
+myself there is an entirely different
+approach to
+this which is to not do two steps of
+parsing we can simply look at
+directly if any of uh the left argument
+elements have been
+found because we know that these
+separators will always occur as first a
+key value separator and then a pair
+separator and then a key value separator
+and then a pair separator and key value
+separator and so
+on so um we
+can use membership but membership looks
+up elements from the left in the
+argument on the right so we can commute
+its
+argument and this tells us uh where any
+separator was we can let's let's print
+this again just to uh to remember how it
+looked so we can see there are three
+characters uh that are not separators
+then there's one separator then there
+are six characters that are not
+separators and so
+on we are not actually interested in
+here in which ones that are separators
+we interested in the not separat
+remember that's just like the uh the not
+equal that we were using before so we
+glue a logical knot on top of the
+membership
+function that inverts that and this is
+the exact mass that we the type of mass
+that we had before so we can use this
+with the partition function and the
+right argument is the data that's being
+petitioned that splits into key value
+key value key
+value the only thing we need now is to
+shape this into a
+matrix so we know uh how many there
+are and uh that means that if we divide
+this by two so this actually two divided
+by because we're commuting just like we
+did over here um then this gives us how
+many rows we want then we can
+concatenate two two so two comma would
+be two concatenated to but we are
+concatenating with swapped arguments
+again so it goes on the right this gives
+us the shape three rows and two columns
+and then we can use that to
+reshape the argument to this inner
+function and that gives us um our
+solution but and I find this a little
+bit clunky in this case when we just
+want pairs there actually a neat trick
+that we can use and that is uh the
+stencil operator so stencil operator is
+often associated with things like Game
+of Life at tomons um in this case we're
+using it for something very simple so
+stencil with a window size of two and
+all we want to do is just collect the
+individual windows that gives us this
+which is almost right but we can see
+that the problem here is that we are
+overlapping so we we correctly took the
+first two elements but then we took the
+the next two elements was beginning with
+the second element we want to begin with
+the third element
+that's because there's both a window
+size and the movement and the movement
+is by default one but if we change the
+movement by giving stencil a matrix
+right upper end where the second row
+specifies the
+movement then we get exactly what it was
+we wanted so this is another solution
+and I think this one is uh pretty neat
+as
+well and finally uh this whole statement
+we can actually it won't we can't make
+it any shorter but uh there's another
+elegant way to compute the same thing um
+so
+let's look at this
+again we got this splitting done and
+that was done with uh this
+mask so we want a One
+wherever and we have something that's
+not a separator and a zero whenever
+there's something that is a
+separator if we take the characters from
+over here instead of doing a membership
+to see if they're there we can do a
+lookup so this is and which position do
+they occur in and that has the
+interesting property that if it doesn't
+occur at all like say the C here doesn't
+occur in this list at all then we give
+it the next index after the last index
+here so anything that's a slash becomes
+a one anything that's a colon becomes a
+two and anything else becomes a
+three you can see that here so we begin
+with the two and then we have put the
+threes here and then there's a one and
+all we want to know here is whether or
+not something and is a three so if it's
+a three we want it to become a one and
+if it's not then we want to become a
+zero and that is simply comparing three
+with that
+so here's our mask and now we can use
+that as before
+with and this time a commuted partition
+function because we have now the mask on
+the right because it's a little bit more
+of a involved expression not just um a
+single
+function and then we are petitioning the
+right argument and that gives us this as
+before and then we can use exact same
+construct with uh with reshape as we did
+or we can use a stencil as before to get
+our key value pairs in a
+matrix thank you for watching

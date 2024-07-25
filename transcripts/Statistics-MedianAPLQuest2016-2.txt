@@ -1,0 +1,536 @@
+hello and welcome to the appear Quest
+see APL Wiki for details
+today's Quest is the second from the
+2016 round of the APL problem solving
+competition
+we are given
+some numbers
+normally as a list but it could also
+just be a single number and we are to
+compute the median that is the middle
+element
+if you order them by size
+and if there isn't any middle element
+then we take the two middle ones and
+take the average of those
+first let's start with some test data so
+there's a difference here between even
+and odd length lists because of there
+being a middle element or no middle
+element
+so the first example we're going to do
+is we're going to have an odd number of
+elements
+and here if you order them we get 1 1 3
+4 5 and so the middle element would be
+the three
+then
+in this case there is no middle element
+because we have four elements so if you
+order them one one three four the two
+middle elements would be one of the ones
+doesn't matter and a three and then the
+average of that would be two
+then we could also be given a single
+element
+in which case we're supposed to just
+return that so this is not a vector
+another list and we could also be given
+an empty vector and the problem
+specification then says that in that
+case we should say that the median is
+zero even though there isn't any
+elements
+so the empty Vector empty list numeric
+one is written like this in APL and
+finally we should also make sure that we
+handle the one element case because
+that's not empty but and there is a
+middle element but you can't just go and
+take two elements because there aren't
+two there's only one in order to get a
+one element list we take
+a number and then we Revel it so this
+flattens it out to be a list of all its
+elements which is just that one so this
+magnetic comma is called Revel and then
+also note that APL denotes negative
+numbers with a high minus and normal
+minus is for subtraction and this
+removes any ambiguity
+so now we have this list
+of lists and we're going to try out our
+code on each of them so what we're going
+to do eventually is we're going to use
+the each operator if we use that to the
+immediate the right of a function it
+will be applied to each element
+basically a map
+right so how we're going to compute the
+median and there are a few different
+ways and and
+one way we could do it is to sort
+and then we can remove the elements that
+are before the middle ones and the one
+that's after the middle one so let's
+just get started
+so
+we defined a function in the braces and
+we're doing the each here on this
+applies the function to each element so
+we're trying out all the different test
+cases
+and then the argument inside the braces
+is denoted with the Greek letter Omega
+and it's because the argument is on the
+right and Omega is the right most
+letter in the Greek alphabet
+and so the way we sort in the APL and
+there's no direct sort function in most
+dialects of APL but what we do have is
+something called the grade so this is
+the grade function and what the grade
+does oops Yeah so here's a problem our
+first problem is it won't grade our
+arguments because we don't we one of
+them is a scalar it's a single element
+and it doesn't have an ordering so we
+cannot error you cannot change the order
+we cannot create it either
+and so much like we did
+um when we were to write one element and
+list we use the comma function the rebel
+we can do that here so we could do a
+revel on each and then we could we can
+apply our function here grade on each
+and this will work
+however we can also combine these simply
+by parenthesizing them and so this is
+called an atop it's a sequence of two
+functions
+um and we only need parentheses here
+because we are calling it in in place
+and we want the each to apply to both of
+them together so we're grouping them
+with a parenthesis and then what this
+just means is apply the first function
+that the one that's the right and then
+on the result of that apply the second
+function so now we can try this
+um and that works as well
+so this is great what grade means is it
+gives us the list of indices that would
+put the array into order
+so if we have a look here the first one
+three one four one five
+so then if you want the smallest element
+then we need to go to position two that
+would be a one
+and the next one because it's a stable
+sort which means that if things are
+equal then
+um
+then they they preserve their relative
+ordering from from how they came so the
+leftmost one becomes the first one and
+then the second one which is in position
+four is becomes the second one and then
+we want element number one which is the
+three then element number three which is
+a four and then finally limit five which
+is a five
+as well and so too here and that means
+if we take these indices
+and use them to index into the original
+array that will be a sort
+and API allows multiple indexing in one
+go so we don't need to map over the
+indices and then index rather we can
+just take all the indices that we want
+and put them into the square bracket for
+the indexing and that gives us those
+elements here so now we get the sorted
+list
+representation of these arguments
+and we should also note here that
+um what we're seeing is a zero here for
+the empty list but these arrows indicate
+X's that are available and so there's
+one axis in each there's a
+one-dimensional array and this uh
+Circle bar thing indicates that there is
+an axis but it's an empty axis and the
+zero is only here to indicate what type
+of array it is so it's a numeric array
+okay so now we've got uh the sorted list
+and what we could do then
+um is we we know that
+the first and the last element are not
+the ones we're looking for we want the
+middle elements
+so we could drop the first element so
+this is one drop and we could drop the
+last element so negative one drop means
+drop from the rear
+of course this isn't entirely correct
+for our very short arguments over here
+but we'll fix that in a moment
+and we could keep dropping until we have
+one or two elements left
+so we can see here we have three
+elements left so we could do this again
+one drop negative one drop
+and then we have the three which would
+be the median and over here when we got
+two elements left then we want to
+average the two so all we need to do
+really is keep dropping from the from
+the front and from the rear uh until we
+have one or two elements and then that
+gives us our result
+and we can do that in a recursive
+function
+um but before we we start with the
+recursion let's just set up our stop and
+condition otherwise we might end up
+going Forever by mistake and so our
+custom condition
+um is and this is we separate the two
+statements here with a diamond because
+diamonds are Unbreakable
+um and then the colon here is a
+conditional and so we have a condition
+on the left and then the immediate
+result on the right of the colon and if
+the condition isn't fulfilled then we
+continue after the diamond with the next
+statement which would be this
+um and so here we're going to take the
+tally of the right argument of Omega and
+this looks like a Telemark so this is
+counting how many elements there there
+are and then we say if that is
+and if 2 is greater than or equal to the
+tally that means we have zero or one or
+two elements then we're done we don't
+want to remove anything more so then we
+could return the argument as it is now
+if you try this
+we can see that we're preserving now we
+didn't drop anything from these last
+cases because they already have uh two
+or less elements
+of course we're not quite done yet
+um and if we keep dropping we can try
+this one drop negative one drop here
+then
+um
+you can see that we don't that only
+happens on the long
+um and the long arguments but we don't
+want to do that we only want to do one
+step
+and then we have a either zero elements
+left or one element or two elements left
+eventually once we
+um we do our recursion and we'll take it
+from there in a moment so how do we
+recourse it's very simple we use this
+upside down triangle which is actually
+upside down Greek letter Delta or Del
+which is like
+um it's called Del or nabla
+um and it's kind of like a d d stands
+for definition so it kind of calls its
+own definition and this allows us to
+recurse in an anonymous function
+Anonymous Lambda that which is what we
+have here
+um so here we recurse until we have the
+length and less than or equal to two
+and that is what we get here so you can
+see then we had the odd links we're
+getting just the middle element and
+we're done
+uh if you have even lengths we end up
+having two elements left and if we and
+otherwise if you start the short we just
+returning the right array so now we want
+to compute the average
+um of these and there are a couple of
+ways we could do this
+um
+but there's a problem with the empty
+list for computing averages so a really
+neat way I think is to do a cyclic
+reshape of this we know that we only
+have zero or one or two elements and if
+we
+do a this is a Greek letter rho which is
+like an R stands for reshape so this
+reshapes to length two and it does so
+cyclically which means that if you have
+one element it becomes two if we have
+two elements it stays as it is if we
+have no elements then it will use that
+type remember this indicates the type
+which is the zero that's a prototypical
+number
+and we will use that instead of any data
+because there isn't any data there so
+here we can see that we end up always
+with two element
+um lists or vectors and then it's very
+easy to compute the average of that we
+can sum them so this is a plus reduction
+and then we can divide by and two
+to get us our result so this is the and
+these are the medians for all of our
+arguments and I don't particularly like
+parenthesis but we need a parenthesis
+over here because APL goes from
+um has a long write scope
+if only we had a division function that
+had swapped arguments so instead of
+dividing the left argument by the right
+argument it would divide the right
+argument by the left argument then we
+can avoid this parenthesis and while we
+don't have that built in we can
+construct that using the commute
+operator or swap operator so this takes
+the division and flips the arguments so
+now the two goes on the left and then I
+like the way it looks like this
+so we can assign this
+so this is the recursive version of
+median
+okay let's do it a different way this is
+not a very good way because of course
+We're looping over in or recursing here
+over and over and over again
+um you know we have tail recursion uh
+telcro uh till call optimization
+um still this is a bit silly to Loop
+through like this and you know it should
+peel off elements instead we could we we
+had this one drop a negative one drop
+and we don't have to use one we could
+use any number so if we can compute how
+many elements we need to remove that
+would be much better and turns out of
+course we can compute
+that so if we look at number of elements
+let's have a look at our original D here
+so here we have a length five
+and we need to remove two from the from
+the beginning to from the end if it had
+six there would be two middle elements
+so we also needed to have two elements
+from the beginning or two from the end
+then four we need to remove only one
+um and if we had
+three we also need to only remove one
+and then we'll end up with a single
+element in the middle and then if we
+have
+two elements or less we don't need to
+remove any elements at all
+so clearly this is something that has
+something to do with the length but
+flattened down so to say to to by half
+so we have and if we start making our
+next longer it will be zero zero one one
+two two three three and so on
+and we can compute that we can try it so
+if we start by generating all the
+indices so this is the index generator
+Greek Iota Iota is like an i i for index
+generator
+um then we can divide
+by two
+and we can kind of see it here how uh if
+we round it off we would get two of each
+but we are a little bit off
+because this was
+um this is one and two and three
+and really what we need to do here is
+um drop less than that so if we
+if we add negative one so you can see a
+case where the high minus does is good
+now for one and two we want to drop zero
+for three and four we want to drop one
+for five and six we need to drop two and
+so on and that's exactly the formula
+that we want
+so and we're going to use the length of
+the argument
+and then and this is uh yeah should be
+obvious before this is round down Laura
+um and then we uh this is the amount
+that we want to drop
+so we computed that this is we're
+assigning that to D
+next statement we're going to use the in
+and in much the same way as before so
+we're taking and and sorting
+first and then we can do a d drop
+and also in and negated the drop so this
+drops the first and the last we can try
+this on our on our arguments those is
+here the scoping so even though our test
+data is called the we can use the D
+inside and there's no problem because
+inside we're using Omega for the uh as
+the name that's the special name for the
+argument
+oh
+again we have the same problem that
+we're trying to do this on a scalar so
+let's do the same trick as before
+and and this works very well we can see
+that we get either one or two elements
+which means we are almost done we just
+need to do the same thing as we did
+before we can do a cyclic reshape to
+size two
+and then we sum that
+n divide by 2.
+this gives us our median
+so this was the median computed by
+dropping and Computing the amount that
+we need to drop
+but in fact we don't need to modify the
+data At All by dropping elements and
+what we could do instead is
+compute the elements that we that we
+want the indices are the elements that
+we want and then we can just go and pick
+those out directly instead of having to
+chop our way until we get to them so how
+would we do this
+this time let's make sure to remember to
+Revel first
+Okay so let's think about it here and if
+we have length
+three we want
+element number two if we have links four
+then we want element number two and
+three
+um and if you have five elements we want
+element number three so it keeps going
+um up and down like this in fact if
+you're going to sum them and divide by
+two we probably want them twice so if we
+have three elements we want element
+number two and then element number two
+if we have four elements we want element
+number two and number three and so again
+it's going to be this kind of increase
+by and half all the time let's start off
+by the length
+um and instead of adding and
+or subtracting one as we did before
+we're going to add zero and one and so
+this
+um this is list is being added to the
+single number which is the length
+and then we divide by two
+and then we can almost see where we're
+getting and remember the first one has
+five elements we wanted element number
+three element number three
+and here we want uh this is with four
+elements so we want element number two
+and number three and we can see we just
+need to round that up just like we did
+the floor before corresponding
+symbol going up that is the ceiling
+and so these are the indices that we
+want except for our short uh the two
+short thing when when the length is zero
+then it isn't working right in that case
+and we should just return zero because
+we can't get the indices in of uh in
+this index number zero index number one
+that doesn't work
+so a couple of different ways and we
+could do this we could do this before we
+could say if one is well actually we
+only need to do it for that and
+for that is one Element so if zero is
+sorry for that zero element length if
+zero equals the tally of the argument
+then and we return 0.
+and then we need to
+use these indices so this is then we're
+done that's our result over here we need
+to use these indices to index into our
+argument so we use the indexing
+and then we we just need to sum
+and divide by 2.
+oh something isn't right here
+oh of course yes do you spot what I've
+missed we're indexing into the
+um
+into the original data that hasn't been
+sorted yet so we need to sort that first
+um of course so we use the grade just
+directly and index and so this is the
+sorted argument and then we're indexing
+into that to get an
+our result so this gives us
+um our result
+in fact we don't need to check the
+um the length at all we could just
+compare to the empty list itself so if
+the argument is identical to the empty
+numeric list then we return a zero so
+that's another way that we could write
+this
+and so this is the median using indices
+and that's three ways of computing the
+median
+there are a lot of different ways and
+that it could be done I'm not going to
+go through anymore now I'd like to
+mention
+a variant of this
+so far we've been sorting the numbers
+and then we've been either
+peeling off from the outside or we have
+been dropping from the beginning uh or
+from the end
+and and finally we've indexed directly
+into
+the sorted list
+a different approach a little bit in
+getting the right elements out since
+we're Computing the grade would be
+um to index into the grade itself
+and then
+use that to index into the main data so
+let's modify this me and this median I
+and just a slight little bit
+and the reason for that is because when
+we are sorting here and we are
+it could be that we have a data type
+that's inefficient and compared to
+indices for example the floats that use
+of multiple bytes per element whereas
+the indices themselves for at least for
+small array would just be one bytes per
+element or maybe two bytes per element
+and so what we could do here is we could
+index into
+and into the grade
+and then that gives us the indices that
+we need to get from our full argument
+like this
+so we can say median I2 on each of the
+data that gives us our correct result as
+well similarly for the other two
+solutions we could do something like
+this
+right that's all for today thank you for
+watching

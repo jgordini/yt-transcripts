@@ -1,0 +1,337 @@
+hey
+we're given a list of heights
+of buildings
+and imagine that we're standing at in
+front of that list and looking
+unto these buildings
+then we cannot see a lower building
+that's behind a taller building but we
+can see a taller building behind a lower
+building
+so just needing to see a little piece of
+a building in order to count it as being
+seen
+how many buildings can we see
+let's have some test data
+so here we have two buildings that have
+the same height that means that the
+second one is entirely obscured by the
+first one
+and here's one that's lower
+which means you can't see that either
+then there's a higher one that one we
+can see
+and again the lower one
+and that's obscure is behind both this
+number 10 and the fives over here so
+suddenly we can't see that then there's
+a 15 which is bigger than the 10.
+and that's our third building we can see
+in the 10 is obscured behind the 15.
+but we can do this by hand we want to
+write an API function that does this and
+let's start by defining an a function so
+this is an anonymous Lambda and we're
+putting the test case on the right
+referring to it with Omega which is the
+right most letter in the Greek alphabet
+and therefore is indicating the or is a
+symbol for the right argument in defense
+or lambdas if you want
+okay now we can start computing
+and what we want to do here is we want
+to Traverse from the left to the right
+and all the time looking at
+how high a building have we seen so far
+and what we can do is we can do is it's
+called a scan using this backslash
+and it's a cumulative reduction and in
+this case we're using it the maximum
+function so
+maximum of five and five is five maximum
+of five and two is five and then we can
+see that so here we're getting a five
+and then with the 10 we go up to 10 and
+the 10 continues until ruling rolling
+over the three because we're doing
+maximum until we get the 15. so let's
+try that
+foreign
+all we need to do is to see how many
+different numbers are there because any
+you will never get a lower number after
+a higher number but we can get some of
+the same
+we're not interested in these are the
+same we only want to count the first one
+of each and a simple way to do that is
+simply taking the unique
+from that
+so these are the heights of the
+buildings but the problem statement is
+to count how many there are so this
+Telemark
+counts how many there and there are
+three
+so let's call this F this is a very
+short neat solution to the problem
+and there are other ways that we can
+solve it let's start again with
+this cumulative maximum
+and
+this time we're going to look at the
+mathematical relationship between these
+numbers
+so we are interested in whenever we go
+from one Building height a plateau like
+this to the next one we want to find the
+places where
+we're looking at consecutive adjacent
+elements we have an increase
+and we can do that by comparing
+pairs five five five five five ten ten
+ten and so on
+so we want to reduce using less than
+so reduction is the forward slash the
+cumulative reduction is the back of
+Slash backslash but we don't want to
+reduce over the whole thing we only want
+to reduce over sub
+arrays of length two so that's what the
+two on the left means
+and we can see that these numbers then
+correspond to the spaces in between so 5
+is not less than five five is not less
+than five but yes five is less than 10.
+there is but one problem that since
+we're looking at the change here then
+we're missing
+the
+um we're missing one because there's
+only one one for the change from this
+size to this size and one one from this
+size to this size
+that's one less than what we have so we
+could
+um we could solve this in a couple
+different ways but a very simple way is
+to add a zero in
+um in front
+note that we cannot just add one because
+if we
+if we try to use an empty list of
+buildings and we added one then if it
+wasn't for giving issues with the with
+the pairwise reduction we would be
+adding one to because there would be no
+buildings and then we'd add one we say
+there is one building but there aren't
+any but if we put a zero in front
+then we will get an increase from 0 to
+5. there the problem statement says that
+these will be
+positively and positive height buildings
+make sense and so let's put this in
+again
+and then we can see that we get a one at
+the beginning
+and all we need to know now is how many
+ones are there and we can do that by
+summation so this is a plus reduction so
+we're using a plus reduction a pair Y is
+less than reduction and a cumulative
+maximum reduction
+and this gives us the three as well
+let's let's call this G
+now
+if you think about what is the
+performance going to be of these then F
+has some pretty bad issues we're using
+unique here even though we know a lot
+already about
+what this array looks like we know that
+it's a non-decreasing
+list of of numbers and unique will have
+to it doesn't know this it doesn't know
+this property so it will have to compare
+all the different numbers that are in
+the list which if it was a big city
+could be a lot of numbers
+um and it might do some hashing and
+things but it's still not going to be
+very efficient because it doesn't and it
+doesn't know that all we need to do is
+look at where the numbers increase
+um and then it produces these numbers
+which we actually don't need anyway so
+even that will take up memory
+um just for the a new array containing
+all the unique numbers only for us to
+encounters we're not actually interested
+in the result of the unique we just need
+it for the counting so that's really
+inefficient whereas G is much more
+efficient
+um we
+we keep we started off the same way so
+of course that's that's the same thing
+uh we'll get back to the zero comma for
+a moment is concatenation then we switch
+to a Boolean array
+and as soon as you do that APL is clever
+enough to compress this into using one
+bit per element so that means we're now
+down to an eighth of the memory used for
+to represent all the data we need to
+compute on if
+we have one byte integers in the in the
+Heights if we have even higher buildings
+for multiple byte integers internally
+then it's going to be even more extreme
+difference it could be effective 16 or
+32.
+um and then the summation of this
+Boolean is going to be really fast
+because the inter because um the
+processor has instructions on Counting
+how many ones there are how many bits
+that are set in the a byte and we can do
+this in enormous chunks as well we don't
+care about the individual bytes we just
+want how many unbits are there in the
+entire memory that we give it so that's
+going to be really fast
+however
+um there is one issue
+and that is the zero
+quantization here this is our original
+data that we get in and if we
+concatenate the s0 on the left that
+actually means
+that we have to rewrite everything in
+memory because the numbers are stored in
+their order
+and we have a packet so even even if
+there wasn't the issue of preserving
+this array which we would anyway we have
+to rewrite an array of almost the same
+size to one one element
+more rather than doing the computation
+directly on the data as given so this is
+going to be a quite expensive operation
+just in memory right time and in today's
+computers
+um the X very often the actual highest
+cost is memory read and write
+the processors are now so fast
+um and so smart that they will just sit
+idle waiting for us to give them work to
+do all the time and many operations just
+happen at memory throughput time and
+this is
+yeah this is uh the real bottleneck and
+we want to avoid memory rewrites like
+this so how can we code around this we
+can
+make a copy of of G where we want to
+avoid this remember I said before that
+there's an issue if we have a an empty
+list where we can't just add one that
+becomes wrong but let's ignore that case
+for a moment
+so here we know that we are off by one
+we're not with missing a count of one
+which is the initial going from zero to
+the first building that you can see so
+we add that back here and this gives us
+the wrong result if the argument is
+empty but we can do the check if the
+argument is empty
+um so
+let's make two statements this is the
+the Diamond this is a statement
+separator and then we have what we call
+a guard it's like an early out condition
+and we're going to take this this is a
+short formage of writing the empty
+numeric list and if that matches the
+argument then
+we know that there are zero right there
+cannot we cannot see any buildings if
+there aren't any buildings to see
+so this is a really quick check there's
+we're not comparing any data we're just
+immediately looking is are these the the
+same we don't even
+um
+yeah we would I think even internally
+it's represented as some constant that's
+always there but even if it wasn't we're
+talking about looking at the data type
+of the array that they're both numeric
+and looking at the shape of the array
+and they're the same shape so we're done
+that's there because there's no actual
+content to compare
+so this is a really quick check of
+course that does have had some overhead
+and it does add a branch point where a
+branch particular could fail but it's
+going to be dwarfed uh by
+and the actual computation that happens
+in the in the general case and of course
+here we are saving ourselves even one
+comparison
+um everywhere and we get a single number
+and then we're adding one which is
+really cheap obviously as well okay so
+let's see if we can
+um actually see
+the difference in performance
+we have some a tool called cmpx or
+compare execution uh we'll copy it in
+from the defense workspace
+and then let's generate a cityscape with
+a whole bunch of numbers
+um
+let's do a thousand buildings and then
+I'm going to randomize so the first one
+is going to be a size one building and
+the second one is going to be a size one
+or two and then the third one is one or
+two or three
+and so the question mark role it takes a
+number and generates a random number
+between one and that number and the Iota
+generates a sequence from one to a
+thousand and this because we give it a
+thousand and this and the right
+and what this means is that in general
+the buildings will become bigger and
+bigger and if we made them all the same
+then pretty quickly we would not see
+anything more very little likely of the
+senior so this ensures that we'll still
+even at towards the end we'll still be
+seeing more buildings
+right a thousand random buildings
+um and then we write our Expressions
+that we want to test
+so we want F applied to S and the g
+applied to S and H applied to S and now
+that we wait a moment for it to run
+these Expressions a whole bunch of times
+and comparing
+them to each other
+and we can see here that there's quite a
+significant difference in the
+performance between them but also
+the
+the definitions are Maybe
+getting more and more complex and and
+certainly longer
+so sometimes you just have to wait
+between how neat you want the code and
+how performant you want it you can
+always have both
+thank you for watching

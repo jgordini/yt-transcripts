@@ -1,0 +1,284 @@
+hi
+we're going to be given a vector of
+points as X Y Pairs and we are going to
+compute the area inscribed by this
+polygon
+we're going to use something called the
+shoelace formula which briefly described
+it says that the area is half the
+absolute value of the difference between
+the sums
+of the
+diagonal products and the
+enter diagonal products this might sound
+like a lot of steps but we'll take it
+one at a time
+here are some sample points
+the first thing that is specified in the
+instructions is to stack them on top of
+each other to become a matrix here's a
+little Lambda for that
+and this is the mix function it's called
+mix because the points you're given as
+an one-dimensional array of one-dimensor
+arrays the inner Dimension is hidden
+inside the array
+mix mixes together the outer Dimension
+and the inner Dimension into a
+two-dimensional array that is a matrix
+Omega refers to the argument
+so here's our Matrix
+now
+there is a slight problem that we can
+also be given just a single point which
+isn't a list of lists it's just a simple
+list so we need to normalize the input a
+bit
+we can see here that it might look like
+we have a table but if we ask for its
+shape then it has the shape is just two
+it has two elements whereas if we ask
+for the shape of the mixing of this list
+of points then the shape has two
+elements the number of rows and number
+of columns so we need to normalize and
+the best way to do that in a case like
+this
+is
+to use the in close if simple function
+or Nest function guarantees that the
+result is nested if at all possible
+so here
+this becomes a single element of two
+elements
+and then we Ravel that
+straighten it into a list of such pairs
+now we have a one element
+list of spare and then we do the mix and
+then we get a one row two column Matrix
+which looks much the same as before the
+trick here is that if we use our list of
+points then this function doesn't do
+anything because it only encloses if the
+argument does not already have
+enclosures and since we already have a
+vector then reveling into a vector
+doesn't do anything either so this takes
+care of the normalization
+now the next step is we want to get the
+diagonals we want two paired up with
+negative eight three paired up with two
+and one paired up with four
+APL works very much orthogonally with
+erase rows columns layers not along
+diagonals the easiest way to get to the
+diagonal is to rotate things so skew the
+array into place such that what was
+previously diagonal is now straight
+if we could only rotate up this column
+one step with the four circling around
+to the bottom coming in next to the one
+then we have achieved
+straightening out the diagonals into
+horizontal rows
+good thing is that we have a rotation
+function which can either take a single
+value to rotate the entire array here we
+took the row containing 2 4 and rotate
+it down to the bottom or we can give it
+one row one number per column
+we want the First Column to be rotated
+zero steps and the second column one
+step and now we have the diagonals as
+rows
+we also want the enter diagonals
+and we can just do that by
+rotating the other direction with a
+negative number
+now we have two paired up with two if
+you look at our original array up here
+two with two
+and we've got three with four so that's
+diagonal in the other direction and so
+on
+right that means we can take these two
+formulas here and put them next to each
+other
+giving us a
+Two element Vector of these rotated
+matrices
+you'll see that there's some code
+duplication going on here this
+normalization and making into a matrix
+we're doing that twice
+really should move that out of a
+function as a kind of reprocessing
+in order for this to become a proper
+function in the end we need to bind
+together these functions here so it's an
+a sequence doing this after doing this
+after doing this we can do that using
+the top operator and it looks cute too
+okay
+the next step is that we want the
+products of these diagonals pairs which
+are now just rows so we can
+use a multiplication reduction
+horizontally
+and that gives us these three products
+so negative 16 is 2 times negative eight
+then we need to sum them
+and then finally we have to subtract one
+from the other
+once you have this number we just need
+to take the absolute value it's negative
+here so we make it positive
+because the area is always positive and
+then we have to divide that by two I
+like to write that 2 divides so this
+operator here takes the division symbol
+and flips its arguments so that what
+we're dividing by goes on the left
+and that gives us seven which is our
+correct result
+this is a solution but it bothers me
+that we have some duplication here we
+can see the the sum of the product and
+it really shouldn't be that we repeat
+ourselves
+what's going on here is that we have
+subtraction
+but we want to pre-process both
+arguments to the subtraction by doing a
+product and then doing a sum
+so we have something called over which
+is
+a pre-process both arguments operator it
+takes a function here on the right which
+is something we're going to apply to
+both arguments before we proceed to the
+main function which is on the left so we
+want the sum of the products
+that means we can remove those over here
+right we still get seven
+but I'm not quite satisfied yet
+because
+we still have
+some duplication here
+all of this is really
+the same two we're just talking about
+the difference between in the two
+arguments are just the rotation amounts
+so we could put things together here
+and say that the arguments are just the
+rotation amounts and they will be used
+to rotate
+the actual argument to our function as a
+whole
+how do we do this
+well
+I mean let's put the argument name in
+here and a
+rotation function
+now we want to bind together this
+argument as a constant argument to the
+function so instead of this being at the
+addict function it takes an argument on
+left the rotation amount and the
+argument to the right what's being
+rotated it now becomes a magnetic
+function that's being applied to each
+argument
+it is a rotate
+Omega function
+so that means we can get rid of these
+two
+um the S light here up here is that this
+is a tested function that we're using
+and that's necessary because we want to
+refer to the argument of the outer
+function if we used braces here to make
+a little Lambda then Omega would now
+mean
+the argument that's being given to this
+over construct
+so being that is tested we can't just
+have three magnetic functions after each
+other that would mean something else
+but we can the same way we did over here
+with the pre-processing we can glue
+together these two with this top
+operator
+this is looking better now we're just
+giving the rotation amounts as arguments
+but can we go one step further yeah I
+believe we can because we're not
+actually interested in not needing to
+rotate the First Column the only thing
+that's important here is rotating the
+second column
+so how can we get rid of
+that zero there
+let's restructure what we have got in
+here a little bit
+we have the insert the amount being
+inserted here on the left
+with what's being rotated on the right
+we can instead of having it the whole
+thing as a compound function the product
+of the rotation on
+Omega
+we're going to make this into a fork
+construct instead
+where
+the right argument goes over here we
+have a central function that
+is applied to the result of fetching the
+right argument and this constant on the
+right problem is that in a tacit context
+we can have a an actual constant on the
+right which has to be a function on the
+right so we'll use this operator again
+um but now with a an array on the left
+it doesn't flip around
+arguments rather it changes this
+constant into a constant function
+so this Returns the
+um other argument
+and this is the rotation amount with a
+post-processing of a multiplication and
+this refers to
+the arguments giving to the whole over
+construct which is going to be negative
+one on the right and one on the left
+we don't want just that
+one or negative one we want the
+concatenation of zero
+and that one or negative one so that is
+zero and concatenation and just the same
+way as we did before
+using the the bind operator to bind a
+right argument to the rotation function
+we're now going to use that same binding
+operator to bind the left argument to
+the concatenation
+so
+we're going to evaluate
+this constant function that gives us the
+outer argument we're going to apply
+the zero concatenated two function to
+negative one first and then we're going
+to use that the result of that for S
+rotation amount
+for the vertical rotation post process
+using the multiplication and then we sum
+up and then afterwards we're going to do
+that with a 1 instead of negative 1.
+and then we do the final subtraction
+so this is about as
+a compact and
+non-repetitive as I can put it
+we can give it a name
+and apply it to the points or to a
+single point when the area then is zero
+thank you for watching

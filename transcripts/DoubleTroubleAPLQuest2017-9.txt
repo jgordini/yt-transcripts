@@ -1,0 +1,239 @@
+hi
+we're going to
+find the locations of
+characters in a given text
+where those characters are followed by
+an identical character immediately to
+the right we don't want the characters
+themselves we don't want the indices we
+want a mask
+that indicates where such pairs begin
+classic example of a text processing
+things in APL is using Mississippi
+because it's got a lot of duplicated
+characters and identical characters
+spread out but it only however has two
+identical characters in a row so let's
+add a little bit more
+where we have three in a row and we'll
+have overlapping pairs what we want to
+get here is
+these are not the same that's a zero
+these are not the same that's a zero
+these are the same that's a one and so
+on at the very end we want that these
+two are not the same that's a zero these
+two are the same one these two the same
+um that's a one and then this character
+is not followed by an identical element
+because there are no more characters
+there so we always end with a zero
+let's start with Lambda and
+we can refer to the functions argument
+with Omega it's because the argument is
+on the right and it's the rightmost
+character of the Greek alphabet
+and we always have the whole solution
+right out of the box with an ny is
+reduced this means we go over all the
+windows of length 2 in this case and
+reduce them using equality which
+effectively just inserts the equality
+between the two elements the two
+characters and that gives us this which
+is almost correct the only thing we're
+missing is because there is no pair of
+the less character with one more
+character after it there's no zero at
+the end
+now and we might think that oh that's
+that's easy to fix we can just stick a
+zero on the end
+and solve the problem however if the
+argument is empty so it's the empty
+string let's apply this Lambda on each
+one of these
+then we get a length error on the
+invoice reduction because it cannot
+find any pairs of link two
+so how might we solve this instead if we
+extend
+the argument with a character that
+doesn't appear anywhere then we can
+solve the problem and we see that the
+empty string indeed gave us an empty
+result
+however this is of course problematic if
+the string ends with a plus we get the
+wrong result we can never get a 1 at the
+end because that last character even
+though it's a plus here is not followed
+by a character that's identical to it
+so we need to solve this problem and
+there are a couple of ways that we could
+do so
+um here's a little bit of a clever one
+let's take the reverse of the argument
+this gives us all the reverses and then
+we take the first one which you can
+actually see by the color here is
+optimized so we're not actually
+reversing and taking the first we
+directly take the last one it's just a
+way of expressing it
+and so here we get a one
+um and notice that we get a space here
+and that is because the first coerces
+out an element when it's there aren't
+any elements it takes a prototypical one
+which for text is a space
+um and then uh the Plus for here
+so this is the last element or a space
+if there aren't any and then we can take
+some filler characters that we can add
+to the string to compare it just like we
+did with plus before but we need a
+couple of different ones because if the
+last one is a plus we want a different
+character
+and then we can use a set difference so
+this takes this set of plus and minus
+and
+removes all the instances of the last
+character so we for the first one we
+remove all the eyes then we remove there
+aren't any so it doesn't sorry not the
+old eyes the the ones there aren't any
+so that doesn't matter the removable
+spaces the holes aren't any and then
+remove all the pluses and that gives us
+just the minus left
+and then we can select and the first one
+of that
+and this gives us an a filler character
+that we can safely use the next
+character cannot be both plus and minus
+at the same time
+in fact we don't actually need plus n
+minus here because just like we used
+first before and it coerced out a an
+element when there weren't any using the
+fill if we just use plus by itself
+then we can see here we get plus when
+plus is not the last character and we
+get nothing when plus is the last
+character if we do first on that then we
+get a and
+a space at the end and space is not
+equal to the last character so it's a
+safe character use even though it's hard
+to see
+okay so now we can take the argument and
+concatenate it with this safe filler
+character
+and we can do the two wise reduction
+and get a correct result
+so this is one way to solve the problem
+let's start over for a moment and try
+something else
+again we'll do the NYS reduction
+but let's we know we want a zero at the
+end
+let's add a zero at the end so this is
+concatenation with swapped arguments and
+therefore we put it at the end we saw
+before that
+if you try to do this on an empty
+argument
+then that's not going to work we get an
+error there
+so
+if we run the the NYS reduction here on
+something with just one more character
+then we get oh sorry we need to make it
+into a vector and then we get an empty
+result
+and that would be appropriate result for
+the empty case
+so really all we need to do is if it's
+empty we need to add one more element
+and how can we do that well we can take
+the length of the argument and let's go
+back to the case that we had before
+so here we have the length of the
+argument and we don't want it to be zero
+we want it to be at most at the least
+one so we can clamp it using the max
+function so this is the maximum of 1 and
+17 and a maximum of 1 and 0. and that
+gives us that this length
+then we can use this to take and we need
+to take it from the other side so
+normally we take would take the length
+on the left and the data on the right
+but we want it Opposite so we swap it
+around with the commute operator from
+the argument itself
+I know now we can see that we've added a
+space only in the case where we have an
+empty
+okay now it is safe to do the NYS
+reduction
+and this gave us the correct result for
+the empty case but we're still missing
+the zero over here
+what we can do then is to we know how
+many elements we want namely the length
+itself so we can take the length again
+of the argument
+and take with that and if take doesn't
+have enough elements it will pad with
+the appropriate prototype and that would
+be a zero in a numeric case that we have
+here
+so this gives us a correct result
+or both of them
+now we can
+this function happens to turn out really
+nice if you convert it to a tested form
+which means that we don't mention the
+arguments explicitly rather all
+arguments are the only argument here is
+referred to
+in terms of function application on that
+argument
+so it's pretty easy to see here that
+what we're actually using is should say
+an aspect of the argument which is its
+length let's parenthesize this just for
+clarity so referring to the argument in
+terms of its length over here we're also
+referring to the argument in terms of
+its length here we're not referring to
+it in terms of any function directly
+applied to it and
+but that would be the same thing as an
+identity function applied to it and
+luckily we do have an identity function
+it looks like this it points as at the
+argument
+so now that we have
+um
+crystal out so to say indicated what are
+indicated what are referring to the
+argument looks like in terms of function
+application we can then go ahead and
+remove both the braces that indicate
+this explicit Lambda or decent as we
+call it and the actual name of the
+argument
+instead we're going to replace it with
+round parenthesis
+and so here we get rid of the names
+and this works we don't actually need
+these parentheses or around functions we
+can just use the functions directly
+this is a very nice
+and clean looking train or tested
+function for solving the problem
+thank you for watching

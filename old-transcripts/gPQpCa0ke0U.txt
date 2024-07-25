@@ -1,0 +1,118 @@
+hi
+we are given two dates in vector format
+and we are to determine what the
+relationship in time
+are
+whether one is before the other one
+that would then we have to give the
+result negative one where the one is
+after the other then we have to give one
+or whether
+they're the same in which case we have
+to return zero
+there are different ways to approach
+this
+but I'm going to go at it with um
+date manipulation in order to show the
+tools we have available
+one fun thing we can do in dialog APL is
+to use dot net
+I've prepared some test cases here
+is always the same date on the left but
+three different date and on the right
+and we're supposed to say that the first
+one is
+earlier because we can see here it's the
+same date but it's an earlier time 12
+instead of 16. these are exactly the
+same and this one is a little bit later
+um we
+because it is a different year
+so
+in order to
+use.net we have to set our using
+statement let's put in our arguments
+first and then we create a little
+different or Lambda to compare each one
+of these on the left with each one on
+the right
+we can try this
+so this pairs them up
+the first thing we have to do is set our
+our using and we want to use the net
+system so we write that
+and this gives us access to a namespace
+called date time
+in that time we can do various things
+there are some functionality that we can
+use and we can also create date time
+objects whereas these are just normal
+APL vectors we can create scalar
+entities which are times so we can
+create
+and new date time based on
+say the left argument
+so these are they're now formatted for
+human consumption but they are just
+scalars
+we want to do that on both of them so we
+create a little inner Lambda that we can
+apply to each one of the left argument
+and the right argument
+now we have two date times
+we cannot component directly but
+we can in the daytime
+Library we have something called compare
+and this Compares these two
+and this gives us the result that we
+want
+using.net is great but a lot of
+functionality comes built into APL as
+well
+in this case we can use something called
+quad DT
+which converts between time formats and
+it understands that we have a vector
+format
+and we just want to convert it to it a
+serialized number which is which
+progresses through time so that we can
+do a comparison
+so these are the day numbers actually
+the number of days since the last day of
+1899 but that doesn't really matter and
+we could use any such format that has an
+offset from an epoch
+and now
+we can compare these two
+if we subtract them
+one from another
+then we find the number of days between
+them
+and all we're not interested in how long
+this is we're interested in which
+direction does it go is it before the
+same or after so we can use the Signum
+or sine function to get the result
+so this also solves the problem in a
+much neater way
+we can restructure this function a
+little bit
+and make it test it instead of explicit
+by observing that the main operation
+here is actually a subtraction we don't
+want to subtract the arguments we want
+to subtract the
+date time in format number one of each
+one of them
+so another way we can express this is
+that we want
+the subtraction over that is we
+pre-process both arguments first with
+the conversion of the entire Vector to
+format number one
+and then this
+is a two train or in a top
+and we can give it a name without the
+outer parenthesis
+thank you for watching

@@ -1,0 +1,199 @@
+welcome to the apl quest c appeal with
+cupid details
+today's quest is the eighth from the
+2014 round of the iphil problems of
+solving competition where we are to
+compute the distance between two points
+in and space this is really a very
+simple problem
+the distance is the square root that is
+there
+to raise to the power half of
+the sum
+of the squares
+of the differences
+along each
+dimension
+so we can test this
+and we have another test case and this
+is 2d space so let's try a 4d space as
+well
+we could say u1 a
+v1
+and
+u2 a
+v2
+right
+so this really solves the problem um and
+there's not much variation one would
+really want to make here on this
+however there are some
+interesting things we can do
+since we like computing things on the
+entire race and let's try to do this on
+multiple arrays
+on multiple vectors at a time points in
+in the space at a time and so there are
+some fun tricks that we can
+take care of here
+let's say we have a collection of
+points but
+this u1 and
+u2
+they don't have the same number of
+dimensions so if we try to mix them into
+a flat matrix
+then we end up getting padded with zeros
+on the right
+that's actually not a problem because
+when we do the same thing on the other
+point
+we get zero zero minus zero zero squared
+sum it it doesn't actually contribute
+anything and so it doesn't hurt our
+computation that means we can kind of
+upgrade all points to the dimensionality
+of the point that has the highest number
+of dimensions
+so we can try this
+and
+that works
+quite well
+now and here's the thing
+we might want to
+define our function in terms of leading
+axis notice here we have summation along
+the trailing axis
+and indeed um if we try to express this
+in a test form
+then we naturally end up there
+because there's a common trick
+to use
+the problem of having multiple or even
+one magnetic function inside a
+test definition if you try to do this
+then there's a problem here that we have
+a magnetic function here and what we
+could move it over as an atop on the
+power but another trick is to use uh one
+base as summation which might even be
+faster on
+non-integer
+numbers
+and now the summation goes vertically
+which means if we try to use the same
+thing
+we get an entirely wrong result
+that is of course because
+we are subtracting the two matrices
+correctly
+and then squaring them correctly and
+then
+um we have now in our case a two by four
+matrix and instead of summing along the
+rows we are
+uh summing along the columns and that
+has those we're mixing up the two um
+inputs that have nothing to do with each
+other
+in that case we would want to state our
+arguments in transposed form which means
+that each
+row or physic each major cell represents
+one dimension in
+n space
+so this can work as well
+um to spice things up a little bit let's
+do some uh some code golf as well so
+we've got b here
+and we can actually
+we can create something that's a bit
+shorter we can remove the zero from this
+power here
+it decreases readability but it does
+save a character
+and then here we are summing the squares
+now summing square same thing as summing
+the self multiplication
+and and so we could write that as
+uh summing on
+the self multiplication
+here but this you should recognize as
+being an inner product
+and so we we're still not it's still not
+correct syntax because this is a
+magnetic function applied on this static
+function here
+and so we could make it on top and then
+it would have about the same performance
+as before but because this is a selfie
+meaning we are
+we are taking the
+the difference
+and using it as both arguments on the
+inner product then we could just
+subtract twice which of course is a
+waste of
+computation resources but it can be done
+so we could state it
+like this
+um so this is a fork and then that's
+used as the right time in this for the
+fork
+so
+this is
+code golfed and away and it will still
+work
+but it won't work on
+the higher rank arrays because it's
+trying to do a matrix multiplication of
+two arrays that are two matrices that
+are not conforming with each other
+so that doesn't work
+finally um
+note this that we're doing subtraction
+then we're squaring summing and then the
+square root which is the square root is
+the inverse
+of the square which means if we had the
+under operator which allows you to do
+some operation
+so to say under the influence of some
+other operation we could sum under the
+influence of
+squaring now we don't have that as a
+primitive but we do have it in apple
+cart
+so we want the under operator that uses
+the inverse
+and we get this formula over here
+so let's call it like this
+and now we can use a i can write a
+definition here which uses
+under
+so
+it's very simple it's just summation
+under
+squaring or self multiplication if you
+want on
+the difference
+and then we can try that
+and we get the result and it should even
+work with
+our high rank things because it's the
+same
+summation along the rows as what we had
+before
+if we had uh if you compare now uh the
+our code golf
+thing here
+with um
+using the under operator
+this is kind of nice and then there's
+one it's one character longer
+but if there was a primitive under
+operator
+then it would actually be a character
+shorter in which case i would say the
+nicest looking expression would also be
+the shortest one thank you for watching

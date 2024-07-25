@@ -1,0 +1,63 @@
+hi we're going to implement a simple
+seizure Cipher for uppercase
+characters and
+spaces so uh the idea is that we have
+the uppercase alphabet as a built-in we
+just need to also have a space in
+front and we can make a Lambda around
+this where we take
+the argument which is represented by and
+Omega which is the rightmost characters
+in the Greek
+alphabet
+and we take a message and we can look it
+up with a index of here so we look up
+every character in the alphabet so we
+can see H which is normally the eighth
+character but it's now the ninth because
+we have a space in
+front and then as left argument we take
+um a rotation of the alphabet
+so we
+can um take the same alphabet over
+here and then we can index into it and
+APL allows us to index with multiple
+values at once so we take all these
+indexes here and we use them to index
+into the alphabet of course if we index
+into the alphabet itself we get the same
+thing but if we take Alpha the leftmost
+character of the Greek alphabet and we
+rotate the elements of the
+alphabet um we can we can also show how
+that
+looks so if we take this
+oops so this is a rotated
+alphabet
+um then that's a solution to that let's
+clean up the code a little bit and we
+can see here that we have some
+duplication of
+code um we can do an inline assignment
+over here to a for the alphabet and then
+we can use the a over
+here and we can
+avoid this parenthesis by flipping the
+arguments of the iota of the index of
+function so let's do that as well reads
+nicer with the inline assignment as
+well um and there you have it let's uh
+give this in
+name and apply
+it oh of course we need a left
+aggreement there to apply it there we go
+and then of course once we have that
+function we can apply it in reverse and
+if we apply the reverse on the
+forward then and we get back our
+original message so same function works
+for both encoding and uh decoding and
+the way that works is that we have a
+negative value under the rotation it
+just means a reverse rotation so that's
+all thank you for watching

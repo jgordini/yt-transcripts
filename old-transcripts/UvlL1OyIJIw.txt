@@ -1,0 +1,67 @@
+hi this challenge is to take a variation
+of a normal chest setup and just check
+two things the King has to be between
+the Rooks and the Bishops have to be one
+white and one
+black so here are some an example setups
+the first one is valid that's a normal
+uh chest setup with a queen and king in
+the middle and uh Bishops next to them
+and then Knights and Rooks and then some
+variations of them uh these are invalid
+because here the king is outside the
+Rooks and here the king is again uh
+here's the king is inside the Rooks but
+the Bishops are both on uh the same
+color
+squares um and we can take this step by
+step the two conditions and we create
+this Lambda that refer to uh the
+argument as Omega and then we just need
+to check these two conditions the first
+one is the order that uh we've got Rook
+Knight sorry Rook King rook and that
+means we're not interested in any of the
+other elements only uh the letters K and
+R so we can do the
+intersection of the
+argument with K and
+R and now we can see that the first one
+is valid because the king is in the
+middle and then we can see that the uh
+these two are this one is invalid and
+this one is valid in this respect that
+is invalid for a different reason so we
+can just write that it has to be Rook
+King Rook that matches the intersection
+of the argument with Kings and
+Rooks and the other condition so and and
+and the other condition is that we have
+opposite uh parity of the positions of
+the um of the Bishops so let's not do
+the end right now instead we're going to
+do left um this ignores everything we
+computed here and just returns one
+what's on the left to make it a little
+bit easier to see and then later we'll
+restore this to an
+end so if we create a mask where we've
+got
+Bishops and we transform the mask into a
+list of
+indices then we can get the parity which
+is the remainder when you divide by
+two and then we have to make sure that
+they are not the same so one has to be
+even the other one odd but doesn't
+matter which one so they just have to be
+different from each other so we insert
+in inequality between them and we we get
+this mask saying that uh that this is
+valid valid and invalid
+and now we can combine that with our
+original mask that we got up
+here to get our final mask just put an N
+there and then it says that the first is
+valid it takt to are
+invalid thank you for watching

@@ -1,0 +1,263 @@
+hello and welcome to this very first
+episode of the apl
+quest where we go through
+one problem every week
+from a past apl problem solving
+competitions phase one have a look at
+apl wiki for the details
+today's problem is the first problem
+from 2013
+where we are asked to write a different
+generate odd numbers
+let's start by generating some numbers
+let's say we want to generate the first
+10 numbers
+problem here is that these are all the
+adjacent integers so we multiply by two
+getting us every other
+number and then we can offset it by one
+for example we can take a one and
+subtract it so we're swapping the
+arguments on the minus so
+there are other alternatives we could as
+well
+add negative one
+to this
+or we could parenthesize it
+and for this we can build our defen
+oops that's the argument name omega and
+we can try it
+and there we go
+now as you can see
+by default apl starts counting from one
+a lot of people computer scientists
+especially some mathematicians prefer
+standing starting counting from
+zero instead and apl allows you to
+choose that so we can set the index
+origin to zero and now
+um
+we
+count from zero instead
+this has upsides and downsides
+upside of course is you can choose
+whatever fits your problem and your
+comfort
+downside is that if you share code with
+others you need to make sure you get the
+right index origin you might need to set
+it yourself and so it's a classic
+problem to
+try to write code that works with any
+index origin and we can see that if we
+now
+try to apply a function it gives an
+entirely wrong result
+so that's no good the corresponding
+function
+for
+index origin zero instead of subtracting
+one would be to add one
+there are other ways of generating
+this um yes the problem asked for a
+defense but we can also write tested
+functions in apl
+so here's another approach let's start
+by
+writing the framework for a tested
+function so we put some parentheses here
+and then we can do two times and not the
+name of the argument but rather the
+identity
+of the argument so the density function
+and we can
+get 20 there
+then we can use this
+to reshape a bunch of
+zeros and ones
+so this is zero one reshape we swap the
+arguments from the reshape so the shape
+on the right and the content on the left
+and now the only thing we miss is
+asking for the indices where there we
+have the true values or the ones so the
+where function
+and uh there we go this was index origin
+zero now let's switch back to index
+origin one
+um and of course this won't work anymore
+rather we just have to flip the ones and
+the zeros
+and there we go
+okay and that's
+all very nice but how about if we wanted
+to write a function that could work with
+either setting of quad io of the index
+origin and there are various uh
+approaches to that
+um here are some cool ones that came up
+in the live event
+let's say we start by multiplying the
+argument by 2
+and then generating
+those
+integers
+and now we take the parity of that so
+that's the
+two residue or modulus 2
+of that
+and now we ask for
+where
+we have the ones
+okay that's good now what happens if we
+change
+uh to quarter yo zero
+okay so
+this part up here
+gives it starts off differently
+and then when we ask for the parity we
+get the
+opposite but that's exactly what we want
+when we're using quality of zero
+which means if we ask
+where
+are the ones we get the right result so
+we can see that this function works with
+either
+either origin let's give it a name
+argument goes here and really what's
+happening is the the iota the index
+generator and the iota underbar the
+where function are cancelling each other
+out
+so
+quadrio
+gets one
+and this works and quad io gets zero
+and it still works so it's a really
+clever solution um for writing
+it in a way that doesn't matter which
+index origin you're using
+now the reason we're bumping into this
+is because we're dealing with indices at
+all we have the index generator we have
+the where function which is the indices
+of the true values
+but we could also go about this in a
+very different way in a mathematical
+way so if we observe that we start with
+a one
+and then we
+increase
+with two every time
+that gives us that's an interesting
+property
+so
+let's say like this let's take we're
+using overtake here so we're taking the
+first 10 elements
+of a one
+now there aren't 10 elements in the one
+so apl will pair with appropriate fill
+elements which are zeros
+we can subtract this from two
+and notice here that we have the
+beginning element the one and then the
+offset to the next number over and over
+which means if we ask for the cumulative
+sum or the plus scan
+of that we get all the odd numbers and
+since we didn't use any index
+related functionality
+then
+there is no influence from the index
+origin so we can put this into a
+function
+as well
+argument goes here
+and we can try it
+f10
+and quarter one
+f10 there we go
+um
+now let's say we wanted to go back to
+our original formulation where we
+started off with
+two times
+the
+integers the indices
+so in one case we wanted to
+subtract one that's when what i o is
+one in the other case we want to
+add one that's in the case when quadrio
+is zero
+so how could we adjust this of course
+both the subtraction and addition can be
+seen as an addition you just need to
+either add negative 1 or you need to add
+1.
+so that means if quad io
+is 1
+then we
+want to subtract 1.
+and if quad io
+is 0
+then we need to add one
+and we can map this in a mathematical
+way
+so we have either a
+a zero or a one
+and if we take negative one and we raise
+it to the power of those two
+then for the zero we get one and for one
+we get negative one which is exactly
+what we want so now we can write our
+function
+as
+negative one raised to the power of the
+quad io and this will just take whatever
+global quatero is currently in effect
+and we add that to twice
+the indices
+so now we can try this was quad io1 and
+quota was zero
+and it still works
+let me show you another very clever
+solution it is as follows
+iota
+plus iota
+minus the tally
+this is a tacit function
+we can apply it and we can see that
+indeed it works um let's see what a
+structure looks like it is a fork where
+the right tie end of the fork is itself
+a fork we start off by subtracting the
+tally from the indices now what is the
+tally that's how many major cells there
+are in
+the argument now a symbol number is
+just one so
+this is a clever way of subtracting one
+from
+the indices so let's try that we have
+the indices
+and we're subtracting one
+and then we're using that as right
+argument for plus
+and the left argument is iota applied on
+the argument so the indices again
+now if we add these up
+then well you cannot probably see this
+already that we get exactly what we
+wanted
+and so the way we can write all this
+together is
+the indices
+plus the indices
+minus
+the tally
+and we can give this a name and apply it
+like that
+and that's all for today
+thank you for following along

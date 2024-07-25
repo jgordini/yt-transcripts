@@ -1,0 +1,202 @@
+welcome to this very last APL Quest
+video see APL Wiki for
+details today's
+Quest is to
+split a text on
+spaces and there's a specification left
+argument which tells us how many
+segments to cut
+into and basically
+we want to be greedy and split at
+leading um at the first coming spaces
+until we have as many segments as
+required and if the number of segments
+required is larger than and what we get
+just by splitting on Spaces then we need
+to add empty segments at the
+end so let's get started here is a a
+sample text and um let's first try this
+as a test it
+function now there's a a couple of
+classic ways to uh to split on
+spaces and this is one of
+them so what we can do is we can we can
+start off with the argument and
+concatenate another space in
+front we can kind of make out the space
+over here here the reason we need and
+this additional space um is so that we
+can compare with the
+space and that gives us this mask that
+we we can then use to
+partition the right argument and this
+gives us
+um a a cut
+off set here but um we're a bit off and
+that's because we added an an a space at
+the beginning so that we would include
+the leading text so instead of splitting
+the original we can split the
+concatination
+okay that looks more sensible to work
+with here's a trick though uh since we
+want to potentially add empty segments
+at the end we want this nested array to
+have a prototypical element which is
+such an empty character vector and we
+can do that by
+injecting a um an empty one at the
+beginning we could do this manually but
+we can actually do this kind of what I
+would call
+automatically and how can we do that
+well if we go back and to how we created
+this
+mask then we can say in we added a a we
+concatenated a a space in front so that
+we would get a
+one but we can also
+add a two manually or for that sake a
+one but by adding a one that tells
+partition function that we want two
+segments to begin here so we get an
+empty one at the
+beginning and now we can use this to
+petition the concatenation of that space
+with the original
+argument this has the benefit then that
+if we take too many elements say six
+elements
+here then we pad with empty elements at
+the
+end if we didn't do this and we try to
+take too many elements say um six here
+it would actually be five to be similar
+then we pair with elements that are not
+empty because they're based on how long
+the first element
+is so this solves that
+problem and now really All That Remains
+is uh to take this and
+merge as many trailing elements as
+required so that we have the right
+number um and then finally we need to uh
+remove this leading element that wasn't
+there and possibly we're going to take
+more elements than they are and they
+will be paded automatically so now uh
+let's add the left argument let's do
+three for
+now and so we can take uh the left
+argument and
+take from here that gives
+us the leading elements that we're
+supposed to
+preserve and then we can use a drop and
+that gives us the trailing elements that
+we we want joined together so we can
+combine this by saying we take the
+leading ones followed by the trailing
+ones this is of course the whole thing
+but before we do this concatenation
+we're going to postprocess the drop with
+joining them together that's a
+concatenation reduction so we insert
+concatenation between all these elements
+we do that on top of the result of the
+drop so now we've joined the
+last and we get a total of three except
+of course the leading one that we
+inserted just temporarily to get the
+right
+prototype this means that we can strip
+the leading one and we can drop the
+leading element from each one because we
+had that one
+space um here that we don't want want
+includeed now that we have split on
+spaces so this works for three and for
+four you get the exact fit and for five
+we have the
+take add and additional elements and so
+to for any higher
+number so this is one solution to the
+problem here's another solution to the
+problem we can start off the same way
+Way by
+concatenating a space on the left and
+let's call that s for eding edit a
+space and then we can make our mask
+before we did that uh with a tested sub
+function but now we can do that
+explicitly like this the the pass
+through value of an
+assignment is the value that's on the
+right of the assignment Arrow so we can
+use that directly the first element of s
+is going to be the space then we don't
+have to repeat ourselves this gives us
+our
+mask and now we want to change this mask
+essentially we want to get rid of ones
+that are over here if we don't want a
+new segment to start there so rather
+than creating all these segments and
+joining them together we don't want to
+create them from the
+outset how can we do that we let's run a
+an addition
+scan that gives us the running count of
+ones here and then we have a left
+argument which is the maximum number of
+segments that we
+want so if we
+clamp here then all these fours become
+threes but we actually wanted a mask how
+can we get back to a mask well all these
+numbers are necessarily unique since we
+are always um increasing or staying the
+same that means that we the ones
+correspond to uh the first time that any
+one of these elements occur so there's a
+one at the beginning of the ones there's
+a one at the beginning of the twos and
+there's a one beginning of the threes
+and we can do that using the unique mask
+unique mask indicates the first time a
+unique element
+appears so now we're back to the mask
+but the one that indicated where the
+four we supposed to begin is gone if we
+put in a four then we preserve all of
+that and if we put in a five then
+nothing more happens we're not clamping
+anything okay with this we almost ready
+to petition the problem is that if we
+take this text and we try to petition it
+it all works nicely for uh for this case
+oh actually we shouldn't be using the uh
+the original argument we should be using
+the one that has an S at the beginning
+so that we stay consistent but if we
+have too many segments that we want then
+we don't get
+enough we want empty segments at the
+end we can do that by telling partition
+in close that we want trailing
+elements we do that by adding a number
+at the very end of the Mask that's uh
+the one element beyond the corresponding
+to the last element of the data which is
+the count now we could compute how many
+are necessary to add but they're all
+just the same empty elements and it
+doesn't really matter the maximum it
+could possibly be is the number of
+segments that we want at
+all this is of course too many so we can
+strip down the ones that we don't want
+simply taking as many as we do
+want and now all there remains is to
+drop the the leading space on each
+one thank you for watching

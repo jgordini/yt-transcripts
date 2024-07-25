@@ -1,0 +1,74 @@
+hi we are to find a reduced fraction for
+a given
+number so let's use an example of
+1.2 I'll start with the actual full
+solution because it's really short um
+and then I'll explain how it does the
+trick right so here is one .2 is
+65 and the way this works is that we
+have this is called a fork and where
+this binds a left argument to the
+Fort so the fork itself it
+says and it looks like n symbol but n is
+extended to be the lowest common
+multiple so it's the low lowest common
+multiple divided by the concatenation
+what does it mean to take one function
+divided by another one well we can
+expand this to an explicit def instead
+we have a left argument which has been
+bound and that's called Alpha we have a
+right argument which is called
+Omega so here we
+take the arguments and use them for both
+these outer functions so this is the
+lowest common multiple of the left
+argument and the right
+divided by the concatination of left
+argument and the right
+argument why does this compute the
+reduced
+fraction well what does it even mean to
+have the lowest common
+multiple this isn't the whole number
+it's not usually how we think of lowest
+common multiple but let's substitute in
+this bound argument into the function as
+a literal
+now what does it mean here the lowest
+common multiple of
+1.2 that is also divisible by
+one so we have to if it's divisible one
+that means it has to be a whole number
+if it's a whole number um then it can be
+part of our fraction so let's try 1.2 *
+1 1.2 * 2 2.4
+3.6
+4.8 and finally
+Five Point well they become
+six so if we multiply it with five then
+we get six so the lowest common multiple
+of one and 1.2 is
+six so over here we get a number
+six and here we concatenate the right
+argument 1.2 with one so we have six
+divided by one and by 1.2 now six
+divided by one of course that's six that
+gives us our left argument and and 6
+ided by 1.2 why are we doing that
+because we want to find out
+um the
+the other Factor we could say it's a
+division we have six divided by
+something is supposed to give one 1.2 so
+that something we can find by dividing 6
+by 1.2 because 1.2 times that other
+thing will uh will give
+six so this really becomes 6 divided
+1 and 6 divided by the
+argument and 6id one of course is six
+and then we have 6 divided by uh the
+argument and this is how uh the function
+works
+thank you for
+watching

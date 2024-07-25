@@ -1,0 +1,73 @@
+hey
+our Quest today is to compare two given
+character vectors or scalars
+that is the economic strings and see if
+they're anagrams of each other with the
+definition here of an anagram being that
+they have the exact same letters we only
+have to care about one letter case at a
+time
+and that we ignore spaces all together
+we don't have to worry about case
+differences we don't have to worry about
+other types of punctuation
+okay let's get started
+I have prepared a couple of left
+arguments
+and a couple of red arguments that we
+can use
+we are going to start by pairing them up
+correctly so we got the left arguments
+on the left and the right arguments on
+the right
+now we have an anonymous Lambda or divin
+and we're going to pair up each
+element from the left argument with the
+right argument
+the name of the left argument inside
+this divin is Alpha and the red argument
+is Omega left and right most letters of
+the Greek alphabet
+and we get pairs
+obviously they're not ready to be
+compared yet we need a couple of
+pre-processing steps
+so
+the over operator preprocesses both
+arguments before the main function is
+being applied
+the first step to pre-process is to
+remove spaces we do that with the
+without or set difference function
+now what we're removing is constant so
+let's bind this function with a constant
+space so this becomes a derived function
+a new function which is the without
+spaces function
+next step is to make sure that the
+ordering is the same and an easy way to
+do that is sorting
+we use a little helper function where we
+take the argument
+and find the elements in the positions
+of the grade of the argument
+now the grade is exactly this the
+indices that would put this array into a
+sort order if we use those indices to
+index and that's exactly what we do
+now we can compare the two
+and find out which ones are anagrams
+we can simplify this a little bit by
+observing that we have a Lambda or a
+different here with a single primitive
+inside that just takes the arguments
+that's entirely unnecessary to wrap it
+like this and instead we can just apply
+the Primitive as it is
+this looks good
+let's give it a name
+and now we can compare
+left arguments each
+now in the right arguments
+and that gives us our result
+thank you for watching

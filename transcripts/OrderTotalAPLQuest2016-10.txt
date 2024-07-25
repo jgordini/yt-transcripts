@@ -1,0 +1,157 @@
+welcome to the EPL Quest
+see APL Wiki for details
+today's Quest is the 10th and last of
+the 2016 round in the EPL problem
+solving competition
+we are given the bunch of prices and
+we're also given how many of each item
+that were bought and we are supposed to
+calculate the total
+amount
+that's this purchase sums up to
+so here we have the number of items that
+were bought and over here we have the
+prices for each one
+and this is mathematically really really
+simple and we can multiply and APL will
+automatically vectorize so
+5 gets multiplied by 299 0 gets
+multiplied by 499 and 2 gets multiplied
+by 199.
+these are the total prices per item
+type per type of item and then we can
+sum
+sum is a plus reduction so we write a
+plus and then the slash means insert so
+there's a the Plus in between the
+elements and that gives us our total
+amount
+so the problem can be solved this easily
+but
+um we could also try to make a single
+function out of this that solves the
+problem so for that we're going to use
+braces like this that makes an anonymous
+Lambda we could give it a name but we
+can also just use it inline like this
+and in this the left argument is
+represented with an alpha and the right
+argument is represented with an Omega
+the left and right most elements of the
+Greek alphabet
+in here we can then multiply together
+and that gives us exactly the same thing
+this is basically a cover function for
+the multiplication and then we can add
+the summation as well and that gives us
+and the solution
+but a neat thing you can do is called
+tested programming or points free
+programming where you don't mention the
+arguments explicitly so here we have
+left and right arguments mentioned by
+name
+and we actually able to combine these
+without mentioning the arguments
+changing these braces into parenthesis
+this makes a single function tested
+function which we call an a top or a
+true train there are two functions here
+the summation and multiplication and
+when you stick them next to each other
+like this in isolation there are tied
+together by the parenthesis here
+then
+the right side function
+is given the arguments of the overall
+function
+and its result is then fed on to the
+left side function
+so this also works
+this is called the two train or
+a top a train because it's a sequence of
+functions after each other train the
+functions like a train of thought
+but we can also be explicit about this
+at top
+we have an operator which is a higher
+order function and it's infix it takes
+the sum on the left and takes the
+multiplication on the right
+and
+it combines them error com in a way that
+the right function is applied first with
+the arguments to the overall derived
+function
+and then the result is fed on to as a
+post processor the left function which
+is applied just one argument so this
+also works but because we don't have a
+train anymore we don't need to show that
+these two carriages belong together
+instead it's the higher order function
+the operator that is binding them
+together then we don't need parenthesis
+here and all and this would still work
+however there is another higher order
+function or operator in APL which is
+called Dot
+which does the dot product and this is
+exactly equivalent to doing a DOT
+product on two vectors
+so this will also work
+and then you might ask well what's the
+benefit of using this why can we not use
+some over the multiplication well there
+are a couple of reasons for that one of
+them is Technical and one of them is
+practical
+technical reason is that an interpreter
+instantly recognizes this combination
+the um
+and it has optimized code to do this so
+instead of doing two Loops the
+multiplication first and then the
+summation then it confuse the loops and
+make it run faster
+however there's also practical reason
+something we couldn't do is let's say we
+um
+instead of these amounts here we have
+two sets of purchases so the prices are
+the same in the store but customer one
+buys five of these and two of these and
+customer two
+buys 50 of the first and
+20 of the last so that should give us 10
+times the price now we reshaped this to
+um
+two rows and three columns this is a
+Greek Row for reshape and this will give
+us
+a matrix so we can see here we have a
+matrix of
+um two rows and three columns and this
+it's like a database with records per
+purchase so in this purchase or this
+customer
+um
+but these amounts and this purchase a
+customer report these amounts
+and now if we
+um if you then combine this we need a
+parenthesis here so that we don't
+um
+end up multiplying directly by this
+Sixth Element Vector which would be a
+length error and now we can multiply
+like this and we can see that we got one
+sum per record in the database and if we
+had only tried to multiply them directly
+that would not work we cannot multiply a
+two by three Matrix with a three element
+vector and then sum it up afterwards
+so that's why you really want to use the
+dot operator or also known as inner
+product whenever possible
+thank you for watching

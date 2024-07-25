@@ -1,0 +1,299 @@
+hi
+we're going to convert a Gregorian year
+number
+to the closest matching Chinese zodiac
+animal
+and we have to be careful because the
+prolactic regarding calendar doesn't
+have a year zero
+now there are various ways that we could
+scrape the data off the website
+however
+um I'm not going to go into that now I
+have defined a
+Matrix which corresponds to the table
+that is on the website including being a
+little bit should we say dirty
+so the first thing we're going to do is
+that we're going to
+clean this up a bit so we have some raw
+data that we can work on
+we don't actually need all the columns
+so we're going to index into this and
+choose columns one and four those are
+the year numbers
+but notice the spacing here they're
+actually giving this text and then we're
+going to take the animal names which are
+columns two and five skipping the empty
+column four which was apparently just
+there for spacing
+now that's all very nice but we can see
+here there are at least spaces at the
+end of the rooster
+and there are also spaces at the end of
+the years
+that's not so much fun
+so what we can do is we can do a without
+this is a like a set difference function
+on each of these with space so removing
+spaces from them all since there are no
+internal spaces we need to worry about
+that looks better
+now we can transpose it
+and that gives us a the reading order is
+a bit better
+but we still have two rows for each
+thing
+so we're going to reshape this
+we only want two rows in total one for
+the years and one for the names so
+that's going to be two row 12 columns
+reshape so this is Greek Row for reshape
+and that gives us a much nicer looking
+table it's also in backwards order so
+let's mirror it
+and finally
+um it's a matrix but we would rather
+have two lists so we're going to split
+this
+into a vector of vectors and we can see
+that we have this even though it goes
+beyond the screen
+um two vectors and now we can assign
+this we assign the first one are the
+years and the second ones are the signs
+and now we have the year separately and
+assigned separately but the years are
+not numeric we could do something about
+that but it's not actually necessary we
+really just want
+um
+and the signs because it's very easy to
+generate these year numbers as well you
+can just do 2016
+plus Iota 12 where Yota generates a
+sequence of numbers from one onto that
+number
+and then we have the years
+okay
+let's get started
+we're going on a 12-year cycle
+oh it's actually not even 2016 it should
+be 2006 but that doesn't matter we're
+going on a 12-year cycle
+and it would be nice to know where the
+origin point is for these so we can see
+say the 12
+divides these numbers how much is the
+remainder
+and then we can see there's one where
+there's no remainder so it's uh evenly
+divisible we can identify that one by
+comparing to zero
+and there's exactly one and then we can
+find its index
+it's index 10. so it's an index 10 and
+we start with index 1 that means there
+we have a an offset by nine if we didn't
+start with
+um with this 2007 if you started nine
+years later then we would be better off
+so we can do a rotation so the same
+symbol that means the mirror if you use
+it with an argument on the left it means
+a rotation a cyclic
+moving of the elements
+so we're going to rotate by
+um for nine steps the signs
+now we start off with the monkey so if
+you is divisible by 12 then it's the
+monkey and if it's divisible with uh if
+you divide by 12 there's one left over
+then it's the rooster and then if
+there's two left over it's a dog and so
+up until 11 left over
+we need this data into our function and
+it's a little bit awkward to have it
+like this we could
+transform it into an APL expression that
+generates this Vector of character
+vectors and we have a user command
+called wrapper that would do that for us
+it's still very verbose though so I
+think it's more fun to pack it all
+together this is the in list function it
+just takes all the characters and jams
+them into a single character vector
+that can fit on the screen that linked
+and once we have this
+then we just need to know how to expand
+this into our full Vector of character
+vectors that we need to
+to select from
+notice that all these names begin with
+an uppercase character and that's
+actually really useful if we look for
+membership into and here's a special
+system variable called Quade or the
+alphabet so this is just a character
+Vector containing the alphabet and if we
+look for every character here is
+membership of this this is the uppercase
+alphabet it should say then
+we can see that we get a 1 for the
+leading characters in each of these
+now
+we can transform this in this function
+into a so-called train or Fork which
+means that we are referring to the
+arguments in just in terms of function
+application
+this is a membership and we want to use
+this membership to Partition
+the left argument so this points at the
+left argument so this is the membership
+partitions the left argument
+and then we reconstitute this so every
+time there's a one we start a new
+section or segment every time it's a
+zero we just continue the previous
+segment so this is a
+um more dense way of writing the same
+array although we might need parenthesis
+around it
+like this
+and now
+um what we could do is we could rotate
+then by the division remainder when 12
+divides the year let's say 2018
+oops what's going on
+oh yeah of course
+um the problem is that the rotation
+takes the argument remember we had the
+nine rotate it takes the argument on the
+left so
+and we need to swap the argument so this
+higher order function or operator takes
+this function and swaps its arguments
+such that the rotation amount is on the
+right and the data is on the left
+okay so now we've rotated it to be dug
+and
+um if we
+look at our original table
+then we can see that 2018 is indeed the
+dog so that that fits we got the right
+right amount however
+um we don't want an entire thing we just
+want the first one so this selects the
+first one
+and that gives us our dog so this is the
+solution for the basic calendar
+um
+here's a cool thing
+we
+took the remainder and divided by 12 but
+there are also only 12 elements in this
+list of animals which means if we rotate
+12 times then we come back to where we
+started
+and it also means that any multiple of
+12 gets us back to where it started and
+the only thing that actually matters in
+the rotation amount is the remainder
+when divided by 12. so there's no reason
+to even compute that
+because if you just rotate it over and
+over and over again then we get back to
+the uh to where we started and then the
+last remainder that's less than 12 is
+what actually gets us to a new position
+so
+this works as well
+and it's not even inefficient because
+the API system itself will compute what
+the final result will be we don't need
+to do it for it
+now here's one issue then
+um and that is
+that
+when we get down to a the small numbers
+when you get to one so that's the
+division remainder
+the four one if we subtract
+one more we get down to zero but there's
+no year zero so the animal that we
+would give year 0 actually needs to be
+given two year negative one
+in other words if we have a negative
+year number then we need to add one
+so let's say we have some negative
+numbers
+and we don't have any zero that will
+never appear but we do have some
+positive numbers as well
+then we can
+compare this to zero so if zero is less
+than that and then in order to make this
+a single function we bind or compose the
+left argument to the greater than
+function
+and this gives us
+A1 or true for the negative numbers and
+a zero for the positive numbers
+if we then take the right argument
+remember this is this pointing thing
+just like we had a
+um up here that we had little little
+finger that points to the left for the
+left argument so this is pointing to the
+right for the right argument
+and we add that to
+the result of this comparison then
+effectively we increment negative
+numbers adjusting them back as if the
+calendar had a year zero so if you use
+this instead of the actual year number
+then we've compensated for the lack of a
+year zero
+okay so we take this whole formula here
+and we put it on the left
+um
+and that means that we have the year
+number over here
+and we don't even need parenthesis
+because APL functions have long right
+scope so this is the
+negativeness added to the year itself
+we use that to rotate this entire thing
+which computes this 12 element list of
+names and then we choose the first one
+after we have rotated them into place
+and this will be our function it's a bit
+long to see here
+but now we can say to 2018
+and we can also say Year One
+and we can say yeah negative one
+and we can look at our table up here
+that f is the rooster and the year
+before that sorry uh year one we said
+was the rooster and your negative one
+should then be the monkey and that is
+exactly what we got so this is a
+solution to the problem
+you probably don't actually want to
+write it like this it would be nicer to
+have this thing saved as a constant
+so let's try that
+we will
+um save this as our list of signs
+and then we can just go up and say
+the list is this
+and now we can use the function f
+exactly the same way it will there's no
+difference here it's just in fact the
+definition becomes the same thing
+because we take the value and substitute
+it in but it's a bit easier to see
+thank you for watching

@@ -1,0 +1,461 @@
+welcome to the apl quest ca pill wiki
+for details
+today's quest is the first from the 2016
+round of the epl problem solving
+competition
+we are
+simply to compute the mean or
+arithmetic mean the average
+there are a couple of gotchas here but
+for the very basic part of the problem
+this is extremely simple
+now the mean is defined as the sum
+divided by the count
+so we could define
+the parts
+of the mean and then combine them
+for the whole thing
+we could do that like this we can define
+small lambda functions in apl
+using curly braces
+inside the curly braces the argument
+is denoted omega
+and then we need to actually compute the
+sum
+and we do that by inserting plus between
+the elements also known as reducing
+using plus so this is plus
+and
+this is a reduction
+and this function then sums
+let's define
+so this is a list or a numeric vector
+you can
+sum the numbers
+like this
+now we want the count
+and there's actually a built-in function
+for the count
+in apl
+it's also known as tally that's why it
+looks like a telemark
+next we can combine these
+so here we define a mean function
+and we want
+the sum of the argument
+divided by the count of the argument
+now i put parenthesis on the left here
+and i didn't put parameters on the right
+and this is because
+apl's order of execution is such that
+any function
+of
+these functions for example and also
+built-in functions every function takes
+as right argument everything to its
+right as far as it can see until it gets
+stopped by say the end of the expression
+or the end of parenthesis
+whereas as left argument it only takes
+what's immediately to its left
+so
+we need to make some
+take
+as argument just
+the right argument to this outer lambda
+and but we and we want count to take its
+argument this other argument
+and then the right argument to
+the division function should be
+everything to its right so that's the
+entire expression on the right that's
+the count there so we could parenthesize
+as well the count but we don't need to
+we do need to parenthesize the sum of
+the argument because otherwise
+without this what some would take as
+argument would be everything to its
+right
+in fact it would give the same result
+because we would be dividing all the
+elements by the count first and then
+summing them but that's
+less precise and
+not less performant either
+okay so now we've defined the mean and
+we can
+apply the mean to p and we get the mean
+of these
+numbers
+but there are some notational niceties
+we can do in api as well
+there's something called tested
+programming or point speed programming
+which basically just is a fancy name for
+meaning i'm not going to mention my
+arguments
+so here
+we have a mention of the argument and
+over here we have another mention of the
+argument
+and basically and
+what happens if we go test it is that we
+express everything in terms of functions
+so we have the sum function applied to
+the argument
+divided by the count function applied to
+the argument and this can also just be
+expressed as the sum function divided by
+the count function
+so we can get rid of a lot of noise we
+don't even need the outer braces anymore
+that's the indicator that we're going to
+use the
+the argument name
+and so we can write it just like this
+the sum divided by
+the count
+so these two outer functions are applied
+to the argument
+and the middle function is applied
+between their respective
+results and the function still works
+what's interesting here is that
+we've defined sum and count in fact we
+can redefine them as tested functions as
+well so we can we can redefine sum
+we defined it as
+the plus reduction of the argument but
+again we're mentioning the argument and
+we could omit the mention
+and remove the braces so we could write
+sum like this
+and we could write count
+similarly just like that
+and then we can redefine mean in terms
+of these new sum and count
+and it still works
+of course this is a bit ridiculous why
+would i give a name sum
+to something that's shorter than the
+name itself some is three characters and
+we probably can't really find any
+any name that would be as short as two
+characters which is the definition of
+some count here is five
+current uh characters but we only need
+one character to express it so we could
+just take these
+and
+these values and substitute them in to
+our definition for the mean
+so we can just write
+the sum
+divided by
+the tally of the count
+and then we can compute it like that
+in fact we don't even need the spaces so
+the entire mean definition
+can be written
+like
+this four characters
+at which point you might then question
+why would you even bother calling the
+function mean when you could just use
+the four characters
+for that means the mean and then
+everybody can see exactly what it means
+anyway
+this is a short way of defining the mean
+and there's a problem
+and that is that the problem
+specification you can look there
+and says that this also has to work on
+the empty list
+and if we try that so we have a symbol
+for the empty list which is called zelda
+because it is a combination of
+a zero
+and the character tilde and
+you pronounce them together as zelda and
+it basically means
+there are no numbers it's an empty list
+like that so we can see that this means
+this picture here means that it has a
+single axis the axis has
+no elements um and
+when we have it being numeric this means
+the type is numeric and this is just an
+example of what such an element would
+look like it would be a zero if there
+had been elements there but aren't any
+you kind of see the zero tilde thing
+now if we try to do the mean of the
+empty list we get one which might be a
+bit mysterious but what's actually
+happening here is that when we sum it we
+get zero and we count how many there are
+elements there are we also get zero and
+zero divided by zero is traditionally
+defined not as an error but as one in
+apl for consistency such that all
+numbers divided by themselves
+give one
+however in this case that's not very
+good we want the problem specification
+says it has to give zero
+so we can fix this because
+we have only in the case where there are
+zero elements we get the sum divided
+which is zero and then divide by zero
+which makes it too big
+but if we were dividing by one instead
+then we have zero divided by one
+and then
+that would give you zero and that's the
+result that we want
+so we can fix this
+by
+taking the maximum
+of one and the count so if the count is
+one or more then it doesn't make a
+difference if the count is zero we get
+one so we basically clamp it to become
+one or
+more and how can we do that well if we
+go back again to our very verbose
+definition of of the mean
+where we had
+and let's now substitute in here
+the sum of the argument
+divided by the count of the argument
+well then we need a maximum function
+which we have in apl it's denoted by the
+up style
+and you can kind of see that
+it's like this vertical bar and then it
+has a bar at the top indicating that we
+want the maximum correspondingly the
+minimum would be this it's a vertical
+bar with a
+indicator at the bottom but now we want
+the maximum
+and then we can put in a 1 over here and
+keep in mind the order of execution in
+apl every function takes as right
+argument
+everything to its right as far as it can
+see so
+maximum here takes the count of the
+argument
+and the omega
+as its right argument and its the left
+argument is to its immediate left so
+that's just this one
+and division takes the result of this
+entire expression on its right
+and now
+mean works as before but if we do it on
+the empty list we get 0 as required
+but we can actually do this testedly as
+well
+again in terms of just function
+application on the argument so here we
+have the count
+and then we do the maximum of 1 and the
+count that still works like that
+and then we have a division and what we
+want to be divided is the sum so this
+says the sum divided by
+1
+maximum
+count and the count
+we can again substitute in here
+and this gives another again we could
+remove spaces if we wanted to and this
+gives us the mean which works
+on p
+and mean which works on
+um
+on the empty list
+and this is a a very good solution to
+the problem and let's just demonstrate
+some features of it because actually the
+problem wants us to
+make this applicable even to higher rank
+arrays
+so apl arrays are
+not just lists of things but they can
+actually multi-dimensional they can be
+arranged along
+multiple x's
+let's define a second number
+so
+now we have p and we have q these two
+lists
+um and they are one dimensional there's
+only one axis that can be collapsed by
+taking the average over that axis but we
+can combine them
+in various ways
+and one way to combine them is to
+combine them into a a table or a matrix
+of two columns
+and we can do that by making each one of
+them into a
+a one column matrix or a column vector
+also known as that
+and then
+concatenate them together
+so we have this
+function comma bar
+which is called table
+and it takes an argument say q
+and it makes it into
+a
+matrix so here this arrow indicates that
+there's a single axis along which the
+elements are ordered
+and here we have two arrows which says
+that there are two axes
+along which the elements are ordered so
+this is the the first x's
+which are the rows and the second x's
+which are
+the columns and we could of course do
+the same thing
+for p and then we could combine the two
+of them with concentration
+so we can take the table of p
+concatenated with
+the table
+of q again i don't need parenthesis on
+the right because
+the concatenation function takes
+everything on its right as its right
+argument
+now we have a two column table
+we could actually write this in a much
+neater way because what we can see is
+symmetry here
+we see that we are concatenating the
+tabling
+of these two arguments
+p and q
+and we have a way to write that in apl
+we can write p and q
+concatenated
+with each other but we don't want to
+concatenate the p and the q we want to
+concatenate a certain aspect of p and q
+namely their table form
+and for that we use what we call the
+over operator
+you could
+see this as pre-process the arguments
+as
+um
+in a certain way
+and so this is not a function this is
+called an operator that's a higher order
+function it takes the concatenation on
+one side and it takes the tabling on the
+other side so these are two functions
+and it
+it combines them into a new function
+which isn't concatenation it is the
+concatenation
+of the tables
+so this does exactly the same thing as
+the previous expression we wrote it does
+a table on each one of them and then it
+concatenates them together
+and so with this new array which we can
+call a
+we can take the mean of a
+and this gives us a two element vector
+or list one per column
+and what's why is it why is it doing the
+average vertically so to say
+because it's
+the tally
+counts
+along the leading axis
+how many
+elements or sub-arrays are there along
+the leading axis
+and so for both of these um and it
+couldn't be otherwise it can be ragged
+there are five
+and also the summation that we did which
+was the the plus reduction so this was
+the reduction symbol um which actually
+also isn't a function it's an it's an
+operator higher order function which
+takes this plus
+and modifies this
+much like the over operator modifies the
+concatenation
+modifies plus to become a plus reduction
+or a summation
+and this also works
+along the leading axis which is over
+here
+so we're summing each column and then we
+are we have the two column sums we can
+try this
+and then we're dividing by the tally and
+the number of
+rows and that's why we get the two
+averages apl automatically
+pairs up
+elements of arrays when we're doing
+arithmetic so 2.8
+and um
+is the result of 14 divided by 5 and
+3.2 is divided the result of 16 divided
+by 5.
+what if we wanted to
+to sum
+and count along
+the rows
+well then there's another operator a
+higher order function that we could use
+to modify
+a function and it's not just built-in
+functions that can be modified even our
+and our own function mean can be
+modified
+so we count the number of dimensions
+this has two dimensions this whole thing
+but each row in itself only has one
+dimension and we want to apply the mean
+function not to the entire table but
+to the one-dimensional
+sub-arrays of this table and for that we
+have
+this which is called the rank operator
+it takes this function on the left and
+then the specification of the
+dimensionality or rank
+of
+the argument that we want just this mean
+function to see
+and so
+this says the mean
+on each subarray of rank one that is on
+each row and if we do that
+then we get five results so two is the
+the average of three and one and three
+point five is the average of one and six
+and two point five is the average of
+four and one and so on
+and so this by defining a function in
+terms of the leading axis this allows us
+later to also
+have a function available that we can
+apply on other axes simply by using this
+rank
+operator
+and that's all i wanted to show for
+today thank you for watching

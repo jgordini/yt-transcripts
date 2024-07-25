@@ -1,0 +1,97 @@
+welcome to the appeal Quest cap Wiki for
+details
+today's Quest is the sixth from the 2016
+round of the APL problem solving
+competition
+we are to take a list of arrays specific
+the list of vectors or possibly scalers
+and sort them by that length the
+shortest ones are in the front and the
+longest ones at the end
+this is really simple
+let's make some test data
+okay so this is a list or vector as we
+call it and it has six elements let's
+try printing it
+and we can see that there are some
+numbers that would have the length of
+one and then there are some strings in
+here that have the length of two and
+five three and five and then there is
+also a list of numbers which has length
+four
+and the way we get the length is by
+using the tele function
+and it looks kind of like a Telemark you
+would make into a counting stick
+but we don't want to tally D because
+that will give us the number of elements
+in D instead we want to tally each
+element in D so we use the each operator
+or higher order function which is kind
+of like a map
+so we are taking this function which
+we're applying
+to each element of d
+and here we can see the length
+what the number one has length one the
+word two has links three and so on
+and now we can use this to grade
+grading is a it's a very apla operation
+really but it's kind of like the more
+fundamental form of sorting it doesn't
+actually reorder the elements but rather
+it gives us the indices of elements
+as we would need to take them so that
+they should become ordered we're not
+doing the ordering quite yet and this
+function exists like this because then
+you can use that information to sort
+something else which allows you
+basically to sort some data by some keys
+for example
+so this gives us
+that if we want it to be sorted by this
+information the length of each
+then we first take element number five
+that's this empty string
+and then element number one which is a
+number and then element number four
+which is this number four then element
+number two because it has links three
+and then element number six because it
+has length four and finally
+element number three because it has
+things five
+and then we can use this information to
+index into d
+so with square bracket indexing
+which allows us multiple indices and
+when we give it multiple integers it
+just reorders the elements or picks out
+those elements in that order
+that gives us this
+and that's the result that we want but
+this isn't actually a function that does
+the work rather it's just an expression
+we can change this into a function
+Anonymous function the Lambda and by
+putting braces around it and then
+denoting the argument with Omega because
+the argument goes on the right just like
+all the other functions we applied so
+far
+and the argument goes on the right and
+Omega is the rightmost character of the
+Greek alphabet so we put Omega instead
+of the D's and this gives us a function
+we can either apply it directly
+or we can give it a name so this is uh
+sort by length for example we use left
+arrow for assignment equal sign just
+means equality
+so now we've given the name and we can
+then call it on D
+and it's Source it correctly for us and
+that's really all there is to it thank
+you for watching

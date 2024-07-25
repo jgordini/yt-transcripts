@@ -1,0 +1,651 @@
+welcome to this episode of the apl quest
+c apl wiki for details
+today's quest is
+generating an identity matrix of order n
+very simple task
+um but a lot of interesting ways we can
+do this
+and let's go get started with some
+serious solutions and then look at some
+more fun innovative solutions after that
+so the first thing we can do
+is
+that we have a number n let's
+for argument 6a that n is five and we
+want to make a matrix that is five by
+five so we can calculate n to itself
+giving us five by five
+next up we can generate all the indices
+of an array of shape five five
+and we can take these indices and look
+at where the horizontal and vertical
+index are the same by comparing each
+this gives us our identity matrix
+however we can do this in a simpler way
+we only need to generate the indices
+until
+n
+and then make
+an
+inequality table using the outer product
+and the selfie or
+commute operator to use the same indices
+on both sides of the quality
+and in fact this is our
+simplest solution
+so just
+the outer product
+selfie on the indices
+it isn't a very efficient solution
+however because we are comparing a lot
+of numbers in general that we have
+generated when we actually know where
+the ones are going to be in advance
+so what we can do is we can start off by
+creating an empty matrix
+of zeros so we take n
+and
+use that twice to reshape zero this
+gives us
+a big
+empty vector like this an empty matrix
+like this no it's not empty it has big
+zero matrix like this
+then we can use dyadic transpose which
+selects the
+um
+it can collapse dimensions so that we
+get diagonals we can illustrate this by
+saying 5 5 reshape iota 25
+and then we can use the attic transpose
+mapping
+both dimensions to a single dimension
+and that gives us the compromise between
+them diagonal
+so now we can use this with a selective
+assignment
+we say one one
+transpose of s
+gates one and the one that gets
+distributed over the entire s
+and now s has been updated to become an
+identity matrix we can put this into a
+function
+as
+s gets
+omega omega reshape zero
+and then the diagonal of s gets one and
+then return that s
+and we can now give it the argument five
+fine
+and
+this is verbose but it works it doesn't
+have the best performance necessarily
+and it's a bit awkward because we have
+to have this middle statement where we
+update s before we then return s
+we can also use the add operator to do
+something similar
+we can start off by generating all the
+indices that need to be set to 1. how
+can we do this well if we start with
+uh
+with this iota n um in in our case then
+we know that it is the
+uh the elements of position one one two
+two three three four four and
+that need to be set to one
+so what we can do is we concatenate
+selfie concatenate to itself each one of
+them and these are the indices
+that we need to
+set to one
+and then there
+we can
+use this
+setting one at
+those
+indices
+in
+the array
+that is n and reshape zero
+and that will give us
+an
+identity matrix
+we could also use these indices in a
+different way
+and namely we could
+say give me a boolean matrix that has
+ones in those positions so
+where are all the
+ones in the boolean matrix is magnetic
+iota underbar
+and the inverse we can use power
+negative one
+on that and that gives us an identity
+matrix as well
+there are even more things that we could
+do
+along these lines instead of using a
+matrix we can use a vector
+and
+the way we can do that is by observing
+that this is kind of an encoding
+of
+in in a special radix
+so
+we want
+ones
+and then when we do things like that we
+we need to see set coordinator to zero
+otherwise it becomes too complicated
+so what we can do is we have the indices
+um iota n here
+and then
+we can multiply those by n
+and
+so this corresponds to
+um
+let's see number zero is this element
+and number five is this element and
+number ten is this element in revel
+order
+however we need to offset one for each
+one so if you take these indices and add
+them to this that gives us in revel
+order
+that diagonal we can actually see this
+if we say 5 5 reshape by yo to 25
+we can see that 0 6 12 18 24 those are
+diagonals
+and once we have those we can then use
+the add operator as before so we can set
+the ones
+at that
+in a vector
+which is
+zero
+reshaped
+to the shape
+of n squared
+and this is our flattened identity
+matrix now we can take the proper shape
+and reshape it and we get our identity
+matrix
+let's change back to quarter one index
+origin one and then actually do some uh
+the best performing solutions
+and and that we can observe similar to
+what we've done now we can see that
+there are exactly n zeros onto the next
+one and then again n zeros to the next
+one
+so what we can do is we can begin with a
+one followed by n zeros
+and then we can reshape that cyclically
+into our full full shape we'll use n
+here
+and this is almost as good as
+it gets there's one problem for a very
+large
+n
+and we create a boolean vector of all
+zeros and then by inserting one at the
+beginning
+it gives us sub-optimal performance
+because we need to copy this entire
+array one step over shifting everything
+by one bit to insert that leading bit
+how can we avoid that
+well
+we can use overtake so if we say n take
+of one it pads with additional zeros at
+the end
+and the only thing we need to do here is
+really adding n plus one
+and this gives us the full row and now
+we can reshape into that shape so this
+is going to be the best it gets we can
+put this into a function
+as omega omega reshape
+omega plus one
+take one
+and we can also make this into a tested
+form and we can play some tricks there
+so let's split up the problem omega
+omega that is the self concatenation of
+the argument
+then we reshape that
+and then we want the argument plus one
+so we can tie
+or bind
+a 1 to plus making a magnetic function
+so that's an increment function and we
+use that to take from well we need a 1
+here but we can't have 1 at the end of a
+tested function
+because it's a constant not a function
+we can transform it into a function
+using uh the constant operator
+so we can try this as well
+and that works
+and then for a little bit of uh of
+trickery we can actually
+avoid this construct of one constant
+by observing that the
+sine
+of five
+is one
+and the problem was that we needed on
+the right hand
+to have a function not a constant
+so this is a function applied to any
+number that's relevant and we get one if
+we want the zero by zero it doesn't
+matter that the sine of zero is zero
+it will still work because we it becomes
+an empty array
+so it doesn't matter that we are taking
+from 0 there so we can do this we can
+say i5 like this another possibility
+is observing that how many elements are
+there in a single number there's only
+one and that applies even to zero
+and so we can
+we can do that as well
+so this is a
+this is the fastest solution that we're
+going to get this is a proper solution
+whether you want to use a tested form or
+a defend it should be about the same
+performance
+now onto some more fun and innovative
+solutions that we could do
+and remember again that we needed a
+single one followed by n zeros and we
+can actually do that using expand
+so if we have
+uh if we have a one representing that we
+want
+um
+one one and then we have negative n
+representing
+n fill elements we can use that with the
+expand function on a single one to get
+the same thing and then we can reshape
+that
+to our identity matrix and we can write
+this um in a tested form and so this is
+again the self-concatenation
+reshapes
+one expanded
+by
+one
+followed by
+the negation
+and it works for
+zero as well
+what happens in the zero case is
+negation of zero is zero so we get one
+zero that means we expand one as a
+single one with no fill elements reshape
+that to zero zero and we have an empty
+numeric matrix so that works as well
+um
+here's one that almost always works like
+there is an astronomically small
+probability that it won't work but it is
+rather fun
+let's say we have a
+matrix
+of uh
+random numbers so
+with the zero as argument question mark
+gives us random floats between zero and
+one so they won't be zero they won't be
+one
+and it's
+exceedingly unlikely that we'll have
+duplicates here of course
+now if this is a matrix
+then
+there must exist a matrix
+such that
+m and multiplication here means matrix
+multiplication we can we can write that
+as cluster times um
+will give us but in traditional
+mathematics just at times will give us
+the matrix itself and that is the
+identity matrix
+now if we move things around around on
+the in this equation we'll find that
+dividing the matrix by itself should
+give us the identity matrix and indeed
+that is so
+so we can do
+m
+matrix divide with m and that gives us
+an identity matrix and we can write the
+whole thing as matrix division
+selfie
+on
+the random numbers
+of the self-concatenation
+of zero
+so here's a constant zero again
+you can try this
+and it works
+similar to what we did with sine and
+tally to get a 1 there's also a function
+which
+for
+a single number a scalar gives 0 and
+that is the depth function
+so the depth of a single number a scalar
+simple scalar is zero so we can go up
+and amend our function to this very
+obscure looking thing
+which works just fine and is very very
+inefficient because api will have to
+solve an equation system
+every time we generate an
+identity matrix but hey it's fun right
+here's another one which is
+very very inefficient
+let's think about this we've got
+the indices up to n
+um if we subtract these from n itself
+that gives us
+descending powers
+from four down to zero
+raised two to the power of that
+and we've got descending powers of two
+and now if we go up and look in our
+identity matrix then we can see that the
+first column
+is
+16 spelled out in binary and the second
+column is
+8 spelled out in binary and 4 and 2 and
+1.
+so this means that if we represent all
+these numbers
+in a
+in
+base 2
+then
+we
+we would get the identity matrix so we
+could do something like this
+which
+auto sizes but we already know
+that we want n bits so we can say n
+nreship2
+encode on that
+and that works as well and then we can
+make the whole thing tacit
+by saying that it is the reshape of two
+so this is a magnetic function which
+reshapes two
+encodes 2 to the power of the argument
+minus
+iota on the argument
+so this works just fine
+but again very inefficient doing base
+conversions when we just want to create
+um
+an identity makes it but fun it's fun
+okay a little bit more and of
+fun
+we can
+um
+we can generate the negative indices
+and then we can overtake like we did
+before
+on a1 so each one of these will be used
+to take
+from
+a1 so it takes from the rear padding
+will
+zero us at the front
+oops that was too much
+missing in each there there we go
+and now we just need to stack them up on
+top of each other and there are various
+ways we could do that
+we can mix
+or we could
+use
+the rank operator so we want to pair
+these up we need to do take
+pair these up with one
+and then it mixes everything together so
+that works as well
+and now we can
+put all this together to create an um
+a tested function so we have the
+negation of iota take rank 0 on remember
+how to get a 1 without using literal one
+we could use tally for example
+so this should work as well
+and here's our density matrix in the
+rather
+roundabout way
+another thing we can use is scan so we
+can get normally prefixes
+of
+a vector
+like this if we instead of concatenate
+so this is a cumulative concatenation we
+do a cumulative
+swapped concatenation
+then we get these reversed
+prefixes instead
+okay
+so if we can have a way to get reverse
+prefixes
+and
+we have a way to get
+one followed by a bunch of zeros
+then these give us our rows and we just
+need
+to mix
+and so we can write this as an
+as a function
+the
+conclusion
+swapped scan
+and off
+the
+take
+of
+one so this is an end take
+one
+and then
+we mix that then we just need to put and
+a top here so we have
+two functions after each other
+and here we got our identity function in
+a very roundabout
+manner but lots of fun again
+and
+now let's move over to the key operator
+which we can also use for this
+so we can generate our
+our indices like this
+and then we can ask the key operator
+what are the indices so let's put it
+like this
+but now
+so this is saying index one is found or
+the number one is found at position one
+the number two is filter under position
+two only number three is found at
+position three that means the alpha here
+is one and omega is what
+f plus 2 omega is 2 and so on
+now we can use take
+here
+and that gives us
+these vectors
+and we can see how where we're going
+with this
+we can then reverse this
+and now we just have the problem of the
+sign
+so we can take the sign of all of this
+and we need to stack them on top of each
+other as well
+so we could mix it like this but there's
+a better way but not enclosing them we
+already get the mix for free and now we
+just need to get the sign
+here
+and then we can make this tacit because
+it fits very nicely it is the reversal
+on top of the taking of these two
+arguments
+and that gives us
+our
+identity matrix it's not quite a
+function yet
+but we can make it so by combining the
+key with the indices and now we have
+our identity matrix generator in a
+totally obscure way that nobody will be
+able to understand don't do this in
+production code
+let's make it worse
+let's start again with um
+with this construct
+and
+here we are only interested in the right
+argument
+so that gives us these vectors
+of
+um
+indices one by itself two beta three
+beta four by five by itself and remember
+we used the uh iota underbar the where
+inverse to generate a boolean array and
+that has ones in those positions there's
+only one position in each one but
+we can still do this
+so
+this gives us these vectors and yes you
+recognize this remove the enclosure
+and we've got our identity matrix
+and we can combine this we can make the
+operand
+test it simply by saying that it's this
+where inverse on top of the right
+argument we have to have that because
+there's a left argument as well
+and so this is our function
+and
+that works
+again don't do this in production code
+but it sure is fun to look at and then
+somebody asked during the live chat
+event
+if we can't use complex numbers for this
+and of course we can use complex numbers
+for this okay let's get started
+so
+we have these indices
+and let's make a table of complex
+numbers so we do the other product of
+the real part
+plus the imaginary part so we multiply
+the imaginary units
+with these indices oops there shouldn't
+be n here it should be
+that and that gives us a complex number
+table so this is 1 plus 1 i 2 plus and 1
+plus 2 i 1 plus 3 i next row 2 plus 1 i
+and so on
+and now what we need to do is we want to
+find out the ones that are down the
+diagonal
+and both actually down the diagonal we
+can kind of see the angle of them but it
+also happens to be that in a complex
+plane these will have an um
+an angle or an also known as the
+argument
+which is 45 degrees or a a quarter of pi
+so we can ask for the argument of that
+and we can see that going down the
+diagonal they all have
+that
+0.785 and so on
+now we can multiply that
+by
+or
+or rather sorry divide pi by that
+so the same thing as taking the
+reciprocal and multiplying by pi
+and then you can see that gives four and
+now we can say
+where is 4 equal to that
+and that gives us our identity
+matrix so this is our full function
+would be
+to
+we could either do iota
+omega here or we could just use omega
+and put iota outside that as in the top
+and we've got
+our identity matrix producing function
+here in a terrible way using complex
+numbers and as if that wasn't enough
+let's go in and modify this a bit
+so starting again from here with our
+table of
+complex numbers
+we can also ask
+what is the absolute value or the
+magnitude of these numbers
+and
+since they are on the 45 degree angle
+that means that
+the horizontal and vertical parts
+in this right angle
+triangle
+are
+equal to each other that means that the
+diagonal's length has to be a multiple
+of the square root of 2.
+so we can ask what is
+the divisional remainder when these
+numbers are divided by the square root
+of 2
+and if there is no remainder
+then and we are at on the diagonal so we
+can compare this with zero and we get
+our
+identity matrix using complex numbers
+that's enough fun
+and what you should do of course is use
+the solution
+where we take the argument twice reshape
+with one plus the argument to take over
+of
+and of one or you can use the tested
+version
+where it's a self-concatenation
+of the reshape
+of the incremented number take off
+one or as a constant or you can use
+the sign or the tally if you really want
+to go there but these would be the
+industrial strength
+versions you can also go up and if you
+don't like parentheses like i personally
+don't do
+then you can swap the arguments of this
+take as well
+that's perfectly acceptable
+as well
+thank you for watching

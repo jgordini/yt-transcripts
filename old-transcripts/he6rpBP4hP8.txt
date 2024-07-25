@@ -1,0 +1,332 @@
+hi
+the problem of
+taking a Boolean vector and leaving only
+the very first true
+while all subsequent trues become false
+is conceptually really simple
+and the APL solution to this is also
+extremely short
+the challenge is really to understand
+how this works
+so let's say we have false false true
+true false
+what we want to do is change the second
+true into a false because only the first
+true is going to survive
+and the entire APL solution I'll give
+you right away is just this these two
+characters
+but why is that
+for this we have to understand what
+exactly
+the backslash is doing which is a scan
+or a cumulative reduction
+and then we have to understand some
+properties of using less than which you
+normally would associate with comparing
+numbers
+but it's being applied here as a Boolean
+operation
+okay so first scan
+scan is actually
+reductions over the prefixes
+so let's say that we take the first
+three elements of our data
+we if we also want to take the first
+four elements of our data then we would
+have to take each and each one of them
+shouldn't apply to individual elements
+of our data but rather to an entire one
+so we enclose it to become an entire
+whole
+so here we have the first three and the
+first four
+but we want all the prefixes
+we can get the length
+and we can get the indices of the length
+and so these are all the prefix links
+that we want to take
+we'll compose these two functions
+together and then we use them to take
+each from the entire argument
+okay so this gets us our prefixes
+let's for convenience give this a name
+right
+and now we can do a reduction
+over each one of the prefixes
+so this is a less than reduction on each
+of the prefixes here
+and yes indeed that gives us the same
+result because this is the definition of
+the scan
+but why is this and for that let's take
+a bit of a closer look at the properties
+of less than when used in a Boolean
+context
+so
+there are only two possibilities for a
+left argument for for less than zero and
+one the false and true and there are
+only two possibilities of a right
+argument
+zero and one the false and true
+let's do all the combinations that's an
+out of product so we do an outer product
+but it's not a multiplication here it is
+a less than
+can be a little bit hard to understand
+what this result represents so let's
+decorate it with some headers I'm going
+to put the less than character in the
+corner and then I'm going to add a
+header row on top with three columns the
+zero and the one right next to the
+symbol I'm going to put that on top and
+then we're going to put a heading for
+the rows as well which are also the zero
+and the ones so they go on the left of
+this and now
+we get a kind of nice table
+it's a like think of it like a
+multiplication table but it's a less
+than table so zero less than zero that's
+zero
+one less than zero is zero why because
+it's true and false so is one less than
+zero no it is not so false zero
+and we can see that there's only one way
+that less than can give us true
+that's this one over here
+and it happens exactly when the left
+argument is zero and the right argument
+is one
+so in order to
+get a final one result
+we must have a condition where we at all
+times have one on the right and zero on
+the left
+okay let's go back and look at our
+prefixes then
+so here
+we remember that APL reduces
+from the right because reduction really
+means you're inserting the function in
+all the spaces between the elements so
+we start from the right
+the first one is just a single element
+which just stays the way it is there's
+nothing to insert here here we get 0
+less than zero which it's not so it's
+false so that's a zero this is the one
+is and here we have zero less than one
+which is true
+so in a sense this one
+moves over one step it takes the place
+of
+these two elements and again we have
+zero and one
+and we get
+A1 which fulfills the condition so this
+prefix which is the third prefix results
+in a one and if we look at our data
+that's the first one we get a one
+now for the next one we have two ones so
+that according to our table at the end
+that gives us false
+so
+the new value 0 takes the place of these
+two elements and we've got zero zero
+zero
+zero less than zero that's also false
+zero less than zero it's also false so
+the result for this corresponding
+element number four
+is false
+and over here we have a zero but again
+it's the wrong way so one is not less
+than zero that's false and then that
+takes a place a zero takes place of
+these two elements so again we have one
+and then zero and that's again false and
+then we're back to the same cases we had
+before zero zero zero we get false
+another way to think about it is the
+only way a one can survive
+moving towards the left towards becoming
+the end result for this corresponding
+prefix is if it has all zeros on its
+left
+if it sees any one they will clash and
+we get zero and everything is canceled
+out from then on
+which means only the very first the very
+leftmost one can survive
+because the first one necessarily has
+all zeros on its left
+and what if there's nothing to its left
+well that would mean it's the first
+element if it would be a one then a
+reduction doesn't do anything and we
+just get that one back and so it
+survives any subsequent one will hit
+that first one and be canceled out
+there's a lot of talking let's try to
+illustrate this a bit so I'm going to
+implement some a little bit involved
+lambdas or defense
+um but when we run them then we'll draw
+a nice diagram so that we can see what's
+going on and all I'm going to do here is
+I'm going to write covers for the
+built-in APL
+so let's write a cover for the less than
+function
+and we'll start off by printing out what
+is going on so we're going to print
+and I'll start by printing a little bit
+of indentation you'll see in a moment
+why
+then we print the left argument
+followed by the less than so that we
+actually doing a lesson operation
+then the right argument and then we'll
+use an arrow to indicate that this gives
+us a result and then the result is going
+to be left left argument less than the
+right argument
+so this just prints it we don't want to
+return this nicely formatted thing for
+human consumption we want to just return
+Alpha less than Omega so left argument
+less than the right argument and yeah
+we're Computing it twice but performance
+is not what we after here it's just
+illustration
+okay then we had the less than reduction
+that we were applying let's define less
+than reduction and we're going to do
+very much the same thing this time it's
+one level out so we're going to give it
+a little bit less
+indentation
+and then we want
+to print out that we're doing a less
+than reduction and there's just one
+argument and then we can print out the
+result then less than reduction of the
+argument
+and then
+we'll actually do the less than
+reduction
+but let's use our comma function
+because this will have the side effect
+of printing out every time
+the reduction invokes the less than
+function
+and finally we'll write the less than
+scan
+in much the same way this time it's the
+topmost level so we don't do any
+indentation we'll write out that we're
+doing it less than scan on the argument
+leading to the result of a less than
+scan of the argument
+and now we're going to use our cover for
+the less than reduction for each it
+would be this
+but we instead rewrite less than
+reduction on each of the prefixes
+of the argument
+okay and now we can run this so we did a
+less than reduction on our argument zero
+zero one one zero
+and now we're going to do exactly the
+same thing but we're going to use our
+cover function less than scan
+on this argument
+and we get a whole lot of text out
+so what is this illustrating
+this is illustrating that the overall
+operation is like a hierarchy overall
+operation is taking
+this argument here
+and applying a less than scan to it and
+getting this result
+and as part of that there were multiple
+steps the first step was reducing the
+first zero
+that's the the prefix there
+and that immediately gave the result
+there's no indented line below this
+because there are no further steps
+there's no actual invocation of the
+function less than we just directly
+derive the result without applying
+anything because there's nothing to
+reduce
+then we took the next prefix which were
+the first two zeros
+and got the result zero how did we get
+the result zero well we inserted less
+than between these two zeros which gives
+us
+zero
+and then we go on to the third prefix
+that has a one
+and it gives us the result one when we
+do the less than reduction on it how
+does this work well we start off from
+the with the right most two elements
+0 less than one that gives
+A1
+and then this one becomes the right
+argument over here with the Zero from
+the left going over here
+and with the lesson between them we get
+a one and so this gives us the first one
+in the result that we can see up here
+that result there
+and then we take the prefix with four
+we start off with the two rightmost
+elements
+that gives us a0 according to our
+truth table that we computed before for
+lesson
+this zero survives into the right
+argument of the second invocation of
+less than with a new zero on the left
+that's the zero gives us zero that goes
+into
+here and we pull down the
+leading zero
+and zero less than zero gives zero and
+so too for the last element we start off
+with a zero on the right and a one on
+the left
+and then the result which is a zero
+survives into here we have the same
+situation and the zero propagates on and
+on and eventually we get zero
+and so we get the full result
+where the first one is only one that
+survives because any other one will
+clash with that one when it hits it
+being reduced from the right
+and this is why
+um less than
+scan is an idiomatic expression for apls
+when dealing with Boolean data and you
+need to filter out so the only the first
+one remains once you have some
+experience with this then you stop
+seeing this as a lesson reduction which
+otherwise will require a lot of
+reasoning why it exactly gives the
+result we want and you just start
+reading it as a whole
+as keep the first one
+in fact there are additional Boolean
+scans like this that are really useful
+for performing various operations but
+this one is a very famous One
+thank you for watching

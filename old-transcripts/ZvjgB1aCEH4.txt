@@ -1,0 +1,126 @@
+hi today's Quest is to find the set
+difference between two sets but the sets
+are given as um any type of
+arrays and um the difference has to be
+symmetric so it's not just all the
+elements from one element from one
+argument that's not in the other
+argument it's only those elements that
+appear in exactly one of the arguments
+but not in both of them
+let's get
+started we have here a character vector
+and here's another character vector and
+we can see that both of them have an A
+and both of them have an L so those
+characters should not appear and what we
+should get instead then is a d a y and O
+and G and P from this one over here and
+let's make an anonymous Lambda a defin
+um here in we refer to our left argument
+as Alpha and our right argument as
+Omega and we want to consider all the
+elements and then remove the ones we
+don't want and all the elements we can
+get by using the
+union of these two so the a set Union
+we're treating these character vectors
+as
+sets and the ones that we want to remove
+are the ones that are in both so that's
+the intersection between
+them and then we can use the set
+difference uh between the
+union and the
+intersection and for symmetry we can put
+parenthesis here that's not strictly
+necessary
+right this however is a really great
+example of what is called a diic fork
+notice that if we think of the functions
+involved in the algorithm we have here
+the Union function applied to the
+argument and we have the intersection
+function applied to the argument and
+then the results of those two function
+applications become the become the
+arguments for the set difference or
+without
+function and for that we can use the for
+construct which does exactly that for
+construct is just three
+consecutive functions in
+isolation and it reads nicely the union
+without the intersection and that's
+exactly what it
+does so this is a neat way to write
+it um another approach that we could use
+is to say that we have all the
+elements from one argument it except
+those that appear in the other
+argument and similarly all the elements
+in the other argument that are not in
+the first
+argument and then all we need to do is
+to merge the two and that could be using
+uh a union or just concatenation and
+there's no really any reason to write
+um a union because we know that they
+must be all different so we can just
+concatenate them
+together here we have something that
+looks like the for construct with the
+same function on the right and the
+left
+and the trick is that we have the
+arguments swapped otherwise it would
+have been exactly the same on the right
+and the left so how can we do this in
+order for us to apply the fork construct
+then we need to have the left argument
+on the left and the right argument on
+the right we can modify using a montic
+operator the set difference function
+which is not symmetric to swap its
+arguments so this till the diis it deres
+a new function which is the same as the
+old one except its arguments are swapped
+so now we can put the alpha on the left
+and Omega on the
+right and with that we can clean up to
+get just the function in
+isolation use the nice Fork syntax ahuh
+but there is a catch and that is that we
+not guaranteed that our arguments are
+vectors or scalers they might have
+higher rank for such a thing um let's
+say
+we we put in the comma bar function
+which then applied to this argument over
+here and it gives us a column Vector
+let's try that for a moment so if we try
+to do that then we get an
+error and the same thing would be if we
+use our other uh function over
+here same kind of problem a rank
+error so what we want to do is before we
+start applying the main part of the
+function we need to pre-process both
+arguments to make sure that they are
+just vectors and we can do that because
+we have a um special operator thetic
+operators it takes two functions
+combines them and the comma when used
+with just one argument which is what
+this operator will do uh it is a
+flattening operation or Revel it
+destroys the outer uh shape but it keeps
+all the elements intact so if you do
+that it will work and the same thing
+goes for our other function over
+here this will also work so these
+two are the two solutions we can give
+them
+names
+and then we could apply them in line as
+before like that thank you for watching

@@ -1,0 +1,209 @@
+hi this task is to group up a list of
+integers by which other integer they are
+divisible
+by so here we start with two lists and
+these on the left are their targets we
+could say where that numbers have to be
+divisible by and on the right we have
+our selection of numbers that we're
+going to test so the idea is we are
+returning a vector vectors or you could
+say list of lists the first list will
+contain the numbers from the right that
+are divisible by two so that would be
+the even numbers 8 12 and
+10 and then we the numberers divisible
+by four that's 8 and 12 the ones by
+seven that's just seven the ones are
+divisible by three
+which is just 12 and then one's
+divisible by nine which there aren't any
+so we need to have an empty list of
+there so we're going to have a list of
+uh five elements because we have five
+elements on the left and each uh sub
+list then can have up
+to this many six in this case elements
+but in our case there won't be any
+because then we would have to have a one
+on the
+left and we can do this quite simply
+actually so we want to do this this
+looping thing we want to try for each
+one so makees let's make a little Lambda
+that we apply to each one on the right
+but we want
+to um apply it not pairwise that won't
+work anyway because they have different
+lengths we want to apply every time
+around the loop with the entire right
+argument as our right argument so we can
+do that by pre-processing
+the right argument with an enclosure so
+this makes the right argument into a
+single element which is then mapped with
+each one of the elements on the left we
+can try this and see it so if we just
+refer to the left argument as Alpha the
+right argument as
+Omega then we can see how two got paired
+up with the entire list and four got
+paired up with the entire list and so
+on okay now we're ready now we can start
+by uh finding out if the ible or not we
+don't have a direct test for that but we
+do have a remainder um and if the
+division remainder is zero then it's
+divisible so this is commonly known as
+modulus and so you can see here this
+says yes uh this says the
+remainder when dividing five by two is
+oneing seven by two is 1 we're dividing
+8 by two is zero and over here when we
+divide 5 by 4 we get one left over seven
+it gives us three left over eight
+divides cleanly so if we just compare
+these numbers to zero that will give us
+a Boolean mask for the ones that are
+divisible and all we then need to do is
+filter the right argument by that mask
+so this is a filtering function it takes
+a uh a list of of ones and zeros on the
+left and they take some data on the
+right but this higher order function
+flips the order of the arguments right
+and left such that we get it um our
+expression a clean flow from the right
+to the left of the
+data and this gives us uh the correct
+answer we can see that the numbers from
+the right are divisible by two are the
+even ones the ones that divisible by
+four are 8 and 12 and so
+on however there's also a uh a very
+clever solution that someone came up
+with in the chat event leading up to
+this
+video and that used
+and some unusual constructs let's have a
+look at uh that as well so let's start
+up with our numbers here and the way
+we're going to do this is we're going to
+to build up piece by piece
+um first we're going to start with an um
+a divisibility table for all the numbers
+with all the numbers cuz we need to
+check all of those anyway we can do that
+in one swoop so we use an outer product
+which is kind of like a multiplication
+table but instead of using
+multiplication we're using the
+remainder so this is a remainder table
+and we can see that we have two 4
+7 3 and 9 going down and then 5 7 8 1 uh
+and so on going across and then we can
+see corresponding numbers whether the
+divisible so we can see for example here
+that
+uh that if we have the third number
+which is um seven and we are dividing it
+into seven then the remainder is zero of
+course and with eight we have one over
+here and then we can do just like before
+comparison with zero because a is rank
+polymorphic so we can just do
+comparisons between this scalar and this
+whole
+table and that gives us our divisibility
+table rather than a uh modulus or
+remainder
+table okay now we need to take each row
+here and use it to select the
+corresponding elements from over
+here and the way we can do that there a
+couple of different ways we can do it um
+but we can use a construct with
+rank so the rank operator specifies What
+sub arrays we want to be given to a
+function so we use the slashes before
+for the filtering and then we want to
+filter using rank
+one and that means we're going to
+conceptually at least Loop over every
+row of these and pair them up with also
+a rank one that's a a vector from the
+right which is just the right argument
+oops uh yeah there's a problem here we
+need to parenthesize this otherwise it's
+not going to
+work okay now we can see there's a
+problem that in order for this to fit
+into an orthogonal array
+then and we pad with additional numbers
+because the length of each of these
+results isn't the same um so rather than
+having this be an orthogonal array we're
+going to post prod process the result
+from each application of uh this
+replicate function or compress or filter
+if you want with an enclosure to make it
+into a Scala make it into its own
+Standalone
+thing and that gives us uh the result
+that we
+wanted now we can be really clever here
+and we do that by um
+realizing that this is is actually
+What's Happening Here is actually a
+pairing up of
+corresponding
+um rows from the table on the
+left
+with everything on the
+right and then a concatenation of the
+individual results so that really makes
+sense here because this is the first
+result from the filtering and this is
+the second results from the filtering
+and they're just concatenated together
+not joined but as separate elements
+they're joined into a um a single list
+and then we can write that as an inner
+product so normally an inner product is
+the sum of
+multiplication some people like to call
+this a uh map reduce we start off by
+mapping with multiplication and then we
+do a reduce which is a
+summation but APL generalizes this
+um as the dot it's also known as a DOT
+product to any two operations that take
+two arguments so here instead of
+multiplication we're going to do the
+filtering and instead of doing the
+addition we going to do
+concatenation this is a very clever
+insight and uh you can look in the
+description of this video and get a link
+to the chat transcript where this was
+discussed for even more details
+and discussion of
+it now we can simplify things a little
+bit we don't actually need parenthesis
+at all around this inner
+construct and since we only have a
+simple thing on the right but something
+complex on the left then if we could
+swap the arguments of this derived
+function this
+concatenation with filtering inner
+product then we could eliminate the
+parenthesis for a nice clean look so we
+do that as we did before and this has
+long left scope so it takes the entire
+thing here and flips it which means we
+can get rid of this uh Tech over
+here and move everything on the from the
+left to the right and eliminate the
+parenthesis for a beautiful solution
+thank you for watching

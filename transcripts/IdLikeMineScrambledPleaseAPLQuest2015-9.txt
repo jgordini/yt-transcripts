@@ -1,0 +1,557 @@
+welcome to the apl quest see apl wiki
+for details
+today's quest is the ninth from the 2015
+round of the apl problem solving
+competition
+we're giving a word
+which is a character vector
+and we are to swap interior letters two
+and two so the first and last letter
+always stays in place
+the second the third gets swapped around
+and then the fourth and fifth gets swept
+swapped around
+if there's a final interior letter which
+doesn't have a companion letter next to
+it
+to pair up with then that just stays in
+place
+and there are a few different approaches
+we can take to this
+here are some simple test cases
+i'm
+going to uppercase
+the letters that are go they have to
+stay in place the casing doesn't have
+any significance it's just for us to be
+able to see easier if things are
+happening the way they're supposed to
+and then so here
+oh
+actually i wanted this one to be like
+this um here we have two fundamental
+letters that stay in place
+let's also make sure that
+a single letter case works it's easy to
+end up writing code where that doesn't
+work where like you strip off the first
+and last letter and then you put them
+back together again the first last is
+actually the same letter
+and then the two-letter case where
+nothing is moving around
+okay the first approach we're going to
+do is quite literally
+pairing up and flipping around and
+putting back together again we're going
+to use the petitioning clause for this
+and so what we want is
+that
+the first letter becomes a
+section by itself and the next two
+letters and the next two letters and so
+on and then finally one or two single
+letter sections at the end
+we can do that by taking the length of
+the argument and using that to reshape
+zero and one
+one at one zero that's because we want
+the first one here for the intermediate
+part to be on the first of the two
+letters in this pair over here
+once we got that we just need to adjust
+so that we have an initial one and
+always a
+a final one and this corresponds to the
+f and that will just stay in place
+because it's a one element partition
+so we put an
+1
+at position 1 and also at the position
+the length of
+the argument
+we could also
+give this a name
+but it doesn't really save anything
+okay this is our position vector
+and
+then we use that for the position in
+close on the argument
+flip each section and the one element
+section stay as they are when flipped
+and then join them back together again
+within list
+and that's our petitioned enclosed based
+solution
+here's a trick you can do when you want
+to generate alternating sequences of
+zeros and ones um then you can
+start off with all ones and do an xor
+scan on that or for the opposite effect
+start with all zeros and do an x nor
+scan of that what does that look like
+well let's say that we have
+some letters
+and we want to generate this alternating
+sequence so first for all zeros
+what we can do is we do a zero constant
+for each
+but a code golf trick is to do a self
+and
+or we can do a a uh one constant you
+should get all ones
+so the code golf trick is to use a
+comparison with itself
+so here all these uh
+characters when
+we ask which one is different from the
+cells that would give us more zeros and
+if we ask which ones are equal to
+themselves that would give us all ones
+and then and
+xor for
+booleans is the same thing as different
+from we do a scan
+then that will give us the alternating
+one zero one zero and if we flip things
+around so we start off with the zeros
+and then we do x north scan on it we get
+zero one 0 1 which is what we wanted
+in this case
+so we can take this
+and stick into our solution over here to
+get 0 1 0 1
+and then we just have to use the single
+instance of the count over here
+and this would also work
+but
+it's
+computation for no particular reason and
+it obscures matters but it is a trick
+you might see sometimes
+okay the next approach is going to be
+using stencil because stencil can
+traverse an array and chunk it up in
+pieces which is exactly what we want
+here
+classically you'll see
+a stencil with a window size of our
+stencil size of 3 and a step size of 1
+which is the default
+but we can actually set what the step
+size is going to be and we allowed any
+window size as well
+so
+we can start off with the stencil and
+then we need a matrix the first row
+specifies
+the size of the window in each dimension
+here's only one dimension and that's
+going to be two and the second row
+specifies the step size here we don't
+want
+an overlord an overlap between these as
+we would have in a
+pairwise reduction
+we want to use every element exactly
+once
+so
+we're going to
+use a step size of 2 as well so we
+overlap with
+so have no overlap between them
+and this is going to be on the argument
+and for now let's just use the simplest
+operand which is the enclosed
+neighborhood and that oops using the
+wrong characters here
+and then we can see that we're getting
+pairwise and elements but this isn't
+quite right because we are
+pairing up the first element with the
+second element whereas we want the
+second and the third so we can offset
+this so to say by sticking a space at
+the front and then we can remove the
+space later
+now that's done
+and we can see that
+we have these pairs correctly
+but there's an issue where we're
+including the last element as well
+um and then the second to last one so we
+can get rid of it temporarily by
+dropping one from the end and we can
+just remember to put it back at the
+front when we're done let's put it back
+at the end when we're done
+now removing that also removes the
+second to last one
+which is a bit of an issue because
+and
+the stencil if you cannot create a whole
+neighborhood you will just drop trailing
+elements called shards
+but we can fix this by putting a space
+at the end as well
+and now we get it there and so other
+than the spaces
+ignoring those for a moment if we
+if we reverse every
+little window here then we get the
+result that we want we just need to
+remove spaces and join everything
+together
+however we've got a vector of vectors
+for each one of these and we don't
+really need to do this enclosure if we
+don't do that then things get mixed we
+get a
+a collection of vectors that is a matrix
+and then
+this little function
+just chooses its right argument so we
+can just put a right tech instead of
+that
+now we need to reverse the left and
+right and we don't care about these and
+then we talk at the end at the beginning
+because the space isn't going to be
+counted so it's safe to reverse
+everything
+and then we need to ravel it
+to get it back here and the only thing
+that's wrong now is that the spaces are
+there we'll have to remove those and we
+have to add the last element as well
+so one way to remove spaces is with
+without
+another clever way to do it is using
+intersection
+because there are no spaces in the word
+and so the only letters that are kept
+are the ones that are already there and
+that's exactly what the intersection is
+doing finally and we just need to add
+the last element
+from the argument
+to the end
+and that gives us our result so this is
+a distinction stencil based
+approach as well
+next we are going to try to do an
+in-place reordering of elements
+so we can use the add operator to change
+things
+in the positions where they already are
+let's try that
+for that we need to
+get the indices of
+the
+the medial elements and then we're going
+to manipulate those with the left
+operand of that operator so let's start
+with this
+so here's the count of elements
+and we need to
+drop the first and the last so we need
+two less than
+than that
+or we could subtract 2 for that sake
+and then we need to subtract one more
+if
+we are going to
+um
+if we have an odd number of elements
+because we don't want this uh this f
+over here to
+to be included in medial elements that
+are going to be flipped around so
+we can we can add one more
+if the length is odd
+and now there's a problem uh short words
+will end up with negative numbers and
+that's not good so we need to make sure
+that we have
+no less than zero
+and then we can generate the range for
+that
+of course this doesn't start at the
+right position because we want to start
+with the second element so we'll
+increment it
+right this gives us the indices of the
+elements that we want to operate on
+and we can be a little bit
+clever over here look at this we are
+having the the length twice and we got a
+number two twice we should be able to
+put this together to become a neat
+little train so if you put the length on
+uh left
+and two on the right
+then we want
+the length
+that be the right argument
+minus
+the 2
+that's the left argument
+plus
+well that's exactly the remainder
+between two and the left and the next on
+the right and we've got the length on
+the right and we've got two on the left
+so that's the remainder
+you see the symmetry
+well it's this is plus so we can move
+the terms around as we want and
+i think this looks a whole lot cooler
+okay these are the indices that we want
+to operate on
+now what are we going to do with them in
+order to flip every other one we can
+reshape them into a two column table
+and then
+swap the two columns
+these are all the elements
+two columns
+and then
+half
+of the number of elements
+would be the number of
+and of course this gives us a matrix so
+when we're done
+we need to
+revel them again so so far there's going
+to be no change the only thing we need
+to do now is just flip the table right
+left
+that's it we're done
+that's the stencil-based approach
+sorry that's the
+add-based approach
+reversal
+but if we think about it
+all we're doing here is reordering
+elements
+so
+really the result is a permutation of
+the argument
+it should be possible to build
+this permutation vector
+from the ground up and then just use
+indexing to permute
+indeed
+let's try that
+so
+if we think about it
+we start off with the first element
+and then we want to get to the third
+element
+and then the second
+and then the fourth
+sorry the fifth
+and then the fourth
+okay
+so the first
+then
+the third
+then the second
+then the fifth
+then the fourth
+what are the distances between these
+ah
+we can see the beginning of a pattern
+here if we were to continue
+then and we would want
+after the we've used up the the fifth
+here you want the seventh
+and then the sixth
+oh now we can see the pattern
+okay so we want
+the distance from one index to the next
+one is alternating the negative one
+three negative one three negative one
+three
+right
+and then at the very end
+we are going to have either the last
+element
+or
+uh the two last elements
+right that's two and one is the distance
+here
+so we should be able to
+create these
+distances
+and then
+the
+then we can because this is just a
+cyclic reshape
+and then the opposite of doing the
+pairwise difference is the running sum
+and this will allow us to get go back
+again to these numbers that we had here
+possibly offset by a little bit
+so let's try to do that
+we can start off actually in the same
+way because we already
+have written the computation
+of
+uh how many intermedia how many media
+letters there are that was
+this formula
+and then we need to reshape this vector
+three negative one
+and at the very end we wanted adjacent
+differences of
+two and one although there might only be
+it might just be the two and not the one
+but let's just put it there for now
+and then we can do the running sum on
+that
+so this gives us
+numbers that we're looking for the
+indices up here
+just the one at the beginning is missing
+so let's put the one there
+now we might have too many elements
+because we always add two and one at the
+end
+so we could selectively add the one
+by looking at the parity whether or not
+we need to include it
+but
+since we already have the length here
+we can also just take the length
+from these and that will shorten it down
+when necessary
+that's our permutation vector
+let's use it for indexing
+and we get the results we want it's a
+nice flat solution
+but it is pretty verbose
+another approach to this
+would be if we can just get some numbers
+that have their relative
+sizes such that if we
+were to try to sort them we would need
+indices that would put them into this
+order then we can use grade to create
+the permutation vector because grade
+always creates a permutation vector
+so let's try that we start off the same
+way
+get rid of the last one
+but now we'll add that at the end
+because the last one always goes at the
+end
+so this is the length up until
+before the last
+element
+and now a common trick in uh array
+programming is using negative one to the
+power of
+because that with
+uh with indices gives us alternating
+negative ones and ones
+how's this useful
+well let's look at the indices
+themselves and put these
+and alternating negative ones and ones
+next to each other
+so for now i'm going to just stack them
+on top of each other by mixing the
+concentration of enclosures
+and now we can see if this is an
+adjustment value and we adjust one down
+to
+zero by subtracting one we adjust two up
+to three
+three adjusted down to two so that
+effectively flips these two next one is
+four adjusted up to five and five
+adjusted down to four
+so if you just sum these up
+then we get these values
+that are very close to
+what we want
+in fact in fact
+all we need to do
+is adding the value and at the end and
+then we grading this so grading it
+gives us the one here
+and then we can put the n at the end
+and that's our permutation vector
+so now we can take
+index with this
+and we get our result
+but
+we could possibly also
+note that
+all the grade did because we already had
+the right values here was change the
+zero into a one
+so maybe we could do that as well
+so we just want to place a one
+at one
+on this
+nope that's not working
+what's the
+problem the problem is that
+in the case where
+there aren't any elements that are that
+we need to to deal with so if we go back
+to
+to this then we have
+an empty here
+and that's not going to work
+we could do some clever trick about
+assigning to a one take of that but it's
+going to become very
+complicated so let's leave it at that
+with the grade
+okay we've got a bunch of different
+solutions let's compare them to each
+other let's generate a bunch of random
+words
+so that we can time them against each
+other
+we've got the alphabet
+we want some random letters there are 26
+letters in the alphabet and we want
+between 1 and 10 letters say
+in each word
+and how many words do we want let's take
+a thousand
+what do the first 10 look like
+that looks pretty good
+what do the next 10 look like
+that's nice too we got some two two
+letter words and one little words
+good
+copying in cmpx from defense workspace
+and then we need to generate the
+expressions that we're going to run
+against each other
+each one of these functions is going to
+be called in each of the words
+looks like that that's nice
+and we're running this and see how it
+comes out
+oh dear that stencil solution
+that doesn't look very good
+but the fastest one is actually the last
+one
+which was a nice and short one as well
+that was the indexing using grade i
+would have maybe thought that
+creating the permutation vector with the
+running sum would have been faster but
+turns out that
+it isn't
+so that's our conclusion
+use grade and indexing a very apla
+approach for the optimal
+performance
+thank you for watching

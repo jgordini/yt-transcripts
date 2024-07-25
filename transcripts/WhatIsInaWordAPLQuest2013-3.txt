@@ -1,0 +1,520 @@
+welcome to this third apl quest see the
+apl wiki for details
+today's quest is the third problem from
+the 2013
+round of the apl problem solving
+competition what is in a word
+task is to write a defend which returns
+the number of words in a given text
+which can be given either as a single
+character or as a vector of characters
+what defines a word
+for the this problem
+is
+a space delimited but there could be
+multiple spaces between words that can
+be leading and
+training spaces in the input we have to
+account for that
+let's begin by creating some test data
+so this is a normal text but i put in a
+dash here
+so that we make sure that we're
+splitting on the right thing
+this is a single letter
+and we can also have an empty input
+and then we have a text with more spaces
+so we can have some leading spaces
+and maybe some training spaces as well
+okay let's get started
+um
+maybe the most obvious approach is to
+split on sequences of spaces and we can
+do that or let's say if we start by
+comparing
+an input string with a space
+and this gives us a boolean vector
+indicating where the spaces are
+now the partition function um
+groups
+runs of ones or
+elements corresponding to runs of one so
+we want to
+invert this
+and then we can use this to split
+so we use partition
+on the string itself
+and that gives us the individual words
+and we can count them
+if we try to do that on
+on the string that has more spaces we
+can see that it still works forwards
+there and that's because any run of
+zeros is a
+an area that gets cut out
+and
+we split up at that point
+now this runs into a problem if we try
+to do it on a single letter
+and that's because we cannot petition
+when there are no access to petition
+along so we must ravel first
+and then it works it also works on the
+empty one um that's not a problem
+so we can put this uh together to a
+fairly straightforward uh tested
+function
+um
+it we want
+we want the tally
+um off
+where the
+spaces
+are different from the argument
+partition enclosed the revel of the
+argument
+so who we are binding the space to is
+different from function to
+achieve a magnetic function there
+if you come from other programming
+language background and especially
+perl you
+[Music]
+might grab for regular expressions for
+this so we can try that approach as well
+and we have
+our string and then
+we have the quad s that's a string
+search
+regular expression search
+and the pattern we want here are
+with the inverted character class none
+spaces
+any number of
+of those one or more
+and then it doesn't really matter what
+we're going to return
+because we just want to count them we
+don't actually want them so the best
+option here is use code three which
+means the pattern num in is in the
+offset from the left and that since
+there's only one pattern that's
+just zero so we get a bunch of zeros
+and then we can see we get one zero per
+word
+there and that works and also on the
+scalar letter um and it works also on
+on the empty
+we just get nothing and then we just
+need to count them
+as you can see here so that
+and that's our second solution
+right there
+okay here's a um
+an interesting
+solution that i came up with that's it's
+kind of abusing a built-in functionality
+a system function called vfi that's
+verified and fixed input and really what
+it does is it parses numbers so we can
+see if we
+give it some text
+then um it
+looks at this input as a space a space
+separate the fields we can also have
+multiple spaces and that's fine um it
+removes all such extraneous spaces
+and it returns a two element vector the
+first element is
+the success
+and it says one e3 that successfully was
+converted and the word 3 was not
+successfully converted 2.5 was and 2.5
+and was not successfully converted and
+then the second vector are the values
+that we converted to
+and with zeros
+for those tokens that could not be
+converted correctly
+now we're not interested in what the
+actual values are we just want to count
+how many such space superior the tokens
+there were whether or not they could be
+converted successfully or not so we get
+the first vector which is this boolean
+and then we can just count the number of
+elements there and that gives us four
+tokens so this
+works for all our inputs even for the
+empty one
+and it works for the single letter as
+well you just cheated as a text
+here's one with more spaces and our
+original string
+so that's an additional solution in
+order for this to be a proper function
+that we can give a name
+then we need to bind together
+compose together two functions for
+example the first two we could also
+compress
+the second two it doesn't really matter
+right um
+so far for these
+uh approaches where we're actually
+parsing and splitting up
+into tokens but there are better ways to
+do this in apl
+but for that we have to work with
+boolean masks
+and the way we often do it in apl we
+compare a scalar with a vector so here's
+our string and then we have
+bits for each one now we're not going to
+use this to
+split up rather we're going to analyze
+it
+we want to know how many words there are
+and what defines a word
+is that we have
+a separator and there could be multiple
+separators let's let's try it with
+m and then
+we have something that's not a separator
+so we're looking for this pattern here
+where we're going from spaces to none
+spaces
+and again here from spaces to none
+spaces from spaces it could be many
+spaces to none spaces and that's what
+gives us a count of words that's that's
+one way to do it
+and
+the way we can do this
+is by comparing adjacent
+elements
+so we do the envi and wise reduction so
+here it's a two wise reduction
+on this as this means we're taking every
+pair of two overlapping windows of two
+and comparing them to each other with
+less than y less than because in a
+boolean vector we can use less than as a
+boolean function to find out it only
+becomes true when you have a zero on the
+left and a one on the right right run
+one is not less than one and zero is not
+less than zero and one is not less than
+zero so that's the only time when um
+when it will match and we can see here
+if we it gets one element shorter
+because we're doing pairs if we line
+them up we can see how this one
+corresponds to this zero one here or
+every time we have a one we begin a word
+um so this is fine then we can we can
+sum this
+and that gives us a number of words for
+however there's a problem
+if we look at our string again where it
+doesn't begin with any spaces
+then let's go back and see what happens
+here we compare this
+space and
+so far so good but now when we do
+the pairwise less than
+then we're missing one element at the
+beginning
+because sure enough
+there is
+um and and
+um
+there's none space at the beginning of
+the string
+but we never go from zero to one because
+there's no zeros there so we're missing
+a one at the front so how can we fix
+this and we can insert a space
+so by inserting one space doesn't matter
+if we have multiple spaces because you
+know from from space to space
+is just zero zero and that doesn't
+trigger but this will insert a 1 at the
+beginning you can see if we go back to
+the one that already has spaces
+then it doesn't add any additional ones
+so this
+gives us the solution and we can sum it
+like this it gives us the number of
+number of words
+and we can just wrap this in braces and
+then we have
+our solution
+oops
+and this is a pretty good solution if
+you want to optimize for performance
+even more than this
+then we have to think about how the data
+is represented in memory
+now as we come into our function
+then we have this name a variable name
+omega referring to the whole argument
+and it may occur later again in the
+function and therefore
+the interpreter has to keep this value
+available at all times
+when we concatenate a space at the
+beginning we'll need to make a new copy
+of this
+um and so this
+if it's a very large argument then we're
+going to spend a lot of
+time writing to memory it's just a copy
+of everything with a space in front
+there are things we can do about this
+notice that here the data type is
+whatever type of
+character array it is so normally it's
+one byte per character but if we have
+some unicode things in there you can end
+up with two bytes or four bytes per
+character as internal representation it
+can be rather expensive to write the
+whole thing again
+once we've done the comparison
+then we are down to booleans so that's
+only one bit
+per character because it's in in the
+comparison and since we're adding a
+space in the beginning and space is not
+different from space so we know that
+we're going to begin with a zero
+and that means we can put in a zero here
+and avoid
+copying the whole array and that's going
+to give us somewhat better performance
+but there is even more we can do because
+if you think about what's happening
+again
+we have a boolean array here and we have
+to rewrite that
+when we insert a zero in the front
+because in memory we have a header that
+introduces the array and then we have
+the data from the array
+if you want to insert an element at the
+beginning
+then every element every bit has to move
+over one step we have to rewrite that
+whole array we can do that in place but
+it's still a rewrite
+so if we can get rid of that
+inserting something at the beginning
+that will give us a performance benefit
+now
+how can we do that well if we think
+about it the only reason we want to
+insert a bit the beginning is because we
+need to make sure
+and
+to get the right result
+when
+um
+when we don't have any leading spaces
+in other words if we're missing a
+leading space
+that means we're beginning with a word
+that's not being counted
+and that means this mask this boolean
+array the first element indicates
+whether or not
+we're beginning by word so we can just
+add that value to our total count
+so we take the first element
+of the mask and add that to the
+to the sum and then we just have to save
+the mask value
+right there give it a name
+um here's an another problem and which
+is
+if we have a one element vector or
+scalar here then we can't do the
+pairwise thing correctly um
+so
+well actually we can do it if we have a
+one element if you have a scalar we can
+do it correctly because
+um so we have to revel that as well
+but there's actually a simpler way to do
+it um and that is simply inserting value
+on the right now
+if we think about it we're doing pairs
+and we're doing with less than and what
+we want to do is detect the words we're
+going from
+spaces to none spaces
+but instead we if we detect the end of
+the words meaning going from none spaces
+to spaces
+then we only need to append rather than
+prepend a single value
+and appending something to an array that
+is often very cheap because we don't
+need to move all the elements of the
+array rather we can just extend it by a
+little bit the interpreter by default
+will
+allocate additional memory at the end of
+the array and if you're talking a
+boolean array like this that additional
+bit might even be inside a single byte
+that has already been allocated making
+it even cheaper to do
+so how can we formulate this well we
+can't just put a zero um at the end if
+we go back to this solution here because
+what we want to trigger is another now
+we're not worried about the a word
+beginning at this rate at the beginning
+of the string we weren't worried about
+words ending at the end of the string
+um and we need to have another and
+another triggering of a word ending so
+word endings are indicated by the
+pairwise
+less than
+and we only get those if we have we only
+get an indication if we have a 0 on the
+left and a 1 on the right
+and also now since we are
+we're interested in uh where the spaces
+are at the end of the words
+then and we need to flip this around
+to an inequality so let's actually try
+this so we have our string here
+um let's print it out again so we can
+see
+so now we are we are trying to find
+these places where a word ends so we go
+from a 0 to a 1
+and the problem is at the end there's no
+space there
+so what we can do is we can go and
+instead of doing a normal concatenation
+we're doing a flipped or commuted
+concatenation
+and this shows us the word endings even
+for when the string ends with a word
+character
+and now we can do
+the comparison as before
+and we can sum that
+to get the the word count we can try
+that with additional spaces as well it
+works as well let's let's look at what's
+happening here so m
+is this one and there are additional
+spaces at the
+at the end
+and then we compare two spaces
+and we can see there's a an extra space
+there at the end but it doesn't matter
+when we then concatenate another one to
+the end because the only thing that we
+find is when zero goes to one
+so
+it all works as it's supposed to and
+then we can we sum it and we get our
+result
+we could also have done the opposite we
+could have kept the inequality and
+appended a zero and flipped this the
+direction of the comparison so it would
+be greater than instead of less than it
+would be exactly the same
+and let's give this a name
+we'll put the argument name name here
+and let's look at
+all our definitions
+that we have
+um and at this point we're going to have
+a look at what the performance looks
+like and i could predict this already
+splitting up into sub strings is going
+to be expensive we're going to have lots
+of pointers one for each word
+and spinning up a regex engine is going
+to be expensive as well
+and the same thing with quad vfi is
+going to be expensive because we're
+actually trying to parse
+every single token whereas we only
+really need to look at where those
+tokens are to count how many there are
+so it's absolutely certain that the last
+four solutions are going to blow the
+first three right out of the water
+let's see how how
+badly so let's create a text
+here a testing for testing purposes
+um and we can see
+we're going to
+um let's just try it first to see what
+it looks like here we reshape 4
+into 20 elements and then random
+elements so we're going to create some
+random text here we can see what that
+looks like so that looks kind of like a
+natural text we don't care about what
+the characters are
+okay let's make it big then
+so here are a million of characters
+let's
+copy cmpx in
+from the defense workspace
+and then we can
+start off here with f on t
+g and t
+h on t
+and just just take i which is the least
+efficient going to be off
+of these and to see what that looks like
+together
+give it a moment to compute
+and we can see indeed
+that the boolean mask-based
+solution it's not even measurable in
+speed compared to the others
+but interesting the
+most expensive one was spinning up the
+regex engine to do this quad vfi had to
+do a lot of work as well in identifying
+the tokens and splitting into substrings
+was then the fastest among these
+now let's compare
+the the four boolean solutions to see
+if
+what we expecting is actually holds true
+so this is i j
+k
+and l
+and we'll see that
+our expectations held up um
+the solution where we prepend the space
+and therefore had to copy an entire
+array consisting of one byte per
+character and was the slowest one
+when we uh changed to
+prepending a bit to a boolean array that
+gave us a significant speed up about it
+took about half this amount of time
+but
+avoiding the copying of the array either
+by saving the mask and looking at the
+first bit of it or by
+appending a bit rather than preventing a
+bit gave us the most significant
+savings
+thank you for watching and see you next
+week

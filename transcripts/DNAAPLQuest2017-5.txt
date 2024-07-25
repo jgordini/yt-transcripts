@@ -1,0 +1,81 @@
+hi
+we're going to take a character vector
+and check if every single character in
+it
+is one of the letters a c g and T
+here's a character vector
+this one does consist of
+a t g and z now
+let's define a function a Lambda where
+the argument is referred to as Omega
+because it's on the right side and Omega
+is the rightmost letter of the Greek
+alphabet
+we can then use membership
+and then write just letters that we are
+interested in looking for
+and this Maps automatically so every
+single element
+in the left argument
+is checked individually to see if it's a
+member of this set on the right we treat
+the array on the right as a set
+and they all are
+the only thing we need then to do is
+ask are they all that is an end
+reduction so and and then a slash means
+reduce
+and then that's true if we remove the
+and reduction for a moment and put in a
+character which is not valid
+then we get a zero there and the end
+reduction gives us
+zero
+now we can Define this as a function
+and apply it
+but we can actually remove
+some of the syntactic elements in this
+function definition
+by defining it in what's called tested
+or points free
+how do we do that
+let's observe that we have two function
+applications we have first a membership
+and then we have the and reduction
+if you were to express this only in
+terms of function application
+then we would need to do something about
+this function because it takes two
+arguments and we only supplied one
+argument
+the other argument is a constant
+the easiest way to do this is by binding
+or carrying one argument to the
+membership function
+deriving a new magnetic function a
+function that only takes one argument
+which is then applied to the overall
+argument of our function
+and we do that with the bind
+operator which is a jot so this derives
+a new function which is membership of
+acgt
+now we don't need to mention
+the argument and we don't need the
+braces for the function definition
+either we have two pure functions
+the membership of a c g t derived
+function and the end reduction derives
+function also y derived because the
+function here
+the core function is and and it's the
+reduced operator which then derives the
+end reduction or the
+wall
+so we can call this G
+and then we can
+apply G
+let's see when there's an X here and
+remove that
+and we get A1
+thank you for watching

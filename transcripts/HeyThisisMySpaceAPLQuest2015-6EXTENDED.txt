@@ -1,0 +1,692 @@
+welcome to the apl quest capl wiki for
+details
+today's quest is problem six from the
+2015 round of the apl problem solving
+competition
+we're given two rectangles as two
+coordinate pairs and we have to check if
+they overlap
+and that can be a little bit hard to
+think of just in terms of words so let's
+illustrate it here are two rectangles
+and we can label their corners
+in order to not continue to in order not
+to get confused which rank that we're
+talking about we're not just going to
+use x and y like normally would we want
+to use an alternately named coordinate
+system for one of them um
+where the horizontal axis is a and the
+vertical axis is
+b
+so we got the xy rectangle and the a b
+rectangle
+and we can see here that each one of the
+of the elements in the coordinates
+are defining an edge so the left edge of
+the xy
+rectangle is defined by the x1
+coordinate
+and the bottom edge is defined by y1
+similarly a1 defines the left edge of
+the
+other rectangle and b1 the bottom edge
+now we don't know what order these are
+given in and that's something we have to
+keep in mind but for simplicity you just
+keep it like this
+and here we can see that
+the vertical edge left edge of the x y
+rectangle which is defined by the x
+coordinate x1
+and the vertical edge the right edge
+defined by x2
+fall in between so to say the range
+between the vertical edge
+a1 and the vertical edge of
+a2
+and similarly but oppositely
+the edges defined by b1 and b2 fall in
+between the edges defined by y1 and y2
+and clearly these two rectangles overlap
+now when a b is entirely contained we
+have still the edges even though they
+don't intersect the edges a1 and a2 are
+in between x1 and x2 b1 b2 are in
+between y1 and
+y2 and even though there's only a
+partial overlap like this
+we still have at least one edge
+vertically x2 between a1 and a2
+and both of the horizontal edges b1 and
+b2 are in between y1 and y2
+now there's only one of each
+so the edges x2 and
+y2
+are in between
+the corresponding vertical and
+horizontal edges on
+the other rectangle but also a1 and b1
+are in between
+and here we have both x1 and x2 in
+between and only
+b1
+in between
+the other and then
+2 in between b1 and b2
+now there's no overlap anymore even
+though x1 and x2 didn't move and they're
+still in between a1 and a2
+it isn't the case anymore that any of y1
+and y2 are between 1 and b1 and b2
+so we can see that in order for there to
+be an overlap there must be at least one
+horizontal edge that is of one rectangle
+between the horizontal edges of the
+other rectangle whichever one it is and
+there has to be at least one
+vertical edge from one direct angle
+between the two vertical edges from the
+others
+of course if you move the rings entirely
+away so that nothing has been in between
+each other then there's no overlap
+either
+here there is an overlap
+vertically in that b1 is between y1 and
+y2 but there's no horizontal overlap
+because both a1 and a2 on the same side
+of x1 and x2
+and so while close there is no overlap
+here both conditions have to be held and
+we're going to use this as our
+case where it is false there's no
+overlap
+moving
+x1
+and moving the xy rectangle a little bit
+to the left there will be an overlap
+just in the corner and we can see that
+we have the edges x1 x
+and
+y2
+in between the corresponding edges under
+the rectangle and also of course
+follows with that that b1 and a2 are
+in between the corresponding edges of
+the xy rectangle
+in the code we're going to
+use labels for these it's the same
+rectangle a b but we'll have x y one and
+x y zero for the one that should give
+true and the one that should give
+false
+and then in order to give some of them
+some concrete values that we can work
+with
+let's just set an origin point which is
+where the a1
+sorry where the
+b1 and the x1
+edges would meet had they continued out
+that gives us some nice small positive
+numbers to work with but this of course
+will be
+very general
+right
+so
+a b will have 0 2 and
+5 9
+x y 1
+4 0
+11 3
+x y 0
+zero and thirteen
+three
+and now we'll start building things up
+so let's just make a placeholder
+function for now the concatenation of
+the encloses that just juxtapose
+the two arguments and we're going to run
+our test cases every time so we have
+a b with x y one
+and then let's output a little line and
+do a b
+with
+x y
+zero
+so this gives us our arguments so this
+these are simply
+x one sorry a one and b1
+a2
+b
+and 2
+x1
+x y 1 x 2 and b
+and y 2 and the same thing in the at the
+bottom
+this encapsulates
+a and b values together and x and y
+values together and we really want to
+consider them separately because the
+condition is
+that there are separately r overlaps
+horizontally and vertically so the first
+thing we'll we're going to do is we're
+going to mix these to get
+nice
+matrices to work with
+and then but we still have each row
+being a mixture of horizontal and
+vertical values we can fix that by
+transposing
+now that we have transposed we have
+a1 a2
+x1
+x2
+b1 b2 and y1 y2
+we can start working on these and so
+what exactly was it that was our
+condition we're going to work on each
+row separately so
+let's use rank one
+and then we're going to
+start stating what exactly is it we're
+looking for
+so
+for each row that means we're
+considering uh the
+horizontal component and the vertical
+component and they're being run
+separately because of the rank one so
+you can just talk about one
+um let's talk about the horizontal
+component that's the x1 x2 a1 and a2
+on the left we have
+a1 a2 on the right we have y1
+y2
+so
+the lowest sorry the lowest one
+on the left
+because remember we don't know what the
+order is going to be so we can't just
+say it should be
+the first one which in our case is a1
+and is the lowest one but maybe it's the
+it's b
+it's a two that's the smallest value
+so we take the smallest one of those so
+the smallest one of
+of
+a1 and a2
+has to be
+less than the greatest one
+of the corresponding on the right which
+is
+x1 and
+x2
+so if the smallest one
+on the left
+is
+below
+the greatest one on the right then
+then they might overlap
+but that's not sufficient
+because we also that they could both
+both of them both a1 and a2 could be
+below
+x1 and x2 so we have to have an
+additional condition which is
+that
+the lowest one
+on the right
+so that's the lowest one of x1 and x2
+also has to be less than the highest one
+of a1
+and
+a2
+so now we know that
+they overlap in this component and since
+we're doing this for each row in our
+matrices we're doing this separately for
+the horizontal part and the vertical
+part
+and then
+with the only thing we need to know then
+is is it both true is there an overlap
+horizontally is it an overlap
+vertically so if both of these are true
+then
+there's an overlap and we can see here
+that the a b x 1 x y 1
+case gave us a 1 and the a b x y 0 case
+gives us a 0 which is exactly what we'd
+expect so this is one solution
+but we can clean it up a bit
+because think about it
+we're using
+we're doing things rank one on each row
+and
+after we transpose
+so if we don't transpose
+then we need to do things on each
+column
+instead and we can't do that with the
+rank operator but we don't need to
+because each
+doing things down
+so that's a reduction
+vertically we can do that with reduce
+first instead
+so that's one simplification another
+thing we can see is that there's a very
+strong symmetry here the component on
+the right of the inner end and the
+component on the left of the inner end
+in this fork
+are pretty much identical
+except one thing
+this points to the right this points to
+the left this points to the left and
+this points to the right
+so
+they're doing the same thing but they're
+swapping
+their arguments
+and so if we give a name
+to this inner component
+then
+on the left we can just use it with
+swapped arguments
+and we can even get rid of
+these parentheses here
+so this is a very nice solution to the
+problem
+let's
+go for an entirely different one
+this time we'll start writing a
+different
+and again we just start off by
+just opposing the arguments
+oops
+of course we need to put
+g over here as well
+there we go okay so here are our
+arguments um again
+and instead of doing this whole mixing
+thing
+now we're just going to use an outer
+product
+because we want to compare all these
+values and see which ones are
+um are
+below each other
+so this is this is an outer product
+between the pairs
+of
+a1
+b1
+with
+x1
+and y1
+so this is saying
+so for each one of these comparisons
+we get these two values one for the
+for the horizontal component one for the
+vertical component so this is saying
+that a1
+is less than
+x1
+and
+b1 is not less than
+y1
+and this is saying that
+a1 is
+less than
+x2
+and b1 is also less than
+y2
+and then we go on to the next
+a b coordinate so that's a2 is not less
+than
+x1
+and y
+and b2
+is not less than
+y1
+and finally
+a2 is less than
+x1
+2
+and
+b2
+is not
+less than y2
+okay
+now
+remember that we want
+edges to be in between
+the edges from the other
+um from the other rectangle
+but it could be any of them so
+since
+less than shows whether or not we are on
+the left or
+below
+and so we need to have one that is
+we need to have at least one edge for
+each that
+is below and one that is above some
+other edge in the same
+along the same dimension from the other
+one then the only thing we need to know
+really is if they're different we don't
+care which one it is we just need to
+know that one is less and one isn't less
+than
+so by applying
+a
+different from reduction we're going to
+again compare element-wise so we're
+going to compare this element here
+whether um a1 is less than
+x1
+with
+this element over here which is whether
+a1 is
+less than
+x2 which is exactly what we want right
+if
+this is if the a1
+edge is the one that that is the
+determining one that is in between the
+other two then these two values would be
+different which we can see it isn't here
+and same thing here we go for the
+vertical components that is the one uh
+that's going to be different
+and same thing here this is uh
+a
+two will be is different from
+um so a8 sorry a this is a two versus
+uh x one and a two versus x two and so
+being that they are different that means
+that the a
+two edge does fall in between there and
+then we can see that it is
+here in the top right and the and the
+bottom left those are the ones where
+they are different so those are the ones
+that will give a
+that cause the intersection to be there
+so because this is in the right side so
+this is the vertical component this is
+the left side this is the horizontal
+component so this is saying that the
+edges that are in between
+are
+b
+1
+which falls in between
+and
+y1 and y2
+and there's also a2 which falls in
+between
+x1 and
+x2
+so the only thing now we need to know is
+whether we have at least one horizontal
+component and at least one
+vertical component that's uh where this
+is going to be true however
+and this isn't enough we also want to
+know whether this happens in what it
+doesn't have to be
+that it is uh
+that it is the
+uh the a b which is
+uh in between
+x y it could also be x y that's in
+between a b
+so how would we
+know that well we just reduce in the
+other direction
+and then and we can see if any of those
+are true
+so we could write this as
+one or
+the other
+however we can be a little bit clever
+about it they're actually the same
+except we could transpose first so we
+can write
+the
+leading axis one
+as
+the reduction over the transpose
+and now we just we want to know if any
+of them of the one that's transposed and
+not
+and are going to be
+true so we can do all the reductions in
+one go
+if we just concatenate along the first
+axis
+with
+its transpose
+its own transpose
+then we get this
+borrowed table and so really the bottom
+two rows are the transposes of the
+others of the first two rows
+that means we can
+just reduce across and then the last two
+across reductions are actually
+equivalent to vertical reductions
+so now and we can
+do our different from reduction across
+to see if
+there is a different relationship to the
+and to the edges on the side
+and once that's
+done we just need to know whether there
+is at least one
+and vertical at least one horizontal
+component and where this is true so we
+can mix it all and then we so the left
+side here are all the horizontal ones
+and the right side is all the vertical
+ones
+which means we can get whether any is
+true
+with a vertical
+reduction
+and then we just need to know whether
+both of them are true
+and that gives us the solution which is
+also very nice
+and finally
+let's start over yet again for another
+approach
+this time we're not going to do the
+direct comparison the
+outer product with less than but we are
+going to
+start with an outer product
+this time we're doing a subtraction
+why is subtraction because
+we can actually see on the sign
+whether or not something is less than or
+not so if you get a negative value it
+must be
+that the alpha component here was less
+than
+the omega component and since we're not
+actually interested in the magnitude of
+their overlap we're just interested in
+whether or not they're overlapping or
+not we can take the sign of that
+and here
+this means that
+a1 was
+less than
+x1 and a1 was less than
+x2 and
+b1 was less than
+y1 and
+a b 1 was less than
+y2 and so on
+now we need to think a little bit
+so
+we need to know
+whether
+there were any
+that were
+in between
+in order
+let's state the opposite let's say that
+they were not in between
+so if
+if one component
+was
+so you say if if both
+horizontal components of one rectangle
+were on the same side
+of the corresponding components from the
+other rectangle then all of these
+numbers that in that dimension would be
+the same
+so really all there's only there are
+only two ways in which we don't have an
+overlap and that is if you've got for
+each dimension
+four negative ones
+or
+four ones
+if there's any
+value which is of the other sign than
+its companions then that means that it
+has the other relationship and then it
+lies in between
+so
+let's flatten that out
+and then remember that the first element
+in each of these pairs corresponds to
+the same dimension so these are all the
+uh
+the a's
+and
+the
+um
+so the a's against
+the x's and there are two and one of one
+and two of the other so that gives us
+all four
+and now if we sum this
+then
+we get added all the
+first elements together
+and all the second elements together
+giving us these two
+and remember that the only case where
+there's no overlap is if they're all the
+same that means the sum
+has to be
+four times negative one meaning negative
+four
+or four times one meaning four
+in other words the magnitude of the sum
+is four
+so if we disclose this because we got an
+enclosure when we did a reduction over
+these
+pairs
+and then take the absolute value
+of this
+then and
+only in the case when there's four
+there's no overlap
+and we can see here that uh horizontally
+and there's no overlap
+but
+vertically
+there is an overlap
+what you're interested in
+of course
+is that there is an overlap
+so there is an overlap if the sum is
+different from
+four
+and these are the horizontal and
+vertical components and we have a full
+proper overlap and if both horizontal
+and vertical components are true
+we just need to say that both of them
+are true
+which we can do with an
+end reduction over them
+okay now that we have
+this
+and all these different solutions
+let's look at
+um
+some comparison of performance here it
+can be quite varied
+and for that we need some test data it
+doesn't really matter what the values
+are as long as we get a bunch of
+different
+values relative to each other so that
+and their magnitude doesn't
+really matter
+what we're going to do is
+we want to
+to create some
+abs and some xy's
+and then
+and
+let's
+make some random numbers
+and so we have two variables here the
+abs and the xy's
+let's let them have a hundred pairs each
+where um
+so the pairs are the the
+two element vectors of two element
+vectors
+so because we need the the two for the
+uh for one corner two for the other
+corner so two
+with two in each and with zero here then
+this would give us just some random
+notes between zero and
+and one but we'd want it all to be
+nested so we'll
+split it this gives us a two by one
+hundred by two
+array of
+pairs we split it again now we get a 2
+by 100 array of pairs of pairs
+and we split it one final time and now
+we get a
+two element vector of 100 element
+vectors of pairs of pairs
+let's copy in cmpx from quad c
+from
+defense
+and construct the expression that we're
+going to run so this is the abs
+joined up with each of the function
+names f g and h
+with
+the x y's
+let's check that this
+looks good yeah that looks fine and then
+look at the performance for that
+and turns out that
+our initial uh implementation
+that was very much based on
+how we phrased the problem is
+significantly faster than trying to do
+any of these clever tricks
+that's all thank you for watching

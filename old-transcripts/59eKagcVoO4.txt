@@ -1,0 +1,269 @@
+welcome to the EPL Quest see APL Wiki
+for details
+today's Quest the fourth from the 2016
+round of the EPL problem solving
+competition asks us to take two vectors
+and mesh them together
+now that's really simple if they have
+the same length but if they don't then
+there's a little bit more work
+okay a test case would be for example
+these two character vectors
+since they don't have the same length
+then the trailing part of the one on the
+left log will have to just be as it is
+at the very end
+so what we want to have is D and then a
+from over here and then Y and then the P
+from over here
+Locus a from the left
+of L from the right and then L from the
+left o from the left G from the left
+let's do that with a little Lambda a
+different in between them
+and what we can do is we can start by
+just simply concatenating them together
+now we have all the elements that we
+want but we need to reorder them into
+the correct order
+so we want from the left from the right
+from the left from the right and so on
+now here's the thing and
+if we have such a
+um such a list we can sort it
+in API the normal way to sort things is
+by using
+grade
+so
+here we're grading the same thing and
+this gives us to it gives it to us in
+escapedical order of course this is not
+what we want but what I want to
+illustrate
+is the use of grade what does grade
+actually do
+Let's uh
+let's try it like this
+rain gives us the indices that we will
+need to use in order to reorder into
+sort order
+so here in order to reorder this
+um sorry in order to reorder this into
+short order we first want element number
+two that's a one then element number
+four the other one
+then the three which is in position one
+then
+the third element number the four The
+Fifth Element which is five
+and so if we do this
+we get it sorted
+but we don't have to sort by the data
+itself we could sort by something else
+so this is saying whatever would be
+necessary to sort this vector
+is used to reorder the letters in hello
+so we have that result over here so you
+want the second element that's the E the
+fourth element that's an L the first
+element that's the H and that's what we
+have down here
+if we can construct something that will
+sort
+in in such a way that it puts the first
+element from the left and the first
+element from the right and the second
+element from the second element from the
+right then we can use that to reorder
+the concatenation into the order that we
+want
+well
+if we start with a one from the left
+and then and on the right a one on the
+right
+and then a 2 on the left and a two on
+the right and we concatenate these
+together three on the left and three on
+the right
+then if we ask how would we sort them
+then we say we need the first element
+from and then the fourth element that's
+the one over here
+and then the second amendment that's
+this one and The Fifth Element that's
+the one from over here so if you think
+about these corresponding to the left
+argument and the right argument
+then this would actually put them into
+red order and this works even if we have
+trailing elements because first we'll do
+pairwise the one from the left one from
+the right one two from the left two from
+the right three from the left three from
+the right and then just the sole for
+five or six whichever side those would
+come from
+this is the result that we want
+so how can we generate this
+this vector or these two vectors
+together well these are just all the
+indices in the left argument and the
+right argument concatenated together
+so if we go back back up here
+and we
+find out how many elements are there in
+the left and how many elements are there
+on the right Alpha is the leftmost
+letter of the Greek alphabet should
+mentioned Omega the right most so they
+refer to the left and right arguments
+six and three
+now we can use Iota Iota is like an i i
+for index generator to generate the
+indices from 1 through this length
+oops
+those are the exactly the ones we need
+now we can concatenate them together
+and that's
+the vector that we need to grade
+in order to
+sort
+the concatenation
+and this solves the problem
+but we can actually clean this up a bit
+notice the duplication of code
+we are concatenating together the
+indices of the tally of the left
+argument and the indices of the tally of
+the right argument
+which means we're actually concatenating
+together the left and right argument
+just like before but just before we
+concatenate them we pre-process both
+arguments by converting them into their
+enumerations
+and we can write that
+as
+um the left concatenated with the right
+with a special combinator called over
+which takes a function on the right in
+this case this function is
+um
+a juxtaposition of index generation and
+tally which just we also call that in
+the top so we're applying the tele and
+then after what you're applying the
+index generation on that
+and that works the same
+next up
+we can instead of using the the indexing
+syntax with the square brackets we can
+use a functional form you see a moment
+why that's a good idea
+so there's a function which very much
+looks like these two brackets put
+together
+or we can leave this parenthesis for now
+so it's this squad
+and it takes the indices on the left
+except we need to enclose it for some
+technical reasons but this works exactly
+the same as the above
+of course because of apl's long write
+scope every function takes everything as
+far as it can see until we close off
+with some bracket or the end of the
+um of the statement we don't need
+parenthesis on the right
+and now we can switch to a uh to a fully
+tested mode tested 0.3 is a type of
+programming where we don't mention the
+arguments
+and it can work really elegantly in APL
+when we have three functions
+that
+where
+two of them are being applied to the
+arguments and the other two and and the
+and one of them
+is applied between the results we call
+that a fork
+let's pause for a moment and see how
+that works let's say we have 10 on one
+side and three on the other side and
+three functions in the middle
+the middle function is concatenation the
+left function is plus and the right
+function is minus so then the outer
+functions are applied to the arguments
+and
+the middle function is applied between
+the results so this is the concatenation
+of addition and subtraction
+and we can use any functions for this in
+our case what corresponds to the
+concatenation is in fact an indexing and
+what corresponds to the plus is the
+enclosure of the grade of the
+concatenation of the indices of the
+of the tally
+and on the right the minus is the
+concatenation over here
+so we can substitute things into this
+pattern
+um
+we can take this
+over here and make it into a little
+function instead put braces around that
+oops
+and then we can change the comma into
+the indexing function and change the
+minus into a comma we just need to put
+our arguments back
+we can go one more step by using and
+actually a couple more steps by using
+some combinators because this is a
+single function and we Sorry up to here
+and we want to apply the grade
+on top of that on the result of that and
+we want to apply the enclosed to the
+result of that
+and we can actually specify that using
+the circle a little a little circle
+there is this or chapter assist this
+just means this function over here
+um
+well followed by this function
+technically speaking it's actually this
+function applied to the result of this
+function
+where the arguments are pre-processed by
+this function of a
+and the same thing we want and
+this year the enclosed applied atop the
+result of the grade so this is enclosed
+of the grade of the concatenation of the
+indices of the tallies of the two
+argument and now we don't have to
+mention the arguments anymore because
+this is a single derived function a new
+function that's being made by combining
+old functions
+and there's a final step we can do and
+that's mostly just for the fun of it
+is break up this compound function
+we are pre-processing both arguments
+with the indices of the tally
+that would really be the same thing as
+previously in both arguments first with
+Tally
+and then pre-processing them again with
+the index generation so we can spell
+that out
+using this over we call it so this is
+the enclosed of the grade of the
+concatenation of the indices of the
+tallies
+of the arguments
+in the indexes the concatenation
+thank you for watching

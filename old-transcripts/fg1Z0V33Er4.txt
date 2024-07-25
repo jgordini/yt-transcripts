@@ -1,0 +1,114 @@
+hi
+let's use APL to make sure that all our
+odd numbers become even numbers doing so
+by incrementing them making them one
+larger
+that is three would become 4 and
+negative 3 would become negative two
+let's start off by defining an array a
+and we're going to give it the numbers
+from 1 to 16
+um for now
+and we can then take the array executed
+we get this
+and we can also
+um
+modify this assignment and subtract a
+bit so let's uh subtract five
+okay now we've got some negative numbers
+and some positive numbers
+let's further modify this by shaping it
+into an array of shape four by four
+here we go good this is some good test
+data
+we're going to write our first function
+which is going to solve the problem
+let's develop it
+piece by piece
+this is a function it's enclosed in
+braces to markets limits and Omega
+refers to the right argument because
+Omega is the right most
+letter
+of the Greek alphabet
+so this is an identity function it
+doesn't do anything
+now we can divide by two
+um to kind of scale down
+and we can see how
+apl's arithmetic automatically maps to
+all the elements of an array even a
+multi-dimensional array like this one
+if we now round up
+that will add a half and we've scaled
+down to half the magnitude that we had
+before which means we can then scale
+back up again to the full magnitude and
+we will have added
+um
+a whole number rather than half to all
+the odd numbers which gave us 0.5 as
+decimals
+of course the even numbers we divide
+them by half by two it gives us a whole
+number again and then rounding up is not
+going to do anything
+so here's the rounding up which uses a
+function
+um that's the same symbol as the left
+side of the special brackets the
+rounding up bracket ceiling brackets
+um used in mathematics when they appear
+every symbol it stands on its own it's a
+function at its own and take everything
+on its right as its argument so we don't
+need any parenthesis here either they've
+Roundup or ceiling function which kind
+of looks like a wall with a bit of a
+ceiling
+takes everything to its right that's
+Omega divided by two
+as its right argument
+and now we can continue
+with multiplying by two
+and this gives us the result that we're
+looking for all the odd numbers became
+one greater and all the even numbers
+stayed the way they were so we can give
+this a name f and we can apply F to a
+and like this no parenthesis or brackets
+or any sort necessary to apply this
+function
+so this is one way of solving the
+problem
+let's take a different way of solving
+the problem
+we mentioned briefly here that the odd
+numbers they give a half as decimals
+um when divided by two so that would be
+the remainder when divided by two that
+has already been divided by two it gives
+us a half and we can exploit this
+by taking the remainder when divided by
+two we write that with the vertical bar
+which is borrowed from mathematics as
+divides right so instead of saying the
+two instead of expressing the predicate
+the two divides
+um Omega we're asking what is the
+remainder when two divides Omega
+as you can see that all the odd numbers
+they give one as a remainder and that's
+great because what we want to do is take
+um and add one to all that numbers and
+add zero such as a leave them as they
+are all the even numbers so we can just
+take all the numbers and add their
+remainder when divided by two
+and that gives us the result that we
+want
+so let's call this G and we can apply it
+with G of a
+so here two really neat solutions to our
+problem
+thank you for watching

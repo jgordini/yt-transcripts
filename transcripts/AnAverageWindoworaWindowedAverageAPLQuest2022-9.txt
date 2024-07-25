@@ -1,0 +1,132 @@
+hi we're going to compute the windows
+average of a list of
+numbers now normally this is a very
+simple thing to do in
+APL so let's say we have the numbers uh
+1 2 3 4 5 six and we want to do a window
+average um the specification here says
+how many enable
+neighbors and on each side of an element
+so let's say we want two Neighbors on
+each side that would mean like for the
+uh number three here we want these two
+neighbors and these two neighbors to be
+included so that means uh these five so
+if we write this as a testet function or
+Point free function and we have the a
+left argument of two which is the window
+size but number of specified as number
+of neighbors then the full window window
+size is going to be 2 * this because
+it's on both sides plus one um because
+of that middle element that's the one
+we're Computing the the window average
+on right
+now so we want uh the left
+argument and we want two times that and
+then we want to add one so this gives us
+five and this is going to be uh the left
+argument to the plus reduction so this
+doesn't just reduce the whole thing um
+but rather reduces over Windows of that
+size so the right argument to the
+reduction the actual um data that we're
+going to reduce is going to be the right
+argument to this outer
+function and the left argument is going
+to be this uh
+expression that is in terms of the left
+argument so now we got uh the sum of 1 2
+3 4 5 so we can see 1+ + 2 is 3 + 3 is 6
++ 4 is 10 + 5 is 15 and then and 20
+because we got 2 + 3 is 5 + 4 is 9 + and
+5 is 14 + 6 is
+20 okay now we just need to find the
+average this is the sum we need to
+divide by the length but the length
+conveniently that's already there as the
+left argument to uh to this plus
+reduction so if we wrap that in an inner
+function and then say we divide by the
+left argument here so there are three
+functions here this is a density
+function that Returns the right argument
+that's this one over here there is a
+function in terms of the left argument
+that's this one and the middle function
+takes the results of those two AO
+functions and says that the the NY is
+Windows reduction using Windows of this
+size uh on this
+data divided by the left argument so
+that's the length of that
+okay makes sense that the the average of
+one to 3 4 5 is three and the average of
+2 3 4 5 6 is
+four now here's the catch um and that is
+we don't want two results like this
+notice that we only computed the window
+averages uh for these two elements and
+not for all the elements because there
+aren elements on the left and on the
+right to create a full window and so the
+problem specification says that we are
+to
+extend uh the original data with copies
+of the last and the first uh elements on
+the right and the left sides
+respectively so um let's do that we can
+always put in the actual formula for the
+window
+reduction afterwards
+so we want the first element over here
+and we want to repeat it as many times
+as stated over here so we want a reshape
+which is cyclic reshape so this just
+reshapes uh the whole thing this
+reshapes the and drops the trading
+elements but we want to pre-process the
+right argument with a first to take just
+the first element so we've got this
+function composition oper operator which
+is pre-process the right argument and
+this is the first function
+so this reshapes the first element to
+the length
+two and how would we get uh reshaping
+the last element well there isn't
+unfortunately a function to get the last
+element but there is a function to
+reverse so if we
+pre-process the right argument to this
+whole function with a reverse
+and reverse this whole thing that gives
+us 654 3 2 1 take the first that's six
+and then reshape
+it and now we can just concatenate
+together all the pieces that we've got
+um so we want the original right
+argument concatenated with
+this and that extends with the right
+number of sixes on the right so that the
+actual original six becomes the center
+of a window of length five and then we
+have the left argument resets the first
+concatenated to
+this and now we have the full data that
+we're supposed to operate on so we can
+go in and take our original formula over
+here and copy it down
+here that gives us our uh running window
+average and with extended neighbors so
+we can get rid of this and give it a
+name and now we can
+apply to f 1 2 3 4 5
+6 and we can do it with a
+one so this is the average over and
+every element and its adjacent element
+so there's average of one because we're
+extending one and two that's one and
+the3 and here we got average over 1 2 3
+that's two and so on thank you for
+watching

@@ -1,0 +1,273 @@
+hello and welcome to this
+epl quest cfl wiki for details
+today's quest
+is the 10th and last problem from the
+2014 round of the apl problem solving
+competition
+we're given a vector of numbers
+supposedly non-zero
+and we are to say uh what the largest
+percentage increase is from
+one
+number to
+the next number
+so let's start with a simple test case
+from the problem statement
+and
+one way that we can do this is by seeing
+what is the the what are the deltas what
+are the differences from
+uh
+once a month
+so we can what we want to do is a
+pairwise
+difference
+over this vector
+and here it's all constant but it
+doesn't matter
+and then we want to see
+this increase
+what percentage is it of the month that
+we started with so
+um that means the first 20 is an
+increase over the 80. the second 20 is
+an increase over the 100 and the third
+third increase is over the 120 that is
+there's no increase on the 140 and we
+can therefore drop the last element
+and now we just need to find out what
+the fraction is of these so we can write
+the first
+part
+so that's the the increase
+divided by the month that the the month
+that we started with its value
+um and then we get well fractions but we
+want percentages we also need to have
+the largest percentage and so a good
+idea is to start off by reducing the
+number of numbers we're dealing with so
+we want the maximum percentage
+and then
+we want to convert it into a
+percentage there so we need to multiply
+by a hundred and let's make this into a
+function that takes an argument
+right there
+here's an interesting thing
+to look at
+this negative one drop
+another way we can think of it is
+that we for every
+window of size 2 much like what we did
+to get the deltas the differences
+we want to select the left one
+and we can actually write this
+as a pairwise reduction as well but
+instead of a normal arithmetic function
+we just want the left value
+and
+if we use a negative number as the the
+window size just like we did for the uh
+for the subtraction then we will reverse
+it
+so now left so this reverses the range
+so instead of getting 80 100 we get 180
+and then we select the left one but now
+if we want to get the right value which
+is the
+the first one then we need to do
+the right side instead
+and what's interesting here is that if
+we take this definition of a
+um
+and
+use
+we can replace this negative one drop
+omega you can um with this equivalent ex
+sub expression here
+then especially if maybe if we
+parenthesize it we can see a pattern so
+and let's start by by calling this one
+renaming and the a here
+but we could actually
+combine these because we are doing a
+subtraction
+divided by the right side
+that means we can we can fuse these
+together
+to a single
+n-wise or in this case negative two-ways
+uh reduction and
+this parenthesis becomes um unnecessary
+and that looks really neat
+that doesn't mean it's a good idea to do
+it
+why is that because
+um certain combinations that are
+very frequently occurring for example
+and a n-wise
+or especially two-wise pairwise and
+subtraction
+and also the right and the left
+and those are cases that are special
+uh special case in the interpreter and
+optimized and will run much faster if we
+replace them with our fork like this a 3
+train
+then the special case doesn't run and
+we're going to get significantly worse
+performance and we can illustrate this
+just even with a not very large argument
+so here's a thousand
+random numbers up to a thousand
+and
+let's copy in cmpx from the defense
+workspace
+and then we run the first version which
+uses the two different and
+two different anyways reductions and the
+second version which uses the fused and
+wise reduction but otherwise are
+entirely identical
+and
+we can see that yeah that's that's
+pretty hopeless in comparison so we
+definitely want to stay with a there
+but we're actually not done we can
+actually do and
+something more
+um let's let's look at a again
+and then let's uh actually we can we can
+start off with with b even let's start
+off with b and then and we can do some
+uh
+some well
+mathematics uh deriving some some a
+different expression for this um
+let's start off by taking this train and
+making it into maybe a slightly easier
+to read and read even so
+let's put in our test case here um so
+make sure it's it still works
+and then we are replacing this train
+with the defense so and what we need to
+do here is
+we have the subtraction of the left
+argument in the right argument
+and then
+divided by the right argument
+okay that so far we've just replaced
+the the train with a
+led and now
+since this is a fraction right we have a
+numerator and a denominator here
+that means that we can multiply or
+divide above and below the
+the division and
+and the result will stay the same
+so
+let's divide by the right argument here
+and divide by the right argument over
+here as well
+same result of course just it's a good
+idea to check that and we can
+immediately see omega divided by omega
+that should give us one remember we said
+there are no zeros here
+at least presumably there aren't
+um and then
+this is
+a
+a difference
+and they're divided so we can we can
+split this up into two fractions instead
+so we can say
+alpha divided by omega minus omega
+divided by omega
+and then of course this becomes a one as
+well and we have also divided by one
+here so that we can eliminate that as
+well
+okay
+and
+getting there now
+we're doing a bunch of divisions here
+pairwise divisions and from every
+division we are subtracting one from the
+result
+that means we could just break out you
+can do the all the divisions first and
+then subtract one from all the results
+instead
+so we if we take this
+negative one and
+move it over here
+so we add negative one to that i'll get
+rid of this parenthesis of course
+and that then we have a little defend
+that is nothing but a cover function for
+a normal division
+so we can just put in a normal division
+there instead
+and now we're subtracting one from all
+the results and then we are taking
+the maximum of that that means
+they would already that the one that's
+the maximum would already have been the
+maximum
+before we subtracted one so we can move
+this
+maximum before that that the difference
+here is that instead of subtracting one
+from a bunch of different numbers we're
+just subtracting one from a single
+number namely the maximum one
+and here we have a whole
+new formulation of it
+and that is not only shorter than the
+original um
+but actually better performance as well
+let's try it so we found that a was the
+first one but we derived c from b where
+we had diffused and diffused nys
+reduction
+so c
+so why is it that we are making we're
+having such a significant difference uh
+between
+these two well remember
+we do we're doing the nyx reductions
+those are the ones are actually doing a
+lot of work and in the beginning we had
+two n-wise reductions
+we had the one to
+compute the differences and the one to
+compute the origin value
+that we were to compare the difference
+against
+whereas in this one
+we're
+the the the work that's being done here
+is only a single nys reduction so over
+there we had an
+n subtractions and then n selections and
+then n minus 1 divisions and here we
+have just
+n minus
+well it wasn't even n it was actually n
+minus 1
+subtractions it was n minus 1 selections
+and then there was n minus 1
+divisions
+and here it's just an n minus 1 division
+and then we're doing the maximum which
+we have to do anyway
+and then we're doing a single
+negative one plus and a single one and
+plus that doesn't really make a
+difference there so that's why that we
+are we're cutting significantly down on
+the time it takes to compute this and
+the resources takes to compute this
+thank you for watching

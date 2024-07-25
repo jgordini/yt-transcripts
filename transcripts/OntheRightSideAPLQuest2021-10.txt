@@ -1,0 +1,250 @@
+hi the task here is to write justify
+some
+text and truncated it on the left if
+it's too
+wide if you want to read the full
+description here then you can pause the
+video okay let's start with a very
+simple
+example this is just a character vector
+and we going to build a little Lambda a
+function that takes the right argument
+represented with the letter Omega that's
+the right most letter of the Greek
+alphabet not much going on here now the
+important part is that we have to handle
+a lot of different types of data so we
+know need to normalize the incoming data
+we can do that using very convenient
+little function which is just like
+inclose which wraps this simple
+character Vector in an outer array but
+it only does so if it's not already
+nested so if we were to give multiple
+elements of character vectors then uh it
+wouldn't do the enclosure and we can
+illustrate this so here we have it
+enclosed if we give it multiple
+things like this then we can see how
+it's already nested and this does not do
+any any further action
+so let's go back to our simple character
+Vector now we have this for later and we
+know that we've got one level of
+nesting we need to take a left argument
+let's say uh five and that is the both
+the the width of the final result but
+that's also the how much we should
+truncate
+to and we need to right justify so that
+means we need to um trunk it on the left
+that is we want to preserve on the right
+also know as to take from the right and
+there's a take function in the APL in
+order for it to take from the right we
+need to negate the left argument so we
+do that and then we need it to apply to
+each of the arguments on or each of the
+elements on the right so in this case
+there's only one but that's fine so we
+can see that gave us person and finally
+we need to stack on top of each other
+the very the individually trunk it
+results if there are um more
+so uh we do that with the mix function
+that combines a nested uh array into a
+flatter
+array and that looks very simple if we
+try it with
+multiple then we can see that it it does
+the right thing um as well now it's also
+interesting to think about what happens
+with a single and scaler because that
+cannot just be enclosed but it really
+works according to the spec very nicely
+because it just stays the way it is and
+then we take from each that makes it
+into a vector um and then we remove that
+enclosure if there is any so we can see
+this happening
+here we paded with spaces that's what
+the tick function does if it if there
+isn't enough data on a character data
+and then the mix um takes care of that
+extra enclosure and we get a vector like
+we were supposed to get so this just
+works this is a very nice easy to
+understand Solution that's called that
+F however um it isn't the most optimal
+solution when it comes to Performance
+because it uses these nested arrays and
+modifies these nested arrays um looping
+over them with the each operator and in
+general that's an anti in APL let's see
+if we can do better of course the
+argument we get in is already
+potentially nested this we can't change
+that but we can try to get rid of that
+nesting as soon as
+possible so instead we're going to take
+that
+argument uh
+here
+we going to do the conditional nesting
+again to normalize but this time we're
+going to take advantage of mix padding
+short
+elements however the padding would
+happen on the right which is not what we
+want we want it on the left so we can do
+this by reversing every element
+first and then we do the mix which does
+a p in and then we reverse the whole
+result back
+again and that gives us what we want but
+it's not it's when it comes to
+justification but not when it comes to
+the truncation so all we need to do now
+is the
+truncation we
+could negate the left
+argument and then do a take this time we
+don't want to take from the rows of the
+result a matrix we want to take on the
+individual rows um and that means we
+want to apply to vectors those are rank
+one so we do a take rank
+one this could
+work however since we
+already uh doing this reversal then this
+reversal happens on the entire data and
+then we truncate it would be more
+efficient if we could first truncate our
+data and then reverse a lesser amount of
+data so let's wait with that over here
+now all our data is in Reverse which
+means we need to take from the left
+instead of from the right and then we
+can do the reversal at the
+end this gives us our result as well so
+let's try to compare these let's call
+this
+G and let's copy in the cmpx the compare
+ution facility from uh the defense
+workspace and then we are going to
+construct some sample data of course
+three words is not enough to notice the
+difference here so let's take the
+alphabet and from the alphabet the
+entire alphabet we en close that we're
+going to uh to take over and over again
+a prefix of the alphabet with some
+random numbers so these are 100 random
+numbers of length
+uh of length 10 oh 100 random numbers uh
+would be like this so these are 100
+numbers that are 10 and then we change
+them into random numbers from 1 to 10
+and we use that to take from the entire
+alphabet now I don't want to print all
+of that to the screen uh let's get the
+first 10 of that so we see some words of
+various lengths of course it doesn't
+matter what the actual letters are which
+is why we're just using the alphabet
+here good let's give this um a name
+words and then we can use the compare
+execution facility to do a five F words
+and a five g words and see what um the
+execution looks like give this a
+moment and well that's significant and
+we only talking about 100 words here if
+you we were to increase the number of
+words then and maybe their length this
+would potentially give us even greater
+speed
+up can we do better we can but it will
+get a little bit involved let's try
+this so we want to take those words we
+want to
+normalize um normalize them into a list
+of words in case there's only
+one and we want to get rid of the
+nesting as quickly as
+possible so we want to do this
+mix now however uh we have we lose the
+information about how long they are they
+could have potentially spaces at the end
+and that information would be lost so we
+do need to access the length of the
+individual words in this nested list now
+we know that it's uh
+nested all we want to do then
+is if we just take this as an
+example
+is we want to do a rotation you want we
+need to rotate um these letters into the
+right position where we can uh then chop
+accordingly so how much do we want to uh
+rotate them
+well we want them to be in an aligned
+such that the a um the longest word
+stays in place and every and every
+letter get sorry every word gets rotated
+to the right by as much as the
+difference is between its length and the
+longest word's length so we can express
+that rather directly
+here we going to
+rotate this so the way rotate works when
+we already have a matrix because we're
+mixed is it rotates each row separately
+which is exactly what we want
+and the amount that we want to rotate by
+depends on the length of each word so
+this is a now a fork so this gets
+applied to this nested array and this
+gets applied this gives us the length of
+each to this nested
+array and then we use the result to
+rotate by of course this isn't right we
+want don't want to rotate by uh the
+length of each we want to rotate
+by a function of the length of each
+which is the density those lengths minus
+the length of the longest one this is a
+maximum
+reduction so now we have rotated
+everything to the right to WR justify
+them but staying flat the only step
+that's missing now is the truncation
+which we know how to do
+already there we have it yes it's a bit
+involved
+let's see if paid
+off let's do
+cmpx with f on the words and G on the
+words and H on oh I misnamed
+this should go up and fix that we still
+want this
+one and then this one should be
+H you go h on the
+words
+that happens because I forgot the left
+argument and we try
+again now we're talking this is only for
+100 words if it was larger amount we
+would save a lot more so sometimes you
+have to weigh off uh you want to keep
+the code simple or do you want to keep
+everything as flat as possible
+and in order to get maximum performance
+or could you find some on a balance in
+between that's good enough performance
+while keeping the code reasonably simple
+so these were our and solutions we
+had and we can see that yeah maybe maybe
+this is good enough for your needs um
+but with some reasoning you can find
+ultimative flat solution thank you for
+watching

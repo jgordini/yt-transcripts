@@ -1,0 +1,141 @@
+hey
+our job is to take a
+number and split it into its integer
+part and its fractional part
+so here's a number
+and we can get the integer part by
+lowering it
+so this symbol is kind of
+is a a stylist wall and the floor next
+to it so this floor and we could also
+round up using the ceiling which would
+be like a wall and a piece of the
+ceiling above but now we're flooring
+and that gives us one
+and what we could do is we could
+subtract
+this so we can make a what's called a
+train
+um or it's a fork a special construct
+where we
+um refer to the function to the argument
+in terms of function application
+so this is you could call this a one
+train
+um and then we can use the identity
+function
+to just give the number itself and if we
+subtract
+the floor from the argument itself then
+we get the fractional part
+now all the remains then because we have
+to return a two element result which is
+the integer part and then the fractional
+part is to concatenate in front
+the forward part
+so that's the integer part
+this is one way we can do it
+um there are other ways to do it
+we have something called the division
+remainder so when you divide
+um if you are using integer math then
+you might have something left over say
+if we divide 10 by 3
+we get three in the third
+however if we did an integer division
+then we would only get up to three times
+three is nine it would have one left
+over so if we we can write that in API
+with a vertical bar which in this is a
+notation technique from traditional
+mathematics means divides
+so 3 divides 10 then what happened you
+get
+one left over if we had three divides 11
+then we would get
+two left over
+and so here comes the trick
+if we have a number that's not a whole
+number and we want to divide it by one
+then
+well of course it gives the same result
+but if you're using integer math the
+closest we could get is the one
+and then we would have this left over
+so if we say what's the division
+remainder
+when we divide by one
+then we get the fractional part
+and so we could go up here and
+substitute it
+and we all we need to do is to take this
+one and bind it together with the
+remainder function
+to create a function that just takes a
+single argument because we've already
+filled one slot with the one
+and we can write that as with with this
+jut composition operator
+and this says the one should be always
+be the left argument to the remainder
+function and then we concatenate the
+float value on the left
+so there's another way to do it
+but there's actually
+a very neat way that we can do this in
+one go without constructing the results
+from its two parts
+and that is by using the encode or
+represent function
+now let's say that we have a movie which
+lasts 96 Minutes
+but we want to know how many hours and
+how many minutes is this
+so what we can say is
+we use the encode
+we could also see this as kind of like a
+letter T and this stands for converting
+to a base which could be a mixed base so
+we have a number system for time where
+there are 60 units minutes in an hour
+and then it doesn't really matter how
+many hours there are in a day it would
+be 24 but it doesn't matter in this case
+and if we use a zero then we don't roll
+over to the next unit we just say this
+is the highest unit and anything that's
+bigger than that will just remain within
+that position keep counting up
+so you can see this is one hour and 36
+minutes
+now what if we were to represent
+um in where the unit is a one
+and then
+um
+that means that none of the whole part
+of the number can be represented in
+um in this digit
+only anything less than that
+before we go there let's just try it 96
+and a half minutes in hours and minutes
+we can see that the fractional part goes
+over here
+and so if we change this to a 1 then the
+whole 96 will overflow to the next
+higher unit which is the highest one and
+the zero indicates that everything goes
+there
+and we just get the half remaining
+and we can try that with our other case
+we can see that it splits it up
+so a whole solution to this as a full
+function we'll do the same trick as we
+did with the one and the remainder
+binding them together using the chart so
+two we can bind together
+the zero one which is an array with the
+encode function and this becomes a
+standalone thing that we can give a name
+and we can apply it and that's the
+entire solution
+thank you for watching

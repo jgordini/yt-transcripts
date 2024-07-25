@@ -1,0 +1,594 @@
+welcome to the APL Quest
+cap Wiki for details
+today's Quest
+is to find the mode
+that's the most frequently occurring
+element
+let's get started with some test data
+okay
+there are many different approaches we
+could take to finding the most common
+element
+however and we're just going to try a
+couple this time
+so one way to find the most common
+element would be to remove one of each
+of the unique types of elements that are
+there
+until there's only one of each left
+that would then be the most common
+element because any elements that occur
+less frequently
+will have been removed in the process
+let's try this
+the way we're going to do it is we're
+going to start by writing a Lambda it or
+a different little function
+um and we're going to apply that to each
+of the elements of D so these two dots
+here that is like a mapping operation
+if we have a an inside a convention that
+says that Omega because the argument is
+on the right Omega being the right most
+letter of the Greek alphabet
+Omega is a placeholder for the argument
+that we're being fed or just the name of
+the argument being fed
+now we have a very convenient function
+called unique mask or we could also call
+it indicator first
+it's denoted by the magnetic unequal
+sign let's try running it
+so for each element we get
+um a mask and these are bullet masks
+booleans in APL being represented with
+one and zero for true and false
+and it indicates for each element
+whether or not that element is the first
+of its kind so for the first of our
+three cases here we begin with one six
+one eight
+and we can see we have one one zero one
+indicating that the first one is the
+first of its kind it's the first one
+um and then the six is the first of its
+kind then the second one is not the
+first of its kind so we get a zero and
+the eight is the first of its kind and
+we can see there's a the last element
+here is an eight and that gets a zero
+because it's a a subsequent eight
+so this is really nice this indicates
+exactly one of each unique element and
+if we then remove the elements indicated
+by the ones here
+then that's equivalent to removing one
+of each element
+now we have a function in APL called
+replicate or compress denoted by the
+Slash
+and then we can it takes a mask on the
+left and some data on the right and
+keeps only the elements where there are
+ones it actually keeps as many copies
+of each element as there as indicated on
+the left but since the left is Boolean
+it will either keep it or discard it
+so we can see this keeps exactly one of
+each
+but
+and and the first one of each but we
+don't want to keep the first of each we
+want to remove the first of each so we
+want to flip it around the ones that are
+indicated with ones here we want to
+discard the ones are indicated with zero
+we want to
+um to keep so we use Boolean negation
+the tilde is Boolean the gate
+and this
+keeps exactly one of each so we can see
+we uh sorry this removes exactly one of
+each so we can see that there are no
+more nines left in the first case
+because there was only one in it got
+removed same thing with the six and the
+zero and that gives us actually our
+result for the first test case one three
+and eight are there
+um
+and most frequently occurring elements
+occurring two times each in the second
+test case
+we can see that we removed the seven
+and we kept the 281 but there are more
+eights and two is one because we only
+removed one of each she would have to
+repeat this operation
+and this that's the case because you
+removed three four and five and one of
+the two ones so then there's one left
+and that's our result so we actually
+have to apply this function
+um multiple times
+and we can use the power operator and
+this is in traditional mathematics
+written to a superscript number on the
+function name and applying it that many
+times but APL is all inlined so we write
+it with this star there is this and a
+number so we can apply it twice
+and again on each of these and that is
+good for the middle test case but
+destroys the first and last test case
+because there's only one of each and
+left and we're removing one of each
+there's nothing left after that and
+we're still not even done with a middle
+test case because there are now two
+eight eight and only one two the modes
+being eight the most common element here
+and so we have to apply it three times
+and that doesn't change anything for the
+first and last they're already empty but
+the middle one you get the result so
+we don't want to apply this function
+a fixed number of times we want to apply
+it
+um
+a custom number of times when it depends
+on where have we gotten so far
+actually what we can do is we can apply
+If instead of applying a fixed number of
+times we could actually apply it kind of
+like an infinite number of times what
+actually happens is
+if we give a function on the right of
+the star diocese instead of a number
+then that function will be applied
+between meaning taking as arguments to
+subsequent
+iteration values from applying this
+function over and over again and it will
+keep doing so until the result is stable
+that is until two subsequent values are
+fulfill this condition that we give it
+so the normal thing to do is to use
+equality or
+um
+um equivalence as in this case so we're
+saying keep doing this until the result
+is stable and if we do that we get empty
+all together
+um empty list because we keep doing it
+the only time that we keep removing one
+of each occurring element and the only
+time that becomes stable is when there
+are no more elements
+so how can we modify a function such
+that it stabilizes when there's only one
+left of each
+before we get to that let's move things
+around a little bit in our function we
+have a parenthesize expression on the
+left and we have just a value on the
+right
+APL functions have long write scope that
+means they take a right argument as much
+as they can going to the right until
+they get stopped by either the end of
+the expression or the end of a
+parenthesis or bracket and so on
+and so we can get rid of this
+parenthesis on the left if we had a
+function that was just like slash just
+like replicate except it took the mask
+on the right and the values on the left
+now there isn't such a built-in in APL
+but we can easily construct it
+if we put this to there is this looks
+like a frown because they're confused
+about which side is right and which side
+is left that modifies the replicate so
+that it takes the uh the arguments in
+opposite positions that is the mask on
+the right and again we have long right
+scope so everything on the right
+of this derived function
+um is its right argument
+and then we take the value on the left
+and of course this gives us the same
+result but it makes it easier to
+manipulate this mask
+now let's say we put
+instead of having
+um
+this mask which varies by what exactly
+we have if we just had all ones then
+nothing would change
+we can actually use a single one and it
+would work as well then it stabilizes
+immediately because we're not changing
+anything
+so we want this mask
+in the general case but we want a mask
+of all ones or a single one for that
+sake
+um in the case where
+there's only one exactly one of each
+element
+so how can we do that
+well we have this mask here
+oops
+we have this mask and here indicating we
+should get rid of this stabilizing or
+we'll go to infinite Loop
+um
+indicating which elements are the first
+of each
+and we want to find out whether and
+every element is
+it's the first of its type and that's
+very simple we just need to check if
+it's all true
+how do we check if it's Ultra in APL we
+use a reduction we just need to reduce
+with and
+and so and we use slash again this with
+a function on the left it means
+reduction and this is logical end so we
+just say this one and this one and this
+one this one if there any zeros we get a
+zero but if all of them are one then we
+get one
+so we want to combine this mask
+with our previous mask
+so that if this one is
+a single one
+then it forces this Max to become all
+ones
+and if it's zero
+then it doesn't make a difference
+and we can do that with an or
+so
+if you have
+ones and zeros over here or one
+then we get all ones and if we have some
+ones and zeros over here and we have
+zero here then it doesn't make a
+difference because
+false and something gives that
+something
+and so this is the mesh that we
+um that we want we can try running it
+and then we can
+um we can try to use it to compress the
+argument
+and now if we apply this two times
+we can see that this did not empty out
+the first and last element so we can run
+it as many times as we want and now it
+stabilizes
+so we can also say let's run this until
+it's stable
+and this actually solves the problem or
+at least almost solves the problem
+um because there's one issue here if we
+look at
+the original test cases
+here we have first one and then the six
+goes away another one here then eight
+and then three
+problem was that our result has three
+then eight why is that
+that's because we removed the first
+occurrence of each element so the first
+one goes away we keep this one that's
+fine the first eight goes away the
+second eight it remains at the very end
+and the threes are next to each other so
+we end up having three before eight and
+we really want to preserve the original
+order
+how can we fix this
+well see
+this indicates the first element
+of every type
+if we reverse it then so this is a
+reversal function remove and this
+reverses the argument before we get
+indicate the first of each
+now we're going to indicate the last of
+each but count it from their ear and we
+really want to keep it from the front so
+we can reverse the result of that mask
+as well
+and now we get the correct order and
+this is a proper solution
+albeit a little bit inefficient because
+we are Computing this unique mask twice
+so let's give it a name instead
+like this and now we can use this over
+here
+and the flow again is from the right
+so we compute everything from the right
+reverse unique mask reverse again stick
+that into M negate it do an or with and
+then we compute this because it has
+parenthesis around it
+we can beautify this a little bit by
+applying uh some laws of
+of logic
+but always a little bit hard to reason
+about so because we want this to be true
+or not this
+let's change the or into an and using
+the Morgan's laws so we can express and
+or in terms of each other by negating
+the arguments and negating the result so
+we change it into an end here negate the
+right argument negate the left argument
+and negate the result as well
+so this knot takes everything on its
+right as its argument
+okay clearly we can remove these two
+this is just negation of negation
+and so and here we have
+not what's on the left
+with yes and yes what's on the right now
+booleans remember in APL are just zeros
+and ones which means we can treat them
+either as numbers or as booleans
+whenever we want they are one and the
+same
+so
+if we have a 1 on the right
+and we have to have a zero on the left
+because we want not this one that and
+those are the only values for which we
+get true that just means that the right
+argument over here has to be greater
+than the left argument so we can change
+this to a less than
+and now we have a negation of the result
+of a less than well what's the opposite
+of less than if it's not less than then
+it's got to be greater than or equal to
+so we can put everything together in a
+very nice solution to the problem it's
+iterative
+but it's pretty elegant it's not the
+most efficient way to do it and we're
+reversing every time we could start off
+by reversing and then at the very end
+and finish up by reversing again instead
+of reversing every time around the loop
+but it this is my elegant
+okay let's do a a better approach
+again we'll start with mapping this
+Lambda over the test cases
+and here
+um
+we are going to use a special high order
+function called key which is extremely
+useful for and our purpose it takes it
+takes a function on the left so we can
+give it a little Lambda on the left and
+then it derives together a new function
+that's then applied to our argument on
+the right
+let's look at what it does how can we
+look at what it does we just give it a
+um it's kind of a dummy Lambda that just
+returns a two element list of left and
+right argument to see what are the
+arguments that we're given
+and key returns us as left argument uh
+two so four it returns here a matrix and
+each row of the Matrix corresponds to
+one unique element of
+the right recording by the way the
+unique elements we can compute
+like this
+so you can see the unique elements are
+one six eight zero three nine as we know
+and we can see the corresponding numbers
+one six eight zero three nine in the
+leftmost table and then on the right it
+tells us the indices
+where these values occur so we had a one
+at positions one and three and a six at
+position two and the eight at positions
+four and nine and so on we're not
+actually interested in the positions
+that they're at
+however we are interested in how many
+there are because we want to find out
+and
+which ones there are most of
+so we can return
+the count of the arguments together with
+of the count of the red argument
+together with the left argument which is
+the unique value
+so we can see that there's for the value
+1 there are two for the value six there
+are one and so on
+and we don't actually need the value
+itself we just need the count
+so here it counts per unique element in
+the order of their appearance
+we want to find out which elements which
+unique elements occur the most often
+so we can find out what this number is
+so we can see that the highest number of
+currencies of a single element in the
+first test case is two and then four
+then two
+we want to find out which elements
+appear that often so over here we got
+the counts let's call that c and we just
+need to know which counts are equal to
+the maximum now what's going on with the
+maximum here is again a reduction like
+we did the end reduction before but this
+time we're reducing with the max
+function which is a function that given
+two arguments one in each side just
+Returns the larger of them you can kind
+of see the symbol showing a vertical bar
+um and then
+horizontal bar at the top indicating
+we're wanting the top of the two values
+so now we have a Boolean mask indicating
+elements unique elements that
+appear the most often
+and we can use this we'll replicate that
+we had from before so this is just a
+mask and but not on the argument itself
+rather on the unique elements of the
+argument
+so this gives us the modes and directly
+again there's a bit of inefficiency here
+because
+we're Computing the unique values here
+and then when key operates on the
+argument it has to compute the unique
+values as well
+internally in order to be able to figure
+out well how many there are in our case
+so how can we fix this well remember the
+key returns both the indices and in our
+case we want the counts and the unique
+values themselves so we just need to
+mangle out this resulting array in such
+a way that we can
+get both the unique values and the
+counts out
+so here the unique values and the counts
+in The Matrix for each test case
+and what you want to do is we want to
+combine these values here into a list of
+and
+of unique values and we want to combine
+these values in here into a list of
+counts
+and so what we need to do is a vertical
+concatenation so we're concatenating
+this column together and concatenating
+this column together
+concatenation in April
+is the comma and then we've used
+reduction before but that was horizontal
+reduction now we're going to use
+vertical reduction which is the slash
+with an extra bar
+so we can see that we transform these
+matrices into the individual column
+vectors and now we can give them names
+so the left one we're going to call the
+values and the right one we're going to
+call the count
+we assign them here we use diamonds to
+separate statements because diamonds are
+Unbreakable
+and now
+we have we need to know where the counts
+are equal to the maximum
+of the count
+that's the same mask as we had before
+and then we can use that to compress
+swapping the arguments of compress and
+not not the right argument we need to
+compress the the unique values
+right there
+and that's a very nice solution
+but we can actually take this a little
+bit further and if we look at this red
+expression
+let's think of it as a function in terms
+of v and C
+so what we've got here is
+let's put this into braces as a little
+Lambda so we got we got C on the right
+we got a v on the left
+and then we can use just like over here
+we used Omega last letter of the Greek
+alphabet and Alpha the first or left
+most letter of the alphabet for the left
+and right argument so we can do that
+over here as well V is on the left
+and C is on the right
+now this might seem just unnecessarily
+verbose and it still works
+however notice this we have this little
+function in between V and C
+and on the left we have V and c as a
+pair we just need to insert
+this function
+between V and C and inserting a function
+between that's really what a reduction
+does
+oh but notice the extra boxes
+that's because reduction needs to reduce
+the rank of the argument
+VC that's a list it is a vector it has
+rank one it has one dimension and the
+result we want and we get from that
+needs to be a scalar but actually we get
+a list of values which is a vector so
+how do we have a vector which is a
+scalar we enclose it in a scalar
+encapsulation but we don't want that so
+we just extract it with this close this
+opens up
+that enclosure
+and now we can see we have VC and we are
+playing something to it
+this function the derived function which
+is our little Lambda together with the
+reduction takes as a right argument this
+list of VC and VC is exactly what we get
+over here
+so we can just take this expression
+because everything flows from the right
+to the left like this we just apply that
+on the left and we get a very elegant
+solution
+there's one more thing that I'd like to
+do
+and that is
+this little
+Lambda over here we can actually
+simplify a little bit by using tacit or
+0.3
+and programming
+we have the left argument concatenated
+to the tally of the right argument
+and that is something we can use a
+function composition for
+so
+let's say we have 10 and 20 and we want
+to concatenate 10.
+to the negation of 20.
+so this is a type of concatenation but
+we want to pre-process the right
+argument with
+negation and there's a combinator for
+that we call it beside because
+it is as if the comma and the minus are
+next to each other beside each other
+and this makes a new function
+which we can apply
+and so too
+if we had on the left a value and on the
+right a list
+then we can concatenate with the tally
+note that this looks like a Telemark
+and we can just insert that
+into our expression here instead
+so we concatenate with the tally and we
+don't need to mention the arguments at
+all
+I think that's pretty elegant
+thank you for watching

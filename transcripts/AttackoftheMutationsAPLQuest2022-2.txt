@@ -1,0 +1,89 @@
+hi we have two DNA strings and we are to
+find out how many of the characters the
+DNA bases are different between them and
+the same length so this is
+easy um here's a sample and if you want
+to see which ones are the same then we
+can get the mask like this and if you
+want to know which ones are different
+then we can can do an
+unequal and then we all just need to
+know how many ones are there here but
+being because true and false and APL are
+and represented by one and zero and
+since they are just numbers they're not
+separate type we can just sum them uh to
+and summing them is using plus reduction
+so we we reducing the result of this
+because every function including this
+derived summing function has long right
+scope so we take take everything on the
+right as argument um so the result of
+this which is the mask get summed and
+that gives us the number of
+differences um this isn't a single
+function we could uh wrap this up a
+little bit as a function so we can uh
+call the left argument Alpha because
+it's the leftmost ele um character in
+the Greek alphabet and the right
+argument is called Omega um and then we
+can put races around it to mark it as a
+Lambda and then we can give it a name or
+we could call it directly in line so now
+we can go up here and um apply our
+function to get the same result we can
+actually be much shorter than this even
+though this doesn't look like much um
+and that is because we can switch to
+test it
+mode the way we do that is test it means
+you don't mention the
+arguments and if you just remove the
+arguments and also the braces uh let's
+give it a new name then we
+can do it like that that works too um
+however this definition We cannot put uh
+in line as is if we wanted to do that
+then we would have to parenthesize it um
+like this there is however a tcid inline
+definition that you could put inside and
+that is um as an inner product so inner
+product um let's let's try that first so
+if we say 1 2 3 so we have two vectors
+or they could be scalars it could also
+be higher rank array but that's not what
+we're dealing with here and for um up to
+one dimension then the inner product is
+the same thing as a reduce over the
+result of a scalar operation also known
+as a map reduce at least kind of because
+it takes two arguments so uh let's take
+10 100
+1,000 and and the inner product uh
+simply pairs up elements with the
+corresponding element over here so this
+is uh 1 * 10 + 2 * 100 + 3 * uh 1,000
+and therefore um we can just replace the
+multiplication with the unequal and the
+plus stays the same and that would still
+work so if we could do that here we
+simply replace a slash with a DOT and
+that gives us this and this because this
+is is a diic operator it combines these
+two functions to a new function and this
+is constitutes a single function whereas
+this before was two adjacent functions
+uh the plus slash is one function
+derived from this mtic operator higher
+order function um that makes the
+reduction and the unequal which is um
+its own function uh so we have two
+functions here we just have a single
+derived function and so we don't
+actually need the parenthesis and like
+that so we can uh can call it that as
+well
+and then we can go up and apply it here
+if you want to do that thank you for
+watching

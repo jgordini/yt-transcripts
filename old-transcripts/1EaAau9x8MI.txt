@@ -1,0 +1,58 @@
+hi
+we are given a bunch of scores and are
+to convert them into grades represented
+as letters
+here are some scores they are arranged
+in a table a two Row three column table
+and the shape doesn't matter
+we need to be able to handle any array
+but as we'll see that won't be a problem
+let's start off with a little Lambda or
+a defen and then we refer to the
+argument with the letter Omega the
+rightmost letter of the Greek alphabet
+now we use the the interval index
+function
+it gives us the indices
+of the elements on the right
+in a lookup array on left
+but it's not just finding those elements
+there it is the intervals so the array
+on the left has to be sorted and we
+figure out which interval with the right
+side elements fall into
+on the left let me illustrate this so we
+write our cutoffs from the table
+and now we go and look up
+71 it's not in the list of cutoffs
+instead it would fall in this interval
+and the intervals are
+inclusive on the left and exclusive on
+the right the last
+cutoff goes for Infinity after that
+and and this is interval number one
+which Falls between after the first
+cut off
+we can see that by 59 which falls in
+that first interval so which ends before
+65 begins at zero if there were any
+elements that would go before zero that
+is negative number then
+we would get a
+interval number zero but by default
+that's not a proper index and we don't
+want that so therefore we begin with
+0 which is the cutoff for the first
+element APL supports
+multi-indexing that is when we index
+into an array or a string in this case
+then we can index using multiple indices
+the result is all always has the same
+shape as the indexer so here
+we get an array of two rows and three
+columns of indices and each one of those
+indices will then be applied in turn to
+the lookup array this effectively
+translates the indices to this alphabet
+and here we have it these are the letter
+grades thank you for watching

@@ -1,0 +1,297 @@
+welcome to the appeal Quest see APL Wiki
+for details
+today's Quest is the fifth from the 2016
+round of the APL problem solving
+competition
+we are to find the elements of a list
+that only once in that list that is
+those that have no duplicates
+let's start by defining a function it's
+an anonymous function we're giving it a
+name right now but we're going to apply
+it to an argument
+a very simple way to go about this is to
+compare every element in this array
+let's say list a vector a one a
+one-dimensional array
+to every element that is we're making a
+comparison table
+so we take
+the argument
+and compared to the argument but we want
+to do all combinations so not just
+equality
+but this jut dot together makes a table
+so this is a quality table
+so imagine that we have the letters of
+hello world going down
+on the left and going across on the
+right
+and we can see which elements match
+which elements so of course the diagonal
+is all ones because elements match
+themselves
+but we can see that there are duplicates
+when they match multiple
+and so and by counting how many matches
+there are for each element then we can
+see which ones only appear once
+and we can do so by summing so
+if we Sum along the columns or along the
+rows it doesn't really matter but let's
+just do the columns for now then we can
+get a count per element
+and sum is a reduction using plus so we
+use plus and this slash bar means
+reduction
+and you can see here that each number
+corresponds to
+how many ones there are in the column
+above
+now we want only the numbers
+that are 1 so
+we can compare one to all of that
+and we can see here that the ones
+compare we get a one true
+where we have L1 and then we just need
+to filter
+the argument using this bit mask so we
+take this bit mask and use it to filter
+we can do that again with a slash bar
+but this time we have a mask on the left
+so now it doesn't mean reduced now it
+means filtering also known as compress
+on the argument itself
+and we get H and E that only appear once
+the L's are two of those the two o's we
+skip that there's a single space w
+appears once and so on
+so this is one solution albeit n not
+very good one because it does a lot of
+computation that is unnecessary for
+example this table is way bigger than it
+needs to be
+we don't need to compare every element
+to every element we could compare just
+to the unique elements
+so how can we find the unique elements
+well we can use the unique function
+which looks like an A U
+and this gives us just the unique
+elements
+now we can compare to those
+and this gives us
+a smaller table
+and if we now
+count how many they are of each of the
+unique we get a mask we can then apply
+to the unique
+and we get the same result with a little
+bit less computation
+wait we are Computing the unique twice
+that seems a bit wasteful as well so we
+give the compute computed unique value
+and a name U and then we can use that
+over here
+which is a bit better
+that said API can actually do a lot of
+this for you and it will do so more
+efficiently by using the built-in that's
+made exactly for this kind of work
+so let's remove everything here we have
+the argument and there's a special
+operator it's called which is a higher
+order function called key and it takes a
+function on the left and applies this
+function to
+some properties of the argument on the
+right
+it's applying it this function over and
+over again once for each unique element
+so there we have it inside the unique
+elements
+um and the unique elements are given as
+left argument whenever we apply so Alpha
+is the the left argument being the
+leftmost character in the Greek alphabet
+and as right argument
+Omega
+Omega being the right most character in
+the Greek alphabet
+it gives all the indices where these
+this unique element occurs
+so we can see that the H appears only in
+position one e position in only in
+position two L appears and three four
+and also 10 over here and O at 5 and 8.
+now we're not actually interested in
+where they are we're only interested in
+how many there are
+so
+we can get rid of the left argument
+and it gives us just the indices and
+we're not even interested in what
+exactly indices are but just how many so
+we use tally which looks like a tally
+marker like a counting stick
+and this gives us the counts for each
+one so this was the same we got before
+when we made the table and summed the
+columns
+and then we can take it from here we can
+compare
+to one
+and use this as a mask
+on the unique elements
+and this solves the problem but
+this key operator actually computes the
+unique Elements by itself and we're also
+Computing the unique elements outside
+which isn't the best
+remember we can get the unique elements
+as left argument in this function which
+means the information is actually
+available we just need to change the
+structure of the result coming back so
+that we can get all the information we
+need and apply it
+so let's try that
+we have the count over here
+and we can actually do the comparison
+with one in here as well
+then we get this mask directly
+and then we can concatenate
+the left argument which is the unique
+element
+so comma is concatenate
+and we can see we get this table of
+which ones are the ones that that we
+want which means we really have a mask
+here
+and we have the Theta over here we just
+need to apply this mask this column to
+the column on the left
+as we saw before
+the the filtering function was known as
+compress
+takes the mask on the left and the data
+on the right so we really want to have
+the unique elements on the right and
+this mask generating expression on the
+left
+we could put parenthesis around this
+expression and move the comma over on
+the side but we can also use a special
+higher order function or operator
+called commute which takes this function
+on the left much like key takes this
+user-defined function on the left
+and the only thing it does to it is it
+changes the order of the argument so the
+left argument becomes left the right
+argument the right argument comes
+becomes the left argument and this just
+gives us the two columns in opposite
+order
+foreign
+this
+a two column table or Matrix into two
+vectors and we can do that by
+concatenating vertically so we're
+concatenating the first element over
+here with the first element over here
+and so on and concatening the second
+element of the second elements
+so we want to concatenate vertically so
+just like we used the slash bar as a
+vertical sum now we're using it for
+vertical concatenation and that gives us
+these two elements which are the mask
+and the data that we want to apply the
+mask to
+before we use compress infix we use the
+between two arguments
+but now we have the two arguments in a
+list next to each other so we need to
+insert
+the compression function
+in between the elements which is again a
+type of reduction but just over two
+elements so slash bar here means the
+um the filtering or compress and then
+slash bar again because it has a
+function next to it it means insert or
+reduce
+now there's one little issue here you
+can see this box around the result and
+that is because we start off with a
+vector a list of two elements which has
+a single Dimension we're counting one
+element and then two elements and reduce
+the name implies that it needs to reduce
+the rank the number of Dimensions so it
+goes from one dimension to zero
+Dimensions how can it have a
+multi-element array in zero Dimensions
+so it packages it up in an enclosure
+that's this box we're seeing but we can
+this close that we open it up so this
+kind of looks like a a mouth that uh is
+away from the array and it opens it up
+that gives us our result so this is
+another solution
+and finally a really clever solution
+that somebody came up with
+there is a function called unique mask
+which instead of returning to the unique
+elements
+it returns a mask indicating the first
+occurrence of every unique element
+that's this equal sign with only one an
+unequal sign with only one argument on
+the right
+so this says that H is the first
+uh
+and the first a the first H is the first
+is H and this this e is the first e and
+the this L is the first L and this L is
+not the first of its type
+now
+what we're actually interested in here
+is to remove all the elements that are
+duplicate
+so which elements are the ones that
+are have duplicates well that would be
+the opposite of the ones
+that are the first so if we use logical
+negation here
+then yes we need to remove all the else
+and this
+if you use this mask it would not give
+us an L but this would give us an L so
+we guaranteed
+for every element that has every unique
+element that has duplicates we are
+guaranteed to get at least one
+element from this mask
+and so we can apply this
+to the argument itself so we're using
+this compressed function but the math
+needs to be on the left so we commute
+the arguments
+and this gives us all the elements that
+we want to all the types of elements
+universe that we want to remove
+it doesn't matter that there are
+duplicates
+now we can take the argument itself
+and then we use set difference so if you
+use the tilde with both the left and the
+right argument it doesn't mean not the
+Boolean not it means but not or except
+so it's set difference it's everything
+here on the left but not those things
+that are on the right
+and that gives us
+the elements that appear on new ones
+thank you for watching

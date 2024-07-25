@@ -1,0 +1,164 @@
+hi
+we're going to get a bunch of words and
+we have to Center them on top of each
+other within a certain
+window
+and we might need to lose some
+characters to make them fit there
+so
+here are some words
+and there are multiple ways we can
+detect this problem I'm going to go
+through only one that I like very much
+and the way we're going to do this is by
+first creating a matrix
+and since a matrix is orthogonal it it
+has the same number of columns in every
+row then we're going to pad with spaces
+which is great because that's what we
+need to in the final result and we just
+need to adjust where the spaces go
+so we'll start off by making The Matrix
+and then we're going to move the spaces
+around to the correct positions
+we're also going to get the width but
+we'll take care of that in a moment so
+the first thing we're going to do is to
+use the mix function on the words and
+what it does is it takes these inner
+arrays and combine them into one array
+with each element becoming a row in The
+Matrix
+so now we've got a matrix and there are
+spaces here at the end you know we can't
+really see them normally
+now we have a width that we need to
+either extend or truncate to
+we want to do this for every row
+um so we want to use the the take
+function
+let's say with the width 10 and we want
+to apply that not on the entire array
+that would take 10 rows we want to apply
+it on each row and rows are vectors so
+they have rank one so we use the rank
+operator to specify we want to take from
+a row from arguments of rank one
+um really the left argument is a scalar
+so that's rank 0 but it doesn't matter
+because if we specify a rank that's too
+high we just
+leave it with
+um the argument in whatever lowering it
+has
+so now we can see that competition got
+truncated and so so did every line
+now we can start working on this result
+so let's create a little different
+Lambda
+and we need to move some spaces around
+and the way we're going to do this is by
+rotation so we can rotate each row
+separately we want to take some of these
+training spaces and move to the
+beginning
+let's first find out how many spaces
+there are that is how much padding was
+added after the truncation even though
+we actually added all the spacing first
+and then did a truncation we could have
+done the opposite order but that would
+have required taking the 10 elements
+from each which is an explicit Loop and
+we want to avoid that
+so the argument is referred to as Omega
+it's not the same as W
+um so here we get the Boolean mask
+indicating where we have spaces and we
+can Sum along the rows of this to get
+how many spaces there are in each row
+right in order for something to be
+centered we need to
+uh
+have half of the spaces on one side half
+on the other side so we divide it by two
+this little face changes the division
+sign so that it takes uh what we're
+dividing by on the left rather than on
+the right now we don't need to put this
+whole thing in parenthesis
+so we need to move three and a half
+spaces one and a half spaces of course
+we can do that
+um but the problem specification says
+that
+if there are an odd number of spaces
+then we should leave the larger number
+of spaces on the right which means the
+number of spaces we move to need to move
+over on the left is the lesser of the
+two adjacent numbers so we round down
+so now we need to move three spaces from
+the right on the first row one space
+from the right on the
+um
+on the second row and so on
+moving from the right to the left that's
+a rotation but normally rotation rotates
+from the front to the rear in order for
+us to rotate in the opposite direction
+we need to negate that so now we get
+negative numbers
+finally
+we do the rotation but the rotation
+takes actually the amount of rotation on
+the left so again we need this squiggle
+to move the amount of rotation over to
+the left
+and we do that on the right argument
+and that gives us the result so we can
+see here we got two spaces on the right
+here and one on the left that's because
+we rounded down the amount of spaces to
+rotate from the end to the beginning
+this is this solves the problem but it's
+not an actual function yet it's just a
+one big expression that uses an
+anonymous Lambda in the middle
+to compute the result so in order for
+this to become a function we can give it
+a name it's not necessary but it makes
+it easier
+you can see here that we have a function
+applied to the result of something else
+so
+um that is at the top it means we can
+just State the multiple functions after
+each other
+and we want to get rid of the arguments
+here we have this function is
+the diadetic function
+who needs to be applied between the left
+argument and the 10 in our case and the
+words that have been mixed
+so this is the central function but we
+need to pre-process the right argument
+with the mix we do that with this
+composition operator
+we called beside so it's like we had
+these two functions
+in the explicit
+phrasing we have them beside each other
+they're right next to each other and so
+this
+composition
+makes them be as if they were beside
+each other so this will insert the left
+argument here and the rest insert the
+right argument over here and then
+evaluate that and then on the result
+we're going to apply this function over
+here
+so now we can try it 10 f
+w
+thank you for watching

@@ -1,0 +1,282 @@
+hi
+let's
+compute areas of
+Circle sectors
+and when we're doing so we'll be using
+APL as the mathematical notation
+when reasoning about and simplifying the
+mathematical formula
+okay to get started
+the area of a circle one way to think
+about the area of a circle
+is that you sort of say unroll the
+circle
+into its slices these pie slices or
+sectors
+infinitely thin ones put them next to
+each other we get a rectangle the long
+sides of the rectangle are then
+contributed by the circumference and the
+short size of the rectangle are the
+radius
+well the radius is equal to compute from
+the diameter that's just half of it but
+the long sides well we know that
+diameter
+times pi gives us the circumference
+and we know that this this circumference
+that has to contribute to Long sides
+being that there are two that means half
+of that would be one of the long sides
+so we can compute the area of the
+rectangle as the short side times the
+long side
+if it's pi times
+half of the diameter that's pi times the
+radius so it's pi times the radius
+times the radius that gives us the area
+of the circle
+and we can express this in the APL quite
+easily
+we don't have a symbol for pi directly
+but almost always when we're using pine
+mathematics it's because we want to
+multiply by pi
+APL does have a function to multiply by
+pi and appropriately is denoted by a
+circle
+so
+Circle R means pi times R where R is the
+radius and we want to multiply that by r
+of course we haven't defined what R is
+and we are going to take as right
+argument
+the diameter not the radius the right
+argument that's omega as the rightmost
+letter of the Greek alphabet and we can
+divide that by two
+and assign it into r
+the result of an assignment is the value
+that was being assigned so this sets are
+to half of the argument diameter and
+returns that same value which we then
+multiply by pi times R and we can try it
+with some values
+APL automatically Maps arithmetic
+operations so it doesn't matter that we
+have three values here it will just work
+these are the areas of circles where the
+diameters 9 12 and 15.
+we are multiplying Pi Pi with r and then
+we keep multiplying and it doesn't
+matter which order we do the
+multiplication in so we can remove the
+parenthesis over here and now it's very
+clear that we have I term R times r
+or R times itself
+instead of using the dynick function
+multiplication with one argument on each
+side we can mention that the argument
+only once and use the commute operator
+or higher order function to change the
+multiplication from a diadic function in
+fix that takes its arguments on the side
+to become a prefix function
+and it uses then the same argument on
+both sides of the multiplication
+the symbol for this self thing as in
+self multiplication is a bit like a
+selfie face
+but now of course we're only using R
+here in the assignment and never reusing
+it so we might as well just use the
+Omega divided by 2 directly
+this gives us the areas of these circles
+but we don't want the full circle we
+want
+a fraction of a circle
+a sector and specifically we want it
+given in degrees so how big a part
+of the full circle is it that we're
+dealing with well let's say we have 60
+degrees
+so we want a fraction
+of the full circle
+how much out of the full
+360 degrees
+is it that we are having so it's the
+left argument Alpha on the left most
+letter of the Greek alphabet and divided
+by 360. that's how big a part of the
+circle it is and we multiply that by
+the area of the full circle
+and so we can see that
+60 degrees out of a full 360 that's a
+sixth of the full value we get the area
+of a 60 degree slice or sector of a
+circle
+this is a solution to the problem
+but let's try simplifying and condensing
+this a bit
+the first thing I'm going to do is undo
+this selfie that we did before and
+we do that since we have a fraction here
+it's Omega divided by 2
+then we can say Omega times Omega that's
+the square of that divided by 2 and
+divided by 2 again that is divided by
+two times two
+how does this work out because APL
+functions have long right scope that is
+this division symbol sees everything on
+its right as its right argument so this
+becomes
+Omega divided by 4 and then times Omega
+again so this is also Omega squared
+divided by 2 squared
+you can see we get the same values right
+there okay it's all multiplication
+division stuff and we know that
+everything we multiply together on the
+right that's what we divide by and
+everything on the left and that's that
+which is being divided so we are
+dividing by 360 over here on the left
+and we can move that over on the right
+just by adding another 360.
+to the terms on the right
+and then of course we can compute two
+times two times 360 is 1440.
+okay this is already looking better
+and this is about as dense as we can get
+it while still mentioning the arguments
+explicitly
+however there is a different style of
+APL functions and they're commonly
+called
+tacit functions and specifically we're
+going to use a type of tested function
+called a train
+interested functions the reason they're
+called tested we don't mention the
+arguments we only mentioned functions
+and that means the whole function the
+overall function is defined in terms of
+function applications to the argument or
+in this case of arguments
+since we have two arguments then all the
+functions are being applied to arguments
+are going to be applied to both of those
+arguments and
+this function the pi times function we
+just want as a multiplication Factor we
+don't actually need it to be applied to
+any arguments at all
+and therefore we're going to move it
+over to the very end it will be a type
+of post processing step
+right then let's look at what we've got
+in terms of the arguments well over here
+I spot the left argument times the
+regular argument again we're actually
+doing a multiplication by everything on
+the right but that doesn't matter
+because it's all multiplications we are
+talking about
+so let's parenthesize this of course
+that will still work
+um and this is now a sub-expression
+defined in terms of a function
+application on both arguments
+this one is a bit more problematic
+because we don't need the left argument
+at all we only want the right argument
+so how can we express this in terms of a
+function application to the two
+arguments to both of them we need a
+function that ignores the left argument
+but does
+take the right argument and returns it
+as is that's it's an identity function
+specifically a right identity function
+now for that we have something called
+Write tack symbol or the functions could
+actually just be called right
+and if we give it a left argument it
+completely ignores that you can kind of
+see it as a symbol that stops on the
+left and points at the right so it will
+return just the right argument like this
+we can try it
+it gives the same result and finally
+another problem this isn't the function
+at all
+this is a constant but we need it to be
+a function we need it to be something
+that we apply to the arguments
+but we don't want the left argument
+don't want the right argument at all we
+just want the constant this calls for a
+constant function
+obviously APL doesn't have a built-in
+constant function that just takes
+argument or arguments and returns 1440.
+however we do have a higher order
+function
+which takes an operand just like we had
+this selfie symbol which took a function
+that took two arguments and made it into
+a function that took a single argument
+using the same argument twice we also
+have a higher order function that
+doesn't take a function but takes a
+value in this case 1440 and turns it
+into
+a function that always returns that
+value no matter which arguments you give
+it
+happens to be it's the same symbol
+there is no contradiction or ambiguity
+here because
+this symbol this operator always takes a
+single thing on its left
+in order to derive a new function if the
+thing on its left is a function then it
+does that which we said before of moving
+arguments around
+and if it is a value then it derives a
+constant function
+so
+we can give this function arguments
+on one of both sides here we don't need
+to parenthesize this last part because
+remember APL functions have long right
+scope and so the division sees
+everything to its right as its right
+argument
+and this will then create a constant
+function 1440 constant function apply it
+to these arguments
+and return 1440.
+this is of course Very verbose and
+unnecessary
+but now we can switch from explicit
+to test it and we do that simply by
+eliminating all mention
+of the arguments and we don't even need
+our curly braces anymore we do need a
+pair of outer parenthesis though
+here's an argument let's get rid of that
+that's another argument we're getting
+ready
+um over there then there are these two
+arguments that we're getting rid of and
+these arguments over here we want to get
+rid of
+and look we get the same result
+the last step is then removing all the
+Redundant parenthesis
+and there we go
+a tested function to compute
+Circle sector areas
+thank you for watching

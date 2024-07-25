@@ -1,0 +1,58 @@
+hi we given two specifications of
+time and we're going to find the
+difference the absolute difference um
+between
+them the twist to this is that the
+specifications of time are not
+necessarily consistent uh they may might
+include just minutes or they could be
+hours and minutes or they could be days
+and hours or
+minutes so we have to normalize that and
+then figure out how many minutes we've
+got so the example we given is uh 213 on
+one hand and uh 515 so this is 2 hours
+and 30 minutes and 5 hours and 15
+minutes and we want to find the
+difference between them the only problem
+is that we need to figure out first how
+how many minutes are each one of them so
+before we do the difference and
+let's just concatenate together so we
+can see we pre-processing both arguments
+with a little pre-processing
+function um and that's going to be
+referring to the argument as
+Omega and then we need to make sure that
+we've got three elements so we padding
+we need to pad with zeros on the left so
+we get the um the dat days hours and
+minutes and we can do that by taking a
+-3 take so this takes the last three
+elements padding with zeros on the left
+so and now we're concatenating them
+together that doesn't make so much sense
+of course but we can see that we added a
+single zero on the
+left and now we need to convert to
+minutes and conveniently we have a an
+ability in APL to evaluate mixed radex
+number systems
+so we specify the base that's why we
+have this base symbol and we specify a
+base where there are 60 Minutes to the
+hour 24 minutes uh uh 24 hours to a day
+and no higher unit than
+that so this m zero indicates that
+there's no overflow to any higher unit
+we just stay uh with days counting up
+forever so this gives us the number of
+minutes and we can now replace the
+concatenation with a
+subtraction we can see that the result
+is negative so we need to take the
+absolute
+value it's this one um and apply that on
+the
+result that gives us our solution thank
+you for watching

@@ -1,0 +1,177 @@
+hi we are going to compute the next
+Double critical
+day um according to this bthm thing um
+and all it means really is that we have
+three cycles of 23 28 and 33 days and if
+two of them meet each other uh then it's
+called a double critical thing
+um we start counting from a birthday and
+then we it has to be the first time they
+they meet uh any two of them meet after
+a given date supposedly like the day's
+date or something um and then there's a
+red herring here it says the triple
+critical day which you're also supposed
+to check but it doesn't matter because a
+triple critical day is of course a
+double critical day as well there there
+two and there's one more um of these
+Cycles
+meet we supposed to take input and give
+output as year month d vectors and
+that's really all does to
+it so the Cycles are stated in as 23 28
+and 33 days
+but think of a sign curve after the
+whole
+period then we cross the x-axis again in
+the same direction but we've already
+crossed in the opposite direction once
+so the actual cycle we're interested in
+is um actually has half the the period
+of the given
+periods now let's find out uh
+What uh number of days we have to
+progress before we have two of these and
+we can do that by finding the least
+common multiple so let's make a least
+common multiple table um of these of
+course we're not interested in when a
+cycle meets itself it does that every
+time it it crosses over and we've got
+the duplicates because it doesn't matter
+which one comes first so we just need
+the upper right corner here and then we
+can we can do that so let's drain the
+vectors from one to three and then we
+make a comparison table and for that and
+that gives us an upper right Matrix and
+that's a good mask for the Matrix on the
+right so we can use filtering or
+compress um or replicate if you want to
+call it that we just need to flatten
+both first and then we get these these
+these numbers are stated in the problem
+statement as well um but now we know why
+it is exactly these
+numbers so we can uh we can call these
+the the periods I
+guess an example uh input
+1962 uh October
+31st and uh 2023 three the 1st of
+January and now uh we can start coding
+the first thing we need to do is we need
+to transform these dates into a serial
+number of dates so that we can do
+computations on them um so for now let's
+just say we concatenate them together
+but we pre-process uh both arguments
+with uh the conversion and for that we
+have to treat each one as a whole we
+call the datetime conversion function
+and it assumes that it's a time stamp
+like this so we don't have to tell it
+what the input type is we just need to
+tell it the output type and type one is
+uh a day count from the beginning of 199
+uh of
+1900 so that gives us uh these and that
+means we can find the difference here
+between them with minus instead of
+concatenation um this is negative of
+course because we have a larger number
+last we could swap the arguments uh to
+get the positive uh difference between
+them and now uh we need to find out when
+the next day is so um we need to find a
+whole
+multiple U of these
+Cycles from the first date so we can see
+how how many of these Cycles are there
+from and and from the first date to the
+second date and then we need one uh like
+how many whole Cycles are there and then
+we need one more date and this calls for
+a modulus operation so if we take and P
+here and modulus so this means the
+remainder when with this over here when
+the difference rum is divided by uh
+these
+periods uh that gives us these values
+but this is how much is left up
+until the
+and the last chance before the second
+date and that's what remainder means
+there's a clever thing in the definition
+of of the remainder in APL and that is
+if you negate the right argument then
+instead of stopping right before the cut
+off we stop right after the cut
+off um we
+can can't really tell that immediately
+here but if we try it we can see if you
+call this one b
+and and this one
+a then if we add
+together A and
+B that gives
+us uh the P that we have from up here so
+we can see that by negating on the right
+we get one more cycle so just uh after
+the cut
+off so that is actually what we uh what
+we after
+now what
+remains is that we we don't want to know
+how many days after the the current date
+the date on the right and it happens we
+want to know the actual date so we take
+the date on the right and we add that
+offset we need to do go beyond that date
+we need to find the first thing which
+could be zero if it's evenly
+divisible now we have the State numbers
+and all the remains is to convert the
+other way so that's negative one so
+we're converting two a time
+stamp and oh we forgot one thing we have
+to uh we have to find the first one of
+them it doesn't matter which one so we
+can before we go here we want to take
+this the lowest one and then it will
+make the formulation easier to realize
+that we're doing a reduction over Vector
+uh of on a scalar function's result that
+can be combined into an inner product is
+exactly the same thing okay now we can
+convert uh to
+date and it's enclosed remember we
+enclosed this to treat it as a whole and
+that's the same thing over here so we're
+going to disclose here uh for that
+effect to get the whole thing and then
+it has date and time and we're not
+interested in the time so we just need
+to take the first three oh first three
+elements uh from that I'm binding these
+two together because we have a Mantic
+function here so it fits in the in the
+trainer
+form and uh now we
+can actually go and Define our function
+directly we could so we can put in the
+actual value of uh over here and get rid
+of these given
+arguments you still need parenthesis
+over
+here and we have our function and then
+we can call our function with these
+arguments and just for good order let's
+see what happens if we give it the same
+argument both sides then it should say
+that that date itself is uh its own
+critical date because all the curves
+start there so they kind of intersect
+there and that's really all there's to
+it thank you for
+watching

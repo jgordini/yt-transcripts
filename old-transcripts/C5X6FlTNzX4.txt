@@ -1,0 +1,273 @@
+hi
+we're going to take a sequence of bytes
+and cut it into pieces so each piece
+represents
+a single
+code point or character
+if we take this sequence of bytes to be
+a utf-8 stream
+okay so what exactly is it we mean by
+this let's
+have a sample text
+so this is a normal d
+and
+this is a Yen symbol
+here's an alpha and a down style circle
+and a normal nine
+if we look at the Unicode character set
+code points for these
+we can see that some of them have
+relatively low values
+some have
+medium high values and some have very
+very large values
+and youtube8 is a variable with encoding
+that means that when you have a sequence
+of bytes that represents text each
+character doesn't correspond to a fixed
+amount of bytes
+we can
+ask
+APL
+to give us those bytes
+and so we can see here that the number
+of bytes is not something that directly
+translates to what we have over here we
+can see that the 68 is the 68 and the 57
+stays 57
+but that's where the obviousness really
+ends the 165 became more than that and
+then we have a bunch of numbers
+representing these large values in the
+middle namely in this case three for
+each
+okay let's call those the bytes
+and then we can convert back again so we
+can say utf-8
+quad UCS on the bytes
+that converted them back again
+if we wanted
+each character to become its own little
+sequence of and of bytes then we can do
+utf-8
+we we bind this argument to the quad GCS
+function and apply it to each so this
+entire thing gets paired up in every
+invocation of what GCS with each
+character that we get from this
+and this is the result that we want to
+get to
+given these bytes
+the rule is
+that when we have numbers here
+that are larger than or equal to 128
+and less than or equal to 191
+then it is a continuation of the
+previous byte so
+68 is outside that range
+194 is also outside that range so each
+of these begin a new character the 165
+is between 128 and the 191 so that
+extends
+the previous bytes to create a single
+character then we have 226 that's
+outside the range so now we begin a new
+one but 141 and 186 they're inside the
+range
+and so they continue the previous one
+and so on
+it could be up to four bytes together
+but we don't have an example of it here
+it's mostly used
+for emoji and and traditional Chinese
+so how can we do this
+well we can start by checking for this
+range let's do everything here in tested
+form that is without mentioning our
+arguments explicitly we've got the bytes
+and we want to do a comparison so the
+upper bound is
+191
+we can bind together a fixed right
+argument to
+the less than equal function so it
+becomes a new lesson or equal to 191
+function then we can then apply that on
+the bytes
+really we
+could keep going like this but it's
+slightly difficult to see which bit here
+a true false value corresponds to which
+byte in the input
+so
+it would be nice if we could stack them
+on top of each other to align things
+and we can do that
+by
+making a vector of these two
+and then we do what's called mix let me
+change this Vector of vectors into a
+matrix with two rows
+as a notational nicety I'm going to
+write in an operator a higher order
+function that does this for us because
+we're going to use it all the time
+so if you look at the pattern here we're
+going to call this operator with an
+underscore because it will look nice
+like this but it doesn't really matter
+and we want the mix of the argument
+and
+a function
+applied to the argument
+that's all there is related to it
+now we can go and say we have this less
+than or equal to 191 function with this
+higher order function we're applying it
+on the bytes
+now we have the stack here so we can see
+that these are the byte values and these
+are the corresponding bits so we can see
+here that 68
+is less than or equal to 191 194 is not
+and so on
+okay that's one half of the
+of the by the the range the other part
+is that it has to be greater than or
+equal to 128.
+and I like to put it on the other side
+for this
+because now we can combine this very
+nicely as a fork so we have this
+function so that has a magnetic function
+derived from a diadetic function and
+we've got this function which also we
+say test it
+and derived function from with diadic
+function to a magnetic function
+and we can make a so-called fork or
+three train where we have a middle tine
+which is the end function
+this means that these two other
+functions are applied to the argument
+and then the middle function here is
+applied to their results to get our
+final result
+and then our higher order function here
+the the underscore operator Stacks the
+original argument on top so we can see
+what's happening
+foreign
+we can see that the ones here indicate a
+continuation byte and the zeros indicate
+a new character begins here but
+but in order for us to use the partition
+enclosed function
+we need to flip things around because it
+takes A1 wherever we want to begin a new
+segment and a zero when we want to
+continue a segment
+but we can simply negate that with the
+not function
+now notice we have a not and we have an
+end we can combine those into a nand
+and this shows us where we begin a new
+character
+and the rest are continuation bytes
+then we can take this
+and use it as a mask for
+cutting using the partition enclosed
+function but the position in close
+function takes its mask on the left and
+the data to be cut on the right here we
+have the mask on the right and the data
+with the identity function on the left
+so we use the partition in close
+with the higher order functional
+operator commute
+that modifies this function to take its
+arguments in the opposite order so the
+grouping here goes like this we
+start by binding these two
+together to create magnetic functions
+rather than applied to the arguments the
+results are
+combined with a nand function that
+becomes the well left argument to
+partition in close and the identity
+function's result becomes the right
+argument to partition in close
+so this doesn't make sense to do the
+stacking anymore so let's stop doing
+that
+and now we have the solution to the
+problem and we could give this a name if
+we wanted to
+and then we can apply that to the bytes
+however
+this looks a little bit messy
+we can use the Morgan's laws which is
+these laws of formal logic that allow us
+to manipulate and
+the an expression
+by knowing that and an or
+duels under not to each other what that
+means is that if you negate both
+arguments and negate the result then you
+get the other one
+so if we instead of using end we then we
+want to negate the result so that gives
+us end and then we switch to an or now
+we just need to negate the arguments so
+what is not less than or equal to well
+that's greater than and what is what not
+less than equal to that's greater than
+so we can write it like this as well
+so these are this is one approach to the
+problem
+another one is you notice we're looking
+into ranges
+we have
+a function called
+interval index
+it gives us the index of the interval
+where a value Falls given some cutoffs
+so
+the cutoffs are left inclusive that
+means that if we have 128 and
+191 then 191 will belong to the next
+interval we want it to be in this
+interval so 192 Begins the next one that
+means everything from 128 to just before
+192 is in this interval here
+and there's one interval on the left and
+there's one interval on the on the right
+so we bind this to the interval index
+function
+and this gives us the interval numbers
+but let's use our underscore utility
+here
+to stack things and see how it looks so
+now we can see that 68 Falls in interval
+number zero that's on the left
+94
+for 194 falls on 2 that's to the right
+165 Falls in between the two that's
+interval number one
+remember that we want ones where we have
+0 and 2 because those will start new
+characters and zero where we have a one
+that means
+all we want here is to know whether or
+not these indices are different from A1
+so one is different from then it is zero
+or two
+and this gives us our argument for
+partition in close that we can then use
+on the argument and remember to get rid
+of this utility
+and that gives us the same result
+we can give this function the names as
+well and apply it on the bytes
+so this is a different way to do it
+thank you for watching

@@ -1,0 +1,112 @@
+hey
+we're given a list in order to chunk it
+up into chunks of a given size
+there are multiple ways to address this
+problem but I think the simplest one is
+to use petition in close
+here's a test case
+the way partition in close works is that
+it takes
+one element as left argument for every
+element on the right
+that element
+is a count the number of new sections or
+segments that begin with this element
+if we restrict that to Boolean
+then it is just a true false indication
+of whether we start a new segment here
+or continue the previous segment
+so we have seven elements here let's
+start a segment with the
+continue with cat in the same segment in
+goes there too then the with lowercase t
+is its own segment because we
+immediately start a new segment with
+head
+and will include a sep in that same
+segment but Pat gets its own segment at
+the end
+partition in close on that list
+so our real problem is just to construct
+a Boolean vector
+that
+given our chunk size has a 1
+every n elements
+let's create a Lambda or Anonymous
+function we call it addition the list
+goes on the right according to the spec
+and the chunk size on the left
+inside here Alpha refers to the left
+argument because it's the leftmost
+character of the Greek alphabet
+we can use this to take elements from
+A1
+the way take works is
+to pad with an appropriate fill element
+if there aren't enough elements
+foreign
+here we have
+a 1
+in a group of three
+Boolean numbers
+we just need to repeat this pattern
+until we get the full length of our list
+the list itself is Omega the rightmost
+character of the Greek alphabet
+and the length of it is this tally mark
+now we can
+take this length and use the reshape
+it's a Greek row which is like a letter
+r for reshape
+and we use that to reshape that
+one zero zero pattern that we created
+before APL functions have long write
+scope so we need to parenthesize the
+left argument to the reship function but
+not the right argument
+finally we need to take this Boolean
+vector and use it to do the partitioning
+so we can again we have long left scope
+sorry long right scope and
+uh short left scope so we need to
+parenthesize the left argument and then
+we use this to do the partition in close
+on the red argument
+I like to reduce the number of
+parentheses that I have and
+therefore when I have a
+um a very straightforward argument on
+the right it's just a single token here
+that wouldn't need parenthesization if
+it was a left argument then I like to
+swap the arguments of the function in
+question so partition in close it takes
+the mask on the left the data on the
+right
+but there's a higher order function or
+something we called an operator called
+commute
+which looks a little bit like a confused
+face because it gets confused about
+what's right and what's left it modifies
+the function to its immediate left so
+that it takes its argument in the
+opposite order
+this means we can move the partition
+over on the left remember to commute it
+and then put the right argument
+um reference as left argument to
+partition in close
+and now we can try this with various
+lengths if we go down to two
+we get Pairs and the last one stands
+alone one we can see we get an extra
+enclosure of each element
+um if we go to six then almost all them
+elements are in the same seven we also
+get an additional enclosure just a
+single element and if we try to go above
+that then there's no difference because
+the specification is we just shorten
+and this is what the mask indeed does
+thank you for watching

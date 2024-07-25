@@ -1,0 +1,202 @@
+welcome to the apl quest the apl with
+keeper details
+today's quest is the fifth from the 2015
+round of the apl problem solver
+composition
+it's a straightforward problem of
+computing the standard deviation
+only little catch is that it has to work
+on an array of
+any rank not just
+a simple vector
+now i didn't have a pleasure to work
+together with
+ken iverson but i did have the pleasure
+of working with his close student roger
+huey and roger used to say what would
+can do
+i can say what would roger do
+and
+well i can't be sure of course um i have
+seen roger huey write
+fantastic code and i think this is how
+he would do it
+suddenly he defined the mean
+to be
+like this
+as that we've seen many times do and
+then he might define the deviation to be
+the argument
+minus the mean so that's how far away
+from the uh from the mean every element
+is
+then you might define some helper
+functions small utilities like
+uh square
+to be
+power with a um preset right argument of
+two and also square root
+to be
+same thing with a half
+and now with these
+tools in our toolbox we're able to write
+the standard deviation quite nicely
+the standard deviation would be the
+square root
+of the mean
+of the square
+of the deviation
+there we go
+now since we have to have this work on
+an entire
+luxury and then
+then this is not quite going to work
+um because we need to revel that array
+first
+we can easily define in our function as
+a standard deviation of the rebel
+and now if we
+try to say take this and
+we can concatenate it with its own
+kong vector
+so that looks like this and then we can
+do an f and that we get the same
+standard deviation because the same
+number is just duplicated
+that's uh that works and however this is
+defining it on these small
+portions and i think that's what rosie
+would do
+we can however change to a more compact
+style where we try to integrate the
+various parts so let's have a look at it
+and this is tool com called bracket devs
+and we do that for f and it takes
+because we have um
+early binding then the actual definition
+of standard deviation here uses all the
+pieces that we use to define it we don't
+remember the names for them and so this
+is just the corresponding formula
+with all the pieces put together
+and we can try to see how we can um
+how we can make this
+um
+more
+collected together if you start looking
+here we have the square
+of the deviation we can just combine
+those here
+and also continue it might be helpful to
+make this into a dyadic function
+application which we can do by using
+power and commute
+the argument so we can put the two on
+the left
+similarly over here we have the square
+root
+we can also put that into um the
+parenthesis here with the
+with a mean
+and we can make this into a daddy
+function just for symmetry um by putting
+the two on the left or we could put we
+could put a half on the left and then
+commute
+but if you want even more symmetry with
+what's going on over here then we can
+pre-process the right argument of power
+with a reciprocal and put a 2 instead
+and now we have again these form in the
+top we have this function here and this
+function over here um and since we're
+already having parentheses here we can
+take
+this function and just make it an inner
+function
+over here
+well coincidentally
+if we
+ask apple card for the standard
+deviation
+then we'll find something that is well
+identical
+and with the little thing extra that we
+are raveling and the argument before we
+apply it so it works on high rank arrays
+as well
+that's the first way that we might want
+to write this and this is something i'm
+sure
+so here we would have been happy with it
+as well and that's using the under or
+dual operator so let's define that since
+it's not supplied out of the box in
+dialogue apl
+um and we since we're only using here
+for magnetic applications we can have a
+fairly simple um
+definition for it so it's the um
+we start off by
+pre-processing the argument with
+the right operand
+and then we do the main action
+application and then we undo the
+application of the
+the preprocessor like that
+and this allows us to write the standard
+deviation
+call this is a version that using under
+and then we can write it's the mean
+under the square
+m of
+the deviation
+and then we could um
+so this works as well
+and then of course we could
+define in terms of that um
+with the rebel as well
+and we can we can have a look at what
+that looks like when we put it all
+together
+oops
+of course there's no u it is h
+and similarly um
+we could
+try to integrate things if we really
+wanted to but
+it doesn't make so much sense here
+because the the beautiful thing is that
+we're using the under um but we could
+so
+um
+we have
+this this part over here this whole
+thing is just a post processor on on
+this parenthesis over here so we can
+take the whole thing
+and put it inside
+oops
+let's try that again
+put that inside here
+and now and there's no point in turning
+the arguments around on the on the
+square but we could replace it with say
+self multiplication which is another way
+of writing a square
+and then uh i think it actually got it
+wrong here that
+it's supposed to be parenthesized
+otherwise this is not going to work
+so we want the mean
+um and that done while we have
+uh the square over here
+and then we un undo the squaring so that
+becomes the square root and then the
+whole thing on
+um
+on the rival
+still works
+so that's
+it for this time
+thank you for watching

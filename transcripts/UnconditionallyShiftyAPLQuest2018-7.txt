@@ -1,0 +1,173 @@
+hi
+our task today is to shift some Boolean
+data
+we are given an amount that we're going
+to shift in from the left so if it's
+negative it goes from the right
+and then we're giving the Boolean data
+as a vector or possibly a scalar so we
+just have to end that as well
+and there are many different ways that
+you can do this
+I'm not going to go through all of them
+just one
+if you want to get inspired by other
+ways that this can be done go look at
+the transcript for the chat event that
+happened in preparation for this
+presentation
+so let's start with some data this is
+the sample that we're given in the
+problem description
+and we're going to
+shift it by three different amounts
+we're going to shift it three steps and
+then zero steps and also negative three
+steps so that's the other direction
+and let's do all of this at once so
+we're doing we're writing a Lambda here
+so we're going to Define
+inline Anonymous and then we're going to
+apply it to each we wanted to map over
+these three shifting amounts but each
+time we wanted to not apply to separate
+elements of this Boolean data we want to
+apply it on everything so this encloses
+it and then apl's scalar extension it
+takes when we have an each it takes the
+one scalar on one side for example and
+three elements on the left and then it
+pairs them up appropriately
+so by taking this entire thing and
+making it into a scalar then everything
+gets paired up correctly and we can see
+that by having our function just create
+a two element vector or list of the left
+argument and the right argument left
+argument is denoted Alpha right argument
+is denoted Omega
+and we can see it pairs up the left
+argument elements with the entire thing
+on the right okay so we're going to take
+this in three steps
+the first thing is we're going to
+identify which data it is that we want
+to keep so when we do the shifting to
+the with a positive number to the right
+then as if it were we're pushing in on
+the left three zeros and the data moves
+to the right and the last three elements
+then drop off the edge on the far right
+so that means that the data we want to
+keep
+is all but the last three elements
+we can use drop
+but
+that gives us the drop from the wrong
+end because three drop drops on the
+front and negative three drops from the
+rear
+if we negate the number then it goes to
+the correct way so we can see how these
+are the initial five elements and over
+here we have the training five elements
+and for zero we didn't drop anything
+we can save ourselves this parenthesis
+if only we had a function that's like
+drop but takes the arguments in the
+opposite order so the data goes on the
+left and the amount on the right that
+doesn't exist but we can Define it in
+line anonymously by putting this
+confused frown called commute
+next to it and that commutes the
+arguments of this adjacent function so
+the arguments are given the order
+I like writing it like this
+so now we are have the correct data that
+we want
+next step is identifying where we want
+to put this data in the final result
+so if we get the length of the right
+argument
+and then enumerate the indices there
+then we can see that we when we shift to
+the right with the positive three
+we want these five elements to end up in
+these trailing three positions
+and when we're not shifting then
+everything stays the same and when we
+are shifting to the left pushing in
+zeros from the right we want the first
+positions
+so in essence we could say if we look at
+the indices we can take this amount and
+drop
+that many elements from the in from all
+the indices and that gives us just the
+subset of indices where we want our data
+to end up
+so that would be the left argument
+dropping
+the in indices from the right argument
+but we also need somewhere to should we
+say draw our our picture we have the the
+data we want to put into the picture we
+have the positions in the picture where
+we want to put it but we need a canvas
+where to draw it and that would be a
+array of the same shape that just has
+all zeros
+and there are various ways we could do
+it but a very simple way to do it is to
+do a zero multiply by because these
+booleans are just numbers or we could do
+a zero end which also nulls it
+um so
+this works
+and now we can take uh all the pieces
+and put them together oh there's one
+more step before we do that there we're
+also given the case where uh the
+argument is a scalar in that case we
+want to normalize it to become a vector
+which we can do is just by reveling so
+in magnetic comma it Revels it's mix it
+flattens the array into a
+um just a simple list a vector which
+means if it's a vector already it stays
+that way if it's a scalar then we make
+it into one element Vector so now that's
+done then we take the data that we want
+to put in
+and we stick it in at
+the indices that we computed by dropping
+elements from all the indices of an the
+length of the argument
+now we can see how we have shifted in
+three bits from the left
+and three bits that have fallen off on
+the right
+and then we preserve these for zero
+nothing happened here
+and for negative number we're shifting
+in from the right
+and if we try this on
+a scalar case and let's say a one
+then we it gets normalized to a vector
+and in the case where we are we are
+shifting out too much there's nothing
+left we still just have a single one
+zero
+and in the case we're not shifting
+anything we preserve the one as it is so
+this is
+um our solution
+but
+just one of many possible solutions so
+go have a look at the transcript from
+the session
+and
+maybe you even want to join in on a live
+event happening every Friday
+thank you for watching

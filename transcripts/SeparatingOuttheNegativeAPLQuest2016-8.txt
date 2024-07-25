@@ -1,0 +1,152 @@
+welcome to the APL Quest Capel Wiki but
+details
+today's Quest is the 8th for the 2016
+round of the APL problem solving
+competition
+we're giving some numbers
+and we need to return
+a two element list
+the first element contains
+all the negative values
+and the second element contains all the
+non-negative values
+we can do this
+by filtering the values so let's start
+with making some values
+okay
+APL
+has implicit mapping
+over
+arrays that means if I make a comparison
+like where 0 is less than or equal to
+these values
+then it automatically Compares all the
+values
+also
+one and zero are used as
+true and false
+they are actually the same
+we can use this to filter using this
+slash we're filtering V
+and similarly we can filter V with the
+values that are less than zero
+okay now we just need to put these two
+formulas next to each other
+this is an expression for the solution
+let's make this into a function
+we put braces around it and this makes
+this an anonymous Lambda also known as a
+defen
+put V over here and inside this we
+represent the argument
+with Omega which is the right most
+letter of the Greek alphabet because the
+argument goes on the right
+and so this is one solution that we
+could use but it has a lot of
+parenthesis it's an
+even inside these braces and it's a
+little bit hard to read like that so I
+prefer avoiding the parenthesis
+now that means I need to have something
+like the slash that text the arguments
+in opposite order that takes the mask
+on the right
+and the data being filtered on the left
+there isn't such a function in APL
+but any function can be modified by this
+modifier or operator
+called commute or swap which binds
+together with the function in the slash
+function
+and
+create a new function which is exactly
+the same but with commuted or swapped
+arguments
+so now we can take this mask and put it
+on the right
+and put and take the
+data on the left and since APL has long
+write scope
+in other words we start Computing at the
+right end of an expression then we don't
+need parenthesis around this part of the
+expression anymore and we can do exactly
+the same thing over here
+so this is another solution
+one thing is a bit of a Pity is that
+we're comparing all the elements which
+could potentially be many twice and we
+could actually infer the result of one
+of these computations from the other
+so let's say we save this as the mask
+and we can do that inline the result of
+an assignment in API is always whatever
+the values that's being assigned is
+so now we have M available and we
+continue to the left and we can use M
+over here
+um but we need to negate it because we
+want all the values that are not those
+so this also works
+we can actually get rid of
+this swapping simplify things a little
+bit if we had a positive mask instead of
+a mask we need to negate
+foreign
+but then that's not this then we need to
+make the opposite
+comparison over here and then we need to
+negate it over here before we apply it
+so this also works
+we could also just take this mask and
+put it in a separate statement first
+diamond is the statement separator it's
+strong like a diamond separating things
+into parts and then we could write it
+like this
+foreign
+or we could say that these are the this
+is the negative mask and then we could
+have a separate positive mask if we
+wanted and then we could write it as
+positive mask over here for symmetry
+oops
+open the negative mask of course there
+we go notice how he appeal points me at
+the name and tells me which name it is
+and that's missing so I can do something
+about it
+and so this is an another solution to
+the problem
+which kind of looks nice finally and
+let's make a little bit of a variation
+on this based on set computations
+so we're going to start by Computing
+um the positive values this time
+and we do that as as we did before
+but now
+um instead of saving the mask we're
+saving the values themselves and the
+return value of this assignment of
+course is that value
+then the negative values would be all
+the values except the positive ones
+and we can express that as all the
+values
+without
+the positive ones
+so this tilde when it's used with
+arguments on both sides it means without
+and when we used it with an argument
+only on the right it means not so how
+are these connected to each other we can
+remember this by thinking of without or
+set difference as but not
+so we want all the values
+of the argument but not the positive
+values
+whereas here it just means not
+and that's our final solution
+to the problem
+thank you for watching

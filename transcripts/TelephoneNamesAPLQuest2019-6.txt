@@ -1,0 +1,161 @@
+hi
+we're going to translate telephone
+numbers written as digits and letters
+into their corresponding
+plain numbers
+so first
+here is the telephone keypad
+if you look at the letters they are
+sequential
+and they kind of split the alphabet into
+the curse into groups
+kind of sub alphabets
+and since that's the case
+then
+we can see the alphabet as a range
+and have some cutoff points
+and then we can just say between which
+cutoff points does any particular letter
+occur
+so
+the cutoff points would be the first
+letter from each key
+so this is the first function and the
+each operator
+and then our keypad
+we don't actually need this to be a
+matrix anymore so we're just going to
+well I can actually just flatten that
+Revel it
+and then we have
+some
+spaces in the beginning at the end
+we can do the intersection
+of
+the alphabet and these
+and that gives us just the letters that
+we wanted
+and we can give this a name if you want
+so these are the cutoffs
+okay
+so
+now we have the letters of the alphabet
+and we can use the interval index into
+these letters that we have stored in C
+and these are the correct numbers for
+the individual keys but offset by one
+we can fix that either by adding one
+or we could
+add a place hold a character that
+doesn't actually appear on the left so
+we need to use something that keeps the
+increase the increasing or at least
+non-decreasing series of letters we can
+use the character that in Unicode comes
+right before a which is the ad symbol
+okay so now we have the correct values
+for the letters of the alphabet
+what about the digits well the digits we
+have here in in Quad D is a constant
+we can look these up in itself
+and even though each interval here is
+just a single one that works fine
+but we're off by one again we need to
+subtract one and there are various ways
+we could do that one thing that's
+interesting to observe is a character
+that appears before the first cutoff
+gets an interval index of zero
+so if we drop one from the alphabet
+disrupt the zero then when we do the
+interval index we get the correct values
+okay now we can put all of this together
+if we take the digits but draft one
+and we concatenate it doesn't matter
+when we concatenate if we concatenate
+first or drop one first because it's
+such a short amount of data here
+um
+then we have a full vocabulary of cutoff
+points
+anything from here is nine then this
+becomes ten this becomes one oh but
+there needs to be two so let's insert
+yet another at symbol or some other
+symbol that appears between nine and at
+or a
+and now we can try looking up all the
+values and so these are the digits
+and these are the letters
+but now they are too large by 10.
+we can
+fix this be since everything needs to be
+mapped between 0 and 10 by taking the
+remainder when dividing by 10 or the
+residue we could also call it so that
+just takes all the tens away
+this is the also known as modulus but we
+take the
+number we divide by on the left
+so this fixes
+the issue for letters and digits stay
+just the same
+and that's really all there is to it in
+order to make this into a proper
+function then we
+we want to apply the static function
+with a constant left argument so we can
+bind that left argument to the
+interval index function and then we just
+assign that to f
+and now
+we can
+see that telephone numbers get mapped
+correctly
+and digits as well
+get mapped directly so
+we get the values that we asked for
+this isn't the faster thing to do
+because
+if we think about it this is a simple
+mapping there is a mapping where we look
+up a particular value and then we give
+some other value
+and we can Define a function that does
+this as a simple mapping so let's first
+generate all the values that they could
+be
+these are digits and these are the
+characters so this gives us all the
+values for all the digits and letters
+that could appear
+we can call that n for now
+then we can look up
+the input
+in
+the list of all digits and letters
+like this and we can Define this as a
+little
+Lambda or defen so this just gives us
+the indices and doesn't matter what
+exactly they are because we take that
+result
+all the indices that correspond to the
+input letters and characters
+numbers
+and we look those up in n
+and then we can try that as well
+Let's see we get the same result and
+this of course going to be the fastest
+solution because we're not Computing
+anything we're just looking up
+um
+if we want it's self-contained solution
+here then we could
+take all this
+um well do two parts
+and put in the literal number here and
+we want 999 at the end it's a bit long
+but uh
+it works the same
+thank you for watching

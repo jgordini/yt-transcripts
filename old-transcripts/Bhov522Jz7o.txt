@@ -1,0 +1,337 @@
+hi
+now we're going to
+compute how far it is to go around a
+path that is given as a set of points
+including looping around and back to the
+first point from the last one so it's a
+going around in a loop it doesn't
+actually matter where we start
+doesn't matter the direction either it's
+just the total distance
+let's start off by having some points to
+find that we can we can work on we know
+from the problem description that this
+is supposed to give 12 as a result so we
+have a little bit of a senate check here
+okay
+we can
+start by making a Lambda that we're
+going to apply to
+the points and the right argument
+argument on the right side is referred
+to as Omega
+and we're going to go through and
+follow very closely how the problem is
+described
+so we want to
+connect the
+last element with the first element
+so
+we can get
+the first element with the first
+function extracted but we need it to be
+enclosed to be fitting into our format
+of enclosures here little vectors of
+vectors
+and then we want to append that to our
+original input
+okay so now we've got the same point
+over here
+as we have over here
+this means we can just consider adjacent
+elements so we've got these two
+iteration elements we want to measure
+the distance from between them and then
+these two elements and we want to
+measure
+the distance between these two elements
+and then we add it all together and
+that's going to be our result
+so adjacent differences
+um that is a windowed reduction so this
+is a a subtraction because there's a
+difference and reduction and but not on
+the whole thing just over Windows of
+size two so this should give us
+three results
+okay
+now we need to use a little bit of
+trigonometry
+you may know that
+if we have a right angled triangle then
+the diagonal so to say
+is the square root of the sum of the
+squares of the sides of the triangle so
+if we look at this as a a triangle we
+moved three steps in one dimension and
+four steps in the other dimension
+um and those dimensions are orthogonal
+to each other that means the total
+distance traveled is the sum of the and
+the square root of the sum of the
+squares so it's going to be 16 and 9
+that's 25 square root of that is 5 and
+so on
+so for each one of these pairs we'll
+make a new Lambda and we call it on each
+one that's the each operator which is
+like a map
+we want to take the first element so
+that's the same first function here and
+we want to take the last element last
+element is the first element on the
+Reversed argument
+so this is the first and last this is
+not going to make any difference at all
+um so far but now we can do the math on
+them individually so we're going to
+um to take
+the square of this one so it's so this
+is the exponentiation function but it
+takes the exponent on the right so we
+use the commute operator to put it on
+the left we want to do that
+over here as well
+and then we can add them together like
+this
+so now we get
+25 here and 16 that's 0 squared is 0 4
+squared 16 square root and so on
+and now that we have these then we can
+take the
+square root of that whole thing
+so square root the same as raising to
+the power of f
+and finally we can sum up everything
+with a plus reduction
+this is all very well but I think we can
+do a little bit better let's give this
+one a name this function a name for
+later so we can do some speed
+comparisons
+and now we go up and and edit this
+so our first observation here is going
+to be that we are picking apart an
+argument
+that has exactly two elements
+we could also
+insert this function
+between the two elements so this is the
+only two elements then this is the same
+thing as a reduction so if we reduce on
+a two element Vector that's the same
+thing as inserting that function between
+those two elements
+this means that what we have on the
+right the last element is
+the right argument and the left element
+is
+the first one so Alpha refers to the
+left argument
+fine
+but we can further observe that all
+we're doing here are some scalar
+operations we're doing
+a square
+of both and then we are adding them
+together and then we are doing the
+square root of it
+so before we get to that square root we
+could just take the entire argument the
+entire pair
+so go back to removing this reduction
+the entire pair as a two element vector
+and using apl's
+um array capabilities to do the squaring
+on this list of two elements
+and then we can
+combine everything afterwards so let's
+illustrate this for a moment let's
+remove this
+here and remove the summation
+okay so now we can see that we squared
+each pair
+okay
+so that means we can now do the
+summation of them
+and then we can do the square root
+and with ready to sum again
+right
+what else can we do
+next what I would do here
+is move this square root over on the
+left avoiding the parenthesis and we can
+do that by commuting with the
+exponentiation operator function again
+so we're using compute
+operator for that
+and the reason I like to do this is not
+just to save the parenthesis but also to
+show a certain symmetry
+we've got the commuted power here and
+we've got the commuted power here and
+they have inverse left arguments we can
+see it's a this transformation and then
+undoing that transformation
+and I'd actually like to take this even
+further let's try to link this first by
+I want to show the symmetry of this 2
+over here
+and we can do that by
+remember that that this 0.5 actually
+goes over on the right because of the
+commute operator so we can pre-process
+the right argument to the power function
+with the reciprocal
+so we have a pre-process combinator
+operator
+and then we have
+a reciprocal function so this is the
+division symbol but when you recall it
+with one argument to pre-process things
+then it's going to be 1 divided by or
+the reciprocal which means we can State
+this as a 2. and now we can see a very
+nice symmetry here in our code
+okay
+next observation is that this is a
+scalar operation scale operations also
+penetrate into all structure but we have
+an outer explicit Loop here
+and we don't need to have this scale
+operation done piecemeal on each pair we
+can do that outside before we
+before we even go into a looping mode
+then we sum each and pre post process
+again with a scalar operation which is
+the square root that doesn't need to be
+inside the loop either so let's take
+that out and
+have the looping just be the summation
+and now the only thing we have
+in our looping and Lambda is a wrapped
+derived function the plus reduction the
+summation so there's no reason to wrap
+it in a Lambda in itself we can just
+apply it directly
+this side over here I want to have a
+look at as well
+because
+what is a pairwise
+difference it is just comparing in this
+case subtracting
+um every element with its neighbor
+so if we take all the elements and we
+shift them around
+One Step rotate them cyclically then we
+get the neighbor element and then the
+first element becomes the last element
+and gets paired up there as well
+so instead of
+explicitly
+adding another element and then doing a
+pairwise
+difference we can just do a subtraction
+which goes on the entire array with the
+one step rotation of the right argument
+so this is the rotation Function One
+Step we take the first element and put
+at the end so now the elements here
+occur are the neighbor elements of the
+ones over here
+right
+let's call this G
+and we'll get to a speed comparison
+between these two in a moment because I
+want to go one step further
+notice these points that we have
+the reason we need to Loop over them is
+because they are enclosed we have
+vectors of vectors but APL excels at
+operations on entire arrays we can make
+this into a simple single array using
+the mix function every Vector here
+becomes a row in in a matrix
+and now if we were to
+um
+find the neighbors it would be the next
+row over so we can rotate this time
+we're rotating vertically to get the
+neighbors
+and from here on everything would be the
+same
+so we can take
+the mixed points
+and subtract them from our points and
+then we want very much the same formula
+as up here
+we're going to do the the squaring
+and now we need to sum the rows so no
+need to to any explicit looping here we
+just sum and this goes along the rows
+and so on the rest of it is the same
+this gives it the same result the only
+difference here is that we start off by
+mixing so we get a single flat array and
+then we do the rest of it of our
+computation on that flat array
+so we can give this a name
+and this is an a top right two train two
+function suggestions to each other
+there's our main computation function
+and then there is a pre-processing
+function which just starts by mixing all
+these points into a single Matrix of
+points with one point in each row
+okay now for performance comparisons
+for that let's generate some test data
+we can take 10 rows and two columns
+reshape a zero
+and throw in the random role function on
+that that gives us a bunch of numbers
+between
+0 and 1 which is fine these are floating
+Point numbers good for our our purposes
+here
+it doesn't actually matter what the
+values are because whenever you're
+subtracting and squaring sun it's just
+the same operation
+now the specification is that we're
+getting a vector of vectors so we split
+so before we're using mix to join
+together vectors of x's into a matrix
+now we're going to use the opposite down
+arrow to split the Matrix into a vector
+of vectors
+and let's give this the name Q for our
+quality assurance
+but we should also not use just 10
+points let's use a thousand points
+right now we copying in the compare
+execution tool copy that from the
+defense
+workspace Library
+and then we give it expressions
+to compare so we have F on the on the
+points and G on the points
+and H on the points
+and let that run for a little bit to see
+how we stack up against each other
+and well that's pretty impressive isn't
+it so just doing some cleanup work
+not really changing anything in the in
+how we're computing
+that got rid of a good 20 of uh almost
+80 leaving only 20 percent
+left of the computation time and
+therefore resources
+but switching to doing things in an
+entire array
+manner by starting off with some flat
+data not nested data that pretty much
+eliminated all the work that we needed
+to do
+so bear that in mind you want to go fast
+stay flat
+thank you for watching

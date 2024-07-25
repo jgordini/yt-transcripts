@@ -1,0 +1,218 @@
+welcome to the apl quest capl wiki for
+details
+today's quest is the 9th from the 2014
+round of the apl problem solving
+competition
+we are computing how far an object
+reaches
+based on
+the angle at which it is
+thrown
+and
+how fast it is being thrown
+now that doesn't actually matter because
+we are given
+the formula
+ready to use all we need to do is
+translate that into apl
+so the distance
+is well we use 9.8 we're given as the
+gravitational constant so we need to
+divide by that eventually it's the
+square of the
+velocity
+times
+the sine of
+2 times and then we need the angle but
+it needs to be in uh in red the ends for
+sine to work correctly and we're giving
+it in degrees so we just need to
+translate that so we multiply by pi
+and
+divide by 180
+now and we can simplify this a little
+bit i like to get rid of parentheses and
+multiplying by a square of a number same
+thing as multiplying by that number
+itself we're multiplying by two over
+here
+um so and we're dividing by 180 and
+there's no we need to do both we can
+just divide by 90 instead
+that makes it look kind of nice with the
+two circles
+some test
+velocities and some test angles
+this doesn't give us quite zero for the
+90 degrees angle
+but that's due to floating point
+inaccuracies of course if you throw
+something straight up then it comes
+straight down and it didn't move from
+the origin at all
+so this is very simple
+to spice this up somebody came up with a
+challenge of doing this without the
+circle function we're using circle
+function twice here for the sine one
+circle and for multiplying by pi just
+magnetic circle
+and it's a bit more of a challenge to do
+it without circle
+but
+we have some ways we can do this
+first let's do the sign
+so we can use a taylor series
+for the sine function
+that's
+the alternating
+and sum
+and then we start off with the odd
+numbers
+we don't even need very many terms
+before we get a very accurate result
+and then on those
+odd numbers
+we
+raise
+the
+argument
+to those odd numbers
+and divide them by
+the factorial of those odd numbers
+and then and alternating some of that
+should give us a correct result
+let's try this out
+and compare with
+the native
+sign
+that looks very accurate indeed
+okay so we've solved that part
+now as for um
+pi
+so if i we could start with earnest
+identity
+that's in the apl
+0 is equal to
+1 plus and then we need e to the power
+of that's the exponent just magnetic
+power and then
+pi times the imaginary
+unit so this holds and we need to break
+out the circle from here so to say well
+let's start by
+removing that so subtracting one on both
+sides of the equality
+and then we can we have a
+e to the power of
+uh so we can change that by removing we
+can get rid of that by taking um the
+logarithm on both sides so that cancel
+each other out
+and we just need to take the logarithm
+on the left
+and now we have
+i times
+the imaginary unit so if we multiply by
+imaginary unit again then we get
+negative one
+and then we can multiply by that over
+here
+and then we just need to negate
+and we can for example do that by
+negating this over here so now we've
+broken out pi and that means we can just
+assign
+this
+and
+you might consider this a bit of
+cheating because
+the building constant pi is of course
+hidden inside this formula inside the
+whole arithmetic implementation of uh
+logarithmic negative numbers and and
+dealing with complex numbers
+so how about using a series instead and
+then we have some might have a series
+and the very simplest of those
+is not very accurate but it's very
+simple
+it computes a quarter of pi so multiply
+by uh by four it's the alternating sum
+simply of the reciprocals of negative
+numbers
+beginning with one
+and even if we take say a thousand of
+those
+it doesn't give a very good result i
+mean it looks kind of okay but if we
+compare it with
+the actual value of pi you can see that
+it's it's quite a bit off
+there's a a little bit more complicated
+formula which gives is much better
+converges much faster
+and and and here we are computing
+pi
+divided by the square root of 12 so we
+start off by uh
+taking multiplying by the square root of
+12 to get actual pi
+again it is an alternating sum of
+reciprocals
+this time we have to start with 0
+and then we just do
+natural numbers and 100 is actually
+enough even much less than that would be
+enough
+rage one of these we take three and
+raise it to
+that power
+and multiply it by
+the incremented
+two times that number now two times in
+this number same thing as
+adding it to itself
+so this is one plus two times okay
+and then
+times three to the power of k
+and this looks really good
+if we
+compare it to the number
+let's build in
+then it says it's equal
+and if we try to subtract them to see
+what is the actual difference
+within the floating point accuracy that
+we that we have here 64-bit floats then
+they're actually equal so that's that's
+very nice now we have signed that and
+that means that we could um
+substitute these into
+our formula
+so
+9.8
+divided by alpha times alpha times the
+sine
+m of
+pi times the argument divided by 90.
+of course we could compute that constant
+of pi divided by 90 but it doesn't
+really matter
+and then we can try we need to use um an
+each here because
+and we're using a series
+computation
+oh well this was the wrong one this is
+deep it doesn't matter and then e is the
+is the new one
+and we can see that we get pretty good
+values um
+for
+the numbers that are
+zero or far away from zero and a good
+enough value
+um
+even for the one that's supposed to be
+zero
+thank you for watching

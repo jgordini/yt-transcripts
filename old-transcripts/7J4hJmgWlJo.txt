@@ -1,0 +1,757 @@
+welcome to the apl quest c apl wiki for
+details
+today we're going to compute the
+fibonacci sequence note that we're
+computing the first first n
+elements of the sequence and not the nth
+element which is a more usual task
+so the fibonacci sequence is usually
+defined as being recursive
+the way it's defined is that we start
+off with some seed values and then we
+compute the next value by summing the
+last two values in the sequence
+we can express this
+as with a stopping condition so if we
+start off the sequence with zero and one
+for the fibonacci sequence and and that
+in that case we
+say that for the
+zero for the first
+um
+zero elements we just we don't need
+anything at all
+and we could just return zero
+um
+and for the
+element number one uh which we want a
+one
+and when we sum them together we get the
+zero and the one and that gives us a 1
+and then 1 and 1 gives 2 and so on
+so
+if
+the argument is less than or equal to 1
+that means it's 0 1 and then we can
+return the element itself otherwise we
+want the sum of the function itself
+applied to
+each one of the argument minus 1 and 2.
+so we can try this on
+on one
+two
+three
+and so on
+but we don't want the nth element we
+want
+all the elements up to end so we can
+apply this on each
+of in
+of the numbers here
+and while this works
+it is exceedingly inefficient not only
+do we
+compute the same sequence over and over
+again for n minus 1 and n minus 2.
+for every element of the sequence we're
+also doing this whole thing over and
+over again and this
+becomes ridiculously slow
+very quickly
+so that's not a good
+way to do it but it very clearly
+expresses what the sequence is about
+instead we're going to
+focus on computing the entire sequence
+at once
+and the way we're going to do that is by
+using a fundament what i call a
+fundamental
+fibonacci transformation function let's
+call that delta
+the fundamental function is that we are
+extending the
+currency generated sequence with one
+more element by summing the last two
+elements of the current sequence so the
+current sequence
+concatenated to the sum of the last two
+elements taken from
+the current sequence
+and so if we start by applying this to
+we can do it to a 1 because taking the
+last two elements will give you a zero
+and a one
+and then
+we can
+apply it over and over again
+so
+how can we actually use this and how can
+we define things in terms of
+this function well now we can
+write a
+recursive function
+where
+we are looking at the element
+at the argument
+if it's less than or equal to one then
+we know exactly what the sequence is
+going to be if it's zero it's going to
+be the empty numeric vector if it's one
+it's going to be a vector
+one and so we can transform a one into a
+vector one and zero into a zero element
+vector simply by letting the argument
+reshape itself
+and then and
+and we
+want to extend the sequence otherwise
+and what sequence are we going to extend
+we're going to extend the sequence that
+we got for
+uh
+one less than the current number we're
+at
+and then we just need to extend it
+so let's call this a recursive version
+and this works but it has one problem
+and that
+approaches the field of tell call
+optimization telecoil optimization is a
+method where
+we do not need to keep track of
+the caller when we are recursing
+[Music]
+by not having to build up a stack
+because the final result value is not
+going to be
+post-processed in any way
+and the problem that we have up here is
+that after we're recursing we're taking
+the result value and modifying it
+essentially we're building up a um
+a sequence on the stack which is just
+waiting for a value that can be extended
+more and more
+and we really should try to avoid that
+both for
+efficiency and not to run out of stack
+space either
+um
+so if if the interpreter and this one is
+is still called optimized then it will
+detect that we're not using the result
+just returning it
+um and then it will not build up a new
+stack frame we'll just replace the old
+stack frame with a new one
+um and for that we're going to
+we want to know when to stop rather than
+just
+returning a value which is then used and
+the way we know how to stop is when
+we've generated enough of the sequence
+meaning when the generator sequence is
+long enough
+so we'll feed every iteration of this
+function
+the stop condition in the form of a
+length
+how long we need to
+to make it
+and that's going to be
+a left argument and that left argument
+then is is given in the initial call so
+our argument is 10 means we want to keep
+going until we've got 10. of course we
+can't make a function that just takes a
+left argument so we'll use as argument
+the seed value and that we're going this
+the beginning sequence we're going to
+start with
+so if the cutoff point
+is
+uh
+less than or equal to the length of the
+currently generated sequence then we
+either done or beyond done
+and so we would in principle just return
+the sequence but the problem is it might
+have been too long and it only really
+happens if
+the argument is zero and we begin with a
+seed value of of a one
+then we need to chop it down just like
+we did before
+so we can do
+a take which just caps
+the sequence to the correct length
+and now
+since we know we're not done yet then
+it's safe to just extend the sequence
+and then we need to check again that
+means we need to recurse
+and the limit
+for
+for the sequence length is still going
+to be the same so we feed that along to
+the next iteration and here we can see
+that the last call
+is go is the recursive call
+with the left argument but the result
+isn't being used
+a for further computation therefore this
+is still called optimized
+then we just need to start off with the
+seed which is a one it doesn't matter
+it's a scalar because we're going to do
+the take on it so it's going to become a
+vector anyway and we're going to extend
+it in all other cases
+so this is a
+telco optimized version
+there we go
+and another way we could
+see this use of the fundamental function
+is by applying multiple times
+and we can express this
+using the power operator
+so if we
+use the power operator
+with a number
+on
+some seed then we're going to extend it
+problem is we're just generating a
+little bit too much
+but we can
+use take again to chop it down
+we don't want to start with 0 1 either
+because then we get a 0 at the beginning
+so we can express this
+just by using argument over here
+so this is using
+the power operator
+and
+with two beginning values so we're
+appending to the first two
+oops
+there we go
+it's a bit
+it feels a bit
+silly to
+make the sequence longer than it needs
+to be and we only do that because we're
+starting off with the seed value of 1 1.
+problem is
+if you want to start with an empty
+sequence and append to that
+then
+when we try to try to take the last two
+elements will be of an empty vector
+we'll be padding with zeros and that's
+going to be
+zero
+zero zero sum together zero and we add a
+zero and the sequence will stay zero
+forever so how can we ensure that we
+always get at least one
+well we can do that by a clamping
+to be above one or doing a max with a
+one
+so um if we start with empty sequence
+and then we apply the basic
+transformation function on that
+n
+times we
+max will a one
+we need to bind these together so
+essentially here what's happening is the
+power operator is applying max over and
+over again always with the constant one
+as left argument but right before it
+applies it in the next the next time it
+pre-processes the right argument with
+the fundamental extension function which
+just then adds one more element to the
+sequence
+and that does the job so this is
+appending to the first zero elements
+oops
+same mistake there we go
+so that's another way to do it another
+way we can
+iterate is using reduction
+and
+there's a bit of a trick here going on
+if we look at
+at our definition of delta it's a
+different and it it doesn't have an
+alpha in there so it doesn't use the
+left argument doesn't mean we can't give
+it a left argument that works perfectly
+fine
+therefore we can start off with
+our
+with the sequence
+and then we can apply
+with some random value here
+it doesn't actually matter
+and this
+is a reduction we have a sequence 42 42
+1 in this case but the all these values
+except for the last one don't matter
+because only the right and right side is
+going to be used as our seat value
+and then we're just inserting
+this delta in between them so we just
+need to generate a sequence that
+um
+ends with a1 it doesn't matter what it
+is we might as well just use
+um all ones for that
+and then we can reduce using delta
+and that gives us this notice that it's
+in enclosed because reduction has to
+reduce the rank from uh one vector to
+zero scalar so it encloses that but we
+can just
+disclose that and come back
+so
+this is a very short way and of defining
+it and using a reduction
+there is one problem however and that is
+if you try to run this on zero so zero
+ratio one that's an empty vector and
+then we're trying to reduce over m to
+vector right that requires that the
+operand
+has a known identity element
+and we don't have that because it's a
+user defined function and in fact there
+isn't
+one anyway
+um
+so we can't do that we have to extend
+the sequence by one and then remove one
+element again and it will be a little
+bit ugly to do that but it can be done
+so instead of using omega to reshape the
+one
+let's use one plus
+or a one max and omega
+that just means that if you have zero it
+becomes one all the other numbers stay
+the same and then finally we'll have too
+many elements just in that case of zero
+but we can fix that as we've done uh
+before
+by just taking the first n element so in
+most cases it's not it's going to be a
+no up but just for zero it's going to
+chop the one down to a
+zero
+and now that works
+and it works still for larger numbers as
+well
+okay that's it for using this
+fundamental and fibonacci extension
+function but there are other ways to
+compute it
+and and one is
+by using a pairwise sum
+so a pairwise sum is is we can see how
+it's related to what we're doing because
+we want to add the last two elements in
+order to build up the next and
+next element
+but we want to extend the sequence not
+shorten it down and a pair wise some
+that's an otherwise reduce with with n
+being two
+it always removes
+reduces the length of the argument by
+one because it's taking two adjacent
+elements and combining them into one
+so we need to extend we need to pad with
+an additional
+numbers
+so that means we could uh if we have a
+pairwise sum
+um of
+zero and one that gives us the next
+element but we need to have and
+more elements
+added up
+so if we
+if we add more and then we can use this
+again
+um
+so if we if we add more elements so we
+need to to extend with one element every
+time around the loop and we and pairwise
+reduction removes one so we need to add
+two
+so if we do this
+oh no no this isn't working
+um oh yeah of course the the problem is
+that we need to have more we need to
+have more ones here
+uh
+we need to make sure that the minimum
+value is a and is a one
+so we can do the same trick as we did
+before with
+with the maxwell one so let's try that
+here so now now we don't actually need
+any any start values
+anymore
+and we can apply this
+again
+and we can see how the sequence is
+building up
+so we just need and we just need this
+transformation here to be applied and
+over and over again
+so we take
+the argue the sequence as far as we've
+built it up so far
+and
+put two more zeros on the left
+pairwise reduction make sure that we
+start off generating and generating ones
+and we do that n times
+beginning with an empty sequence
+so this is a pairwise sum
+another way to compute
+the fibonacci sequence is by using a
+transformation matrix
+and that matrix
+is a
+tiny little
+matrix looks like this
+and if we multiply that by itself
+and keep doing that
+then if we look at the generated
+matrices along the way we can spot the
+fibonacci sequence in there for example
+in the top right corner we're going down
+one one two three five eight so on
+and so again we have here m all over the
+place and we have a matrix
+multiplications in and in between them
+this means
+that we can define a
+a vector of
+m's
+and then we can reduce those
+using
+the
+matrix multiplication to get the tenth
+element
+however we want all the intermediate
+values instead of using reduction we can
+use a scan
+and then we just need to have
+the top right element
+of each one
+and that gives us uh the fibonacci
+sequence
+if you try to use it on a 0 it works
+fine because we have a
+we have
+an empty vector with a no with a
+reduction
+and
+with a known so we can try this
+plus dot
+times reduction over an empty vector of
+and of matrices doesn't really matter
+what their values are
+and
+that doesn't work
+but a scan
+and
+scan just gives us the intermediary and
+values beginning with the first one
+preserved but when there aren't any
+there's nothing that needs to be done we
+don't need to curse on any value out we
+don't want need an identity element
+which would have been the identity
+matrix um anyway but it would have been
+relative to the argument and that hasn't
+been defined
+but this is using matrix multiplication
+um
+and we can we can hard code our
+vector in our matrix inside here so it's
+standalone
+okay another way to do it is by
+the only information is remember the
+only information that we we need to
+compute the next value in the sequence
+are the last two elements
+and so what it means is that
+when we're going from the last the
+current letter elements to the next last
+two elements
+then the last elements become the last
+element becomes the first element and
+the sum of the two becomes the last
+element
+so
+consider here two and three let's say
+those are our last
+less elements
+and
+if we do a scan on those
+then and
+we preserve the first element
+and the second element becomes the sum
+of the two that's very close to what we
+wanted we want to preserve the last
+element
+and then have the sum
+and we can do this simply by reversing
+the two
+so
+and now the three became the first and
+the sum of two and three became the last
+which means we can
+if we do this again we get the next
+values
+and then we can we can
+if we extract every time around the loop
+then and one of the elements
+the first one for example then we can
+build up the sequence we just need to
+store them somewhere
+so we can define a function where we
+have a result
+variable
+we're not going to use it initially but
+we're going to
+apply this transformation here
+the plus scan on the reverse of the
+current pair
+and then we want to
+take the first element from that and
+and
+append that to the result variable
+and then we want to
+return the new
+the new pair which is
+which is this whole thing
+so here's a trick instead of
+taking the first element let's leave the
+whole thing
+the whole
+and when we do the concatenation to the
+result variable we pre-process the new
+value that is being added to the result
+with
+first
+but still this whole function is the
+modifying function in this
+modified assignment
+and the assignment is here and there's a
+principle that the assignment always
+returns whatever is on the right
+so even though we're only actually using
+the first value
+the result of this whole assignment is
+going to be this whole pair and that's
+the whole pair that we actually
+interested in
+so now we can do this and we want to do
+it n times
+and we just need a starting uh
+pair which is zero and one
+so the first time uh so if we do this
+zero times we have r already set to an
+empty vector if we do it one time then
+that means we are adding them
+up we're getting one one taking the
+first value that's one adding to that
+then the second time around the loop we
+do one one and adding up is two so we
+get one two and we get another one and
+um
+and so on
+and once we've done that n times then r
+has accumulated all the values that you
+want and we we're not interested in the
+last pair which would be the result from
+um from this application with the power
+operator we just want the resulting
+value
+so that gives us our sequence
+using
+accumulation
+and that's it for and
+all the methods we're going to look at
+for building up the results slowly we
+can actually
+compute the entire result
+in one go
+and there are uh because it's possible
+to compute the nth fibonacci number
+directly without building it up to it
+and there are various ways of doing so
+and one way is by using approximations
+of the golden ratio
+so if we have a bunch of
+ones
+so
+for this series
+and then we can reduce
+using
+um
+addition to the reciprocal
+that gives
+so this gives us an
+approximation of the golden ratio if
+this value is large enough then we get a
+very good value for the golden ratio
+but as we get there um all the
+intermediary values which we can get
+with the scan are
+approximations and these approximations
+are exactly ratios of two uh adjacent
+elements in the fibonacci series
+so if they're fractions of the two
+adjacent elements that means if you can
+get either the numerator or the
+denominator then we can get
+the sequence
+and we can do that with the
+least common
+divisor with a one
+although you can see here we are we're
+missing one we want actually the other
+number in the pair
+and we can just flip the uh the ratio
+upside down
+taking the inverse or reciprocal of that
+and that gives us
+the series directly computed
+however we're both using a scan using a
+custom function here and we're using a
+number theoretical function on the
+floats it's so the performance is not
+going to be great
+it is neat looking though
+we can also use the sum of the binomial
+coefficients to compute the nth
+fibonacci number
+the way it works is that
+we start with the numbers from 1 to
+n minus 1.
+so
+and then
+we can give those a name and reverse
+them
+and then we can pair them up
+with themselves in the normal order so
+this pairs up 0 and 9 1 and 8 and so on
+and
+doing the binomial on that
+and then we've sum that
+and that gives us the nth fibonacci
+number and in this way
+notice that we have a
+scalar function reduction over a scalar
+vector application we can combine that
+to be an inner product
+and we want the same argument on both
+sides i goes on both sides
+um we only want just want to preprocess
+the right argument to this inner product
+with reverse so it can be stated like
+this as well
+and that means we can make this into a
+tested function
+apply it on 10 to get the 10th fibonacci
+number
+and we can therefore get and all the
+numbers up to 10
+by applying on each on the energy just
+like we did in the very beginning with
+the recursive version
+of course this is hugely inefficient
+both because of the expensive functions
+that we're using
+and the binomial and also because we're
+recomputing it and
+over and over
+for every number
+but it's kind of fun and short so this
+is based on the coefficients
+and finally we can use be nice formula
+it's rather long and involved but it's
+not using any difficult math and it's
+all scalar functions and that has the
+benefit then that we can just compute
+the nth fibonacci number directly on the
+whole sequence just by feeding it
+the
+all the indices that we want
+i'm going to type it up um there's
+nothing really to explain other than
+this is a formula you can look it up
+online
+it can be stated in in various ways
+because of some equivalences but it's
+not really important
+and so we want that on the entire
+sequence and
+that computes the sequence directly okay
+on to
+the finishing stage here which is going
+to be performance comparison
+let's copy cmpx
+from diesen's workspace
+and then we need to build up um all the
+expressions that we want to run we can
+get all the functions that we have
+defined
+like this but there's actually a feature
+that maybe not so well known and that
+quadranele can take a list of
+uh
+of letters
+that it will then uh filter its result
+with um to only include functions that
+begin with any of those
+of those letters and notice here that
+all our solutions begin with an
+uppercase
+letter cmpx begins with a locus letter
+and delta isn't a normal letter at all
+so if you give it uppercase english
+alphabet that filters and out
+and each one of them well we we want to
+apply to some argument or arguments
+and
+in order to get some balance in it
+should it be a large number a small
+number so let's apply to all the numbers
+up to some limit
+so we're applying it to
+each one up to say
+um iota 20
+and we are doing that on each
+so these are all the uh expressions
+we're going to run
+and then
+see impacts on that and
+this might take a little while
+so i might cut this out of the video
+and there we go here's our result
+and and we can see that using venice
+formula to compute the values is the
+clear winner here um and even though
+there's cute the binomial coefficients
+is not going to
+be able to compete with anything
+thank you for watching

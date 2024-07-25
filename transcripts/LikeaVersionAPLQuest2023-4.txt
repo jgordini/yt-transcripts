@@ -1,0 +1,190 @@
+hi we have to compare two version
+numbers each version number has three
+parts and then we have to answer whether
+the left one is an earlier version the
+same version or a later version than the
+right
+one so let's have an example
+here one two
+3 and 1
+32 now as a human I can immediately see
+that the one on the right is the newer
+one but it's actually a little bit
+involved uh what's happening here
+because I must be scanning from the
+beginning to see what the first part is
+that differs so the first one is
+irrelevant they're the same only the
+second part is important and that means
+that the third part isn't important the
+fact that this one has a higher number
+here um this one over here has a lower
+number it doesn't matter because an
+earlier number is more
+important so let's make a tested
+solution to
+this we need to compare corresponding
+elements and the comparison of size that
+we can do with a
+subtraction and so here we can see that
+this part is an earlier number than this
+part and this one is a later number than
+this one um that corresponds to the
+negative one and one here and then the
+first digit the first number is the same
+that's why we get a
+zero we're not actually interested in
+um the the difference itself so let's
+say uh that over here we had a
+four then we had a difference of and of
+two and we're not actually interested in
+the zeros
+either so
+and what we can do is we can remove the
+zeros so we can use a set difference
+with zero and because we doing
+everything in a functional uh style
+everything in terms of fun uh functions
+we have to mark this zero as being a
+constant function so this zero is a
+actually a function uh zero with this
+symbol to DS is actually a function that
+takes these two arguments and and value
+is to Z and then we use that with as
+with set subtraction from the
+differences between these numbers and
+these
+numbers and that gives
+us-12 so we've gotten rid of uh one part
+that we're not interested in second part
+we're not interested in is the actual
+magnitude of differences we only want to
+know which one it is so we use uh the
+multiplication symbol with only one ARG
+argument that is the Signum the sign and
+that will convert any number that's
+larger than uh in magnitude than one so
+one or anything beyond one or negative 1
+or
+zero leaves them down at one or negative
+one or
+zero and finally we want to prioritize
+the first difference right the anything
+that is the same we already eliminated
+with removing the zeros
+um but we want the first one so we have
+a first function that we glue together
+with the Signum function so this is a
+new function that we have composed and
+we applying that to the result of this
+set difference between the subtraction
+and the
+zero and that gives
+US1 but uh we can actually do this in a
+little bit different way as well that I
+think is really cleverly thought
+out let's go back to the Set uh to the
+difference between these version
+numbers and we are not interested in the
+magnitude so we apply this time the
+Signum function glue together composed
+with this
+difference and instead of trying to
+eliminate the zeros and then finding the
+first one
+then we can uh evaluate this in base two
+as a binary
+number now if the magnitude in if there
+were multiple differences then this
+could be a larger number we can take an
+example of uh of that so let's backtrack
+a moment and do 625 over here and 713
+over here so now
+we have two differences over here where
+and where the left one is larger and one
+where the left one is
+smaller and now we evaluate this in
+binary
+and we we
+get um ne1 because this and and this is
+a bit interesting what's happening here
+because I'm saying I'm evaluating in in
+as binary
+but normally you use the binary being
+only digits zero and
+one but here we also have negative ones
+so what does this mean it's actually
+really not that
+complicated uh what's happening is we
+have these uh these numbers and they are
+just values for the digit positions so
+digit positions in a binary system with
+three bits so to say bits not really
+bits because they can be negative one
+well the first one is four the second
+one is two and the third one is uh one
+the last one is one so we could multiply
+that that gives us our total and
+amount and then we just need to sum it
+all up to get the final result so we can
+add a plus reduction here in the front
+and that gives
+US-1 um of course if we had the same
+value at the end then we would get
+something with a larger magnitude
+so uh we at the very end we need to
+again take the Signum the sign um
+because we don't want a larger number
+than uh than negative one or larger
+magnitude than negative one and
+one and let's go back to how we actually
+spell that so this is the the binary
+evaluation of that and then we can take
+the Signum of that for the actual
+solution
+and yeah this seems clever but do we
+really understand what's going on
+here it works but why is it that it
+works let's go back to this example we
+had before with
+625 and think about it for a
+moment here we have basically the worst
+case um possible what we should be
+afraid of is that maybe uh a lot of
+trailing numbers that are greater here
+on the left but smaller on the right
+would weigh out they would add up to so
+much that even though the first number
+is smaller than the than the um first
+one on the right it would still
+overweigh it so we would consider this
+to be a larger number what if we had a
+lot of huge numbers on the left and and
+a lot of smaller numbers and on the
+right and the um the important thing
+here to understand is that the binary
+system is exactly
+this it it has the property that if you
+add up all the fully set bits
+and trailing bits then they add up to
+exactly one less than uh the next larger
+bit well that's nice we know that about
+a normal binary system but what about uh
+we have these negative numbers well that
+can never make it any
+worse
+because if we have any zeros on on um
+negative 1es here of course that adds up
+to even
+less um and over here we
+[Music]
+and
+the the negative value here is well in
+in in magnitude larger than the sum of
+anything that could be here so it all
+works out to reevaluate in binary um
+even though it's not actually true bits
+it's can also be negative and then we
+take the sign of that um and we get the
+correct
+result thank you for watching

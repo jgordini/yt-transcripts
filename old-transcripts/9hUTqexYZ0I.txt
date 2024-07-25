@@ -1,0 +1,351 @@
+hi
+we're going to split a list of words
+into those that have an even number of
+letters and those that have an odd
+number of letters
+and the ordering is important we want
+the other ones first then the even ones
+I'm going to go through three different
+ways to do this but there are many ways
+that this could be attacked
+here's some test data
+so we have for some even words and some
+odd linked words and then some mixture
+after that
+we can start by using Telly to count the
+number of letters in each word
+we're not actually interested in the
+real number of letters we're just
+interested in whether it's odd or even
+and an easy way to do this is to look at
+the remainder when dividing by two so
+this is the two remainder of these
+numbers the length of each one
+this means if you're dividing by two and
+the number is even there's nothing left
+over so you get a zero and
+if it's odd we get a one left over that
+we can divide evenly in two whole
+numbers
+and this pattern we're going to use in
+all our Solutions this is the basics
+right
+um at this point let's make a Lambda or
+a decent that takes an argument outside
+of these braces and refer to the
+argument with Omega
+so this is the same and then we want a
+pair
+who want basically two masks you want
+one mask for the odd numbers and one
+mask for the even numbers
+so this mask that we have here that is
+for the odd numbers and if you want to
+get the even numbers then we can do a
+Boolean negation a nut
+that gives us this mask
+so how can we get both masks well we
+could use a variable and uh so for one
+mask and then compute the other masks
+based on that but we can also be a
+little bit more clever
+um
+there is a an operator higher order
+function called over which allows us to
+take a function and apply it to two
+arguments but pre-process both arguments
+first
+this will allow us to concatenate the
+enclosures
+of
+two
+masks so
+let's say that we have this mask over
+here and we use the commute
+or selfie operator to also place the
+mask on the left that means we are
+concatenating the enclosure of this mask
+with itself that gives us two identical
+masks
+of course we don't want that we want the
+original mask as we have it here and
+it's negation and Boolean negation so we
+can use the beside operator to
+pre-process the right argument to this
+derived function with the nut
+and this gives us the mask
+and its negation
+each one of these masks we then want to
+apply to the argument which is the list
+of words
+so applying it we want actually to
+replicate we want to or also known as
+compress we want zero of the first word
+zero of the second word one of the third
+word and so on that's used to this slash
+now we always want the data that's being
+replicated to be the right argument so
+we bind the right argument as a fixed
+constant
+right argument to this function which
+would take two arguments but now only
+takes one argument which is the mask
+which then conceptually goes on the left
+but if one argument functional magnetic
+function it always takes this argument
+on the right we apply that to each one
+of these two masks
+and that gives us
+a solution there are many ways that this
+that the components we have here could
+be mixed and matched but this is a very
+nice straightforward flow solution let's
+call that f
+okay
+in the specification for this problem
+there's actually a hint saying that we
+could use the key operator so let's try
+that
+we start off the same way as before with
+the two remainder of the tally of each
+on the sample texts
+and all we want to do here with the key
+it keep groups things by a certain
+characteristic so we want this
+characteristic this being even on it to
+be the keys and the values that we are
+grouping is just the original data so we
+could do it by putting parenthesis
+around this which becomes a little Fork
+here
+um and then we use the key operator and
+the data the values goes on the right
+and we need to choose a function
+and the function we want here is we
+don't want to ignore the left argument
+and just enclose
+the the data so we want the enclosure of
+the right argument to that
+and this almost solves the problem but
+notice that the ordering is wrong and
+ordering depends on the appearance of
+odd and even numbered
+and
+words in the argument and since the
+first word we encountered had an even
+number of letters then the first group
+is the even number so how can we force
+the ordering that we want
+well there are a couple of different
+ways and I think the simplest one
+is to just inject
+words that have the right length and
+then we remove them afterwards because
+they're not actually part of the
+incoming data so here this identity
+function refers to the right argument
+this whole thing actually is one big
+fork this means we apply this function
+on the left and this function on the
+right and then this function in between
+them which is the grouping so instead of
+having a density function applied we
+want a function that prepends and even
+an odd numbered word and an even
+numbered word now the shortest odd
+numbered word would be a A Single
+Character it could be the right text
+that sake but just the space is fine as
+well and the shortest odd numbered word
+is a zero length word
+so we bind those to as left arguments
+just like we were using bind uh before
+as for right argument to the replicate
+function we're now using bind to bind a
+left argument to the cousinate function
+so this will prepend two words so called
+words
+um to the argument and then similarly
+over here we we already know
+whether they are or even the first one
+is
+um is odd and the second one is even so
+we can prepend that to a result there's
+no reason to compute that
+over here
+and that gives us the correct ordering
+and this gives us all the odd ones first
+and then all the even ones but there's
+one element too much
+for each one of them
+so we can drop one from each
+now because we only have a single
+function here which is an argument bound
+to the concatenate and we have a whole
+train here this is a fork of a fork
+then we need the parenthesis on the left
+side here we can also move things around
+we can swap the arguments of this middle
+time function and then just move
+the outer functions around
+and this will allow us to remove the
+parenthesis on the right for those that
+prefer to do it like this and we don't
+really need these spaces either
+so this is
+another nice solution
+that we can apply
+so
+there we go
+and finally
+um something one might not think of at
+first and that is to use grading or we
+could say sorting by extension to solve
+this problem the idea is that we sort by
+the even oddness that puts all the
+putting all the other ones
+first and all the even ones at the end
+and then the only thing that remains is
+to split the result into two at the
+right point where we transition from odd
+ones to even ones
+and so the way we can do that let's
+create another Lambda with the test
+cases over here and we begin exactly the
+same way as before the two remainder of
+each
+of the length of each and this time
+let's give that a name so we can
+we can call that
+n
+it's kind of like the number but that's
+a auto even
+and then
+we can sort by that so let's uh let's
+start by sorting and we since we want
+the odd ones first
+then and the odd ones have the N equals
+one then we want to sort descending
+so descending on
+um
+on n
+so you can see that this puts all the
+odd numbers words first and all the even
+numbered words at the end
+now we can call this s
+we want to know
+and how many are there that are
+that are odd numbers
+well since we get a 1 for every odd
+numbered
+word in the list of odd events for for
+these words that means that the total
+count of ones is just the sum of the
+Mask
+so we can and we can find the count of
+odd numbered ones as the sum that's the
+plus reduction of n
+which is then going to well we can we
+can try it out first we get there are
+four of those so that's all oddly and
+great
+and then of course there's going to be
+also four we don't need to compute that
+because we can then use this let's let's
+call that c
+we can now say uh the number c take off
+the sorted list
+and we can do
+and see drop of the sorted list to get
+the rest of them
+so now we can
+make a two element Vector C take of s
+and C drop of s
+and that gives us our result
+this is very much broken up into tiny
+little steps and we can you can try to
+compress this a bit combining things and
+there are some cute ways that we can do
+this
+here we have C and S and we have them
+um in the same position C on the left s
+on the right and then we are joining
+those two together
+which means that it's kind of a fork
+right we have other arguments here
+and and then the results are joined
+together although we're not using an
+explicit function here but we'll get
+back to that
+okay so let's try to put things together
+here
+if we have S
+so this is our expression for S we want
+that on the right
+and then we want the expression for C
+on the left
+then we all we need to do is
+have a fork in the middle so we want the
+take and we want the drop and then we
+need to have the concentration of the
+encloses so that's that
+Nate
+over the enclosure of the two
+so
+here's a partial putting everything
+together but we can actually do better
+than that
+the thing is that we need to
+um
+we need this enclosure and we are
+Computing this expression separately if
+we put them both on the right instead
+like this
+then we can use now we we only want
+magnetic function so we want this one
+applied and this one applied and what we
+want to apply is actually
+we want an insertion here of a tick
+function an insertion of a drop function
+we can use the reduction
+for that and it's so lucky that when we
+reduce from a vector to a limit Vector
+then we get must get a scalar because we
+drop the rank down reduce the rank and
+we do that by enclosure so that
+automatically encloses on both sides
+we can write this and it's Fork like
+this
+and now and we can
+substitute in this expression for n
+in the rightmost occurrence so this puts
+everything together with an inline
+assignment however we can also be a
+little bit more clever
+um and make this a fork so we can see
+the argument as one argument and
+the the group number if you want or the
+even odd number as the other argument
+so we can make that a fork all the way
+out here
+so we say the whole argument we feed in
+as the original argument feeding as left
+argument to the inner function
+and then we can use this as a train a
+fork just like we did in the key
+solution as right argument so now
+whenever we want to have the the mask
+which we called n here we refer that to
+that as the right argument and whenever
+we want the original data refer to that
+as the left argument and this space
+isn't needed either
+so we can write it like that and and so
+on and so on we could move the bits and
+pieces around but these are just some
+possibilities of how this could be
+written so we can write this whole thing
+as a as a nice Fork that uses a
+different Lambda inside as the middle
+tine
+thank you for watching

@@ -1,0 +1,350 @@
+welcome to the apr quest capl wiki for
+details
+today's problem the eighth from the 2015
+round of the apl problems of
+compensation
+asks us to replace
+instances of the number 13
+with the number 12.99
+but only numbers not where it's written
+in text
+however um
+while
+the test case is given in automated
+testing system on problems.trypill.org
+only our fully numeric
+and flat arrays
+by extending the
+the domain you can get quite some depth
+to this problem
+without further ado let's get started
+so let's start with
+a very simple test case the type of test
+cases that we might see in the automated
+testing system
+and for this we can use a mathematical
+approach
+so
+we can say
+the argument
+minus
+0.01
+times
+a boolean mask
+the argument
+so here this will give us ones where
+there are 13s and then we multiply with
+this which is a difference to
+that we need to make when we have a 13
+and then we subtract that from the
+argument itself and that works fine for
+arrays
+like this
+however
+if we
+say
+take it very literally what it says in
+the problem specification that we only
+need to concern ourselves with uh
+with data that is uh there are numbers
+and not uh 13s that occur in text that
+would seem to indicate that there could
+be text so let's throw in some
+characters
+so this is a flat array still but it's
+mixed type
+and of course
+this is not going to work very well when
+we try to apply the f
+function
+on it
+and that is because
+and
+we
+are trying while we can compare to 13
+and it will give us 0 for the d and the
+e
+we cannot subtract zero from d and e so
+we get a domain error in this case
+and we had to go with an entirely
+different approach
+so
+let's write a different function here
+and
+one way we can do this is to use
+um selective assignment to change the
+value or we could use
+modify this and select the assignment to
+do the subtraction
+for that we need a variable which we are
+allowed to change uh the omega in a d
+fin is a constant we're not allowed to
+uh to change that so we'll take that and
+we'll
+use the name r instead
+we don't need
+this value right away so we'll defer
+that instead we want
+12.99 and we want to put that into
+uh
+into r but only into a subset of r
+selected by the mask where
+13 is equal to
+the argument or we could put an r as
+well here it would give the same result
+now the r has been updated we just need
+to
+ignore the result of this assignment
+which would be 12.99 anyway
+and then return r
+and g can be used in this
+variable and it just ignores the d's and
+e's and even the 11 because we're only
+interested in elements that are
+13.
+okay
+what happens if
+we
+change things up a little bit let's do
+let's take
+these numbers and letters from b and
+make them up and make them into a matrix
+instead
+so now we've got a matrix with numbers
+in one column and characters in
+the other column and if we try to use g
+on
+on this then we get a rank error
+because we cannot use compress
+with a matrix left argument it has to be
+a vector a mask over the columns or
+elements in this case but
+we can of course
+fix this
+so if we um
+if we take
+this g
+and make it into an h and then we ravel
+the
+argument values first
+and then we ascending to the reveled
+argument
+and then but we didn't actually revel
+the um the array r and then we're
+returning that there so let's try that
+hnc and that works as well
+but we said text before and
+that might be even
+more than
+this
+before we go there and let's just see
+another way of doing this which is
+very similar in what it's doing
+but
+much more concise
+that is to use that operator so really
+what we're saying is that
+not considering the shape of the
+argument
+we just want to replace with 12.99 at
+the positions where 13 equals that
+and that's exactly what the after
+operator does
+so you can write 2.99
+at
+where 13 equals
+the argument
+um and that's
+all we need to do really
+and that works as well okay back to the
+text
+and the text of course can be more than
+a single character so let's
+have a new array
+which again let's stick to a matrix so
+that we make sure that we don't have any
+regression on that
+and this time
+we're going to use a character vector as
+one of the elements
+so it looks like this a nested array
+this time because one of the elements in
+the array is itself a vector
+if we try to apply this function and i
+on d or for that take if you were to try
+to apply h which works exactly the same
+way
+then
+it's not going to work
+i would give us this
+and h
+so you get a domain error here and that
+is because
+um when we're doing this comparison
+we're creating the boolean mask
+and so we said 13 is equal to the
+argument
+on d and when and equal is a scalar
+function which means it penetrates into
+our structure
+and so we get an array of the same exact
+structure but with boolean values inside
+however such a nested array is not a
+valid argument and not for
+replicate
+and
+not for
+that operator either
+so what can we do about this
+well
+one thing we could do
+is
+not to use equal because we don't want
+to penetrate instead
+and we don't want to penetrate into
+the arrays
+so if instead we look at
+whether these
+elements individually are members of
+13 that would consider them as a whole
+so we have a collection which is just a
+single element 13
+and then for each element in the
+argument we look at whether or not they
+are members of that collection we call
+that single element and then we can see
+we get
+an array of the same shape as the
+argument
+and it doesn't penetrate into all that
+structure
+so if we modify our i function and
+just changing that one little bit
+then we're able to
+use our function
+successfully
+okay
+but let's
+complicate matters even further
+so we had
+a
+d here with a character vector which as
+one of the elements but let's say we
+have a more complex structure so we have
+a still matrix
+but
+and still the same
+elements
+but this time
+we we bunch together
+these two
+elements into a single element so
+they're actually three elements and
+we're going to
+reuse the 11 because we need a fourth
+element so we can see that here
+and now the 13 is hidden deep inside
+so while we can use
+the function
+j here
+it didn't actually work because
+inside it it had a look
+are the elements members of 13
+and it said that
+the two element vector of dd and
+13 well that's not a 13 it's a two
+element vector
+but that kind of defeats the purpose
+because we would want this 13
+to be replaced
+so one solution to this
+is to use recursion
+we only want to consider the simple
+scalars and replace those
+now simple scalars they have a depth
+of zero
+if we don't have a depth of zero any
+other depth
+then we need to recurse we need to go
+one step in so on each element
+whether it's just an
+a scalar enclosure or whether it is a
+vector or any other rank array we go
+through all the elements in turn
+and consider them a new calling the same
+function
+otherwise which means we do have a
+simple scalar there are only two cases
+either we've got a 13.
+in which case we replace it with 12.9 or
+we don't
+in which case we leave it unchanged
+now we can apply the function to e and
+we recurse through the whole structure
+and replace the deeply hidden 13 with
+12.99
+we can actually use a method that we had
+before
+this
+function h
+we were reveling
+the data
+to find the elements so that
+we could use compress
+and we could do exactly the same instead
+of rambling we kind of do a super
+reveling which is in list still we're
+not
+changing the actual structure of this
+temporary variable r
+we are just assigning to its
+corresponding
+completely flattened version and the
+same thing we are comparing 13 to the
+completely flattened
+data in r
+and then we can
+oops i should have
+should have named this not k it should
+have been
+l
+that's better
+and then we can
+we can use l on
+uh on e and that still works
+finally there's actually a pretty neat
+trick
+that we can
+use in here and that is to combine
+this ability to assign to
+the enlist of a variable
+with the neither notation of using an at
+so
+again we make a copy of our argument we
+enlist that
+and then change 12.99
+where we have got
+13
+equal to well you can write the way
+we've done before
+well actually
+i like writing 13 first um because it's
+more i find it more idiomatic in apl to
+write what we're comparing with
+on the left as i see functions as having
+a left argument which is kind of
+parameter and the right argument is the
+data so i'll write it like this
+and now we've got we replaced all these
+values of 13 with 12.99
+um
+but we have it all flat and we just need
+to stick it back into the structure it
+came from so we're assigning this
+to the list of r
+and then discarding that and returning r
+and now we can finally run this
+and
+that also works
+so that's all for today thank you for
+watching

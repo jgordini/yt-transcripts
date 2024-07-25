@@ -1,0 +1,334 @@
+hi we are given
+the the
+scores from people who have played
+golf and then uh we are to give them
+it's kind of a a grade give them a a
+place in the
+sequence and in the golf you want to
+score as low as possible now that's very
+easy
+however there um The Twist here is that
+if people score the same then they need
+to get the same
+place and all the slots that would be
+taken if they were different are still
+taken so then instead there are certain
+uh positions that don't
+happen and instead everybody gets the
+average of what they would have gotten
+had they been
+different so here's some sample scores
+and notice here that there are two 68
+and they they're given in uh ascending
+or n descending order and there are
+three that got
+70 so clearly 67 gets first place then
+this would be second and third place but
+since they're the same they have to
+become the average of that which is the
+two and a half place so they both need
+to get two and a half then this gets uh
+number four this is five six and seven
+uh which need to share place so the
+average of 56 7 is six and then we get 8
+n over
+here and there are a lot of different
+ways that we can um attack this
+problem
+so one simple way is that we start by
+grading so grading means uh telling us
+what what position element uh we should
+take in order to
+sort so here we say well first you want
+the first one then the second one then
+the third
+one um and since they're all in in order
+already and since we be doing a stable
+sorting here then we it just becomes
+really the sequence of um indices so we
+could actually
+um
+just replace this with with indices as
+well here's the length and then we've
+comput the indices like this and that's
+going to be much faster because we're
+just generating the indices right away
+whereas this actually needs to do
+comparisons of
+everything okay now we need to uh group
+them and there are again a couple of
+different ways we could do this but
+since they already in ascending order
+and they are nonone zero integers then
+we could actually just use those values
+as left argument to the partition
+function uh partion spell
+this and that gives us our groups that
+because this is exactly how the petition
+function
+works so now we have these groups some
+of which only contain an single element
+we can take the average of each one and
+we can do this with a tested function
+there's a FEA spelling which is the sum
+divided by the tally
+that gives us the average for each
+one um but we also want uh repetitions
+here so we want to take the shape or the
+length of each segment and use that to
+reshape this average so we take the
+Telly and use it to
+reshape the
+average now we're back to having groups
+but they have been smooth out so every
+value in every group is the same now we
+just need to join them which we can do
+with the in list
+function and that gives us our result in
+order for this to be a proper function
+which you can give a name f then we wrap
+it in braces and replace the argument
+with Omega which is the rightmost letter
+of the Greek alphabet so that indicates
+the right
+argument and we can apply that right
+there um we were doing grouping and
+group really calls for the key operator
+so this is a alternative way of doing
+things let's take the argument
+here
+and we are going
+to use the key
+operator and we're not interested in the
+actual values we just want to operate on
+the indices so that's the right argument
+in the to the upper end to key ke's an
+operator takes this function as
+operant that applies it in a certain way
+and on that we're going to apply another
+function which is going to be pretty
+much what we had
+before the only difference um is that
+key will mix together the results and
+make it into a single table that is
+every such application here becomes a
+row and they might not have the same
+length so we can have that so we enclose
+it and that gives us the same result as
+before and then we can enlist it and
+we're done so we can give this a name
+g
+now um there is
+a um a little bit of a complication here
+and that is that if we try to apply F on
+just a single
+number that works fine if you try to
+apply G on a single number number that
+gives us a rank error because key cannot
+group a scaler it has no Dimensions
+along which to group them so we need to
+amend g a little bit by
+um applying this whole thing that we
+did this grouping to the result of a
+reveling so this first makes it into a
+vector and then uh we have apply the
+rest and now we can do G otherwise it
+gives the same results only to handle
+the scaler
+case Okay so this works as
+well now we can go into a completely
+different way of of solving
+this and that is in order for us to get
+the average positions
+here if we go back to um to just the
+indices let's look at uh let's stack
+this on top of s actually so we can um
+put s here and we put the indices here
+that gives us a two element vector and
+then we can mix them to make it into
+rows of a matrix and that gives us this
+um so now if we look at um at these
+values let's look at the 70 we don't
+actually need to take all the values
+five six and seven in order to get the
+average we could just have the smallest
+value and the largest value and then add
+those together and divide them by two
+that would give us the average because
+it's a contigous uh range of adjacent
+indices so um how can we do this well we
+already looked at how we can get the
+indices
+themselves and we
+also
+and we can also get the opposite we did
+this with grade before but we could we
+also have so this is
+grade we also have a grade that goes the
+other way and that wants to sort from
+the largest to the smallest so let's
+stack these on top of each
+other and we can actually let's put in
+the the grade up as well so we have all
+three of
+them okay
+so here you look at the
+268 then and this says this is the
+second largest and we can see that eight
+is the second largest number before
+nine so we are going down instead but of
+course uh we don't want actually to have
+these large numbers here we want to go
+from from low to high so we can
+reverse the
+grade and now we can see how everything
+lines up except where the numbers
+are the same so here's two and three
+which is exactly what we need to average
+three and two over here by 70 again we
+have five six and seven and we got 7 six
+and five so if we are to take the
+average of these two that gives us six
+these of course give six as well and
+this gets six as well so that means we
+can solve this problem um by taking the
+grade of s or say the indices of X so
+these are the um the indices and we add
+them to the reversal of the
+grade that gives us double uh the score
+now we just need to divide it by two so
+and we could use parenthesis and do
+division by two but we can also flip the
+arguments so the division symbol so it
+takes what you divide by on the
+left and that gives us uh the result
+that we want so we can call this
+H and um we still have the problem that
+if you try to apply it on a single
+number then the grade will
+fail so we can put back in this
+parenthesis and just put a revel outside
+so this function is applied to the
+result of this
+function and there's one more way that's
+interesting to look
+at and that is um self indices so if we
+look for the first occurrence of every
+number in s in s
+itself so then we can see uh let's let's
+do the same same thing again let's stack
+them on top of each other we can see
+what's going
+on we can see that we find a 68 in
+position two and this 68 we can also
+find in position two because they're
+equal to each other same thing all the
+7s are found in position
+five there's a different function in APL
+which is the interval
+index interval index tries to find the
+slot wherein a number and can fit so
+let's say we wanted to find
+um where can we fit in say
+um
+69 and a
+half it says slot four 1 2 3 4 we can do
+this because our numberers already
+sorted so we can find that slot there if
+we do 69 itself It also says four if you
+do 68 it says
+three so it it wants to place you can
+see here it wants to place 1 2 3 and a
+value that's identical to an existing
+value after the last of those values
+kind of first come first
+serve and that's very convenient because
+now if we use the interval index on of s
+on
+itself then we can see that the 68s they
+with the noral index of they want to go
+to the first
+position and interval index wants to go
+to the last position same thing here
+five and
+seven which means the average of the
+index of and the interval
+index is going to give us the score that
+the position that we want so let's do
+that
+this is pretty neat how can we make this
+into a a proper standard loone function
+we could replace all the SS with omegas
+and wrap it in braces but there is a
+need a way and we can make it all test
+it by saying that this is a self
+application of the in uh index of and
+this is a self
+application of the interval
+index um which means we can then
+um apply
+this and now we just have some redundant
+parentheses we can
+remove this is in my opinion a beautiful
+solution um again you order to handle a
+scaler case we need to
+Ravel but other than that
+and this
+works
+now it would be interesting to know
+which solution is the fastest
+one let's import the compare
+execution and facility from the defense
+workspace and we probably want to
+generate some sample numbers and as well
+so let's say that we are generating
+um
+five uh
+th000
+numbers in the range of
+10,000 and so these are the upper limit
+and we apply the r to that to get a
+whole bunch of um of
+numbers we can take the first 10 and and
+look at them oh look at that they're not
+sorted so let's sort
+those and we can do this by indexing
+into t with the grade so this exactly
+what what grade does it
+sorts okay it would also be interesting
+to know how many unique numbers are
+actually there we can do this by taking
+the uh unique mask so if we try this on
+the first
+turn it indicates with a one every time
+we have a unique number for the first
+time and then uh with a zero for any
+duplicates of that which means that the
+sum of this is going to be how many
+unique numbers we have so this is the
+plus
+reduction and we get there 10 seven out
+of these and what about the whole big
+collection so we can see that there are
+about 4,000 unique numbers out of the uh
+5,000 so there are some duplicates uh
+here and
+there uh and they're all in the range 1
+to
+10,000 now we can write
+cmpx F on t g on t a h on T and I on
+T and we let it run for a little while
+it will apply the functions many times
+to get an average of the execution
+speed even
+out oh look at that that's a huge
+difference here in fact so much that we
+can't really tell which one is faster H
+and I so let's try those
+again
+and uh well I guess for this size
+argument uh then H which was using the
+grades up and down was uh the fastest we
+can look at at what we've got
+here thank you for
+watching

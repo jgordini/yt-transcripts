@@ -1,0 +1,165 @@
+hi now we're going to be given a square
+Matrix and we have to check whether it's
+magic magic means that all its row and
+column sums and the diagonal anti-
+diagonal sums are the
+same I've predefined a collection of
+matrices the first one is trivially
+Magic there's only one number so
+whichever we sum it we get the same
+number second one we can check that it's
+magic 4 + 9 + 2 is 15 3 + 5 + 7 is 15
+even diagonal 4 5 6 is 15 and so on the
+third one is easy to see it's not magic
+plus 1 + 2 is three but 3 + 4 is not
+three so that one is out and for the
+same reason we can see the last one um
+we keep having increasing sums both
+vertically and horizontally so can't be
+magic either so first two are valid
+magic ones and the second two uh are
+not let's apply a Lambda on each one of
+these we refer to the argument as
+Omega and instead of trying to do all
+the summing we'll stack together
+everything we need to sum and do all the
+summing in one go so here's the argument
+concatenated with its diagonal how do we
+find the diagonal well if we Traverse
+the array and in order but every time we
+go to the right we also go one step
+down then we find the
+diagonal effectively if we map both axes
+of this uh Matrix to a single axis so
+that we force walking along both axis at
+the same time then we get the diagonal
+and therefore we can do this with a
+transpose the generalized diic transpose
+Maps AIS to different locations and if
+we map both X's to uh the first
+one then we get the
+diagonal so here we have the 456 it's
+been concatenated on the
+right next up uh we want to do the
+summation of um the rows but since we're
+going to sum vertically then we just
+need to transpose the argument
+to so that when we are going to sum here
+4 92 that actually corresponds to the
+original
+row
+and finally we want the an diagonal
+which we can get by flipping the uh The
+Matrix horizontally and then taking
+diagonal so we can flip it
+horizontally using the uh reverse
+function so we can see that we got 294
+instead of 492 and then we take the
+diagonal just like
+before so this gives us all the columns
+that we need to sum so we do a plus
+inserted
+vertically and the only thing that
+remains is to check whether all the
+elements are the same so we can find the
+unique elements and then count them and
+then check if that's equal to
+one so this is a very straightforward
+translation of the problem statement to
+um
+APL but there's
+some duplication of code we could say
+this something seems very redundant we
+we taking the diagonal here and we're
+taking the diagonal over here and
+flipping things around it's actually uh
+a way to compress this a bit which is
+rather neat so let's try
+that let's start off by and combining
+the
+transpose
+and the flipped
+horizontally version of the um array
+because if we if we think about
+it this reversal
+here allows us to take the diagonal if
+we do a
+transpose then it doesn't matter for the
+diagonal diagonal stays the same so if
+on each of these two we take the
+diagonal that gives us the two diagonals
+and if on each of these
+two
+and
+we take the um the sum then if we mirror
+it horizontally then this the vertical
+sums are just in a different order but
+it's still the same vertical sums and
+the vertical sums of the transpose that
+gives us the horizontal sums so all we
+need to do is do all the combinations of
+uh
+transposing um sorry of of taking the
+diagonal and taking the vertical sums
+with the Trans uh combined with the
+transposing and the mirroring in order
+to get all the four different
+combinations that we want so we're going
+to uh combine these and we're going to
+take the the union of them because we
+need to get that final set of how many
+different sums are
+there um we need to be careful not to
+have any duplicates uh because they
+would persist in the Union uh but before
+we take the union of course we have to
+actually find the sums so we pre-process
+the argument to the union with a little
+function an inner
+function and that function is going to
+be taking the
+diagonal and we concatenating that
+to the array
+itself and once we've got that that
+means we've got one more column which
+consists of the diagonal and then we can
+do the vertical sum and take the unique
+of that it's important that we both take
+the unique here and take the union over
+here because if we didn't take the
+unique and there were multiple on the
+left multiple sums they would persist to
+the end um but they could
+be all the same even though they're
+multiple right because if our array is
+larger than just a 1 by one there will
+be multiple sums um actually even if it
+wasn't because we had
+both the diagonal and the r sub so
+always have two but this will make sure
+that in the case where it is Magic in
+this halfway respect we only get a
+single element and then we get if it's
+magic we get a single element from the
+left and the single element from the
+right and then the union of them will
+either be a single element or not if
+they don't uh match um in case there are
+any uh other elements than any other
+sums then it doesn't matter where they
+appear here we'll always have something
+that has length more than uh than one
+because the union will not be able to
+take away any duplicates from
+here
+so this gives us um all the different
+sums and then Remains the thing that we
+did before of 1 equal to uh the count of
+that but since we're doing things tested
+here we we still want the diadic the two
+argument form of equality but we want to
+pre-process the right argument with the
+counting with the
+tally so this is a very neat compressed
+solution without any duplication going
+on thank you for watching

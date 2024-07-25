@@ -1,0 +1,162 @@
+hi we given a list of numbers and we are
+to find the length of the longest
+consecutive
+subsequent where the values are either
+consistently increasing or decreasing or
+constant here's sample data now it might
+look like this sequence here is the
+longest
+one that because the values here are
+constant are easy to spot but this is
+actually only two steps because we go
+from here a five to a five and then from
+a five to a five whereas over
+here we have four elements in a row that
+are consistently
+increasing even though the increase is
+not consistent so we go from one to two
+and then 2 to three it's still
+increasing 3 to 5 it's
+increasing okay let's begin our Lambda
+uh with p as argument and we refer to
+the argument as Omega because that's the
+rightmost letter of the Greek alphabet
+and
+here we are not actually interested in
+the values we're interested in their
+relative sizes so we can start by
+subtracting consecu uh adjacent elements
+so this subtract this does a 1 - 2 and
+then 2 - 3 and 3 - 5 this might sound
+backwards but it doesn't actually matter
+CU we're only interested in whether
+we're going up or whether we're going
+down
+or whether we're constant and it doesn't
+matter if we flip around up and
+down so here we can see that we
+going up because the left element minus
+right El is negative and we're going up
+we going up and then we have two
+constant ones going down going uh and
+then uh up again and then down down okay
+now we're not interested in how much
+we're going up or down we're just
+interested in whether whether it's up or
+whether it's down that is we're
+interested in direction or the sign so
+we can do
+that and now we just want to find out
+whether adjacent elements in this
+indicator list are equal to each other
+so we can use the same exact technique
+but this time instead of using
+subtraction we're using different
+from so this tells us that the first
+element is not is the same is not
+different from the second one the second
+one not different from the third and so
+that's these three and then we have one
+here uh where the zero is equal to the
+zero for this space over here and so
+on okay so how do we convert this to a
+list of lengths one way to do it is by
+cutting this into pieces that begin with
+a one the only problem is the first one
+begins with a zero it's missing kind of
+the one that the very first
+uh directional change is of course
+different from anything before it
+because there was nothing before it so
+we can fix that by inserting a one in
+front and now we can use the petition
+function
+to that takes exactly this kind of
+element uh this kind of argument on the
+left and cuts the data on the right into
+partitions that correspond to uh
+beginning with a one and then continuing
+with a zero but here it doesn't actually
+matter what data it is we're cutting
+because we're only interested in the
+length so we could just C cut the data
+itself and for that we have the self
+operator also known as
+commute so now we've cut into segments
+that begin with a one and then we can do
+the T which it looks like a T mark on
+each and this Maps the tell over every
+segment that gives us the length now we
+just need to to find the largest one
+which is a maximum
+reduction and that gives us um this
+solution which is very nice and easy to
+understand however there's a principle
+in APL that if you want things to run
+fast then you've got to stay flat and as
+we can see here on the boxes this result
+is not flat it is a list of lists rather
+than a single list so we could actually
+do this using a single list instead
+single flat list let's take this again
+and this is the point where things go
+not flat when we doing So-Cal nested
+arrays let's go back and look at what we
+had
+here all we want to do is find the
+distance from the beginning of one
+segment to the beginning of the next
+segment so we frequent find the indices
+of these ones and subtract them from
+each other that would give the adjacent
+ones from each other that would give us
+the segment lengths the only thing
+missing of course is the ending point
+for the last one so let's fix that by
+adding a one to the end now the same
+symbol as we used before doesn't apply
+the concatenation with a single argument
+used on both sides rather it flips the
+arguments around so this becomes the
+left argument and this becomes the right
+argument in effect it just as this was
+preened a one this becomes end
+one okay now we convert this Boolean
+indicator Vector to a list of
+indices these are indices of our ones we
+can see that this one is in position
+four five and six over here seven and so
+on and when we just need to subtract
+adjacent elements this time it is
+important which way we do it so whereas
+this will give us the opposite of what
+we want actually if we negate the two on
+the left then it flip flips uh the sub
+vectors before we apply the reduction on
+each sub Vector of length to so this
+flips the sign for
+us and then the only thing that remains
+of course is taking the
+maximum that works let's call this G and
+to see what kind of difference in
+performance this makes we need to have a
+little bit uh of a larger data set so
+let's do a
+million uh
+numbers from one to 10 so this is a
+million reshaping a 10 get a lot of tens
+and then the question mark changes each
+10 into a number between one and
+10 we can look at the first 10 of
+them right now we can copy in the cmpx
+compare execution utility from the
+defense
+workspace and construct a a couple of
+Expressions that we want to compare in
+performance against each other so we
+have f with the argument of Q and we've
+got G with the argument of Q then we let
+that run for a little
+while and we can see that with a million
+elements we get a very significant speed
+up thank you for watching

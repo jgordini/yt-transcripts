@@ -1,0 +1,245 @@
+hi
+we're now going to figure out
+or a set of years given as any type of
+array
+which years are leap years and which
+years or not
+leave your rules are quite involved
+the rules are like this
+every fourth year is a leap year
+except
+every 100th year
+which even though it's divisible by four
+is not a leap year
+except if it's also divisible by 400
+then
+even though we just said it then it
+wouldn't be because 400 if divisible by
+400 it's also divisible by 100 and then
+it wouldn't be a leap year then it is a
+leap year nevertheless so it's an
+exception to exception
+and Rule
+so we say
+every fourth year
+and then every 100th year and then every
+400 is here
+what we want to know is
+R is the current year number that we're
+dealing with divisible by
+the these numbers here
+we don't have an is divisible by
+function in APL but we do have
+a division remainder function and if
+there is no remainder when you divide
+then
+it's divisible so let's take year 2000
+for example
+that was a very special one
+we can see that it has no remainder for
+any of these
+and if we take year 1900
+then
+it was divisible by 104 but it wasn't
+divisible by 400 and if we say 1904
+then it was only divisible by four but
+not by
+the two larger numbers and 1905 of
+course will not divisible by any of
+these numbers
+okay
+so what we want to do here is compare
+with zero zero means and that there's no
+remainder and therefore it is divisible
+and the rule is that if we have a one
+here
+then it's
+um
+then it is a leap year if we have a one
+here then it's not a leap year unless we
+also have a one here so it's a kind of
+yes no yes thing
+and that can actually
+be expressed quite neatly using an xor
+which just means this one is true or
+that one's true but not both of them
+so if we think about inserting a
+different from that's what X1
+represented as in APL
+then we start from right to left
+um and say well we have this one
+but only if
+this one is false if they're both true
+then it becomes false again
+and then we continue here
+this has to have been true
+but only if not
+this one
+has to be different from that so that
+gives us that every time we proceed one
+step to the left it's another flip as
+but not if that one that gives us
+exactly the exception rule
+so we can do an xor
+reduction that just inserts this
+different from inside
+the vector
+and you can see that this says that 1905
+is not a leap year 1904 is a leap year
+1900 not a leap year and 2000
+is a leap year
+so this really solves the problem for a
+single number
+but we are told that we should handle
+any array so
+let's
+um modify this a bit
+we'll start over here
+and we're going to have a an array of
+these numbers 1905.
+and we also had 1900 and 1904
+1904.
+right there and you can really let's
+make them into a matrix so so this is
+going to be our argument
+and we want each of these to be paired
+up with each one of these no matter what
+the ship is over here that calls for an
+outer product so
+vertical style that's the outer product
+which combines the axis here this one
+axis with the axis over here uh two x
+two x's and that gives us a
+three-dimensional array
+like that we can see the layers here so
+this is
+um
+for the first one
+and so this are the the remain just for
+400 with each one of these so this the
+entire layer
+it corresponds to this Matrix that we
+have over here
+for 400 and for 104. 4.
+that means correspondingly that which
+which are the numbers that correspond to
+1900 that's the top left corner of every
+Matrix so the 300 and the zero and the
+three are zero and for the 1904 it's the
+one in the top right corner
+of each one and in order to do our extra
+reduction we need to go down through the
+layers so that's along the first axis
+the first axis enumerates the layers so
+we want to go through the layers here
+that means we need to switch our slash
+which was the last axis reduction to a
+slash bar which is first axis reduction
+that gives us a matrix just like this
+Matrix over here saying which years are
+leap years now we all just need to make
+this into a
+sorry this is wrong in this missing the
+the zero equal there there we go
+um
+this gives us a an expression but we
+need to change it into a function we can
+easily make this test it just by adding
+um array attack here and then we can add
+parenthesis around it or we could have
+added an Omega and braces either way
+um this tells us that the two right
+column ones that's 1904 and 2000 those
+are leap years but the two left column
+ones 1900 and 1905 or not leap years
+we could actually be even more clever
+we've got here a scalar comparison and
+then we've got a reduction and we could
+combine these into an inner product
+where the way this works then is if you
+go up to
+um to over here we say 0 equals
+this one
+different from zero equals this one
+different from zero equals this one
+um and so on and then we go through
+um the whole array like this it's
+slightly faster
+um I think at least it can be slightly
+faster because it allows The Interpreter
+to know everything that's going on it
+doesn't actually need to look at
+uh first a comparison and then do the
+xor it could do that total in one go if
+it understands how to optimize that so
+this is a quite nice way of expressing
+it
+but we also have a build way built-in
+way of doing this there is a function a
+system function called quad DT for date
+time
+and quantity is normally used to convert
+between various formats
+however and there's a special and it
+uses format codes on the left
+there's a special formal code which is
+zero which doesn't convert to any
+particular format instead it asks
+whether this is a validate it's a date
+time validator so all we need to do here
+to test whether that date is valid is to
+sort of say convert to
+format zero and a normal timestamp
+with year month day that is format
+number negative one
+so that means if we and we need to make
+sure to enclose the argument so if it's
+a one vector is one Element so then we
+can for example say
+um is the
+um the 30th month and the 100th day in
+that 30th month is at a validate
+of course it isn't
+um is the
+uh January 1st is that valid
+yes it is and what about in February 29
+that's the one day that determines if it
+exists then it's a if it doesn't exist
+then it's not a leap year so in 1900
+that didn't exist but what about in 1904
+then it did exist
+so all we need to do when we have an
+array of years is to add 229 to each one
+of them to make it a full date and then
+we ask quad DT whether that's a validate
+by converting so to say to
+um
+format number zero which is just
+validation if we go and take our array
+over here
+then we can
+start making a function for this let's
+forget this part for now
+um we want to concatenate with a
+constant right argument to concatenation
+and we want to do that on each one
+so this gives us a matrix of these four
+vectors and then we just need to say to
+quantity which already handles arrays we
+want to convert from the normal
+timestamp
+format to
+validation numbers
+on
+all of these
+and that gives us
+our results from before so that's a very
+neat way to write that as well
+and that this works on anything and um
+including on a single number because of
+the each so it will go into so to say
+this scalar and then the result will
+still be a scalar and we have that
+enclosure that we needed above so I'm
+going to see that this works as well
+thank you for watching

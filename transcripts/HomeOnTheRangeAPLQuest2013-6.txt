@@ -1,0 +1,504 @@
+hi and welcome to the apl quest
+c apl wiki for details
+today's quest is the sixth problem from
+the 2013 round of the apl problem
+solving competition
+it's a very simple problem uh just
+finding out the numeric range of an
+array that is uh the highest value minus
+the lowest value
+um but we'll see that there is a special
+edge case that we need to take action
+for and we'll look into some
+generalization as well
+without further ado
+and let's generate some data we can work
+on
+okay so here's a numeric vector and the
+highest value is the maximum reduction
+of that vector and this
+lowest value is the minimum reduction
+over the vector
+and then we can take those two values
+and subtract
+the smaller
+from the larger
+and we get the full numeric range so
+that's really all there is to the basic
+problem
+let's put this into a function and we
+can write
+the max reduction of omega minus the min
+reduction of omega there's a redundant
+parenthesis here but that's mostly just
+for clarity and
+to make the expression symmetric
+so we can try this on v and that works
+great now there are a couple of problems
+with this
+one is that it has to work on any array
+so let's make a matrix which is two rows
+and four columns containing the same
+numbers as v it looks like this
+now if we were to apply our function
+here
+on m instead then it doesn't work
+because it gives us the numeric range
+for every row we want the numeric range
+for the entire array
+and we can solve that
+by
+raveling the array first
+so we revel it here remember it here
+um and
+this gives us the full range
+as we can see here we are reveling twice
+which is quite unnecessary and we can
+actually in a neat way break this
+reveling out of the parenthesis
+so let's get rid of the ravel from here
+and the rev from here
+and we can actually switch to a tested
+form quite easily so we just say the max
+minus the min
+off the ravel of
+the array
+here we go
+and we can get this even further because
+now we can observe that we actually have
+a full tested function and a top simply
+wrapped in a different wrapper so we can
+completely get rid of that syntax and it
+still works we can give this a name then
+see how that works
+of course still works on our vector
+it also works on
+a scalar where the range is zero because
+we revel in the largest
+minus the
+smallest is and it's the same number so
+it gives zero
+so this is a good method
+and one method that isn't so good but
+it's kind of fun to look at if we take
+our
+our vector and do an outer product
+but instead of multiplication we're
+doing an outer
+subtraction so that means it's a
+subtraction table that gives all the
+possible differences
+between values and then the full range
+is then the largest number in this table
+so we can take the maximum of the level
+of that and that gives us also the range
+not a good way to do it but it works so
+we could make a function out of this by
+saying
+um
+the maximum over
+and
+ravel of
+the outer
+and
+subtraction
+selfie
+and in fact this will work on our matrix
+as well it just generates an even higher
+rank array as an intermediary step
+but there's a catch
+according to the example cases in the
+problem specification
+the function also has to work on
+empty arrays and that doesn't work why
+doesn't it work well we can try our um
+original function
+um let's go up and define that again
+we have it right here this was this one
+if you try that on say the empty vector
+we get a domain error
+and uh we're supposed to get a zero
+instead as it to say there is no range
+the problem is
+that the maximum
+over
+an empty vector
+is the smallest representable number in
+the current numeric system
+so these are 64-bit floats and this is
+the smallest representable 64-bit float
+why is that
+that is because the reduction over an
+empty axis gives the identity element
+for that operation so for plus identity
+element is the value that you can plus
+with
+without changing anything that would be
+zero for multiplication what you can
+you can multiply with is a one
+and for max the only number that you can
+do a max with
+and make sure that your original numbers
+becomes the result so it's an identity
+operation
+nothing changes is the smallest
+representable number or a negative
+infinity if that's
+available and similarly if we do a
+minimum reduction we get the max
+representable number and trying to
+subtract
+this very small number from this very
+large number goes beyond the range of uh
+the floating point system that we are
+using and we get the domain error
+so this system doesn't quite work
+how can we solve it well one simple way
+to do it is simply to say is our array
+empty
+now we can't just compare to the empty
+vector because there might be multiple
+x's say we could have a
+a
+zero row
+two column matrix of numbers
+which
+isn't visible but it sure exists
+what we can do is that we can take its
+shape and there is a zero there and if
+there is a
+zero anywhere in the shape of an array
+it's called an empty array and then the
+range has to be zero so we can write
+this function as if zero is a member of
+the shape of the array then return zero
+otherwise
+we take the maximum
+minus
+the minimum
+of the ravel of the array and now we can
+apply this on each of our arrays the
+vector the matrix the empty
+vector and why not our zero by
+two
+matrix as well and now it works so this
+is a valid solution and it's very clear
+it's probably the clearest
+solution that there is
+but we can be a bit more
+clever about this first for a fun
+solution but not an efficient one
+and that is if we sort the array first
+so we let's say we start with our matrix
+and then we revel the matrix and then we
+sort it
+then we know that
+the
+range is the last element minus the
+first element
+so the last element can be written as
+the pick atop
+reverse
+minus the first element which is just a
+first pick
+and and that works and the reason i'm
+using this method for getting the first
+and last element is because if we try to
+pick the first element of an empty
+vector
+then it coerces out a number so that
+means that both of these terms would
+become zero so we get zero minus zero
+which is zero and that's the correct
+result for the empty array even
+of course if we have something like this
+a matrix because we revel first it will
+work the same way so this is a solution
+but not a very good one in order to make
+it a full function there are a couple of
+different ways we could do it um
+we could take this tested function here
+and put it inside the parenthesis but as
+you can see the color changes that is
+because it ceases to use the sorting
+idiom so things will run a bit slower
+but it works if you want to preserve
+the
+speed of it then we can just string
+things together
+using in the top either way it could be
+in the top here or you could be in the
+top over here or we can use all three of
+them all of that works
+all three are topped together
+there are uh
+clever ways that we could do this
+and for that we need to think a little
+bit okay so we have a matrix
+and we need to ravel it
+and
+um
+then
+we want to have a zero
+if
+the array is
+empty okay how could we how can we do
+that so we can we can tally the reveled
+array
+and then
+we can
+have a maximum
+with one
+so if the array is length zero then we
+get one otherwise we just get the length
+of the array
+and then we can use this
+to take from the reveled
+um array again
+okay so now here it doesn't make a
+difference of course we can see that
+that gives our data as we expected if we
+do it on an empty vector
+then we end up overtaking by one
+and that pads with another
+zero at the end and then the rest of the
+procedure will be the same so we can say
+the maximum minus the minimum
+of
+the revel
+let's say we can write take this whole
+expression here
+we can
+write it like this
+and then we can go and simplify
+things a bit um we can turn all of this
+tested actually
+so we could ravel first
+and then we could apply a function to
+that where we
+use this value which is the length
+except it becomes one and we can take
+from
+that same thing
+so this is a possibility and now we
+don't need the braces anymore
+but we have three functions here so we
+need to atop at least one place
+so now we can this works and it works on
+empty arrays as well
+um and but there's actually
+more we could we could do firstly for
+the syntax here
+and we instead of since we have three
+functions that we want to avoid we
+because of we have to do the explicit at
+the top we can take
+this which is a magnetic function
+and put inside the parenthesis as a left
+carriage on the strain so here is
+the original function we're applying it
+becomes a fork right here and then
+another fork
+and then finally in the top with this
+function here so that works as well
+and it gives us our results as we expect
+what else can we do well
+observe
+that the ravel of an array
+gives us all the elements in a single
+vector
+how many elements
+well that's the product over the length
+of all the x's in that array so for our
+matrix
+the shape is this
+and that means that the product
+is how many elements we have
+very good
+so if we
+say that there are none
+so if there's any zero inside
+the shape then the product is going to
+be zero
+so we can take that the maximum of that
+will one
+and then we can simply use that to
+reshape their array itself
+so here when the array is empty we
+reshape the empty array into a one
+element
+vector giving us just a one element
+vector with a zero and if we used it on
+say our matrix
+then this would be equivalent to
+reveling it
+so we can put all this together and
+again say
+the maximum minus the minimum
+of
+the array itself
+reshaped by the maximum of
+one and the tally of uh the array when
+that entire thing is reveled
+and this works
+so that's one way to do it
+another thing we can do is since we're
+raveling anyway then we can
+selectively append a zero which will
+then be picked up
+by the maximum minimum or it could
+actually be any other number that we
+that we add
+because it will be that same number
+minus itself and then that the range is
+zero
+so how do we do this well we have the
+condition zero is a
+member of the shape of this array and
+you can see that here
+and then we can use this to
+replicate
+a zero or any other number
+so here we get a zero but if the array
+isn't
+empty then we get nothing and we can
+then
+append that to
+the ravel of the array
+so now we can write
+the revel over the array
+concatenated with
+this
+as a tested function
+so here we do not add any zeros
+but in an empty array
+we
+do add it to the revel
+so now we selectively add a zero when we
+need it or any other number it would be
+we can use any other number as well and
+then we can say the maximum minus the
+minimum of that and then that gives us
+zero let's put this vector right here
+there's no reason to find any other
+number
+so this is another solution
+and can we be even clever yes because
+think about it
+we want to add a zero
+if
+there is a zero in the shape
+and any other number in the shape
+we're not interested in only zeros
+we could even be multiple zeros it
+wouldn't matter because the maximum and
+minimum is not going to change just a
+bunch of zeros or actually any other
+number but the important thing is that
+we add a number
+or more numbers when there's a zero in
+the shape
+so how about just adding
+all the zeros from the shape
+okay let's say we have this array two
+zero
+zero two reshape zero this is this
+invisible matrix and then we take the
+intersection
+of zero
+with
+the shape of this
+that gives us the zero if our array
+wasn't empty then there would be nothing
+there if our array had multiple zeros in
+its shape
+then
+we have the intersection of
+and of a single zero
+with
+and
+all these numbers here including the
+zeros and so we get that single zero
+so we can use this
+and concatenate this intersection
+so we can write the maximum minus the
+minimum of
+the ravel
+concatenated with
+zero intersection of the shape
+and that works
+this is probably the most concise and
+way and a tested way of writing it
+um
+now for going a little bit beyond
+the original question
+uh quest which was just in a given a
+numeric array um you we could choose to
+understand it as giving any array that
+consists eventually of atomic numbers
+how would that look well and we could
+split our matrix into a vector of
+vectors
+and
+um and now our method is not going to
+work anymore we're going to get
+something completely unrelated to what
+we're looking for and because our
+function just travels it and that
+doesn't un
+open up the structure but we do have a
+function called enlist which is just
+like gravel but more powerful in that it
+completely takes any array and flattens
+it out to be a simple vector so if we
+take our old solution of the maximum
+minus the minimum
+of
+the
+argument
+and we overtake with
+one maximum of the length
+and all of this
+applied not on the rebel but rather on
+the list
+now it will work
+and we can do exactly the same thing
+with our function up here that uses the
+intersection the only important thing is
+that instead of
+just using the shape directly we
+get rid of this ravel
+and
+move outside the whole expression this
+in list
+so this is in list
+if the is any
+zero in
+the
+intersection with the shape of that in
+list then we concatenate that to the
+argument which is the enlisted argument
+and then we compute the range as normal
+however at this point when we've already
+made the enlist
+we don't need to
+to take the shape at all we because we
+already know that this is a vector
+so
+and if it's a vector and it's empty
+then it must be the empty numeric vector
+so we can actually say that if the
+argument
+is
+the empty vector so if the argument is
+equivalent to an empty vector
+um then
+we
+add another number so this is another
+way to do it
+and we can but of course it it works
+just fine to say the intersection
+with the shape or even with the tally
+would be just fine as well
+and that's it thank you so much and see
+you next week

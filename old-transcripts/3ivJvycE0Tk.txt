@@ -1,0 +1,163 @@
+hi
+we're going to do a very simple test of
+validity of some XML it's not a full
+test at all we're just checking whether
+the angle brackets
+are matched
+here's some test data that we can work
+on the first one is valid and the second
+one is not valid and that's because when
+it says 2 is less than 3 it uses an
+angle bracket there which messes up the
+balancing of the angle brackets
+there are three rules really that we
+need to keep here
+one is that every opening angular
+bracket has a closing angle bracket that
+is every less than sign is has a
+corresponding
+um greater than sign
+another rule is that they cannot be
+nested
+and and
+well finally
+the meaning we can't have less than less
+than and then greater than greater than
+and then well you could say it's not
+really an extra rule we have to finish
+up with everything closed it can't be
+shifted around
+okay let's get started
+we're going to Define this entirely
+tacitly from the beginning
+so let's apply this function to each one
+of the test cases
+and what we're going to do is note that
+the only thing that matters for our
+problem are these angle brackets we
+don't care about any of the other
+characters
+so we can start by filtering so we only
+have these angle brackets and none of
+the other characters
+and one way we can do that is by doing
+an intersection
+so we're treating the arguments as sets
+and we're going intersection between
+that and the angle brackets
+so now we can see we've isolated out
+only the angle brackets that makes it
+much easier to work
+the strategy we're going for here then
+is to identify where we have such pairs
+because the entire argument now must be
+made out of entire pairs of open close
+open close open close when we get here
+we get open open and that's wrong
+foreign
+so one way we can do this
+is by searching for angle brackets so
+we're now going to change the
+intersection function into a compound
+function a fork
+where we're going to find so this finds
+the locations of what of the right
+argument so this function here has a
+very interesting structure
+it is
+bound with a right argument which are
+these angle brackets which means that
+when we apply it to some text it become
+that text becomes the left argument and
+then it's called a fork because it kind
+of branches out and applies the two
+outer functions to the arguments and
+then the middle function
+to the results of those two outer
+functions so this is the intersection of
+the left argument which is going to be
+the text and the angle brackets which
+have been bound on the right
+this is the right side identity function
+it ignores the left argument and Returns
+the right argument so we again get the
+angle brackets and this returns a
+Boolean mask
+same length as our argument with a one
+every time what we're looking for starts
+including overlapping matches but that's
+irrelevant in our case
+so here we have the Boolean mask and we
+can see that we have open close open
+close open close and so on down here we
+have open close open close and then we
+have one character that doesn't belong
+there and then we continue with open
+close
+what we can do now is check
+that the entire mask that we got out
+consists of uninterrupted one zero one
+zero one zero and so on
+until the end and it has to also end
+with
+one zero
+if the final character
+is not or Define the characters are not
+open close then we wouldn't get a one
+zero at the end
+if the final character isn't open we
+won't get a one at the end because we're
+not finding the entire open close and
+then the find function will not say we
+get a partial match
+so we don't need to check for any of
+those
+and extra rules we could say whether
+they're they actually match the knot
+whether we're closing at the end we have
+all boiled it down to this subset of the
+input consisting of
+open closes which are then mapped to
+ones zeros
+so we can apply another
+tested function to that where we take
+the argument length
+and use it to reshape
+1 0 as a constant so this operator takes
+the one zero and makes it into a
+constant function it's again the same
+structure with the fork as we had before
+but this time only with one argument so
+we apply this constant function to this
+mass that we got out
+that gives us one zero we apply the
+tally function so it looks like a
+Telemark which gives us the length of
+the mask that we got out and then we use
+reshape which is a Greek row R for
+reshape to reshape the result of the
+constant function which is one zero into
+the full shape cyclically so one zero
+one zero one zero until we get the full
+length
+and then the only thing we need to do is
+to check whether this mask matches
+this mask that is whether this mask
+matches
+this mask as well
+and we are given the mask as argument
+here we indeed we used it to get the
+Telly the length and we have this right
+density function that we can apply so
+this also corresponds to the mask we
+asking whether it matches exactly
+element for element the master we've
+generated here
+we can see the first one is good and the
+second one
+is not
+and that's actually our whole solution
+we can assign it like this
+and apply it to each one of the elements
+of t
+thank you for watching

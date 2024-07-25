@@ -1,0 +1,439 @@
+hi we are to take a multim
+multi-dimensional array and
+interchange the horizontally adjacent
+elements here is an example
+multi-dimensional array it is a
+three-dimensional array with a two
+layers and each layer has two rows and
+then we've got five
+columns and our task here then is to
+Interchange adjacent element so Gela is
+being interchanged with opton they
+switch places Prospero with Lysa and
+then uh there isn't anybody to uh switch
+position with toaza so that just stays
+in place there and the same goes for
+every row and
+actually note that we can really operate
+on individual rows we don't have to
+worry about the overall shape of the
+array though we'll get back to doing so
+anyway so just to develop our algorithm
+let's focus
+on uh just the first
+layers and first row and then all the
+columns from
+there we have those
+here and so we'll start by the finding
+or wrapping our Anonymous function
+de and we
+can take advantage of the partition
+inclose function to pair up these
+adjacent elements and flip the positions
+and merge everything uh back
+again and the the petitioning close
+function it takes a uh for our purposes
+a mask have one when we are to start a
+new section and then zero when we are to
+continue a section so we want a mask of
+one Z One Z onto the length of uh this
+Vector um so we can get the length of
+the vector uh with or the shape of it uh
+with uh the shape function of
+Omega and then we can use this to
+reshape uh one Zer so we keep using from
+this array one Zer uh cly until we have
+the shape that we asked for and that
+gives us this mask then we can use that
+mask to partition uh the argument and
+here we have the pairs that we going to
+flip and we now can uh reverse each one
+of these and notice that the last one
+that only has one element it's still
+Vector of of character vectors here but
+it its reversal doesn't have any
+effect and now what we need to do is
+merge these back together again so we
+use a concatenation
+reduction but uh the concatenation
+reduction uh has to reduce it is a
+reduction and reduces then the the rank
+number of Dimensions from one this is a
+a list Vector of vectors to zero so this
+is a an enclosure of uh the actual
+Vector result that we want and we need
+to then disclose that uh to get the
+result we want this took care of
+the simple uh case where it's just a
+vector and we want this to apply to all
+the vectors that can be found as
+subarrays of our overall um array so we
+had the entire n here and we can very
+simply do this um that's we can we just
+Define our function here e uh for uh
+partition
+inclose and specify that it should be
+applied on rank one so it's not really a
+specification It's actually an operator
+that takes a function as left operand
+and a rank specification as right
+operand and saying this function must
+never see any argument that has rank
+greater than one so in effect the rank
+operator will iterate over our given
+argument and apply the function to every
+subarray of rank no more than one which
+is in fact always going to be present
+because the problem specification says
+that it will be a vector or higher rank
+array so we can try this let's uh print
+out the names again just so we can
+compare them and then we apply uh the E
+function to that and we can see that uh
+we got exactly the result that we
+wanted so this is one way to approach it
+um but there are many others I'll go
+through another couple um another way we
+could do this is by indexing so we could
+build up up the
+indices uh of the elements reordered
+such that we get the result that we want
+and that takes um a little bit of an
+algorithm so let's start again just by
+the vector case and then we can apply
+rank one to get the full uh thing so
+here is our
+vector and again let's define a uh
+Lambda
+a and and this time uh we again we have
+the the shape of
+that but now what we really want is to
+find out which order should we put them
+in in order to sort them but not just
+sort them by say alphabetically but sort
+them such that we interchange adjacent
+elements and um we can start by
+generating the norm noral indices right
+so what we want here is the uh the
+reordering but we need to adjust our
+values because these are already sorted
+so that two becomes uh less than one or
+one is greater than two and three
+becomes greater than four and so on and
+we could do that by just adding two to
+every other element so if we add two to
+one we get three and that doesn't Clash
+with the next three because this three
+will also have two added to it and
+becomes five and it won't clash with the
+five because five becomes seven and then
+and then the two and four stays and then
+we just have to sort by uh that ordering
+the ordering that would sort those
+numbers enough talk and we can do this
+in exactly the same way as before so we
+uh we take the length and we use it to
+reshape uh this time it's two and zero
+and then we just need to add that to the
+um to the indices that we computed over
+here and for that um easiest thing is to
+make a little train uh Fork so we do the
+indices plus the reshaping of to
+Z and we apply that whole thing to the
+shape of uh the argument so we first
+compute the shape and then we get the
+indices of the shape and then we use the
+shape to reshape to zero and then we add
+those together they now have the same
+length of course and that gives us uh
+this we can see the one was incremented
+up to to three and the two stays in
+place the three became five four stays
+in place and five became seven now we
+can H we can grade this to find out what
+indices elements should we take in order
+to make this
+sorted and so here we can see that we
+want F the the smallest element is uh
+the second one that's the two then the
+next one is the first one the next one
+is the fourth one and the next one is
+the third one and then the fifth one and
+that effectively gives us um these flip
+pairs for indices 2 one then 43 then
+then five All That Remains now is to use
+these indices to index into the argument
+and we have gotten um our reordering as
+we
+wanted so here we're using indexing with
+grading um we can call this I and then
+specify that this goes on uh vectors and
+that means that we can let's just print
+out our um example names here again and
+then we apply our
+function and we can see again that we
+have the correct uh flipping of
+Paris
+and finally I want to show how to do
+this uh using the stencil operator the
+stencil operator is normally associated
+with cellular automatons Game of Life
+things like this um it processes Windows
+of an array um it's it's almost an edge
+case that it can have Windows of size
+two and the movement the window moves
+over by two steps and that effectively
+isolates and adjacent pairs
+this time uh let's do it tested and we
+again we can start with uh the first
+layer's first
+row so we use run parenthesis instead
+for a a train or a tested
+function and um we can we start with a
+stens operator and then the idea here is
+that we use an Windows of size two with
+a movement also of size two so we need
+to make this into a matrix because every
+row has serves a different purpose in
+the right oper stens the first row
+specifies the window size the second row
+specifies uh the window movement if
+there were additional Dimensions we were
+traveling along then we would have
+additional columns in this
+table and we can and we can isolate
+these so we
+can uh this the oper end function to
+stencil is given uh two arguments and we
+don't need the left argument so we use
+the the right function and then we
+enclose
+that and uh we can see that we got the
+pairs but stencil cuts the argument
+short if it can't complete a window uh
+with the specified
+movement so we will have to address that
+but for now
+um we don't have to necessarily enclose
+this we could also increase the rank uh
+by not
+enclosing so that gives us this table
+and that can uh conveniently
+be uh
+reversed and then and we can Revel it
+and
+again right
+there now and there is missing something
+and and then is the last column so we
+can read that column but of course this
+only happens when uh the rows have an
+odd length so here we use a a right
+reduction to get uh the rightmost
+element and that add this back again if
+we had an even number of elements then
+and
+our and code here would add one more
+column that didn't need to be added so
+we can do this by cutting short and our
+argument to just four not five uh names
+and we can uh see
+that and we have an extra Delicia and
+over here because that was the last
+element before it was moved one step uh
+to the left this is of course wrong but
+we can counteract this uh by taking the
+uh the
+shape so we take using the original
+shape and that ensures that we chop off
+the excessive uh element if it
+exists and then if we use the odd
+numbers here five then we also get uh
+the right
+result so this works um again on uh rank
+one and we can call this s for stencil
+and we can try to apply that on and our
+whole multi-dimensional array and we get
+the desired result
+result um it would be interesting to do
+a speed comparison of these three
+approaches so let's copy in the compare
+execution uh facility from the defense
+workspace and then uh I also have a
+larger and here we only have 20 names we
+have a larger many dimensional array uh
+called a
+uh we can see that
+and a has
+20,000 elements instead of um just 20
+and it's distributed over five
+Dimensions so it's a relatively large
+array um and well we can also look at
+the whole whole shape of this it has an
+odd length and long last axis where
+we're going to do all the the actual
+computation so uh and we're going to
+compare the execution and we've got e
+with a as argument and we've got I with
+a as argument and we got s with a as
+argument and then we let it run for a
+little bit to see how they stack up
+against each
+other and well those are some
+significant differences we can see and
+and if we reason about it we can also
+see why that is
+and the stencil operator and is
+optimized for certain cases but not for
+what we're doing here and so it goes in
+and actually applies a function and to
+every window and and moves around and
+that is expensive to
+do the partition inclose function
+generates an intermediary further nested
+array that isn't otherwise necessary
+and the indexing just directly goes in
+and computes how we want the result
+reordered and that then ends up being
+significantly faster than other
+approaches
+but that
+said we can do this much
+better because if we look at our
+definition say we we look at s here we
+are treating every row separately and
+potentially there are a lot of
+rows and even though rank is optimized
+again for certain Primitives and
+constructs and when we have a complex
+function like this there's nothing The
+Interpreter can do and it just has to
+Loop through um all the rows
+individually if we could treat the whole
+array and in one go then that would give
+us a significant speed up and uh this is
+what array programming languages like
+APL are really good at
+so let's try to reformulate this s into
+a uh a function where we do not need to
+specify that the rank uh of the argument
+is restricted to
+one and here well we still kind of want
+to do that but we don't have to do it on
+the entire
+function because we do want these
+windows and on rank
+one but we can do that all the way in
+here
+instead so this takes care of the
+reordering of individual rows then we
+might be missing a column we add the
+rightmost column so to say that's the
+last element of every Row in the entire
+array to this potentially
+multidimensional array that comes out
+after running on rank one and instead of
+doing the take operation on every row
+individually we take the shape of the
+original array the multi-dimensional
+array and uh restrict along all X's
+which won't have changed except for the
+last one potentially um so that's just
+one operation to cut short in our
+array and now we can try to
+compare uh our original s with our S2
+and see if that made a
+difference
+so we can see that uh that became
+somewhat faster um it still doesn't get
+rid of this Loop for of the um the rank
+one we could potentially get rid of this
+one as well by specifying a window size
+that is one and a movement of one in
+every Dimension except for the last one
+where we have a window size and movement
+of two but it becomes a lot of
+computation to get that uh window size
+right and to then reform the argument
+back again to the original so let's that
+leave that there because as we can see
+up here the stencil approach is anyway
+much slower than the other one so this
+will be more interesting and with and
+our other approaches so then we had and
+our function
+e and let's try to define a new and
+E2 that
+and
+does this on the whole array instead so
+we want to get rid of the the rank one
+here now this gives us the shape of the
+entire array but we only want the
+trailing uh element of the shape which
+is
+the um the number of columns so the
+lengths of the rows and uh we can get
+that for example like this to do with
+get the less element uh the the
+rightmost of uh the
+shape then we reshape to the mask uh
+that we want and actually this works out
+very nicely because by default the
+petition inclose Works along the
+trailing axis so this is going to uh
+split up our array into should we say
+vertical slices of uh with two and so
+everything else just works out we
+reverse these two column and
+multi-dimensional subarrays and then we
+join them all together adjacent to each
+other and since we use the reduction to
+do that we disclose they should just and
+work out so now let's try to compare e
+and
+E2 and we can see that just this little
+bit of modification gave us some very
+significant
+savings okay let's see if we can do this
+uh with the I function as well so we
+want to have an a new I2
+function and we don't want to apply rank
+here now we end up in trouble
+immediately because the square bracket
+indexing requires us to know the rank of
+what we're indexing so we have to
+replace it with something else um and
+for that there actually if you take
+these two square brackets um and we we
+merge them together uh then they become
+the squad function which is then a
+proper function
+indexing but again we don't really want
+to generate the indices along and every
+dimension for all our elements so we can
+use the slightly um unpleasant looking
+square bracket access to say that all
+the indexing that we are going to do we
+are going to do and along the last
+axis uh so that is the same thing as the
+rank of uh the
+argument and now and the what we're
+indexing is on the left but it normally
+takes it on the right so we swap that
+and in order to just reorder and so to
+have multiple indices along the same
+axis then we need to enclose um the
+argument over here and then of course
+this is the entire shape so just as
+before uh we want to get the length of
+the last Dimension and the rest should
+stay the same we get the mask we do the
+grade and then we apply that there so
+now we can compare and remember that I
+was the fastest one before and now we're
+doing I versus and I2 where we not going
+over the individual rows with the rank
+operator we are treating the entire
+array at once and we get well similar
+savings as we did with e so uh this I2
+is by far the fastest solution to the
+problem thank you for watching

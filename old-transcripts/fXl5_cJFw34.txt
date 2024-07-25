@@ -1,0 +1,372 @@
+welcome to the apl quest c apl wiki for
+dear sales
+today's quest is the second from the
+2015 round of the apl problem
+solving competition
+we're giving some numbers and we are to
+find out
+what the
+longest run of intervals
+are where the intervals are all
+increasing in volume
+let's start with some test data
+so
+we are to find which intervals that is
+these spaces so to say in between
+numbers and that are increasing
+what we can do is we can subtract
+any number with the number before it
+this is an end wise reduce and because
+of the direction we want we want the
+rightmost element minus the leftmost
+element so we can use a negated window
+length to clip
+the
+subsequence backwards before we apply
+the reduction over it
+there's a little catch that if
+and this is one of the the
+example
+arguments if
+the input is a scalar then the invoice
+reduction will fail
+but we can fix this simply by reveling
+the argument
+okay so going back to our sample data
+we got these
+differences and we want to find out
+where they are strictly positive so
+that would be any of them that are
+greater than zero
+now we have a boolean mask
+indicating and which intervals
+are
+growing
+and then we can use
+a partition
+on any data really
+but conveniently we can use it on the
+same data and the way partition works
+is
+that
+when the argument is booted left
+argument is boolean is that any runs of
+ones become
+segments and any elements that are
+zero get dropped out and that's also
+where new segment begins
+so we can see how we are getting these
+groups of uh the first the one and then
+the zero drops out and another one and
+then the zero drops out and then we have
+the three
+and now that we have the segment lengths
+these are the runs of
+growth so we can simply
+take the length of each one
+and then
+do the maximum over that and that gives
+us our result
+for this case which is
+three let's put this into a function
+like that
+right
+um there are some tricks we could do to
+make this shorter
+let's have think about this we're
+finding a difference but we're not
+actually interested in the difference at
+all
+what we're interested in is whether or
+not we are growing so instead of
+comparing elements
+in size we can just compare them
+directly so we want to know if the left
+argument is less than the right or well
+left element is left and then less than
+the right element in this
+two element sequence so we can just do a
+two wise oops a two ways uh
+less than reduction and that would work
+as well
+there are um
+other should we say golfing tricks we
+could use to make this shorter but that
+doesn't mean it's better just for the
+fun of it
+let's try this
+so
+let's say we have this
+vector of
+vectors
+if we
+mix it
+that is we make it we stack these
+vectors on top of each other
+to get a matrix
+then we have to pad the short ones with
+zeros but that doesn't actually matter
+we can see what this looks like and then
+we can see that the longest
+sub-vector is the one that determines
+the number of columns so if we transpose
+then
+the number of
+rows is going to be the original width
+and that's the length of the longest one
+so we could just tell you that um
+alternatively you could get the second
+element of the shape but this is shorter
+just not better because
+transposing can be a bit expensive so
+for code golf version
+this works fine
+but what is a good way of doing it see
+the problem is that we are petitioning
+into these sub vectors creating
+potentially a huge amount of
+vectors in a in a large vector that's a
+lot of pointers and a lot of ways to
+space for information that we actually
+don't need the only thing we really need
+is the length of each
+and so let's think about it for a moment
+let's start off again
+with this comparison
+what we want to find is the length of
+sequences of
+ones
+okay
+well
+let's normalize
+this by padding with some zeros around
+it
+now we can more clearly see these runs
+of ones that we want the length of
+um and now we know that we begin with a
+zero end with a zero as well
+what we want to find out here is
+whenever we are switching from uh from
+zero to one and one to zero that's a
+cut-off point we just need to know the
+distances between the cutoff points in
+order to get the length of the runs
+so we can attempt to do that um
+the cutoff points the the places where
+we when we switch from zero to one one
+to zero that's when consecutive elements
+are different from each other zero
+different one one is different than zero
+and of course one one is the same zero
+zeros is the same
+so it would seem that we can
+we can do this and
+the pairwise difference
+and now already now we can kind of see
+our result here that would be
+this sequence here with three
+so we can take the
+indices where there are ones
+and then
+we can measure the distance between
+consecutive ones
+and then we can see our three over here
+and we might think that we can then just
+do a maximum here
+to get the three
+but
+if we try that
+then
+we have pulled ourselves and the reason
+for that is
+that remember
+here we're looking for the cutoff points
+between consecutive between runs um but
+you would find the the cutoffs between
+uh
+from from a change to from a one to a
+zero and then back from zero to one just
+as much as you will find what we're
+looking for um from zero to one and one
+to zero
+so we can illustrate this with an
+example that's not going to work well so
+let's just have some descend lots of
+descending numbers here but very little
+uh
+increasing numbers
+and if we try this expression here
+then we can see we get seven
+and this is because if you go back and
+look at um our differences well we can
+start off with this actually
+we can see that and here are our
+increased runs
+and if you look at the
+where the differences are and sure
+enough there's a difference here we go
+from one to zero and then zero to one
+over here
+and then asking for the indices
+of that and the consecutive differences
+between them it gives us the length of
+the longest run of identical items but
+we only want the runs that correspond to
+that are all zero runs so this approach
+doesn't quite work but we can modify it
+to make it work let's go back to our
+boolean vector here
+this indicates where we are growing now
+um
+instead
+if we
+if we look at the opposite of that where
+we are non-growing
+then we get a bunch of ones whenever we
+have a streak of
+zeros
+that is none growing and we only get
+zeros where we have a streak of ones
+now if we ask
+for
+the indices
+and compare
+consecutive elements
+then
+since every time there's zero followed
+by zero and there are complete adjacent
+that gives us a length of two in between
+sorry a length of one in between them
+because it's just one element over the
+next one
+since we are counting
+the intervals not the elements involved
+in these streaks then we have
+overestimated by
+by one
+so we'll just have to
+subtract one
+and estimate over over computed by by
+one
+and that gives us this one at the end
+indicating
+the uh this original sequence of zeros
+which is our and
+growth
+and so we can put this into a function
+and we can try it
+on
+each well we still need to take the
+maximum here
+um of that you can try it on each of
+this n and x
+and that gives us correct result three
+for the first one and uh
+one for the
+uh example with a long decreasing streak
+but short increasing streaks
+then before we give this a name
+we can
+[Music]
+simplify some things so let's just run
+it again every time we simplify some
+things to uh to make sure that we're not
+changing anything notice here that we
+are applying a boolean
+nut
+um and
+that means we instead of applying that
+nut we could just initially compute the
+values in exact opposite so
+not less than is the same thing as
+greater than or equal to
+and not on these
+zeros would be one of course so we can
+get rid of that and see that we get the
+same result
+and here is interesting we are flipping
+around the subsequence before we're
+applying minus reduction that is uh
+since it's only an x2 so that's just
+b minus a instead of a minus b
+that means if we don't flip it around
+then we get negated values
+so if we're getting negated values then
+we have to subtract them from here
+finally we could move
+this over because here is a reduction
+over a bunch of numbers
+all these numbers is being are being
+processed with negative one minus that
+and since we're just finding the maximum
+then
+we can do the addition subtraction
+afterwards just have to remember that
+these numbers have been negated so we
+don't want to find the maximum anymore
+we want to find the minimum
+there's a negative at that point
+so this gives us a very nice
+solution that should be also efficient
+did you assign remember to assign b yeah
+i did assembly okay great so um so now
+we've got these
+uh three different
+definitions and we've got the a which is
+very much a the way we think about it
+we're finding the
+streaks we're finding the lengths we're
+getting a maximum one um there is one
+issue with a that we haven't taken into
+account and that is what if there aren't
+any streaks and that's so that's a bit
+of an issue so let's try that on
+some decreasing things like that and
+that doesn't look right negative well
+kind of infinity negative the smallest
+possible representable number and that
+is because
+we um are finding these partitions and
+if there aren't any that gives us a
+length zero array getting the length of
+each one so still an empty array and
+then we are reducing with maximum over
+an empty array and that would give us
+the maximum functions identity element
+which is negative infinity or as close
+as we can get to that and we can fix
+that simply by requiring that the length
+is at least
+zero
+so let's reset that and now
+we are ready for some comparison in
+performance let's generate some test
+data um i find it convenient to use
+a thousand integers in some random
+permutation
+that should give us about five uh on
+average as the
+longest streak of
+consecutive growth
+importing cmpx from the defense
+workspace
+and then we're simply applying that to
+our test case
+right there and if my predictions are
+right
+then
+the golfed version is being exceedingly
+inefficient by creating this matrix that
+we don't need so it's going to be a bit
+worse
+than
+the original solution which was the more
+intuitive solution and then there's the
+entirely flat solution where we never
+create
+the partitions we rather do the
+computation directly of them which is
+going to be hugely more efficient
+definitely the one you want to go for
+for speed
+thank you for watching

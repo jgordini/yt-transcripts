@@ -1,0 +1,260 @@
+hi
+we have to look at a given number and
+check if the digits
+alternately
+grow and Shrink that is there aren't any
+digits next to each other that are the
+same and you don't have a digit that is
+followed by another digit that is larger
+and then another digit that's even
+larger or the opposite going down
+so
+here's a sample number
+and we need to look at the digits not
+the number itself
+the way we do this is by representing it
+in base 10.
+but I hear you say
+it's already in base 10.
+that's only for us humans to perceive it
+but really it's just a number and it's
+being presented to us in what looks to
+us as a base 10.
+if you want an actual real base 10
+representation of it
+then we would want to have it instead as
+a list of digits where each digit
+represents the the count of a of units
+of that size for that position in the
+numbering system
+okay that's a lot of
+um Babble about number systems let's
+just try this so we have a represent
+function in APL also known as encode
+we're going to take this number and
+encode it in a certain Radix a certain
+base
+and we can say that every
+position in our number system uh you
+need 10 of those units in order to get
+the same in the next higher unit
+now this might seem obvious that they
+should all be 10 but some numbering
+systems have mixed bass for example the
+way we count time we have a thousand
+milliseconds
+makes up a second but 60 seconds makes
+up
+a minute and 60 Minutes makes up an hour
+and 24 hours makes up a day and
+seven days makes up a week for example
+so we specify here that we want all
+these bases 10 but the number got
+truncated because we didn't have enough
+tens
+so we don't want to specify
+how many digits they are we would like
+to have this done automatically and
+there is a trick to that
+when I go the other way and I want to
+convert these
+digits to a single number then I use the
+decode function which is just the same
+symbol but upside down so this converts
+to a number base and this evaluates in a
+number baits that looks like the base of
+our pillar and here I don't need to
+specify the number of digits because if
+I only specified once then that gets
+mapped out to all the digits
+okay how can we use this
+well this is a neat trick and that is to
+use the power operator the power
+operator
+takes a function on the left and the
+number on the right
+and applies the function that many times
+so here I don't want to apply this
+function
+the trick is to apply it negative one
+times what does that mean
+that means asking the APL system
+what would be an argument to this
+function
+with this left argument such that the
+result would become this
+ah so being that this evaluates
+from base 10
+and we need to get this result
+then the argument given to the function
+must be the list of digits that
+represented in base 10.
+that's exactly what happens that's the
+result we get
+and with that in hand we can start on
+the actual core of the problem
+let's wrap this thing in braces making
+it a definite or a Lambda an anonymous
+function
+in here the argument on the right is
+represented by the rightmost letter of
+the Greek alphabet
+okay
+we've got the digits the next step is to
+compare adjacent digits we need to make
+sure that we're going down and up and
+down and up or the opposite way
+if we reduce with minus then we get
+the first digit three minus one minus
+four minus one minus five that's not
+interesting but if we give this
+derived reduction function and number on
+the left say two
+then we only reduce over Windows of size
+2. so this is three minus one one minus
+four
+minus one and so on
+three minus 1 is 2 1 minus four is
+negative three four minus one is
+positive three
+now we need to check if we alternately
+go down up so if the positive number is
+positive we're going down if we put
+numbers negative that means we're going
+up
+but in order to deal with this it would
+be nice to normalize these to just be
+ones and zeros so we use the Signum the
+sine function
+and that gives us one whenever it's
+positive and negative one when it's
+negative
+so we might think that now we can do
+adjacent different from
+and this says these are all true
+but what happens if we've got
+a zero in there
+right so now we have two ones in a row
+and the difference between them is zero
+but zero is different from one and zero
+is different from negative one and so if
+we do adjacent
+different from it looks like everything
+okay when it actually isn't
+so that doesn't quite work
+what we can do is adjacent differences
+again
+here we can see that from one to zero
+there's only a difference of one and
+from zero to negative one also a
+difference of one
+and we must have only negative ones and
+positive ones there
+so
+sorry only negative twos and positive
+twos there
+so how can we find out if that is the
+case
+well if we take the absolute value now
+they shoot all the way all of them be
+two and if we have any zeros
+will spot that there's only a difference
+of one in between
+you could even be a difference of zero
+if we have the comparison being
+identical
+but for a good number a zigzag number
+everything is fine it's all twos so now
+we need to check are they in fact all
+twos well how do we check that
+is 2 equal to these yes it is equal to
+all of those and is it all true this is
+an and reduction
+yes it is and if we mess up any part of
+our number
+then
+it's not true anymore
+so this is one solution to the problem
+but there's actually a clever thing we
+can do
+we can start off the same way
+as before
+with the adjacent differences
+and then we can remember something from
+basic math lessons
+which is when we do multiplication
+equal signs give positive and unequal
+signs give negative
+so if we multiply these adjacent numbers
+then this will be positive this will be
+negative this will be negative and so on
+And if every time we go from one digit
+to the next we switch direction that
+means that adjacent numbers will have
+opposite signs and therefore all the
+multiplications must give us negative
+numbers
+so if we do adjacent multiplication
+we can see that there is a positive
+number here and that's not what we want
+if we fix the number
+all of the signs are negative which is
+what we want how do we check if all of
+them are negative
+well instead of like we did before
+we did an end reduction on two equals
+then here we need to check if zero is
+greater than all of these values
+and do the end reduction
+same pattern
+and this works nicely
+there's an interesting pattern going on
+in this function
+and that is we have an argument
+a function with two arguments
+a diametic function we call that and
+this left argument another function with
+two arguments and its left argument
+another diametic function and its left
+argument and it keeps going like that
+onto the last function which is applied
+to the result
+when we have this kind of pattern that
+means the function is a nice fit for
+tested programming
+so
+we can get rid of the braces
+and C is to mention the argument by name
+which is what tested means it's just
+understood that the argument is there
+without mentioning it instead since we
+want the value here of the argument
+we'll denote that with the
+identity function it's a normal function
+but applied to the argument
+it just yields the argument so this is
+again the argument's value and then we
+we express that in base 10. and then we
+do adjacent differences and adjacent
+products and then we compare it with
+zero and to an end reduction then
+and this would work
+however
+we can be a little bit more clever
+and what we can do here is we can modify
+the function H instead of mentioning the
+right argument implicitly by a identity
+function we can bind
+a fixed left argument two to the
+function that we're going to then invert
+and that gives us the base 10
+representation and this whole thing
+becomes one giant tested function and
+that's our the rightmost part of our
+function train our string of functions
+and their arguments
+and now we can try applying these again
+and we can see that
+this still works so this is a nice
+tested way to do it
+thank you for watching

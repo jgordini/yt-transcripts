@@ -1,0 +1,191 @@
+hi here we are to take two
+texts and we are to split the one on the
+right such that um the first character
+of the second segment is the first
+character that is found in the left
+argument let me illustrate
+this so let's say We've Got U this is
+the the splitter
+characters and this is the actual
+uh text that you want to split so D
+doesn't exist on the left y exists on
+the doesn't exist on the left a does
+exist on the left so we want to split it
+here we want to get Dy and we want to
+get a
+log and there are a few different ways
+that we can uh we can do this let's get
+started so what we can do is we can find
+where we've got
+and elements in the their
+positions so if we look up
+um so this is a lookup
+function and but this will look up
+elements of the right in the left and we
+want the left in the right so we can
+flip its
+arguments so we can see that a is found
+position three p it says seven because
+it doesn't actually exist there so it
+goes to the next index over here and L
+in position
+four we're not interested in all these
+positions we just want the smallest
+one so we can apply the
+minimum uh reduction on on this that
+gives us the
+three however um three is not actually
+the index we're interested in we want to
+get one less than that because we want
+to split it so we only get the first two
+so we can add1 to
+this then we take this
+number and we use it to take this many
+elements from the right argument and we
+can also use it to drop this many
+elements from the right argument we want
+both to take and to drop and we want
+them joined
+together so the
+take and the drop and we could
+concatenate them together but that
+doesn't do anything because then we're
+just rebuilding the text from the right
+no we need to encapsulate them so we
+need to pre pre-process the arguments to
+the concatenation function with an
+enclosure and that gives us our result
+there's one little issue here and that
+is if the right
+argument and which is the place where we
+look up elements from the left argument
+doesn't have any Dimensions that is if
+it's a
+scaler then we get an error and we can
+fix this by pre-processing the right
+argument with a comma uh which is Ravel
+this makes it into one element Vector
+instead and then it
+works
+so we can give this a
+name this is
+f a different way uh to approach
+this um is begins off the same way
+this's time uh let's stay
+explicit so we've got
+dialogue and
+APL and we're going to do much the same
+thing as before
+let's look up the left argument in the
+right
+argument we saw this before let's take
+the
+minimum and
+now we want to petition the right
+argument and the way we petition is
+using
+um or actually partition inclose is the
+more correct term is but using a Boolean
+mask that is as long as this or shorter
+could actually be one limit longer but
+that's not really relevant
+yet we want a one every time we begin a
+new section and zeros for everything
+else so this is a three that's where the
+second position begins we also want to
+begin at a partition a section position
+one now we just need to create a buan
+mask that has and these values now there
+is a function in APL that goes the other
+way if we write one Z 1 0 0 then and we
+can use the where function to say where
+are the ones but we want the opposite we
+want to know we want to start with one
+and three and do the inverse of
+where luckily there is an operator in
+APL which is is called the power
+operator which can apply a function
+multiple times including a negative
+number of
+times so this creates the shortest
+possible Boolean
+result
+um that satisfies that when you apply
+where to it you get one and
+three so if we go in here and we use
+where in inverse on this that gives us
+the MK that we need and then we take the
+right argument and do a partition in
+close only the mask needs to go on the
+left so we flip the arguments of this
+and that gives us our
+split there are still a couple of issues
+as we have had before if we have a
+scaler on the right of course then we
+get a rangar and but we can we can fix
+this by putting a
+uh Revel over
+there and another problem
+is what happens
+if the left argument contains the first
+letter
+interestingly this actually works but
+how is that even possible for that we
+let's take our part our solution
+again we generated these two so we get a
+one because we want to start a position
+at the first position and then we
+generate the lowest index where D
+appears where the uh a letter from the
+left
+appears which is also
+one so what happens when there are
+duplicates for the where
+inverse ah then it says that there are
+two here maybe a little bit obscure
+what's happening but let's say that
+we've got 1 1 3 4 four four and five so
+these are the positions of and our boans
+that means that we want to have three
+times
+A1 at position four that is exactly what
+the wear inverse
+does so similarly we can go take this
+one and put where in front of it so it's
+saying where are the ones well there are
+two ones at position two and there are
+at position one and there are no ones at
+position two there's one one at position
+three there are three ones at position
+four so this solution actually works
+even though and we finding a match at
+the very first uh position
+we can also take the solution and turn
+it test it like the other one so in this
+then we would have the
+reversed and index of we put left
+argument on the left and the right
+argument on the right we can join the
+reduction to that so we're doing the
+minimum of the re
+flipped index
+of then we apply this
+and then we have to
+apply this derived function to the
+result of the concatenation which one
+way we can do this is like this you can
+test it this still we still explicit but
+we've prepared all the pieces for ATT
+tested
+conversion you you see that this
+works and now we can get rid of um all
+mentions of arguments
+and this wants identity function applied
+to the right
+argument and we can call this G oh we
+still need uh the comma over here we
+need to um we need to pre-process the
+right argument using
+Revel so now we can
+write and and it also works for
+scalers thank you for watching

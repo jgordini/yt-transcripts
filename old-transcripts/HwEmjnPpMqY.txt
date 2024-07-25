@@ -1,0 +1,290 @@
+welcome to the apl quest see apl wiki
+for details
+today's quest
+is the sixth
+from the 2014 round of the apl problems
+of the competition
+we are supposed to count the number of
+ways that you can
+throw any given result
+with a given set of
+dice
+and so this isn't a statistics
+of what the chances of getting a
+particular result but just counting the
+number of ways
+a very simple approach to this is
+exploiting the magnetic iota or the
+index generator so let's say we have
+two dyes
+that have six sides so there's a normal
+dice
+um then the indices in an array of the
+of that size six by six contain all the
+different possibilities that the dice
+can show
+and so this means that if we sum each
+one of these
+lists of
+face values
+then we get all the
+the sums
+then
+uh revenue that result gives it as a
+single list and finally we can use key
+to
+and summarize
+we are not interested in the actual
+position here we're interesting in the
+count so we take
+the particular value
+concatenate it to its count
+and apply that
+with key
+and that gives us the result that we're
+looking for
+we can give this a name
+this uses an index generation so we can
+call it i
+like this
+however it does have a problem uh
+besides for performance which will come
+right back to and that is that since
+it's generating an array
+of the given dimensions where every
+element is the index of that element in
+in the array then it is subject to
+dialogue apl's
+limitations in the sizing of arrays
+and as it is today and dalek appeal does
+not allow arrays that have more than 16
+dimensions rather more than 15
+dimensions even um indeed if you need
+more than 15 dimensions you might be
+doing something um
+wrong or at least a little bit odd
+so if we try it uh let's say we here we
+have um
+two-sided dice
+this actually means that like coins so
+the coin flips
+um that's all very good so we can either
+have both of them showing uh showing a
+one or both of them showing a two or one
+of each
+which means there are two possibilities
+but let's say we have a bunch of coins
+let's say we have 15 coins
+um then
+um
+a lot of possibilities like this and
+it's perfectly reasonable to throw than
+16 coins as well problem is
+that
+we're not allowed to generate an array
+that has this rank that has 16
+dimensions
+furthermore there's a problem of
+performance here as well because we're
+generating a nested array with one every
+element is a pointer and because every
+element is in itself an array
+uh not just a simple scalar
+um and
+that is a bit wasteful in representation
+and dealing with it
+but we can achieve the same result in a
+not too complicated way by observing
+that the number of uh of elements in our
+resulting array and it is clearly and so
+in the two-dimensional case it's in
+six by six whenever the both of them are
+six and in general it is the product of
+the dimensions and along every axis
+so all the possibilities um is the
+product
+um off
+of the number of sides and all the dice
+and then
+we have all these uh
+values
+um
+although we should start with
+with zero
+you know because we're going to use um
+we're going to use
+mixed radix representation here
+and so let's let's just take it for six
+for now
+um
+and then so this this gives us this
+gives us some a long list of 2 36 35.
+now if we then represent this
+in the radix of 6 6
+then every row represents the the value
+of
+one die and so so the first row is the
+first die and the second one is the
+second die
+and then we can get uh the sum the only
+problem here is because we're counting
+up from zero rather than from one we
+just need to increment again
+and then
+we can
+go and sum vertically
+and that gives us the total sum
+so here we managed to do it without
+having nested arrays just direct
+computation based on
+the mixed radix
+in this case that's the same radix but
+it could be anything of course
+and then we can proceed as we did before
+uh by concatenating the value with how
+many times it appears using that the key
+and we can call that
+e for encode because using encode over
+here
+to generate all the values
+and then we can try it with 16 coins
+and that works just fine
+it will also be nice to see as i
+mentioned there might be a problem with
+the
+performance of it because it's necessary
+which here we're dealing entirely with
+flat arrays so let's compare that as
+well
+we're copying in
+cmpx from the defense workspace
+and then we need some test data this is
+a little bit interesting what kind of
+test data there's no limit of course you
+can throw as many dice as you want and
+they can have as many sides as you want
+so we can try to
+make some
+variation of of cases so let's just
+start with small cases we can see it and
+then we can scale it up so in fact we
+can have a diet that has no sides at all
+in which case it doesn't really
+contribute but
+we can still include it
+um so
+let's just start here with from uh
+from zero to three all right so we can
+have we can have a dice that have no
+size but they don't contribute we can
+also have no dice at all in which case
+the result obviously is zero but we can
+include that here so here's between zero
+and three
+dice
+and then for each one of them
+we use that number to replicate uh the
+number of sides on a die um so here
+three just to keep it small
+and that means we could we could also
+for example uh roll them like this so
+this is these are
+dice rolls with zero one two three
+dice that have uh three sides
+each
+what we really want is we want all the
+possibilities because maybe maybe we
+have one diet that has
+two sides and one has three sides one
+has one side
+and then we can we can do it like this
+so this gives us a a grand table of with
+zero one 2
+and 3 and then
+um all the different die sizes so we can
+then combine all of these
+into a single list so we can
+do a concatenation reduction over this
+list of
+multi-dimensional
+arrays we need to flatten each one
+before we do that and then disclose
+because we have reduced them
+and that gives us
+our
+giant list of
+die hands that we can then throw
+and now let's scale this up a bit and
+there's not really any
+given
+limit to this so i'll just say between
+zero and four dice and the dice can have
+up to
+nine sites each and these are our test
+cases that's count how many test cases
+we've got we've got seven thousand
+something in this case so that seems uh
+well enough
+okay so
+cmpx and
+and then we have i or the one that used
+iota to generate
+the indices
+on each one of these test cases and then
+we had e
+which was the one that used encode on
+each one of these test cases
+oops
+did i make a mistake here
+oh yes of course
+there's a mistake in
+uh in our definition of e
+uh and that is because i forgot to
+i forgot to revel here the problem is
+that
+um we can be given the argument as a um
+i guess a single number as well
+um and then um we're going to missing
+out in the rank so we need to make sure
+that uh
+the left argument to encode is also a
+vector
+um we can do it like this or we could
+use the over operator to make sure both
+the right argument is always going to be
+vector anyway because we get it from
+from iota
+so let's try that again
+and we can see that
+avoiding the nested arrays can give us
+some significant speed up there but
+there's actually more we can do
+um and that is
+looking at key so for key
+here we used a tested left operand
+and there are some special cases and
+this is exactly one of them
+where we want the
+the value concatenated with its count
+and that has been highly optimized if
+you state the operand as a defense so
+left argument
+concatenated with the tally of the right
+argument instead of that and this seems
+like a very small difference but this is
+the defen inner
+key
+and then we can compare the performance
+of
+e and e d
+and we should see a significant
+performance improvement there too
+there we go
+so
+playing around a little bit and trying
+out the the operands for key can
+actually make a big difference
+and there are some
+some combinations that have been special
+cased and run much faster
+thank you for watching

@@ -1,0 +1,232 @@
+we have to find the longest run of ones
+in a Boolean vector or scalar let's keep
+that in
+mind so let's first have some sample
+data and here we can see that we have a
+run of length three of length two and a
+run of length four so that will be the
+answer
+four um let's make a Anonymous Lambda we
+can always name it later and take the
+argument s in here we refer to the
+argument as
+Omega and we can go directly and cut
+this into pieces well there is a
+petition function which takes a mask
+like this on the left and some data on
+the right corresponding
+length and it keeps uh runs of that
+correspond to ones and it discards any
+elements that are that correspond to
+zero and then begins a new Partition at
+that point it doesn't really matter what
+our data
+is so we can use uh the same bu and
+Vector for the data and as the
+mask and then we just need to uh count
+the length of each one so this is the T
+mark appli to each mapping over
+those we could also State this argument
+only once by using the selfie operator
+or commute so this derives the new
+function that's the same as this one but
+takes one argument and uses it as both
+arguments of the original okay next step
+uh then is to take the maximum and that
+is
+four there's one tiny issue that is if
+there aren't any runs of uh of
+ones then then this gives us an empty
+list of lengths and a reduction a
+maximum reduction over an empty list
+should give us the identity element
+that's the argument to the maximum
+function that will not affect the
+outcome for any other
+argument so that has to be the minimum
+representable value and what we're
+seeing here is indeed the smallest
+possible
+64-bit uh binary
+float
+so how can we fix this well we can make
+sure there's at least one value at all
+times so we just inject a zero in front
+of
+that and then it
+works however injecting a zero this
+seems like a simple thing it actually
+can have an impact on performance so
+let's
+first um give this a
+name and then we are going to import the
+compare execution facility from the
+defense
+workspace let's generate some Boolean
+test data so we want it to be in the
+range of two we want there to be 10
+million elements of those and we want
+them to be random and then we get random
+ones and twos but we actually want
+booleans so we compare them to a one
+that gives us so the ones give one and
+the twos gives give a
+zero
+and then let's think about how we can
+solve this problem a different
+way the problem is that
+um this is a potentially very long list
+of lengths and when we inject a one uh
+one element at the front a zero then
+even if we were able to do the
+transformation in place in memory we
+would have to move over every element
+one step to the right that's a total
+rewrite of all the data and a
+potentially expensive operation compared
+to everything else that we're doing so
+if we didn't do that then we could end
+up with this very large negative
+value however any other uh argument to
+the maximum reduction would have
+positive values in it that is if we have
+runs of ones so what we can do is we
+take the maximum of the result of this
+maximum reduction and zero if it's a
+very large negative value we get zero if
+it's a positive value then the zero is
+not going to affect
+it how big of a difference does this
+make well let's try it we apply F on
+this Boolean and G on the
+Boolean and we wait a moment to
+see which effect this has that's about
+twice as fast for 10 million elements it
+will vary according to how many elements
+there are so this is definitely Ely a
+good
+technique that said we went as we can
+see here in the top left corner by a
+nested array that was strictly
+unnecessary we
+could compute the lengths of runs of
+ones directly rather than actually
+generating pieces that have these
+lengths and then measuring the lengths
+so how can we do this let's start over
+with our sample
+data and have a
+think if we can find the location of
+beginnings of a
+run and we also find the locations of
+the ends of the
+run then if we subtract the index the
+location of every beginning from its
+corresponding end that will give us the
+length so
+how do we do this let's go to our to an
+anonymous Lambda
+again and we want to compare adjacent
+elements if the left element is less
+than the right element and the whole
+domain is just zero and one then we know
+that we have a zero and a one and that's
+the beginning of a
+run so we can do a two wise less than
+reduction of the
+argument
+and that gives us the indication where
+we
+have this run and this run why are we
+not finding the first one that's because
+we never went from zero to one there's
+no zero on the left but we can inject
+that okay and similarly if we had
+been let's go let's go look at the uh
+the
+ends and this tells us that we we have a
+um the end of a run at uh coming up to
+this zero at the end but of course let's
+say there was no zero at the
+end then we would fail to find the
+end so let's put in a additional zero
+over
+here okay so with this we have our
+um
+ends and we also had our
+beginnings now we just need to convert
+these Boolean masks to be
+indices and we do
+this with the indices function or
+where so this gives us the
+beginnings and uh this let's change that
+to the S again gives us the ends and if
+we just
+subtract the corresponding elements then
+we'll get the
+ls oh yeah it has to be the opposite
+order of
+course want to
+subtract the beginnings from the ends
+there we go of course this has a lot of
+duplicated effort we are uh generating
+this zero followed by the argument
+followed by zero
+twice there are a couple of different
+ways we could uh we could solve this but
+actually a neat way is to start with
+somewhere else we are doing a
+subtraction and we're not subtracting
+these masks we are subtracting the
+indices of the ones in the masks so
+that's the same thing as subtraction
+where we pre-process both arguments
+using the indices and we have a higher
+order function function an operator for
+doing exactly
+that so this isn't any shorter overall
+but it will help us later um so this is
+a subtraction of the indices that means
+we don't need to explicitly compute the
+indices over
+here and now we can see that this is
+lends itself nicely to a fork because we
+have a shared left
+argument and we have a shared right
+argument and the only difference here is
+we have two functions being applied the
+lesser than reduction and the greater
+than reduction So This lends itself very
+nicely to the fork construct so let's
+remove everything
+here and
+this now we have a right argument a left
+argument two functions that are being
+applied and the result of those become
+the arguments to the minus that
+pre-processes its arguments with finding
+the
+indices
+and from here on it should be simple we
+do the maximum but we also want to catch
+the zero
+case so we do the zero maximum like
+before otherwise we would have the same
+problem and um performance issue if we
+inject a zero in the data
+itself let's compare these two
+approaches
+then so we had uh
+oh did I just overwrite this one let's
+go up and rescue that one it's this one
+and this one should be called
+H and now we can compare our
+fastest of the original algorithm which
+was G on B and this one h on
+b wait a moment to see so these are the
+two approaches of uh creating runs and
+measuring the length
+and Computing it directly from the
+indices and we can see that makes a huge
+difference so that was a nice
+Improvement

@@ -1,0 +1,153 @@
+welcome to the appeal Quest Capel Wiki
+for details
+this is the seventh problem
+from the 2016 round of the APL problem
+solving competition
+where to take a list of numbers and
+filter it such that the only numbers
+that remain are those that can be
+cleanly divided by either 3 or by five
+or well by both
+let's get started
+first let's
+create some data that we can test on
+so
+here's some integers
+and just for the fun of it that also
+have some numbers that are not whole
+numbers
+okay
+before we go to look at what actually is
+divisible by three or five and let's
+have a look at a very special feature of
+APL which is called the outer product
+conceptually it's actually really really
+simple
+um and especially in its basic form
+where we just give it two lists
+so here on the left we have a list of
+numbers and over here on the right we
+have another list of numbers and all the
+other product does is
+make a combination
+from all the combinations of every
+element on the left with every possible
+element on the right in other words
+we're making a table of such
+combinations
+the most common example of such a table
+would be a multiplication table
+and the syntax in APL for making a table
+or an outer product is this jut and then
+a DOT and then we put in the function
+that we want to make the table for so
+multiplication multiplication table
+would be jut dot times
+and here we can imagine that we have the
+headers going down the left side and
+across on the top so one two three four
+on the top and 10 20 30 we also see the
+10 20 30 because we're multiplying them
+by one
+now instead we can use a different
+function than multiplication in our case
+we want divisibility
+now there isn't a
+divisible by function in APL but there
+is a remainder that is if you divide how
+many do you have left over after you try
+to distribute evenly with whole numbers
+and so we can take our numbers and then
+we can take three and five on the list
+on the left and create a divisibility
+table
+um that shows the remainder whenever
+we're dividing
+so here you can imagine three and five
+going down and these numbers 1 through
+16 across we can see that the remainder
+is 0 1 2 0 1 2 0 and 2 because we keep I
+think one for when it comes to three and
+zero one two three four zero one two
+three four and so on for five and then
+we can see that
+for numbers that are not wholly
+divisible then uh the non-integer part
+the fractional part is also part of what
+remains because we cannot divide that
+cleanly you see that the three went away
+from three and a half but there's a half
+missing whereas for five the whole three
+and a half is the remainder
+and so something is divisible if the
+remainder when you try to divide it is
+nothing if there's nothing left that is
+if we have zero
+so we can compare zero to this and APL
+uses long write scope what does that
+mean it means that the equality function
+takes us the right argument whatever is
+all everything that's under its right
+all the way to the end of the expression
+and so we don't need any parenthesis
+here
+and so and we have
+a table
+that shows us a one which means true in
+APL
+whenever something is divisible
+and a zero when it's not divisible and
+we're not actually interested in whether
+or not it's divisible by specifically
+three or five we just want to know if
+it's divisible by any one of them so we
+want to say yes keep this number if we
+have a A1 at the top or we have a one at
+the bottom or both
+and we can do that by using the or
+function and we're inserting that we're
+using a slash bar after that it means a
+vertical reduction so we are sticking a
+or an or in between so to say the space
+between the first row and the second row
+and that reduces this two-dimensional
+array which you can see is two Dimension
+over these axis arrows and introduces to
+a one-dimensional array so here's a mask
+indicating from the numbers in this
+variable D which ones are divisible by
+um by three or by five
+and we can use this then to filter and
+we do that with a slash
+so we filter d
+and that gives us just the numbers that
+are divisible by three or by five
+we can actually get rid of the
+parenthesis if only we had a function
+that was like the slash but with swapped
+arguments which isn't built in but we
+can construct it with a higher order
+function called commute
+and it looks like this frown because
+it's all getting confused which side is
+what
+and then
+it modifies the function on the left to
+swap its arguments so here we have
+exactly the same thing
+and finally we can make this into a
+function which would be our solution to
+the uh to the problem by substituting a
+special symbol which is the Greek letter
+Omega that's the right most
+letter in the Greek alphabet indicating
+the right argument so that's whatever is
+over here on the right in this case d
+and that solves our problem
+like this and we don't actually need
+this much white space in in our code and
+so if you prefer you could get rid of
+all of that of course we need a space
+between three and five to separate them
+so we can write it like this as well
+thank you for watching

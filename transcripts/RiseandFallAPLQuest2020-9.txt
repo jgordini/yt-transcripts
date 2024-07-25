@@ -1,0 +1,177 @@
+hi
+this time we're given a list of numbers
+and we are going to check if it fits
+into this pattern where
+we have a
+non-decreasing segment followed by a
+non-increasing sediment this might sound
+backwards to say non-decreasing
+non-increasing but that I don't really
+want to say increasing and then
+decreasing because plateaus are fine
+it's okay if the value stays the same
+as long as it's not going the opposite
+direction
+okay
+how are we going to do this
+let's have an example of something that
+does go up and then down again
+okay this is very simple
+and a very neat way of doing it
+is by
+by doing a normalization we could say do
+a transformation
+of this
+list such that it will only stay the way
+it is
+if it abides by the rules and if there
+are any breaks to the rules then it will
+be changed and then we can compare the
+original list with
+um the modified one
+if they're the same
+then it abides by the rules and if not
+then it doesn't abide by the rules
+okay we're going to do this test it from
+the outset that means we're only
+applying functions and never mentioning
+our argument by a name
+and so the trick here that we're going
+to use is we're going to do a maximum
+scan so the maximum function is a
+function that takes two arguments and
+Returns the larger of them and we're
+going to insert it between the elements
+here
+but over the prefixes so we're going to
+insert it first we'll have just one and
+then do one and two that gives two then
+two and three that gives three then two
+three four or one two three four
+actually and that gives us four one two
+three four five gives us five one two
+three four five three
+now the maximum that we have seen is 5
+which means that the corresponding
+element of the result to 3 will be 5 and
+same thing goes for one so we can try
+this this is a maximum scan
+so here we can see that after we hit the
+highest value we don't go down again
+and this is a nice way of
+um expressing the idea of being
+non-decreasing
+what about the other way what if we're
+going to
+start from the right
+and do the same thing that means after
+we hit the highest point we stay with
+the highest point going left
+well we don't have a scan from the right
+but we can pre-process
+the scan
+argument with a reversal function
+so now we reversed
+the argument one three five four three
+two one
+and then we did the scan and that gave
+us and the one three five five five now
+we just need to turn it around back to
+its original order
+and here we have a scan from the right
+okay
+how can we combine these two because we
+want to preserve the array the way it is
+if it divides for the rules there are
+two parts to this
+but for this particular problem
+we can combine them by taking the
+minimum value if we now compare
+this list here and that list there
+then the minimum of one and five that's
+one the minimum of two and five is two
+three and five four and five up until
+they meet and then we go down on the
+other side the minimum is not going to
+be down here that's the three and the
+one
+so we take another maximum scan which is
+the one that goes from
+left to right and this is the scan that
+goes from right to left and we take the
+minimum of the two
+but the pattern here that for tested
+functions is that an outer function is
+applied
+and the inner function is applied to the
+results of the outer functions
+so that pattern is broken if we try to
+put the reverse function in here this
+should be the inner function altogether
+but notice the pattern here is very much
+like this where we want to pre-process
+the right argument with a reversal
+so pre-process the right argument with a
+reversal that's this operator
+and that gives us the back the original
+array
+now let's try if this indeed holes if we
+make any modifications so here after the
+end we go back up again
+and we can see that
+the
+the three and the one the four got
+smeared out so to say by the four coming
+in from the right when we when we are
+um doing the scan
+the maximum scan from the right we get
+four four and then five and we go from
+the left we get three four five five
+five and then we take the minimum of the
+two that's going to be the four that
+came from here and that means that
+there's a difference there
+we can also try doing it with a value in
+the middle we can see that kind of got
+painted over by the three from the right
+and the four from the left and therefore
+it became a three the minimum value
+what if we turn the whole thing upside
+down
+here the five coming in from the left
+with a maximum scan paints over fives
+until we get to a larger value and the
+Seven makes sevens all the way to the
+left the minimum of that is going to be
+all the fives with a single seven so
+this looks good now the only step that's
+missing is that we compare this to the
+original argument so we need to do a
+comparison of all the elements together
+in one go
+with the original value which we can
+represent with the identity function
+applied here so the way this this
+executes and binds is every other
+function is applied to the argument
+and the intervening functions
+are applied between those results so we
+do scan from the right in the reverse
+we do the scan from the left
+and then we do the minimum of those two
+but reordering the right side to become
+its original order
+and the result of this is compared to
+the result of the identity function
+which is the original argument and so
+this doesn't hold
+but if we did
+something like this
+then it does hold
+and in fact we don't even need this many
+spaces we can we can remove all of that
+save some
+horizontal screen estate
+this works
+very nicely
+thank you for watching

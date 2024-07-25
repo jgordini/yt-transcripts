@@ -1,0 +1,442 @@
+hi we are to build a
+staircase and the way it works is that
+we're getting a number and we have to
+create a matrix that is this wide and
+high and the bottom right including the
+diagonal um of this Matrix should be the
+quad character this little boxy
+character and the other one should be
+spaces so if we get five we need to make
+this little
+staircase and there are a few different
+ways we can do this let's get started um
+we created a little Anonymous Lambda we
+can always give it a name later and for
+now sure let's use five as
+example we need to create something that
+is the bottom right
+so one way we can think of this is It's
+a range going from the top left to the
+bottom right let's create a range that's
+Iota for It's Greek letter like I for
+indices is the indices up until the
+argument the argument is Omega because
+it's on the right and it's the rightmost
+letter of the Greek
+alphabet but this only goes in one
+direction we need to go two directions
+so this call for some kind of table and
+something that goes diagonally uh
+increasing towards the bottom right from
+the top left um is an addition table so
+if we create an addition table we write
+a jot and a DOT and then the function we
+want this an out of
+like an outer product but it's an outer
+addition and we want to use this Iota
+Omega on both sides so instead of
+writing it twice we write the selfie
+operator or also known as commute its
+official
+name and here we can see how it
+increases uh towards the bottom right
+and once we reach above the number we
+were given then that's the parts that we
+interested in so if we compare if the
+argument is less than and then APL will
+will map automatically the single number
+to all the numbers that are in this
+table then we get this Boolean Matrix
+and a represents booleans with zeros and
+ones and that's really convenient
+because since it's just a number we can
+add to it in order to get
+indices remember we're counting from one
+like we can saw we generated indices
+from one and we can then use that to
+index
+into the space character and the quad
+character then we use square brackets
+for indexing
+here and we've got ourselves a solution
+so let's call this one F and we can
+apply
+F
+however if we think about this a little
+bit we're doing too much work we're both
+doing an addition and then a comparison
+when we really could just do a
+comparison from the outset so if we do
+an outer comparison table
+instead then we do get a triangle out
+this triangle is not right because it's
+the top right corner and we don't have
+the diagonal but the zeros here they do
+form kind of a triangle that we want
+except it's on the wrong
+side so what's the opposite of less
+than well that's greater than or equal
+to okay well we can definitely build on
+this the only step that's missing now is
+reversing so this we can see the axis
+over which we are doing the flip it's
+we're flipping horizontally over that
+vertical
+bar um kind of like spinning a globe and
+this gives us what we
+wanted so if
+we call this
+G and we do the same thing as
+before we've got G and apply to five and
+that
+works but we can actually do better
+because um let's think about performance
+here we are creating a whole Boolean
+table and if we were to use a big
+argument this table would be rather
+gigantic and then we are uh reversing
+this entire table all that's happening
+here is that we're doing a
+comparison of the elements going down 1
+2 3 4 5 with the columns 1 2 3 4 5 if we
+reversed the columns so we would get 5 4
+3 2 1 then the tall side of the triangle
+over here would end up on the right and
+then it would be created from the outset
+in the right orientation so how can we
+do
+this let's uh try this so we've got this
+Auto product we've got the Yota 5 and
+we've got an aota 5 and all we want to
+do is reverse the right
+side like that
+but we really don't want to compute aota
+5 twice so what we can do is go back to
+using this selfie
+operation but right before we create the
+table we want to pre-process the the
+table functions right argument with a
+reversal so jot in this context not the
+same as this one it has a function on
+the right and on the left
+we essentially apply this function
+that's on the left but be right before
+we do that we pre-process Its Right
+argument so
+pre-process with a
+reversal and that gives us this table
+right away which of course allows us to
+write um a new
+function that on just the same pattern
+as
+before G25
+I forgot the one
+plus there we
+go
+okay should we compare the performance
+of these two let's do that so we copy in
+the compare
+execution uh utility from the defense
+workspace and it just takes Expressions
+so write cmpx and then we running G on
+say a th000
+and G2 on a th000 and then we wait a few
+seconds for it to run these a lot of
+times so we get some averaged out
+results and we can see that we pretty
+much have the runtime simply by um
+reversing arguments to the table
+generating function instead of reversing
+the resulting table can we do
+better actually I think we can because
+if you think about it so let's say with
+a th000 we generated a table here with a
+million elements and then we added one
+so that's a million additions but
+there's maybe something that's worse
+than that today computation is really
+fast what's slow is memory
+throughput and APL is clever it stores
+arrays in generally in the smallest data
+type internal data type that it can so
+this Boolean Matrix is stored as single
+bits in memory smallest units of
+computation in the
+computer once we add one we have to
+switch to an integer
+type and the smallest integers we have
+available are 8 bit integers which means
+we're using eight times as much memory
+for to store this Matrix compared to
+just storing this and what can we do
+about it remember that we were counting
+1 2 3 4 5 we're counting from one if we
+switch our system to count from zero
+instead then we don't have to add this
+one we can use the booleans directly to
+index into this character vector and
+over here what happens is that instead
+of getting 1 2 3 4 5 we get 0 1 2 3 4
+they still have the relative size the
+same to each other adjacent elements
+increasing um monotonically and um never
+two elements are the same so it doesn't
+really matter what our numbers are in
+these indices as long as we're just
+counting up so how will this
+look and we have a statement
+separator diamonds are unbreakable so
+two we can't Traverse from one statement
+to the next one and in here we're
+setting a system variable called quad Io
+Io doesn't stand for input output it
+stands for index origin so we're setting
+the system index origin to zero and it
+will be local only for this function and
+then we can remove this one
+plus wonder how how big a difference
+this will
+make look at that we just have our
+runtime again which means that G3 has
+about takes about a quarter of the time
+with argument 1,000 compared to the
+original G but pretty much using the
+same
+method
+okay let's look at a an alog together
+different approach now we're going to
+take the
+quad character and we're going to
+manipulate it until we get our desired
+staircase the way we're going to do this
+is we're going to replicate it so we can
+write three and a slash that's replicate
+this we get three of these if you write
+two three then we can replicate each so
+the two replicates this and the three
+replicates it and we get this
+list if if we do Iota 5 then we get all
+the components we need for our staircase
+but they are so to say
+disassembled we can assemble them with
+mix this increases the rank the rank of
+a vector is one and we want the rank to
+be two wanted to have two Dimensions be
+a matrix by breaking this levels of um
+of
+structure so here's our staircase and
+now we can reverse it
+um but this is not a proper function we
+can write it like
+this however I think in this case the
+tested solution one way we don't mention
+the arguments explicitly is a little bit
+nicer so this
+works but if you use a fork
+constructs then we need an we can have
+an array on the left that's that
+quad then we wanted the replicate each
+but now we have swapped the arguments so
+this array is on the left and the counts
+on the right and for that we use this
+same symbol as we did before the selfie
+but this time it is used with an
+argument on the left so we don't use the
+right argument also for the left we use
+the right argument on the left and the
+left argument on the right so it
+commutes it switches the argument
+order and all we need on the right
+is the counting up so the way this this
+works is a tested function we don't need
+the braces we can put parenthesis just
+to separate it from the
+argument is we apply this function then
+we have our array and then we apply this
+derived function between the results
+this one and well it's result it's just
+a
+value so this is this works um then we
+have a mix which is fine but we can't
+just put in a reverse here this will
+break the structure because we would
+have the result of this and the result
+of this being combined as with being the
+arguments for this function which is not
+what we want we want these two to be
+joined into a single function we could
+do that with the top operator which um
+applies this to the result of that and
+derives a new
+function so this works now we don't need
+the parenthesis since we're not applying
+it let's call this
+h
+however um we can phrase this a little
+bit nicer it's a bit nasty to create
+this extra level of nesting and then
+just destroy the level of
+nesting we can instead do a mapping of
+cells in the argument so over here we
+have a vector and it Vector is one
+dimensional it create it consists of
+numbers that are Zero
+Dimensional this is is itself a Zero
+Dimensional um array it's just a single
+character so we can say I want to
+assemble a new
+function I want to sorry I want to
+assemble an a result based on this
+function we're creating a new function
+which is like this one but Maps together
+arguments of rank Zero from the left and
+rank Zero from the
+right and then take these results so
+each one will become a vector and those
+vectors have to become the components in
+our overall result array so vectors put
+them together make up a matrix and for
+that we don't need a um a mix anymore so
+we don't do the mix here which means we
+can just insert uh the reversal here
+let's call that
+H2 so now we can do H2 and five and this
+also works it looks a little bit neater
+than the uh than the original H one we
+have
+here the performance of these two is
+probably going to be about the same
+because the same thing is happening
+inside we can you can try it out
+though yeah that's within fuzz
+tolerances it doesn't really
+matter but there's a whole different way
+we can do this instead both of these
+Solutions the H Solutions are
+essentially loopy Solutions we're
+mapping over explicitly um and creating
+the rows by themselves and then joining
+them uh together here is a very
+different way of kind of doing the same
+thing and that is by exploiting the that
+replicate which we saw before it has
+some extra tricks up it up its
+sleeve um we can
+do um negative numbers and negative
+numbers they create um a replication of
+that
+element that is the same as the positive
+value but instead of using the actual
+data the actual value we're using a
+prototypical value and as we saw with
+the the mixing the prototypical values
+for this quad character for any
+character is the space which is exactly
+what you want so if you write -2 3 here
+and we only have a single element we
+could do an each but it doesn't matter
+uh let's let's do the each just to see
+how it looks then we can see that over
+here we got two spaces and then three uh
+quads if you don't do the each they get
+joined
+together so we get two spaces and three
+quads like this o but this means we we
+can explod this looking at
+our staircase over here we got four
+spaces and one quad three spaces and two
+quads so if we start playing with this a
+little bit we've got a Yota 5 and we
+want each number to be paired up
+with well with what exactly well first
+we have a one and then we want four next
+to it so that's 5 minus one gives the
+four and same thing on the next line
+we've got two we want
+three minus 2 uh sorry 5 - 2 is three
+but we actually want negative numbers so
+we can flip the arguments of
+those so let's try
+this we do five minus this we get these
+numbers if
+we take this and put the five over here
+on the minus we get the negative numbers
+so now we need to join these pars
+together with the original
+numbers and there are a few different
+ways we can do it I prefer to go
+directly to a tested solution so we've
+got numbers from 1 to five and over here
+we um we have the number five itself
+being passed
+in and then we have another function in
+the middle we want to um
+subtract
+so this gives us our negative number so
+this are the indices up to five minus
+the five itself this is an identity
+function but we don't just want that we
+also want the original numbers so we
+could get those with the left identity
+so this points the finger at this one
+and now we just want to combine these
+two so we want the minus and we want the
+left identity and we want them
+concatenated together but not one after
+another we want them to be in two
+columns in pairs so we want every scaler
+from here paired up with every scaler
+from here and we did this before with
+the rank operator so we want to map over
+subarrays of rank zero these are the
+simple scalers and that gives us this
+table right now we
+can use this directly each row to
+replicate our quad
+we're using the rank again uh we need to
+remember to swap the arguments because
+we have the array that's being
+replicated on the left and this time we
+want to map over rank zero on the left
+and the one on the right but the rank
+operator actually allows us to remove
+the zero because if we ask for something
+that's higher ranked than it has here
+rank one and it only has rank zero then
+we just use the highest rank that we
+have which is
+zero that gives our staircase directly
+okay let's remove the out of parenthesis
+and call this H3 it's the same kind of
+idea of using replicate but and this
+time we are forming the pairs that form
+every Vector in itself so
+let's uh compare the execution time of
+we know that H1 and H2 are about the
+same so we can we can compare H2 uh
+1,000 with H3
+1000
+and that was a pretty significant speed
+up okay so now we know that uh when
+we've got the F and we've got and the
+G's we can actually look at our
+definitions um
+here and we know that uh G3 is uh the
+fastest one of the G's and H3 is the
+fastest one of the H's so in order to
+conserve a bit on space and time uh
+let's compare the performance of the F
+and the fastest G that was
+G3 and the fastest
+H so uh um we have here that
+G3 is the fastest
+one we can see that an F is
+significantly slower it would be
+interesting to run the test again using
+just G3 and H3 because when something is
+very much slower than others it tends to
+skew the
+results okay we can
+see the trend
+here and that's
+it

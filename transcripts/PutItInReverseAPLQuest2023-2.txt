@@ -1,0 +1,118 @@
+hi we're going to find the end points of
+one array in another
+array
+so here's the
+thing APL has a primitive function a
+built-in which finds the beginning
+points this can be a little bit hard to
+visualize so I'm going to
+stack Mississippi here on top of the
+boan result that we get spreading out
+the
+letters here we can see that we're
+searching for iy and we're finding that
+it begins here and it also begins here
+stretching towards the right the result
+that we want is with the ones being here
+and here meaning where they end they're
+basically uh two easy ways to do
+this one of them is to note that we
+already have these ones in the right
+relative
+locations but they're just offset from
+where they're supposed to be we need to
+move them towards the right by how many
+steps
+well it has something to do with the
+with the length of of the match but if
+we were to move four steps to the right
+then we would end up one beyond the m so
+we need one less than that okay let's
+just try
+this so we're going to take this
+primitive and we're going to wrap it in
+a Lambda so it makes it easier to change
+its
+result and we can rotate with the rotate
+function and well that rotated One Step
+left to to rotate right we want negative
+numbers okay and then we said that it
+has something to do with the length of
+the left
+argument what happened
+here oh this is again to the left so now
+we want to negate this so that we are
+moving towards the
+right okay so we can see that we got the
+I here but the one is now one step too
+far so really we would want to subtract
+one from uh from this we can addtive -1
+to the length and that gives us the
+result we want but we can actually
+simplify this a bit because subtracting
+one from a number or adding negative one
+as I've done here and then negating it
+that's the same as subtracting that
+number from One oops subtracting that
+number from one right there here we go
+so this formula will will
+work um we can reduce the amount of code
+a little bit um by observing that we've
+got kind of a fork construct what do we
+mean by a fork it means that we have a
+middle function here that takes the
+result of something in the terms of the
+arguments and something else in the
+terms of the arguments so we can change
+this to a tested form changing the curly
+braces to run
+parenthesis and then we can remove the
+explicit mention of
+arguments um over here we do need to
+refer to a to the left argument and we
+could do that using just functions to
+make it fully tested and but we can also
+just make this inner expression into a
+function so here we have a small Lambda
+that's applied to both arguments
+ignoring the right argument only using
+the left argument and returning one
+minus the length of the left argument
+and that value is used to rotate the
+result result of the find primitive
+which shows us the beginning
+points and this gives us uh the correct
+result so we can take this whole
+function here and give it a
+name missing that brace
+there and then we
+can right uh left argument
+and right argument and we get our result
+so this is one way to do
+it another way to do
+it is to observe that the fine
+function gave us the beginning
+points but if we read from the right
+instead of from the left then that's
+actually the end point doesn't matter
+that what we're looking for here is a
+palindrome um it's still finding that
+from the left and then if you read it
+from the right we get the end
+points so if we reverse both arguments
+we could do that with a over operator
+which pre-processes both arguments with
+reversal and for ease of comparison
+let's also indicate what's going on over
+here so let's reverse that as
+well so if now we can see that we
+are looking for the beginning points but
+if you're reading in Reverse that's
+actually the end
+point so the only thing that's missing
+then is reversing the
+result and now we've got the end
+points can give this a
+name and then we can apply it like
+this that's another solution thank you
+for watching

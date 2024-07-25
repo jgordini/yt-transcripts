@@ -1,0 +1,400 @@
+hi
+let's remove text that appears between
+Pairs of double quotes in a larger text
+we start with a test case
+that needs to contain some of these
+quoted
+things
+and a very obvious approach is to use
+regular Expressions it's great for
+matching and manipulating text
+so we can write this directly we're
+writing it as a derived function using
+the quad R that's the regular expression
+replace
+operator it takes two operands and
+derives a new function which we're going
+to assign to R for regular Expressions
+the left operand is the pattern that we
+want to match we want double quote
+followed by
+any characters that are not double
+quotes and we want zero more of those
+and then a final double quote and we
+just replace that with empty double
+quote double quote
+this works very nicely and it also works
+in the case where when you have some
+some text
+with empty and empty double quotes
+and this is important for the regular
+Expressions if I had used a plus here
+instead then we would have only matched
+double quotes that actually have content
+in between and this might seem like an
+optimization but it gives the wrong
+result because
+what we'll do is we'll not match this
+empty quote
+and then we'll try to match beginning
+with the next character and that will
+match but now we are out of the parity
+and we can see that here
+this is with the star
+and this is with the plus and that's not
+correct
+okay now we're going to do the same
+a job in a bit more of an APLE way
+before we do that we're going to define
+a helper function just to let us see
+what's going on
+and it's a bit involved but not really
+important for this problem so we want to
+apply this function on each character
+and we simply want to add put the
+character adjacent to a space
+we print that out without a new line and
+we do that by assigning to the special
+quote variable
+and there is the pass-through result if
+we use it of this assignment is the
+value on the right which is the
+character itself because we have applied
+this whole Lambda to each character this
+means each
+um and so we're going to get the
+character itself followed by a space but
+we only want the character itself this
+has the effect
+of
+printing out as a side effect
+the spaced out text
+but returning the original text
+so we take this whole thing and call it
+P for print
+and now we can start working
+so we're making a different a Lambda and
+applying it to the text but let's print
+it out
+and in here we refer to the argument
+and compare it with the double quote
+this gives us a Boolean mask and as you
+can see why I want
+the letters to be spaced out so they
+line up with the corresponding Boolean
+and we can see we have a one a true
+because API represents
+true and false as one and zero and they
+are just actually numbers
+and every time we have a double quote we
+have a one because the equality Maps
+automatically from this one character on
+the left to all the characters on the
+right
+and that means that every time we we hit
+a one we need to flip state so to say
+we're switching between being outside
+the code to be inside the quote
+um and we can do that with an xor scan
+or a cumulative xor
+xor just means when only one
+argument is true not the other one that
+is that the different
+so we use in APL the unequal and scan is
+the backslash so this is a cumulative
+xor or extra scan
+and this means
+that we have we're outside of quotes
+until here and then we're inside quotes
+and then we go outside quotes again
+there's a little bit of an off by one
+error in that the final quotes are
+considered outside and they should be
+um outside and the leading quotes are
+considered inside but they should also
+be considered outside because we want to
+keep the quotes but want to get rid of
+the content and also the content that we
+want to get rid of should probably be
+marked as false because then we can use
+compress to remove it
+so we can start by and Flipping The
+Chosen fonts so this is a Boolean nut
+and then
+we only need to
+um
+include the quotes as well but we
+already created
+a mask that indicates where the quotes
+are
+and it doesn't matter that it has zeros
+for places and not codes if we do an or
+so then so if
+this gives true or
+this gives true then that's what we want
+so we can give this a name mask and then
+we can do this mask or
+this over the right note that APL it
+doesn't have a precedence order for
+these Boolean functions everything just
+flows from right to left or another way
+to look at it is every function
+including a derived one like this XO
+scan and takes this argument everything
+to its right
+so now we get the mask that we want we
+can see we have zeros for the characters
+that are inside the quotes and the ones
+for the quotes themselves and characters
+that are outside the quotes and that
+means
+um
+that we can use compress
+but before we do that
+I just want to note this or not
+that can actually be optimized a little
+bit let's have a look how so if we
+create the function that just does the
+or not
+then we can use the outer product which
+is the all combinations between 0 and 1
+which are all the possibilities in
+Boolean algebra on the left and zero and
+one on the right so this is like a
+multiplication table
+but only for zero and one so zero and
+one and over here it's also zero and one
+for the columns and there's that
+multiplication it's or not
+and that's reason about this a little
+bit
+we can see that there's only one case
+where this gives false that's when we
+have zero on the left and the one on the
+right that is
+it gives false if then less than it's
+the only case when you in Boolean we're
+restricted to only zeros and ones where
+we have zero where we can give true from
+less than
+but we don't want true from this one
+less than we want false from that and
+true from everything else so we want
+something that's not
+less than or it's not less than is going
+to be greater than or equal to
+so we can go up here and replace the or
+not with greater than or equal to
+and we can see that gives the same
+result
+so now we have
+shown that using the laws of Boolean
+dungeon then we can replace the or not
+with a greater than or equal to
+okay we continue on our way
+um
+and we use this
+to mask out
+the
+argument itself
+and this gives us the result that we
+wanted
+however this but a single symbol on the
+right of the compression function
+whereas we have a whole expression on
+the left that then needs to be
+parenthesized because as I said before
+we flow from the right to the left
+we don't have a function that does the
+same thing just with flipped arguments
+but we can create that for ourselves by
+using the commute operator
+which commutes the arguments so now this
+is a derived function which takes the
+mask on the right and the data to be
+masked on the left
+and that means we don't need the
+parenthesis anymore
+because as a derived function it's a
+function and takes everything to its
+right as its argument
+so this is a very nice solution and we
+can call this
+um let's say x because it uses the xor
+scan
+who can apply it to argument
+and of course this works just fine when
+we have adjacent quotes
+because it just flips between the state
+of being out of close to inside quotes
+and then inside quotes outside quotes
+every time we see a quote it doesn't
+matter whether there's anything in
+between them
+finally we're going to implement a more
+General solution an actual State machine
+here we used xor to carry a state along
+and this works fine for this very simple
+type of coding but let's say we had
+different types of quotes single quotes
+and double quotes and Escape characters
+and so on
+then this method wouldn't work and we
+need an actual State machine that
+traverses over our string and keeps
+track of and where we are and what state
+we're in now we inside quotes every
+outside quotes are we in the middle of
+an escape sequence and so on now we're
+not going to implement all those
+features I'm just going to implement the
+framework for the stick machine the
+simplest form
+so let's start again
+with the mask
+and print that with the argument itself
+so these are our the the points where
+we're going to switch state
+and then we're going to start with a
+starting state which I'll call
+um l
+for um it's a letter that we're going to
+keep and everything else is like in
+quotes
+the state initial state is one
+and Diamond separates the expressions in
+the APL so this is the Lambda with with
+two expressions in it we start off by
+setting the state L to one and then we
+produce this whole mask now this has
+looks exactly the same because assigning
+L to one it doesn't make any difference
+however now we can start working our way
+through this mask
+so we want to apply to each one a new
+little Lambda and that little Lambda
+will update this initial State here of
+course the first character could be a
+quote in which case we immediately flip
+it and the way we're going to do it
+is we're going to use
+um
+a very nice thing we have which is
+modified assignment right you might know
+about augmented assignment if in other
+languages often written like this this
+will increment
+like that now we don't use
+equals for as I mean we use an arrow and
+this works in APL but not only that we
+can use absolutely any function to the
+left of the assignment and then that
+essentially means
+um that function
+um with the argument left argument of
+the variable that's being assigned to
+and the right argument whatever is on
+the right
+and as any other assignment the
+pass-through value is going to be
+whatever is to the right of the
+assignment Arrow so the result of this
+will be one even if L now has a
+different value than one now we're not
+going to use plus we're going to use
+well xor again
+because we want to say
+um
+this the state
+if it's equal to one and it's already
+one
+then we want it to become zero and if
+it's zero and we have
+um
+sorry this is this shouldn't be a one it
+should be an argumentative so so we have
+going over this mask and we want any if
+we say it's different from zero
+for Boolean
+that just keeps their value
+right because
+if it's zero different from zero is
+false so it becomes zero if it the value
+right now is one different from zero
+it is different from here so it produces
+one so we so by doing different from
+zero we preserve the current value
+so as we Traverse over this we're not
+changing State as long as this is zero
+now if there's a one and the current
+state is zero zero different one then
+that's one so we change from zero to one
+and if it's currently one is one
+different from one no it's not so that
+the answer is zero and then we switch
+the state so whenever one here we switch
+the state of L we can't see that
+anything happened here because we have
+just updated the state we didn't
+actually use the state
+for anything
+however
+this if we continue and return the state
+value at every point then we can see it
+and effectively we got this xor scan as
+we had before
+again we have the problem that the
+initial quotes accounted as being inside
+because we switched the state
+immediately at that point
+but luckily the argument here is
+actually
+whether or not the current character is
+a quote and that means that we can
+we can again say
+um
+the state
+or
+the argument whether or not the current
+character is a quote
+and this means that we get the quotes
+always marked with one
+we can however be a little bit more
+clever about this because the
+pass-through value of this assignment
+is the argument itself
+and by the time we're done with the
+assignment then L has been updated
+so this Omega over here is the same
+thing as the expression over here we can
+take the rest of the expression
+and add
+over here instead
+and now we have the states as we
+Traverse and of course this is Lambda
+couldn't have a whole bunch of code that
+decides what to do based on what
+character we are in now and what one or
+more different types of states that are
+being updated as we go along are we in
+an escape sequence are we in this type
+of string are we in that type of string
+are we inside braces and so on so this
+is a
+um a completely General system it can
+decide what to do at that point and
+update all the various states that we're
+tracking we could have multiple states
+that we're updating
+um and so on
+and this gives us our mask which means
+we can proceed just as we did before
+we'll
+compressing filtering by this mask
+and that gives us our result so this is
+a state machine implementation it's
+going to be much slower than using the
+built-in Excel scan but it is a more
+General solution
+this is a state machine and it works
+thank you for watching

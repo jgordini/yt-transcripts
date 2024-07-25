@@ -1,0 +1,189 @@
+hi
+now we continue
+from the previous problem where we were
+making the grades and here we compile
+some very simple statistics in a table
+on a given set of grades
+so we are supposed to have three columns
+the First Column is just the grade and
+that will go from a to d and then F and
+then we have a column that says how many
+of each there were
+in the given list of grades
+and finally we want the percentage but
+what we do want it as a number we also
+wanted to round it off to look nice
+so up to a single decimal position
+here are some sample grades
+now it happens to be that all the grades
+are present and they're all in groups
+but it doesn't matter as we'll see based
+on the algorithm
+here's a little Lambda
+a different
+we can take the right argument here
+with Omega the rightmost letter of the
+Greek alphabet
+we could also take a left argument
+and if you were to do that then I would
+for generality you use the alphabet of
+letter grades
+like this
+however there is a
+um so here we have the left argument and
+the right argument next to each other
+however there's a trick we can put in a
+special little statement diamond is the
+statement separator because diamonds are
+Unbreakable
+if we try to assign to Alpha which is
+the leftmost letter of the Greek
+alphabet indicating the left argument
+when there is already a left argument
+and then that whole statement is ignored
+however if we do not supply of left
+argument that statement is executed
+so I think that rather than using a
+regular variable to keep these letter
+grades we should use Alpha because then
+if you want to override it with a new
+system that uses different letters that
+will work too
+hmm
+okay now we are ready to get started
+we've got our left argument which are
+the letters of all the different grades
+that can appear we have the right
+argument which are the greatest in
+question that we're going to compile
+statistics on
+and the first thing we want to do is
+find out how many there of each then we
+can use that to compute the percentages
+and one way to do this is to do an outer
+product well it's called Product but
+it's really not a multiplication here
+but an outer equality that means we take
+every element on the left those are the
+letter grades and compare to every
+element on the right those are the
+grades coming in and we get a comparison
+table
+so here we can see that since we begin
+with a bunch of D's and each row here
+but since one grade A B C D we get a
+bunch of ones here and then we get a
+bunch of A's they are up here
+and so on
+of course this means that we can do the
+count of each one simply by summing and
+rewrite that as a plus slash
+so here are the sums or counts if you
+want we can call that s
+in order to compute a percentage we want
+to know how many letter grades are there
+in total we can use the tally mark to
+tally the number of elements in the red
+argument
+then we can take the sums and divide by
+that giving us fractions
+in order to get percentages we want to
+multiply by a hundred
+and then we want to round off to a
+single decimal and here's a neat way to
+do it but maybe not the best we'll fix
+that later
+we can use the format function which
+converts numbers into characters so this
+becomes one giant character Vector with
+digits
+you won't be able to see a difference
+because it has the same texture
+representation however we can give it
+the left argument which is exactly the
+number of decimals
+if you were using a negative left
+argument it would be the number of
+significant digits
+we can try that for a moment so if we
+say we want
+two decimals
+we can see that we get 9.68 but 25.81
+if you do negative 2 then we get a
+scaled format so that we can indicate
+the Precision exactly and we say we get
+exactly two but for now we just need a
+single decimal
+this is not a num an array of numbers
+this is an array of characters so we
+want to convert it back again to
+numbers
+and
+with that we just need to construct our
+table
+this is a vector and we need to have a
+matrix that is a table a two dimensional
+array
+we can use the table function to create
+a table from a vector
+so here we get a column vector or single
+column Matrix and with that we can
+concatenated together with the sums or
+the counts of each one and finally we
+can concatenate on the far left
+the letters themselves
+and this solves the problem
+however
+going via a character representation
+seems a bit iffy just for rounding
+especially since the way we're going
+back again is actually execute or
+evaluate so we're taking this whole
+character vector
+which are all these rounded numbers and
+executing them as APL code
+that's generally a better idea both for
+performance but also for safety if
+somebody were to somehow inject
+something in there that's dangerous then
+our whole system could fall over
+let's do this the arithmetic way instead
+we don't have a round to a specific
+position function in APL however we do
+have a flooring function we can write
+rounding in terms of flooring we don't
+want to run to to whole numbers we want
+to round to Tenth of numbers so instead
+of multiplying by 100 let's multiply by
+a thousand that gives us tens of percent
+now we just need to do the rounding but
+flowing is not going to give us the
+right result this is floor you can kind
+of see there's a wall and a piece of a
+floor
+and that is because we need to round up
+when we have seven and eight here in
+fact from five and none of us we want to
+round up and this just runs down its
+floor
+if we lift up all the numbers by a half
+then anything that is ends with 0.5 or
+higher will be lifted into above the
+next higher number
+and now we can see how
+96.7 and 225.8
+were rounded up whereas everything else
+was rounded down so this is the type of
+rounding and that we want to do but our
+numbers are too big now we want to
+divide them by 10.
+of course this is 10 divided by but the
+commute operator can swap the and the
+arguments to the division function so
+this is
+10 into
+whatever we have over here
+rather than the opposite
+and this solves our problem in a safe
+and efficient manner
+thank you for watching

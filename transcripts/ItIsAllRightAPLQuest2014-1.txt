@@ -1,0 +1,452 @@
+welcome to the apl quest
+see apl wiki for details
+this is the first problem of the 2014
+set from the apl problem solving
+competition
+we're given this left argument
+the two supposed shorter sides of a
+triangle and this right argument the
+longer side
+we are to check
+if these three numbers together
+can work as length of a right-sided
+triangle
+a right angle to triangle
+it's of course natural to use the
+pythagorean theorem let's put in some
+test cases here two shorter sides two
+and four another case with shorter sides
+three and four
+we're going to try this with a longer
+side that's four and a half and five the
+first one is going to be false and the
+second one is going to be
+true the pythagorean theorem states
+that
+the sum of the squares of the left of
+these two shortest sides
+matches the
+square
+of
+the longer side
+we can write this in various ways
+if we
+observe that the square is of the same
+thing as multiplication by itself
+then we can see that we are summing over
+in the application of a
+scalar function
+all right with a scalar reduction over a
+replication of a
+scalar
+function application is
+the same thing as an inner product
+and here we have
+the same argument being used twice on
+the inner product which means we can use
+the selfie or commute
+operator we can do the same thing with
+the commute for
+the multiplication
+there's the different way of stating the
+same thing
+we can also make a tacit
+we want
+this inner product applied on the left
+argument
+and we want
+the self multiplication applied on the
+right argument
+same thing just in a test form
+we can also break out the multiplication
+because we really start with
+squaring both arguments and then we're
+summing one of them
+so by using the over operator we can
+preprocess both arguments with
+self-multiplication or squaring
+and now we only need to sum the left
+argument so we could write this as
+the sum of the left argument matches the
+right argument
+or
+we could use normal equality but
+pre-process
+an argument we can't represent the left
+form but we can't pre-process the right
+one and we're going to pre-process it
+with
+summation the problem is of course it's
+the left argument we want to deal with
+but we can fix this by commuting
+swapping around
+the two arguments
+we could also start off by commuting
+then we preprocess with squaring and
+then we have
+the summation on the right
+however
+observe that
+a reduction over a single element
+doesn't actually change it so the fact
+that we're preprocessing only the right
+argument with the summation
+could
+we can use that
+to fold this
+reduction into our preprocessing of both
+arguments because a summation of a
+single argument doesn't matter
+here we have equality where we
+preprocess both arguments
+with the summation of the square we
+don't need to compute anymore because
+we're treating both arguments exactly
+the same
+and of course we can combine
+this plus reduction over the
+multiplication
+and into
+an inner product if we prefer that style
+a whole different way to approach this
+is by using complex numbers
+so in the complex plane
+we can
+we can look at the two shorter sides as
+the two components the real
+and the imaginary
+and then
+we have the diagonal being the magnitude
+the whole length of that vector in the
+2d space that the complex plane forms
+so now we just need to
+combine these two parts into a single
+complex number and it doesn't matter
+which one becomes the real part and
+which book and becomes the imaginary
+part because we're going to take the
+absolute value of it anyway
+so
+um we can start off by saying the last
+element of the
+left argument
+we multiply that
+by the imaginary unit
+and then we take the first element there
+and add to that so this combines the two
+now we can take the absolute value of
+that
+and compare it to the right argument
+we can also make this test it
+we
+all this thing that we're doing
+is really pre-processing the left
+argument so as before we can swap our
+arguments around and pre-process the
+right argument instead
+the last element we multiply it here and
+then the
+the first element take the absolute
+value of that that's how we preprocess
+another way that we can
+write this
+is using negative 11 circle that's
+simply its definition
+it just multiplied by the imaginary unit
+then someone came out with a clever
+thing using
+four circle
+if we apply four circle we get back to
+what exactly that mean on the ratio
+between the two elements in the left
+argument
+and then we multiply by the second
+element
+then that should match the right
+argument
+and that holds for our test cases let's
+prove that that is in fact
+the case
+for that
+let's try to make a test it again we are
+preprocessing the right argument
+so we can
+we can write it
+the ratio of these two the four circle
+on that and then we just want
+the last argument in the last element of
+the uh
+of the original left argument so we can
+write that we can either combine these
+two they take the um the first
+um of the reverse but we can also just
+use
+um a right tech reduction it's a right
+reduction
+and we preprocess the right argument to
+the equality with that
+and we just need to commute things
+around so this is the tested form um of
+that alternatively we could use first
+and we could and
+commute the elements
+of the sorry commute the arguments of
+the division and that would also work
+but how does it actually and how does
+this actually work let's go go back to
+our and our defense form
+with uh let's see before circling right
+here
+this one
+so the definition of a four-circle is
+the square root
+which we don't have in
+this apl
+but we're using this as a placeholder
+we're going to eliminate it later so the
+square root of and one plus
+the square
+this is going to be a little bit and
+complicated using the elements of the
+left argument so let's give them names
+a and b
+now we this is the last one is b
+and the fraction
+bond random is just a divided by b
+here's the square of a fraction that's
+the same thing as the fraction of the
+two squares
+we have a b outside the
+square root we can get it into the
+square root
+by squaring it
+now we have 1 plus this fraction
+where the
+denominator is b squared that means that
+we can
+we can add on top of the
+of the fraction a b squared instead
+and now we can observe that we have this
+whole thing this sum is being divided by
+b squared
+and then it's multiplied by b squared
+those eliminate each other
+we have a square root here
+and we can and we can just square on
+both sides of the equality
+and now we have the sum of squares here
+so we don't really need these names
+anymore it's just the sums of
+um of a b squared
+and a and b together they are the left
+argument so we can get rid of our
+temporary names and this is exactly the
+pythagorean theorem so we've proven that
+the solution using four circle
+is exactly the same thing
+okay
+now for the last solution which is a bit
+involved and it uses a rarely the rarely
+used uh
+domino
+function
+which is a matrix inversion although
+we're using it here only on vectors and
+scalars so
+it's a bit of a misnomer to call it
+matrix conversion maybe extra inversion
+or just
+inversion
+and it's very clever it is
+the
+ratio between the inversions
+of
+of both arguments so this is using over
+we check if it matches
+the ratio
+between these
+the arguments
+okay what's going on here how does this
+work it does actually work for our test
+cases but let's start to
+to unpack this a bit
+and so first we have a division here and
+we're pre-processing both arguments
+using
+this domino
+here's the right argument
+and
+here is the left argument
+and then we are checking if it matches
+the ratio between the arguments of all
+now um
+this inversion function and we'll apply
+it to a scalar is exactly the same thing
+as just a normal reciprocal so we can
+replace that
+and we can also see that we're dividing
+by a reciprocal that's the same thing as
+a multiplication
+so far so good
+what does it actually mean
+to invert a vector
+what it does is
+it finds a vector for which the dot
+product with the original vector gives
+one
+so it's in a sense it's inverse
+just like
+five and a fifth multiplying by each
+other you get one
+so the vector is going to have the same
+direction
+but this reciprocal magnitude
+this is
+the in
+this means that the inverse vector
+would need
+to be multiplied twice by the magnitude
+to get the original uh
+vector
+right what's
+since uh
+multiplication once by the magnitude
+gets us um half it gets us
+to the middle to one
+so that's the same thing and that means
+that multiplying twice by the
+magnitude gets us all the way back
+to the original
+let's
+test this out a bit so we invert
+3 and
+the 3 4
+and then we can multiply that
+twice
+by that supposed magnitude
+and we can see that we're right back
+where we started
+if we try to do this for and
+for arguments
+that are not
+forming a right angle triangle
+then we're going to see that it's not
+going to work to
+add up
+close
+but not quite
+nope this isn't even right it's supposed
+to be
+two even closer still not right
+have our example from um before
+so if multiplying it twice gives gets us
+all the way there multiplying it once
+gets us halfway there kind of
+meeting uh in the middle
+where do we so if
+multiplying the inverse
+by the magnitude
+twice gets us all the way to the
+original argument if you only multiply
+it half
+halfway there or you multiply it once
+then it would be the same thing as
+starting from above starting from the
+original and dividing it once by
+uh by the magnitude
+hence what we have here
+so we multiply so this is the diagonal
+the order magnitude and we're
+multiplying it once by the magnitude is
+the same thing
+as dividing
+the original by
+the magnitude and that only holds
+if
+it's a right angled
+triangle
+so we we need to test if they meet in
+the middle if the
+if the inverted vector
+times the supposed magnitude matches the
+original divided by the supposed
+magnitude then they met in the middle
+and then what we've supposed is them is
+the magnitude is actually the true
+magnitude
+okay so we said that the inversion
+of this vector
+is the same thing as scaling it down
+twice by its magnitude so let's
+let's test that let's write that out
+so we're scaling it down we're dividing
+it
+by its
+magnitude twice
+and its magnitude
+is of course
+the square root
+of the squares of this component
+next out
+next up we see that we have a square
+root here
+but it's squared
+so they cancel each other out
+oh sorry did i
+let's go back a step
+we had the square root
+of
+the sum of this of the squares of course
+to get a get diagonal and that was
+um that was being squared yeah so these
+two cancel each other out
+and we have the sum of uh the squares
+that we are dividing um
+the original by
+now we can see that we have alpha
+divided by something over here
+and then multiply it by something
+and over here we also have alpha divided
+by so if we divide both sides of the
+quality by alpha
+we can eliminate that
+now we have a reciprocal of this
+times
+the right argument
+so a reciprocal multiplied by something
+that's the same thing as that something
+divided by the value
+then we can take the we have a
+reciprocal of the right argument over
+here and let's take the reciprocal
+of both sides of the equality that
+eliminates this and we just need to swap
+over the arguments over here
+we divide by
+the right argument over here and here we
+just have the right argument so let's
+multiply on both sides of the equality
+by
+the right argument
+that eliminates this division
+and this self-multiplication is of
+course the right argument squared
+and therefore
+we have here the pythagorean theorem
+again the square of the long side
+equals
+the sum
+of
+and the squares of the
+the two shorter sides
+so that's how
+this very impressive five character
+solution works and inspect the whole
+the exact same thing but just in a very
+disguised way and then with one caveat
+since we're doing all these divisions if
+we have any zeros
+then it will fail so it doesn't actually
+work if any if sides are zero but then
+that it's very clever
+thank you for watching

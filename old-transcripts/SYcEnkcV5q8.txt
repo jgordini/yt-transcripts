@@ -1,0 +1,195 @@
+hi
+today we're going to take a text and
+chop it into
+sequences of a given length
+this is something that's called KMS when
+it comes to DNA sequences but that
+doesn't really matter
+first let's generate some fake DNA
+and we can do that by taking the bases
+that can appear in DNA and then index
+into them
+with a bunch of numbers let's just do 15
+for now so there are four different
+bases
+and we want some random numbers for
+those indices
+that gives us some random DNA
+now the problem is almost built into the
+other Solutions are probably almost
+built into the uh to APL
+by way of
+invoice reduce
+so anyways reduce those reductions over
+Windows sliding Windows over a certain
+size the data goes on the right and the
+window size on the left
+and here we're not actually we're going
+to do any reduction but we can use
+concatenation reduction which then
+concatenates the adjacent characters
+forming subsequences
+here for example is
+the four wires or setting Windows of
+size 4 reduction that's the Slash and
+concatenation is the comma
+and that gives us this if we do five we
+get like this and so this almost solves
+the problem because the problem
+specification is that the left argument
+is the length of these cameras and the
+right document is the DNA
+there's just one problem
+um let's say that we have and now just
+for clarity let's just use a normal
+alphabetic letters
+let's say we only have six bases
+then we have these two five mirrors and
+if we have five then we only have this
+one which is still correct this is a
+list of character vectors A list of
+strings if you want
+but if you only have four
+then well this looks strange
+so this output form from APL which is
+known as the maximum boxing level or the
+display
+moment
+um notice how it changed this Arrow
+which indicated an axis into this circle
+bar and this indicates that there is an
+axis but it's a 0x it's linked zero so
+this is still a vector of vectors
+but there aren't any
+and it's not the same thing as just any
+empty list and we really want to be
+consistent here and always return a
+vector of Five Element character vectors
+only that there aren't any
+so into in here we can see that there
+are indeed five elements which is great
+so this is still correct this is a
+vector of no Five Element vectors
+however if we further shorten
+then we get a length error
+and API will not allow you to do an
+invoice reduction over an argument that
+is a data argument that is more than one
+element shorter than the requested
+length so the actual problem here is not
+really solving the main thing of K mares
+but rather working around this
+limitation and I'll show a couple of
+ways to do so
+so first
+um it's very simple
+we can see that we can have
+up and we can down to
+one less than the requested length so
+let's define a Lambda like that and the
+data goes on the right
+and the length on the left
+and then we are going to look at
+the left argument which is Alpha left
+most character the Greek alphabet
+subtract one
+and then we do a
+um
+the maximum with that
+and
+the tally or length of the right
+argument that's the data over here
+so this style uh with a bar at the top
+and it kind of looks like a wall with a
+piece of the ceiling above and so it
+also means round up ceiling but if you
+use it with two arguments it's the
+maximum which you kind of see it as a
+measuring stick showing at the maximum
+of the two values
+and so this Returns the maximum we can
+see here that this gives six this is the
+length but if we decrease it five then
+they're the same and four then it it
+gives one less and three it stays at
+four
+so
+if we then take this and Pad the
+argument to this length which we can do
+with the take function although take
+text the length on the left and the data
+on the right we can use the commute
+higher order function or operator to
+swap that so that the data goes on the
+left and the next goes on the right and
+then we we do this we put the argument
+on the right
+from the right over on the left instead
+and now we can see that we got padded
+with a single space here and if we give
+it even less argument and less elements
+we had accordingly so now we add up end
+up having at least a length four and
+with that we're done we just do the
+um
+and wise reduction
+and we can see that we get the correct
+result here so this is one solution to
+the problem
+we can try
+and it works like this
+another way to do this is something
+that's actually stated in the full
+problem text if you look there and that
+is that if
+the requested length is greater than the
+length of the input then we return an
+empty Vector so we can code this as well
+um so we say if the requested length the
+left argument is greater than the length
+available in the red argument
+then and then return an empty Vector
+we'll get back to the definition of that
+otherwise we just do the operation as
+before
+now what exactly we want to do here we
+could just return an empty string but
+that's not the right type let's let's
+try that if we say 5 G ABC
+we can see that this isn't the type
+that we wanted we actually want a vector
+of character of x's of the right length
+so we can change this and say well it
+doesn't actually matter what the content
+is because it all gets
+thrown out
+we normalize empty arrays so that they
+conceptually just contain spaces or
+zeros and so on
+so we can take the left argument which
+is the length required
+and take that many elements from the
+right argument and that again pads it
+with spaces
+um
+and this will then be our prototypical
+element
+then we enclose that to treat it as a
+single unit
+and then we take zero of those
+foreign
+we get the right type of result and it
+also works
+on
+the full argument as before so these are
+two different ways of coding around the
+problem one is by extending the data so
+that we always have enough data and that
+was F
+and and the other one was by doing a
+test first and if we need to stop short
+of actually
+calculating the cameras and then we
+construct an appropriate result and that
+was G
+thank you for watching

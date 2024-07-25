@@ -1,0 +1,81 @@
+hi this time we have to remove any
+elements from a given list uh that are
+not in an non decreasing sequence from
+the beginning of the list so at the end
+we have something that's sorted but
+potentially shorter than the
+input and um here's some test data that
+that we're
+given and there are a couple of
+different ways uh we can do this
+let's look at a very literal
+interpretation of uh the problem
+statement so here's an an anonymous
+Lambda and we want to compare adjacent
+elements to see if they fit so we can do
+that with a two wise or pair wise less
+than or equal to over the
+argument what this means is that one is
+less than three and three is less than
+seven uh but seven is not less than
+three so the first element we always
+want to keep of course and then uh
+because it it that's where the sequence
+begins and then uh this one we want to
+yeah so this one we want to keep this
+one we want to keep this one we're going
+to keep this one we want to remove
+because um it's outo sequence five is
+greater than three um but it's not being
+eliminated by the first
+pass so um let's put in a one here to
+keep the first
+element and then um we take the argument
+and filter it by this
+mask uh yeah here we
+go so here the the five is there the
+eight is is there and that means that we
+really have to apply this again
+so if we use the power operator to apply
+this
+twice
+then we can see that we have eliminated
+the five however since we have the two
+fours over here at the end uh they still
+survive so we need to do it
+again okay this is good if we keep doing
+it then nothing more happens and then
+there's a trick that we can specify a
+match instead of a number and that means
+it will keep doing this until there are
+no more differences so until two
+consecutive iterations match each
+other and go give this a name and we can
+do ft and that solves the problem
+however it's not a very efficient way of
+doing it because we are doing a multi
+pass uh on this so instead what we can
+do is a single
+pass and the way we can do it is by
+scanning using maximum so this gives us
+the largest value that we have seen so
+far okay we can still see T up here you
+can see we never go down again now we
+just need to keep the elements that are
+either
+and um
+already well we need to keep the
+elements
+that match the current maximum because
+if they don't match the current maximum
+then they must be smaller than the
+numbers we've already seen and they need
+to be
+eliminated so equal to the maximum this
+gives us the corresponding
+elements and then we just do the
+filtering like did with the first method
+so here's a single
+pass uh
+solution for the elimination sort thank
+you for watching

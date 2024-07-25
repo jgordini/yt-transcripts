@@ -1,0 +1,108 @@
+hi
+where's your check which
+of the given words contain consecutive
+letters that are identical
+let's start with a word that does have a
+duplicated letter that is the lowercase
+l
+the easiest way to go about this is to
+do a pairwise comparison so we want to
+compare every letter with its neighbor
+for that we use the dynamic form of
+reduction so this is an equal reduction
+and this is a pairwise equal reduction
+we go over windows or size 2
+and compare
+so we can see that there are four pairs
+one two three four and the third pair
+has the same left and right so they
+equal to each other
+we're not actually interested in knowing
+where they are or how many are there are
+we just want to know whether there are
+any so we want to ask are there any
+which is an or reduction so you're
+putting or between these so you're
+saying 0 or 0 or 1 or 0. and that gives
+us one yes they are
+If instead we try a world
+then we don't get any because there are
+no duplicated letters
+okay
+this solves the basic part of the
+challenge but
+there are a couple of catches one is
+that we need to be able to handle
+scalars so this is not a string or a
+list of one
+character rather it is a single scalar
+character without dimensions and since
+this Paris reduction needs to Traverse a
+dimension it fails
+as there aren't any Dimensions to ruse
+it's saying rank error a scalar has
+ranked zero there are zero Dimensions
+but we need at least one dimension a
+vector in order to do a reduction
+we can fix this however by reveling
+reveling means taking all the elements
+that are there and like a bunch of yarn
+we are revolent or even a sweater where
+you pull a loose thread and it becomes a
+single dimensional list of the elements
+and that is magnetic comma so
+it will appear the same but this
+actually has a dimension that we can
+then reduce over
+so I doesn't have any of course and no
+one element and
+word will ever have duplicate letters
+because there's only one there
+now that this is done we need to fulfill
+the whole spec of the challenge which is
+to handle multiple words so
+I of course as we know doesn't have any
+and Z doesn't have but feed has and
+bookkeeper has multiple duplicated
+letters
+so we take this
+function that we have created it just so
+happens that we can just parenthesize it
+and apply it to each one
+and this works fine
+one more catch is that we have to be
+able to handle a single word so this is
+the each
+and if we try to do this on single word
+then we get the wrong result and that's
+because the each now traverses over the
+word itself and adds and applies the
+function to each letter
+what we want to do here is if we have a
+single word we want to enclose it but if
+we have multiple words then we don't
+want to enclose it to treat it as a
+whole and for that we have a very
+convenient function that is often called
+inclusive symbol or just nest
+is because it does exactly this it
+encloses if the argument is simple so
+this is a simple single word and it will
+then enclose it but if you have multiple
+then it will not enclose it we split it
+like this all right it's the include
+symbol with an extra underbar also
+called nest because it guarantees that
+your result will be nested if it isn't
+already it will add an outer enclosure
+so now we get the right result here and
+if we try to do it over here
+then we can see and which which words
+are
+have duplicates and which ones do not
+and so this whole thing we can just go
+and give a name
+and now we can apply it on both
+lists of words
+and single words
+thank you for watching

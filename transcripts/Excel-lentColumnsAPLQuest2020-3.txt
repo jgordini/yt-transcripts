@@ -1,0 +1,137 @@
+hi
+we're going to convert the labels that
+you see at the top of the columns in for
+example Excel or any other spreadsheet
+manager to the number from that
+of that column in the whole sheet
+it might sound straightforward a to the
+end of the alphabet is
+1 to 26 and then you go to a a for 27
+and then a b and so on
+is actually deceptively simple and the
+solution is also simple
+but what's actually going on is
+interesting
+so let's start off with
+um
+then a and and then
+those are really easy we if we look now
+up in the alphabet we get 1 and then
+26.
+then it gets more interesting because
+the next one after Z is a a
+that's one one but it's supposed to be
+27.
+clearly this is kind of a positional
+system the further left a character is
+the
+more significance it has but it's not
+just base 26 because there's no zero
+here
+it does however work
+if we say this is in one one base 26
+because that's
+1 times 26 to the power 1 plus 1 that's
+27 so if you evaluate this in in base 26
+we get the right result
+where things get really interesting is
+what actually happens when you have a z
+so this gives us a 26 26 is not a valid
+digit number in base 26 just like 10 is
+not a digit in our normal Decimal System
+we only have from zero to nine
+zeros are skipped here because we never
+get anything that has the index 0
+in the alphabet
+so what's actually happening here when
+you evaluate this in base 26 is that API
+allows
+digit position values to have a number
+that is higher than the base
+and it just uh overflows with a carry to
+the next position so when we have 26
+ones
+then that overflows to become well 26
+plus 1 times 26.
+um in in if it was 126 here it's
+implicitly 0 26 so that overflows and
+just becomes zero plus twenty and six
+um and so that actually works
+nope
+and if we do this also with say a z
+where we get 126
+then this means there are 26 ones
+and 126 so that's
+we just add them together
+um
+and we get 52.
+and if we had a b here we would add that
+together again
+um
+so there's one 26 and then
+226s
+and if you go up to even larger numbers
+here then we'll see how the the carry is
+going to carry over so there are 26
+plus 26 26s
+and so on it doesn't matter that it will
+overflow to the next position we just
+add them all up we do the multiplication
+with the powers and then we add it all
+up so we can write our full solution to
+the problem
+as with binding
+the alphabet as left argument to the
+lookup function Iota and then we
+evaluate in base 26. so that's that's
+our solution we can put in anything
+um here and get the right result
+to really understand what's going on it
+might be a good idea to you know emulate
+the functionality of the base evaluation
+here also known as decode
+so what's actually happening let's uh go
+back to these numbers for a moment
+is we get these three values here and
+this is all base 26. so these are the
+these are the ones these are the 26s and
+these are the 26 squareds
+that means we can get the powers
+by
+starting off with
+three numbers like this we can reverse
+them because we have descending Powers
+these are the the highest one and then
+they are too high by one so we can
+subtract one
+here
+and then we have 26 to the power of that
+that gives us the weights for the
+positions and then we can multiply by
+our numbers
+and sum that
+or alternatively we could use an inner
+product
+to do this
+and that is actually what's happening
+here that we're taking
+the length of the argument and finding
+those powers and then just adding it all
+up and it doesn't matter that they are
+too large they overflow and they
+couldn't really represent it in that in
+that system
+so we can write this here as
+quad a
+be looking up the right argument and
+over here instead of
+Iota and three we have the tally of an
+argument so now we can do APL over here
+of course there's no reason to actually
+write this because we have the Primitive
+that does this but this could help give
+an understanding about why this works
+even though we're using digit position
+values that are actually too high for
+the number system
+thank you for watching

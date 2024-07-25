@@ -1,0 +1,667 @@
+hello and welcome to the apl quest ca
+bill wiki for details
+today's quest is the second problem from
+the 2014 round of the apl problem solver
+competition we're given a text
+and have to find the words in those
+in the text and remove any vowels from
+the words except if the vowel begins the
+word or the vowel ends the word
+let's get started with some test data
+okay
+we can identify where we have spaces
+and non-spaces
+in our text
+then we can use this to partition
+the text
+because partition will take
+elements that is letters here
+that correspond to
+runs of ones and group them together in
+a single element
+any
+letter or character that corresponds to
+a zero
+will be discarded and at this point
+we'll begin a new segment
+so
+we partition
+using this mask
+now it's a question of processing each
+word separately
+because we need to be a
+case insensitive we have to
+to handle all kinds of vowels upgrades
+in lowercase we can start by uppercasing
+our and
+our words
+and we can then find out which words
+which letters are vowels
+this gives us one mask per word
+there's a problem however you can see
+that in the third word the last letter
+is a um is marked as a vowel and we
+really
+don't want to consider the vowel that
+can be removed
+also
+and our masks are inverses of what we
+actually want since we're going to use
+compress to remove vowels then we should
+have zeros for the characters we want to
+remove and one for those we want to keep
+that part is super easy to fix
+we just negate it
+and then we need to take care of the
+issue of putting a one always at the
+front at
+the end well that we can do we can amend
+this vector with one at position one and
+also at the position of the length of
+the word
+now we're ready to do
+the compression
+looks good and we just need to join
+things together with spaces
+since we're already processing each word
+we can just stick a space in front of
+each word
+enlist the whole thing
+and remove the leading space
+this solution is nice in the sense that
+it expresses an appeal very much how we
+think about the problem
+let's call it
+c for cut
+there are other ways to to address the
+problem however which avoids
+splitting up the text
+and processing in each word one at a
+time rather
+the ideal when doing array-based
+programming is
+to process the entire array in one go
+let's see how we can do that
+this time we're going to
+start with uppercasing everything
+and then
+we need to
+match up
+the previous letter and
+the next letter with the middle letter
+in order to identify whether or not we
+are at a word and word boundary
+of course the first letter doesn't have
+a left neighbor
+but we could possibly supply that
+now in order to
+to match up the left neighbor the letter
+itself and the right neighbor we can
+drop
+so
+here's the left neighbor
+left neighbor of the
+h
+in how is that space
+we drop one
+we get the h itself and if we drop two
+then we get
+the neighbor on the right
+we want to drop all three possibilities
+zero
+one and two
+and we want this dropping
+to be done on the entire
+vector
+so we can say we want on
+and
+we want to drop using rank 0 every
+single number scalar from the left and
+we want 1 because we want to treat the
+entire vector on the right
+now we can compare
+these
+this whole matrix to spaces
+for example and
+like this
+we can put it inside the parenthesis
+and we know that
+uh a letter is internal
+if
+all the
+all these three the left neighbor
+this letter and the next uh letter all
+well if this the left character the
+middle the current character and the
+right character all are um
+are none spaces
+so and we can
+combine
+this
+uh not equal with
+a vertical and reduction
+the only problem we have now is that
+and since we added a character we have
+one character too many and that we used
+this
+to
+to push things
+to the right and when we didn't drop
+enough
+then
+one character from the end got pushed
+too far we can see this above here
+the last character we have is the u
+and its left neighbor and his right
+neighbor and here is another space
+that's been added which we don't
+actually want
+we can fix this however just by dropping
+the last element
+another way we could do it um
+is by
+not adding the space on the left
+um
+because
+that will just give us all the
+information for all the characters
+except the first one
+we know that the first
+character
+is not one that we that we should
+consider a an interior character because
+it's right next to the beginning so we
+can just add a zero on the left and that
+will give us
+the same result exactly
+now the only thing that remains is
+to check if
+and
+the these the letters are also vowels
+so we can do this by simply saying
+member of
+aeiou the vowels
+that gives us this mask and so these two
+masks are the ones we're going to
+combine if a letter is both interior and
+it's a vowel
+then
+that's a letter that we can remove so
+let's combine
+the two parts
+and this points out which letters we
+have to remove but again we want to use
+compress so we want to mark instead the
+letters that we want to keep we could
+negate it but we can also just combine
+the negation with and into an end
+now we are ready to do the compression
+that works very nicely
+let's call this one
+drop
+d for drop
+because we're using drop in various
+places
+we talk about these neighbors and we can
+we look at these triplets another way to
+do this is by using nys reduce
+so let's start over
+with our text and uppercasing it
+we can and we can look at triplets
+initially we can try just concatenating
+them together
+so these are the triplets
+but instead of applying and
+this invoice reduce on the letters
+themselves let's com
+let's do it on the boolean mask of
+whether there are none spaces
+and now we just need to reduce each one
+of these with an end reduction just like
+we did before
+we don't need to do this outside of the
+nys reduction because analyze reduction
+is indeed an introduction on each
+sliding window of the size three in our
+case
+and that gives us
+the mask for which letters are
+interior
+letters
+which means
+we can just combine all of this with
+um our way of finding the um
+the vowels in exactly the same way
+oops
+oh yeah of course
+since we have sliding windows that don't
+uh
+that begin at the very left edge and we
+have sliding window size three that
+means that we don't have a corresponding
+element for the very left most and very
+rightmost letters but we know that those
+are boundary letters and so we can just
+supply those
+that gives us our mask and we're ready
+to do the compression just like we did
+before
+let's call this one r for reduction and
+voice reduction
+another way to look at neighborhoods is
+using stencil
+so let's try this again
+uppercasing that
+and this time we're going to use
+stencil
+and
+stencil with a window size of three and
+applies its operand
+on each sliding window
+at the edges
+if necessary it pads and it is necessary
+in our case we want window sizes of
+three and every element gets a chance to
+be the center of a neighborhood of size
+three
+stencil with pad with appropriate
+padding which for text is spaces and
+that's great that's exactly
+what we want
+what operand are we going to give to
+to stencil we're not interesting in the
+left argument to the operand which is
+the padding information
+we just want the right argument
+and we again we want to know where it is
+all true
+that
+the letters are different
+from space
+that gives us our mask including the
+zeros so this is exactly what we had
+before with the end wise reduction and
+we can just copy the rest of our code in
+this is our stencil s
+function
+now it will be interesting to compare
+the uh performance of these wouldn't it
+let's do that um but for our test case
+is tiny we also need to generate some
+larger test data so
+now i'm going to copy in the cmpx
+utility which measures performance and
+also
+for convenience i'll have the delete
+extraneous blanks in order to generate
+our test data copy those from the decent
+workspace
+okay for our test data and let's have
+some uppercase characters and some
+lowercase characters
+and then we need to have some some
+spaces as well and in a nice proportion
+i'd say if we take about 60
+and overtake then we get and a bunch of
+spaces at the at the end
+then then let's choose some random ones
+from this
+so random and we'll take
+a thousand of those
+from all of them the length of that
+so this gives us a
+a bunch of
+letters if we just take the first
+hundred of those to have a look at what
+they could look like we can see here at
+the end we have some
+some double spaces so that's why we need
+uh to apply delete
+external blanks
+and then that won't happen
+no more double blinks
+okay then we're ready to assign this
+it's not even though i asked for a
+thousand it's of course not exactly
+going to be a thousand because we're
+deleting some spaces here and there but
+it's close enough
+for purposes
+and let's generate some apl expressions
+that we're going to compare the
+performance of
+and we had c for the cut
+method and d for the drop we had r for
+reduce and s for stencil each one of
+those is going to become
+called on the entirety of
+this
+test data here so these are our three
+api expressions
+and now we're running the timings on
+those
+see what that looks like
+all right
+well
+that's pretty significant differences
+we've got there
+and the cut method which is our baseline
+is not very good compared to uh
+to using drop and
+reduce
+that's because uh draven uses are
+entirely flat
+uh solutions
+whereas uh when we cut into individual
+words then we get a pointer array and
+one pointer pro word and that's going to
+be very expensive to traverse
+so that one's basically out there's
+nothing we can do to fix that stencil
+that doesn't look good at all
+and the reason is that we gave a rather
+complex
+operand to stencil and there are just a
+few
+common patterns
+that when addressed when expressed as
+defense
+have been optimized
+very heavily and they will give us way
+better performance
+so
+let's see if we can
+use one of those instead
+so i know that
+one thing we can do with stencil that's
+super fast is just getting uh getting
+the right argument
+now since we have neighborhoods of three
+and from a vector that means every
+such neighborhood is a vector in itself
+and stencil will collect them into an
+array where the major cells are
+these vectors so an array that consists
+of vectors is a matrix we'll get one
+neighborhood per row
+and all we need to do now um
+is the exact same thing here we're just
+comparing two
+spaces and then
+we are reducing across
+the rows
+so all this
+should just work in exactly the same way
+and let's try it on our small test case
+oops yeah i made a mistake here
+i am
+missing a space
+nope not necessarily i made i haven't
+parenthesis that could be missing or we
+can just remove this parenthesis over
+here that's why it was read before
+okay let's try it again there we go now
+it works
+right
+so and
+let's do this comparison again with the
+new updated stencil version
+but this time we're going to skip the
+one that that cuts using petition
+because that's hopeless
+stencil is still the slowest of the
+string
+but
+uh it's not bad right they're all very
+similar to each other and if something
+is convenient to express using stencil
+then by all means it can work very
+nicely
+and then you don't have to worry about
+how much padding you need for various
+sizes which you didn't need to worry
+about for the anyways reduce
+but there's another problem
+and that is let's update our uh our
+small test case
+with some punctuation the problem here
+is with the final letter
+since we are detecting whether the
+characters that are non-spaces then
+question mark is a non-space and u will
+be considered an internal
+letter so for example using this s
+we can see that
+o and u
+get removed which is of course wrong
+so
+how can we fix this
+well here are our definitions
+the problem is that we are using
+the property of being a non-space
+to identify which
+characters are eligible to be uh
+be removed and
+which ones are have
+non-space neighbors
+i really want to turn it upside down we
+want in order for a character to be
+considered an interior letter
+it's it's
+the determining factor there is that its
+neighbors
+are also letters not just non-space
+characters but letters so we just need
+to turn things around a little bit
+for the dropping method
+the only thing that we need to do
+is to check
+if
+and
+characters are
+in the set of uppercase letters and
+membership goes the other way around so
+we can swap that
+and if
+they are letters
+all of them
+then
+and
+we have an interior letter
+and actually
+the exact same thing applies
+to all of these solutions
+so here
+with
+an invoice reduce
+instead of checking whether we have
+taken whether we have none letters we
+just look whether or not they are
+members in
+uppercase
+alphabet
+and so too
+with stencil
+instead of checking whether or not
+and we have none letters we just check
+whether or not they are members of
+topics alphabet
+and now we can generate new test data
+so this time we're going to have
+uppercase letters and lowercase letters
+and also
+some punctuation
+let's say 65 overtaking that to get some
+some spaces there and then we just use
+the same formula as
+before we want
+random
+about a thousand
+of
+the length of the argument
+and this time we don't need to remove
+extra blanks
+right
+the comparison we're going to do is
+exactly the same as before
+and the performance is very similar to
+what we had before but this time
+we are correctly handling all of these
+so we can see it
+for example
+with the dropping
+on t
+and
+reduce on t
+and stencil
+and t you can see that the u
+remains right there
+so these are good solutions aple
+solutions there's another approach
+though and sometimes it's more
+convenient
+and that is to use regular expressions
+and
+we found
+two
+interesting ways of doing this using
+regular expressions
+what we can do is we can we want to look
+for
+some characters and then we want to
+remove them and we want to do so case
+insensitively
+the letters
+that we want to remove are the vowels
+but we don't want to remove all the
+vowels
+we want to make some assertions about
+these vowels
+what we want to assert is
+that
+this question whether on the left
+we have
+a word character
+if there's not a word character on the
+left
+then
+we're not interested in this vowel that
+also means is the first character in
+this
+in the input then we're not interested
+in it we also want to to make sure that
+on the right we have a word character
+if it's the last character in the whole
+input then there are no characters to
+the right
+and we're also not interested
+it's important to note that these look
+arounds or look behind look
+ahead
+are not part of what's being matched
+they're just something that's being
+checked when we try to match them
+so that works as intended
+it can be hard to think about these uh
+assertions
+i personally find it easier to think
+about
+things in a different way and that's
+with what you could call exception
+patterns to detect things
+and let them go through so again
+we
+we do want all the vowels
+and we want them removed but we want to
+preserve some
+which ones are that we want to preserve
+we want to preserve any any letter that
+is preceded by a word boundary so that
+means it's on the left edge of a word
+or
+at the right edge of a word
+so those will replace with themselves
+and any vowel that remains after that
+that hasn't been consumed by the first
+pattern we're going to replace with
+nothing
+so let's call
+this one b for word boundaries
+and the one we had before we'll call it
+a
+for
+look around
+and then we can compare the performance
+of these so now we have a
+drop we have reduce we have stencil and
+then we have look arounds and
+word boundaries
+each one we're going to run on the
+entire expression of
+an entire argument of t3
+and we'll we can oh we didn't get the
+exact same result uh why is that
+this is
+look ahead
+oh well that's interesting
+this works
+well let's do some debugging and see
+what uh what's happening here
+we can start with some of our
+string so if you take a hundred
+from t3
+and then
+we can oh so we can even do it like this
+we can say is d
+matching a for a hundred of t3 nope is
+it so for 50 of t3
+how about for 20
+yes
+25 no okay so now we can look at 25 take
+t3 and see what is it that's uh
+oh this is at the very first space
+at the very first space so
+d removes the internal vowels like
+this o for example
+and a
+we removed one
+more thing than d where they different
+oh did i simply forget a
+an i oh d didn't remove the i
+that's interesting
+this eye doesn't get removed
+but we clearly have an eye here
+removes it
+uppercase i gets removed
+so what's going on here why is d not
+removing this
+oh i see
+it's because i've did i put in digits by
+mistake in our test test data
+that's what it is
+so
+oh yes i'd put in a one over here that
+should have been an exclamation point
+so much for that there was some
+troubleshooting right there
+let's try the performance again but it
+shouldn't really make a big big
+difference in the results that we get
+there we go now we can see it finally uh
+so
+the performance using regular
+expressions is not good compared to the
+api solutions and with multiple patterns
+it's even worse than with a single
+pattern with with look around but hey
+sometimes
+regex is the way to go especially if the
+smaller amount of data or it's something
+that's very complex to express or it's
+something you just need a one-off and
+not running
+times then it could be quite fine
+but
+we should definitely prefer an array
+oriented solution if at all possible
+thank you so much for watching

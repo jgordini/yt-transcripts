@@ -1,0 +1,53 @@
+hey
+what is the percentage of characters in
+a given
+character Vector that are either the
+uppercase letter C or a place uppercase
+letter
+G we're about to find out
+so let's say we have a DNA string here
+we apply a function to it and the first
+thing we want to know is which letters
+are C and G we do that with a membership
+where one argument is pre-filled we bind
+an argument to it to look which is our
+lookup array C and G and that gives us a
+Boolean one bit for each character
+which means we could sum this
+and then we could divide it by length
+and multiply it by 100
+but
+notice here that we are
+and we are both dividing and summing so
+we can actually combine these to an
+inner products we could write
+plus dot divide so it's actually these
+bits divided by the length and then sum
+all of that up
+and this gives us a fraction which we
+can then multiply by a hundred giving 37
+and a half percent uh C's and
+G's this isn't especially uh efficient
+because we're going to be dividing these
+booleans we really should be summing
+them first so there are other ways that
+and we can do this well that's slightly
+less elegant and we could have sum this
+first and then divide it by the length
+we can also of course
+multiply the length by a hundred first
+and then
+we can multiply the sum by 100 first
+here and then divide and again we can
+now
+do the
+plus the times for an inner product
+and because of this parentheses here and
+with a single thing on the right if we
+want we can move division over on the
+left
+um and
+commute its arguments and just another
+solution in many ways to phrase this
+these are just a few
+thank you for watching

@@ -1,0 +1,297 @@
+hi
+we're going to simulate
+casting dice
+and then figuring out how many different
+ways of each total result there are and
+then
+drawing a diagram
+that shows the frequency for each one
+so first let's start by throwing the
+dice and this is actually interesting
+because we can think of the dice throws
+as
+um indices
+so each die represents one independent
+dimension in the full
+set of possible outcomes
+and so if we have three dice then each
+one of them can contribute with a
+magnitude along that its own dimension
+which means that throwing dice is
+actually the same thing as creating
+indexation vectors and if we want to
+make all the different possibilities
+that's the same thing as creating an an
+index a temple of contents of an array
+that has the dimensions of the number of
+sides in the dice
+so for a normal
+six sides then the Iota function which
+generates indices does exactly what we
+want
+so there are six possibilities the
+numbers from one to six and if we have
+two days with six signs each then we can
+get this collection which is a
+six by six
+array of Two element vectors into the
+space
+each Vector representing an outcome
+and then we can sum each one so this is
+a plus reduction on each
+and that gives us all the outcomes as a
+two dimensional array because there are
+two dice and if we do this with more
+dice then we get a whole lot of numbers
+like this in the Scrolls by
+Let's uh try instead of normal six-sided
+dice to have a two-sided die that is a
+coin flip a three-sided die that's a bit
+difficult to build but it can be done as
+a kind of weird Twisted piece of
+something that can land in in three
+different ways
+um and then
+a uh
+we can even do a six-sided normal die
+yeah
+so here we see the uh the full space
+it's a two by three by six array and
+then we have summed all the
+um
+the numbers and these are all the
+outcomes which means we can Revel this
+that is remove the shape we just get a
+flat list back and that gives us this
+very long list of possible results and
+since that we start off with the lowest
+possible value and then we increment by
+one going along the
+um at the
+in the Revel order that means we already
+have our possible outcomes in sorted
+order we'll never get a smaller value
+after we've gotten a larger value
+therefore and we can take this and throw
+it at the key operator it's a higher
+order function that takes an operand
+that is a function in this case we'll
+write it as a Lambda and it calls this
+function
+as many times as they are our unique
+elements so we will call it on three
+four five six seven eight and then
+eventually a 9 and so on
+up to the top value
+which is 11.
+and for each call it will give a left
+argument represented by Alpha and a
+right argument represented by Omega left
+and right most
+elements or letters in the Greek
+alphabet
+and the left is going to be the actual
+value and the right is going to be the
+indices where that occurs so we can see
+that we here have all the outcomes and
+we and here the indices where this
+occurs are 300 occurs in the beginning
+four appears in position two and
+position seven so we can see the second
+four over here and also position 19
+is the one over here
+but we're not actually interested in the
+indices themselves we just want one
+asterisk for each index and we can write
+that by
+taking an asterisk and making it into a
+constant function and applying that to
+each
+index
+and that gives us
+um
+our
+possible outcomes for these three types
+of dice and we can try and try this for
+two six sided dice then we get this
+and for a single die we yeah that's just
+one outcome for each possibility
+however this has an issue and that is
+that we in the process
+of
+Computing like this we
+have
+created an array of the number of
+dimensions of the count of the dice
+um
+and this is problematic because there is
+a limit in dialect APL to the number of
+Dimensions you're allowed to have in an
+array which is at 15. so if we have say
+16
+coin flips
+so this is a reshape so we're reshaping
+two into length 16. then
+we can see that the result array would
+have too many dimensions and that's not
+allowed
+so we need to solve this problem in a
+different way
+so how can we do this
+we can still think about it as indices
+into an array
+but this kind of
+um indexing
+is also a mixed based system actually or
+in this case if they're all the same
+that's the same base system what does
+that mean it means if we look again at
+this array then we can see that it's
+like a number system where we're
+counting up we start one one one one one
+one two so this is the the ones place
+and this is the sixth place we can see
+once we reach
+um
+to the end here after the six so this
+corresponds to
+a digit zero a digit one digit two and
+so once we reach the digit five then
+there are no more digits in this in the
+ones place because it's the final base
+six and then we continue
+by incrementing the next number over so
+this would correspond to the number one
+zero in base the mixed base two three
+six so this looks a little bit funny
+because we start with index origin one
+but if we subtract one
+notice API uses a high minus for
+negative numbers
+then we can kind of see the numbers as
+they progress so zero one two three four
+five and then one zero
+one one one two and so on
+um
+and over here we can then by the time we
+get to 2 5 then since the middle one
+only has is is base three the digit is
+only base three we need to progress to
+the top digit which is not the hundredth
+place but rather the three times sixth
+place that is the 18th Place
+and then we progress to that and this is
+the last number before we need to add
+one more digit
+Okay so
+how many are there here remember how we
+did the the sum reduction
+um to get the the addition reduction to
+get the sum so two we can do a
+multiplication reduction to get the
+product
+so there are 36 possibilities
+um when we have
+a specific ordering of the dice here and
+we have to because they're all set
+different here
+and we can generate all these numbers
+again we need to subtract one
+and now we just need to express them in
+this mixed base
+so we can say two three six
+encodes so a base looks like this or
+this evaluation in a base and this kind
+of looks like a t so it's
+it's converting to that base so we're
+taking these normal decimal numbers and
+we're converting to the mixed base 2 3
+6.
+and that gives us this one number per
+column notice that so this is number
+zero number one number two and so on
+then we get number one zero in base two
+three six and so on
+and here we never exceeded rank two we
+are just dealing with low uh rank arrays
+and it's also beneficial because we
+don't have this array of arrays a
+multi-dimensional arrays of little
+vectors we're keeping everything flat
+and that's going to be a much more
+performant
+now that we have this we need to add one
+back again because dice they start with
+one two three and instead of zero one
+two
+and then we just need to sum vertically
+so we're using the plus but this time
+we're using reduction with a bar on it
+which means we're reducing vertically
+actually along the leading first axis
+it gives us all our outcomes so this is
+the same thing that we had from before
+with the reduction on each of
+the indices of an array that has the
+shape 236
+where we then Ravel them so we can see
+that
+this is the same but this time without
+any issue that if we try to use 16
+coin Flips For example that just works
+no problems there
+okay
+then we can go in and put in our
+function from before where we use key
+left argument and an asterisk constant
+for each of the indices
+and then we can see we get some huge
+thing for for this very big conflict but
+it works
+um and if we try to do this on our 236
+case
+we got the nice curve from before if you
+try to do it on two dice
+then
+um
+oh this uh what is the problem here this
+doesn't quite look right
+um that's because we're using we should
+go back again try this one this
+constantly appear we need 16 reshape two
+over here
+there we go that's better of course if
+you have 16 coins and they they both
+contribute
+um one and two then the Lower Side you
+can get there's one for each one so
+that's 16 and then going out from there
+and then and we can try our six six case
+have a six six over here
+um
+there is but one little problem
+and and that is if you only have a
+single number here then
+expressing it as in the base here is
+going to just give us a flat Vector but
+we want to explicitly make this a
+vector rather than a scalar which gives
+us a matrix and it doesn't actually look
+different but it will make a difference
+when we use the key part so this is
+correct whereas if we didn't do the the
+Revel into
+a vector from a scalar then we get a
+rank error
+so that's important and there are
+different ways we can we can do this but
+now let's make this whole thing into a
+proper function
+we put bases around it substitute an
+Omega for the argument
+and now we have a function that we can
+use and that doesn't hit any issues with
+the maximum rank
+and it works as well on
+a scanner
+thank you for watching

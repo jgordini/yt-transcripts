@@ -1,0 +1,335 @@
+hi
+this time we're going to compute the
+zodiac sign approximately
+we're given two numbers one for the
+month and one for the day
+it's given as a table on the problem
+description website
+but I've imported it here
+I'm not going to go into how we get it
+in there are various ways to do that but
+know that what we have here is a matrix
+representation of character vectors
+which is exactly like the table is there
+including some strange spaces that we
+really don't want and we're going to
+clean all that up
+so our first problem is that while the
+table is laid out for human consumption
+it is not really very good for machine
+consumption we can see that we've got
+four columns but it's actually a
+database table of two columns the sign
+and the date range the date range as
+well is formatted nicely for humans but
+not really very nicely for computers
+so we've got two columns that are
+actually the same column
+um twice
+let's start by cleaning that up so the
+First Column and the third column Belong
+Together
+and the second column and the fourth
+column belong together so we're going to
+permute The Columns of the table
+now we want to get
+the the cells in the table that belong
+together
+to be together in sequence because the
+the reading order here if we just
+flattened our data is Aries Libra and
+then March 21st and then September 23rd
+and then Taurus and that's awkward
+but if we transpose our table
+then the reading order has all the signs
+first and then all the date ranges
+now the only problem is that we have two
+rows for each one of these I only want
+one with of course 12 columns so
+two rows and 12 columns reshapes this
+transpose table
+and now we've got two rows one with the
+signs and one with the date ranges
+another problem is that strangely this
+table begins from March 21st and since
+we're going to look for dates in the
+Gregorian calendar that begins with
+January then we'd want to rotate this
+around so this is a
+negative 2 steps
+horizontal
+rotation of the table
+so the normal rotation takes elements
+from the left and sticks them over on
+the right now we're doing the reverse so
+that's what the negative number is for
+and now we begin with January
+instead
+it's a table and it's much easier to
+work with this data having it separately
+one list of signs and one list of dates
+so let's split the table into two
+vectors and we can actually see the
+dates but they are out there to the
+right and then we assign them to S and D
+for the signs and the date ranges
+like that here are the signs and here
+are the date ranges
+and now we can see that the signs have
+some training spaces which we should
+probably get rid of immediately so the
+signs and then we're going to use
+um
+especially syntax let's first try to
+remove the signs so we want to this is
+the a set difference so without we can
+read it as without from each one of them
+a space
+and that works this removes them but
+this didn't update the variable and we
+could assign it just to to S but
+more fun is to use something called
+modified assignment which is something
+you see in other languages as augmented
+assignment you might see things like
+plus equals so you have some some
+variable name V and then you increment
+it like this or decrement it or have it
+in APL we allowed absolutely any
+function
+on the left that function is given the
+original value on the left and this
+parameter a new updating value on the
+right
+and then whatever it computes is then
+assigned to the variable
+so in this case our function is a
+derived function which is the without
+each
+function
+and then we just stick the assignment
+Arrow over here
+and then this parameter is given as
+write argument and the variable's
+current value is given as left argument
+and the result is put into that same
+variable
+now this has been cleaned up
+next step is to parse the dates
+we could go and pass the uh the month
+names but we actually know that there's
+one month for each so that's just the
+range
+um Iota 12 that's the integers from 1 to
+12.
+the only thing we should extract then is
+the the day of that month and we only
+want the first number in each cell
+because it's actually redundant
+information the last day of one sign is
+the day before the first day of the next
+sign and we're going to go with
+beginning dates rather than end dates
+so a really nice way to do this is to
+use quad vfi
+and this means verify and fix input
+and it's called verify and fix where
+verifying make sure that a token is a
+proper number and fixed actually
+converts that text to a number
+and so we can try this with the first
+one
+so the first one of d
+it's if we just run this by itself then
+by default it splits on Spaces it uses
+them as token separators so we can see
+it saw three tokens here this generally
+there's 20 and dash February and then
+there's 18. and the very far part is on
+the left and the fixed part is on the
+right the very first part is a Boolean
+mask saying that this token was invalid
+this token was invalid and this token
+was valid as a number and these are the
+values with zeros substituted for
+invalid values so we can see we only got
+the 18.
+however we can also tell
+GFI to use one or more field separators
+so we want both space
+and N Dash as
+field separators
+and now if you try running this we can
+see that it's split it up and we got
+both the values 20 and 18 out recognized
+as numbers and then there was the
+February and the January that were
+considered invalid tokens they're not
+actually proper numbers
+and since we know exactly what kind of
+data we have here this is good enough
+for us to parse it fully
+we can then
+well we can we can take it one step
+further
+um we know what this mask is going to
+look like so we can ignore that and we
+know what this one is going to look like
+so we can just go in and take the second
+element of
+the second element
+and we can do that with the pick
+function
+2 2 means go into the second element of
+the overall structure and then inside
+that go into the second element again
+and that gives us the 20. now the only
+thing we need to do is wrap this in a
+little Lambda where Omega represents the
+argument and apply that to each of the
+that gives us our cutoff days of the
+month
+we can make this into a matrix
+so now we have a column vector or column
+Matrix single column and then we can
+take those indices from 1 to 12 and
+concatenate horizontally to that Matrix
+and that gives us a lookup table for
+where the cutoff dates are
+let's call this
+C for cutoff
+so here is our cutoff table
+okay
+now if we have to come up with a
+strategy for actually finding the signs
+and if you look at our table again
+then we'll see that
+if we go and look for December here
+the
+we're going to end up with the end of
+the year
+here
+being Capricorn
+and that's that's fine that's the 12th
+one but there's also a part of the
+beginning of the year
+which is a bit of an issue so any dates
+before the first cutoff should really
+end up with Capricorn as well
+one way to do this would be to add
+another element to our lookup table
+another one is by doing a cyclic lookup
+so we could use modulus and compute the
+indices but even easier is to rotate
+cyclically
+like we did before and we we rotate
+technically the whole
+um the whole table of signs
+and then
+we can have indices or positions between
+zero and 12.
+so we'll we'll call it zero when we are
+before the first
+cut off date that is from January 1st to
+January 19.
+and then we'll call it one when we have
+from January 20 and onwards and two when
+we kept that and so on and then we have
+the 12th one
+when we have December 22 and onwards to
+the end of the year
+so this means that we want the Capricorn
+to be in front because that's going to
+be the zeroth step
+and currently we have the signs arranged
+with
+Aquarius first
+but we can do the same kind of syntaxes
+before we do a rotation but rotate takes
+the amount on the left and the data on
+the right so we need to commute or swerp
+the arguments negative one step
+now we have Capricorn first
+so if we have zero rotation of
+of the signs
+then we get Capricorn first and if we
+pick the first one then it becomes
+Capricorn
+if we rotate it one step that is after
+the first cutoff date
+we get Aquarius at 12 or 11 let's do
+that first
+we get Sagittarius and 12
+we're back to Capricorn
+so this works really nicely
+we then just need to do some lookups
+into our table so here's the table of
+cutoffs and we have something called
+interval index
+interval index it looks where do things
+fit with every major cell or Row in this
+case
+being the beginning of a section so it
+will look this something belong with 120
+and further or 219 or further and then
+this is the first interval here between
+these two is called interval one before
+the first one is called interval zero
+and then the last one defines the
+interval 12 which is exactly what we
+want
+so we can try it 223
+interval 2. so this is this works with
+lexicographical ordering meaning we
+first we look at the first element and
+then we look at the second amount which
+is exactly what we want so 223 a three
+it falls in here that's interval number
+two
+and we can try it with 10
+31. the example K is given
+that's over here now we can try it with
+January 1st
+you see we get a zero
+so that's before the first one
+so for a date like this
+we can take this and rotate
+the signs
+and then we pick the first one
+the remaining step is to make this into
+a proper Standalone function
+we will
+we could put in an argument here
+and then
+wrap everything in the Lambda
+foreign we could even save our
+parenthesis by commuting the arguments
+of the rotation
+so this is one way to State it
+or we could make a tested definition
+where that's one where we don't mention
+the arguments by name
+instead we say that
+we bind
+as in fixed left argument two interval
+index to the lookup we bind this lookup
+table
+and then we use that to rotate the signs
+and pick the first one
+that's another way to write it however
+the reading order here with the swap
+the arguments is not actually we don't
+need to do this swapping because we
+could instead write the rotation
+and then use
+the the sine Vector here but make it
+into a constant function so this Returns
+the signs
+it gets rotated by the interval index
+into the cutoffs so this is another way
+that we can write it and now we can try
+on each one of
+223 and 1031 with this example cases
+and we can try that with G as well it's
+entirely equivalent
+thank you for watching

@@ -1,0 +1,353 @@
+welcome to the API Quest cap Wiki for
+details
+today's problem is the last from the
+2015 round of the APL problem solving
+competition
+we are to generate Pascal's triangle
+which is pretty simple but the catch
+here is that we wanted to also look nice
+for human readers and a triangle doesn't
+fit nicely into a rectangular array so
+instead of having it numeric as Pascal's
+struggle consists of numbers we are to
+create a character Matrix where the
+lines are approximately centered
+there are two steps to this problem the
+first is generating the data and then
+they're centering the lines so let's
+split it into those two parts
+Pascal's triangle has a classic
+elegant solution
+it is simply the binomial coefficients
+an outer product on all the numbers from
+0 to n
+there's a problem though with this
+triangle it's sideways and it's padded
+with these zeros
+we can do something about that of course
+but it makes it a little bit less
+elegant so first we transpose it and
+that gives us the rows at least as as
+rows
+and then we need to remove the zeros
+so
+on each and row that is on each sub
+array of Frank one we want to be without
+zeros
+but the problem is that we want to pad
+again with zeros if we try to apply this
+just like this
+so that didn't get us anywhere therefore
+we must immediately format it as a
+character array and now the padding will
+instead be done with spaces
+and this gives us
+um the first and flat approach to
+creating
+the data that we want and the next part
+is then
+to align the rows so that to be centered
+and we'll come back to that
+another approach is a nested one
+we start off the same way by generating
+all these indices
+but instead of doing an auto product we
+kind of doing half an hour product
+so again we want the same indices up to
+whichever end that we are at now
+combined with that
+number
+and that gives us kind of a triangle
+with each row getting longer and longer
+and then since we're going to deal with
+character data and have it equip the the
+nested equivalent of the previously
+previous shown flat result when we're
+going to format each one looks the same
+but these are actually character vectors
+and this we can call n because it's the
+nested solution
+we can also
+um avoid repeating ourselves we have
+here zero comma Iota and we have over
+here zero comma Yota so we could uh say
+this is kind of like an inclusive
+um Iota in here
+and then we can use that name over here
+it's it comes out and it represented
+exactly the same but just the way of
+stating it is a little bit shorter
+and now uh that we have the data let's
+look at actually centering it so let's
+go back first to our flat Matrix
+with the training spaces
+so one strategy for centering it is
+looking at how many training spaces are
+there there are four in this line and
+there are six on this line so if we take
+half of those on each line and then
+rotate the entire row so we'll remove
+the training less training spaces and
+put them at the front we'll do and here
+we we have six we're removing the
+training three we put it in the front
+then we end up having something that
+looks centered
+how can we do this well we need to count
+how many training spaces there are
+if we make a Boolean Matrix of where we
+have spaces
+and then make sure that it is we do that
+in the reverse so now it becomes leading
+spaces we can do end reductions on each
+line
+to see to isolate the leading spaces
+which are actually the training spaces
+and then we can sum that to see how many
+leading that is Trading Spaces they are
+and then we want only half of that
+so these are how many steps to rotate
+um it could be that the number is is odd
+not a number of spaces on and therefore
+we get a half so to be safe let's just
+round this off and the problem
+specification also says that can be one
+more or less so it's not important how
+exactly we round it up or down
+there's definitely no reason to run off
+to closest because it's always going to
+be a whole number or a half
+okay so and now we want to rotate this
+many steps but rotation the normal
+rotation API rotates from the front to
+the rear
+but we need to rotate from the rear to
+the front so we need to negate this
+and then if we give a name or an
+argument namely to the The Matrix that
+we're operating on then we can simply do
+a horizontal rotate using these values
+as the rotation amount and that gives us
+our
+centered Matrix
+so this is rotation using the flat and
+this is the whole thing is one large
+atop where the right function right time
+is this F generator function that we
+created before and then the left chain
+is this in a centering thing and we can
+even see this classic approach
+um the ID is highlighting this to be an
+a dialogue idiom which means it doesn't
+actually go through each of these three
+operations
+um instead it recognizes this as a whole
+idiomatic expression and computes the
+trailing space spaces directly for some
+extra performance benefit
+foreign
+we instead started with the the nested
+array
+now here aren't any spaces that we can
+that we can count and operate on but we
+can look at the length and remember that
+these are character vectors so if we get
+the length of each one of them then we
+have those here
+you can see that even though it's only
+two numbers it's like three because
+there's a space in between as well
+and so
+um what we want to do here is we we want
+to rotate
+around on the whole Matrix and we can
+create the Matrix the flat Matrix simply
+by mixing
+so here we have it with the spaces so
+we're still going to rotate but we're
+going to compute the amount of rotation
+based on the nested representation of it
+so we have the length of each
+and then on the length of each how much
+do we need to rotate well the full width
+is the length of the last one
+and all the lengths are
+it's just the same thing that's the
+argument here
+and we want half of the difference
+between them to be the amount that we
+rotate with
+so this is the the length and this is
+the length of the longest one and this
+gives us these negative numbers
+and I've done it negatively like this of
+course we could we could if you subtract
+the other way around we get the
+corresponding positive numbers but since
+we're going to do a negative rotation
+amount we might as well just keep it
+negative from the beginning
+and then we divide that by two as before
+and we can round it off again it doesn't
+really matter how we we round it so this
+is the amount of rotation that we need
+to do on each one
+and then and we use this to rotate but
+not the argument itself because that's
+nested we want to rotate the mix of the
+argument
+and then since this is a uh yeah so then
+we have in the top over here and then we
+just need to to
+swapped arguments over here
+we have it here and this is in the top
+two pieces we can use the top operator
+here because the left function is
+complex
+but ins since this is the post
+processing on the result of the tally of
+each it could also be the pre-processing
+of the swapped and rotation so we can
+replace this with a job over here and it
+would be the same thing
+so this is a way of using rotation with
+a nested representation again at the top
+this is the centering function and this
+is the generation generating function
+so now we used rotation but we can also
+use a take so take has this interesting
+thing that you can what I sometimes call
+overtake so let's say we have ABC
+if we take the nest five elements from
+that
+then that pads us with
+two spaces at the beginning and we can
+use this to our advantage
+um if and the same as it goes if we take
+from the beginning and then we get
+training spaces right here
+so for this to work we can't already
+have the more all the rows be the same
+length in the flat representation so we
+have to use the nested representation
+and now and we are going to start off
+the same way we get the length of
+of each one
+and then we need to compute what is the
+length that we want to take from the
+rear of each one which is going to be
+the next it already has plus half half
+of the difference between the longest
+one and the current one
+that's going to add half of those
+potential spaces on the left okay so
+let's state that
+the current length Plus
+half of the difference between the
+longest one which is the same thing as
+the last one
+um minus the current length
+so these are the lengths that we need to
+take from each one
+of course this needs to be negative
+and then we need to make sure that we
+don't have any halves so we can round
+that up as well
+and then the only thing that's missing
+is that we take
+from each one with this amount
+um and these are the nested things so
+now we have padded them with leading
+spaces so that they will fit each other
+and then we can just mix and we get the
+character Matrix that we're looking for
+however we can simplify this quite a bit
+actually
+if we think about it
+then we have the amount itself
+Plus
+half of the difference between
+this constant value so to say the last
+one
+and the amount itself
+in other words we
+are here
+um
+removing
+from the part that we are
+adding
+which means that we can also see this as
+half of
+the last element the longest one
+plus only half of the value itself
+because we're adding the whole thing
+and then we're subtracting half of it
+so then what we can do is just
+add have to begin with
+and not
+add a whole one and subtract the half
+one
+and we can keep going
+we are here negating
+this half
+will be include so to say this this sign
+change in the division which is the type
+of multiplication so if we divide by
+negative 2 instead that's the same thing
+but another way we could do it since we
+only think we need to affect is a sign
+change
+then instead of adding so to say these
+lengths we can add their negation
+instead of adding
+the last one we can subtract the last
+one so that affects also a sign change
+um on the whole thing
+and we get the same result
+and this is another very nice way of
+of creating our Matrix
+so we can call this
+um the
+the overtake
+so it uses take on the nested
+representation again and the top this
+time we have a different on the left and
+then our original generating function on
+the right
+okay so how do they compare to each
+other well there's not really any other
+limit to what we can do here but let's
+increase the print Precision to the
+maximum that our 64-bit floats will
+allow and then we can do triangles up to
+say order 50 or so
+copy in cmpx from the defense workspace
+and let's try everything for ends up to
+50.
+we can stick a zero in front as well
+and then we want to compare
+um this was the rotation using the flat
+on each and we want the rotation using
+the nested on each
+and then we wanted to have the using
+take on the nested
+oh so we can see that the nested
+approaches here are
+well approximately half the runtime of
+the flat approach and that's exactly
+what we predicted to begin with because
+we are generating only half the triangle
+slightly more than half the triangle
+because we need a diagonal
+um and that is the overwhelming amount
+of computations then two here and we are
+using just slightly over half of the
+runtime in the rest of the approach so
+even though it's a good rule of thumb
+that when you're doing APL you want to
+stay flat you have to also recognize
+when is flat actually flat in this case
+we were processing each row separately
+and that really negates all the benefit
+of staying flat
+thank you for watching

@@ -1,0 +1,412 @@
+welcome to the apl quest
+today's quest
+has us imagine two circles that are
+touching each other
+and
+one of them
+stays where it is
+the other one
+rolls on the first one's surface
+or circumference
+all the way around until it reaches the
+place where it started
+now obviously um
+it
+depending on the exact sizes of these
+two circles
+then it may not
+end up in the same it might while it's
+in the same position relative to the to
+the stationary circle um it may not have
+the same orientation may not be pointing
+in the same direction again and so
+today's problem which is the seventh
+from the 2014
+round of the pill problems on the
+conversation
+is to see how many times do it does the
+circle who that's rolling need to go
+around
+um until
+how many times does it need to turn
+around itself so that until it has
+rolled all the way around the stationary
+circle
+but also is pointing
+um in the same direction
+and i mean same orientation as the way
+it started
+there are different ways that we can
+attack this um let's just start by
+actually simulating
+the problem
+and we can use and since we have two
+arguments here we have the the size as
+left argument of the stationary circle
+and then we have the size of the
+um
+of the
+mobile circle one that's rolling around
+um
+they and officially they're given as as
+diameters but it doesn't really matter
+because the circumference of course is
+just a a constant times the diameter and
+that's the same for both so that kind of
+goes out of the equation
+and but what we wanted to see is whether
+the amount of revolutions that we have
+done on the mobile circle um
+times its size
+ends up with something that
+that we can divide the stationary
+circle by
+sorry something that the
+um
+that can be divided by the stationary
+circle
+okay so the way we can we can write this
+up
+is we are done
+if
+there's no division remainder
+when we are dividing by the state a
+stationary circle
+um and how far we've gone so far well
+we're going to use an operand for that
+so that's how many revolutions we've
+done
+of the diameter well actually the
+circumference
+of the mobile circle
+and in if that divides
+then we're done and so that's the number
+of revolutions
+otherwise
+we are going to try again
+but this time we're going to
+increment
+the
+um the counter of
+revolutions so we take one more
+revolution of the
+of the mobile circle
+and then we feed that in to the same
+operator so it doesn't operate another
+function so the the arguments stay
+constant
+and the upper end stay
+increments every time and then we just
+need to
+start with a1
+so this is a recursive solution uh it
+keeps
+incrementing and calling itself
+so
+we can say a state a stationary circle
+of uh diameter or that's it
+circumference 10 and then we have a
+mobile one that's five
+so the five
+after it has rolled one time around
+itself and then it's on the opposite
+side
+and then it rolls one time again around
+itself and it comes back to to where it
+was
+if we try to
+flip the two
+then
+we only need one
+revolution of the mobile one what's
+happening is that it only needs to go
+half away a half a turn to come back to
+where it was
+but it will keep going for another half
+a turn in order to
+come come back and face the same
+direction that it
+started with as well
+and we can we can try all the
+possibilities by making a table of this
+so this is an outer product and then
+all the
+all the numbers up to 10.
+and then this gives us a full table of
+uh the revolutions and there's one
+interesting issue um and that is
+zero
+now
+it doesn't really make sense that the
+mobile circle should have a diameter and
+therefore circumference zero it's point
+shaped because it doesn't matter then
+how many times it will turn around
+itself it's never going to get anywhere
+so every time around it will move zero
+it will not move at all
+unless also the the left argument the
+the stationary circle is
+uh point shaped in which case nothing
+can really move and it doesn't really
+make sense to ask how many times i mean
+any number of times would be good zero
+one two infinite so you could say the
+number the result is zero or you could
+say that one or after zero times it's
+also turned one full revolution around
+uh the zero zero case doesn't really
+matter however if the stationary circle
+is zero
+then
+the result is most certainly zero
+because we don't need to get anywhere
+even though the
+mobile circle has the ability to revolve
+it doesn't actually need to revolve
+so we can we can handle this additional
+case by adding in an extra guard
+so if
+uh
+the left argument that's the this
+circular standing still is zero
+then the result is zero otherwise we
+just continue as before
+and now we can go and
+make a test case where there's even a
+zero on the left
+but not on the right as that doesn't
+really make sense
+and we can see you get the row of um all
+zeroes there of course
+right so this is one way to do it um
+another so this and this was recursive
+let's try to do an iterative way
+here we just start off with a count of
+zero and then and we we increment as we
+go along and until it works out it's a
+little bit it's much shorter but it's a
+little bit more involved
+so the way we can do it is
+we start off with
+with zero and then we need to increment
+it and we want to increment it until
+our condition has been fulfilled now
+what is that condition that is that
+the left argument
+because we are comparing
+the previous and the next
+iteration and so that would be the left
+and right argument of our comparison
+function which is one that determines
+when it's true then we have fulfilled
+our condition
+um so and
+when that multiplied by
+the circumference of
+the mobile circle
+evenly divides
+the circumference of the
+of this circle that's standing still
+then we're done
+and so we should get exactly the same
+here
+as well
+but again we have a problem with zero
+because if we start off with zero on the
+left
+then we're going to um
+we can try it
+if we have
+zero on the left and say two on the
+right then the first time around we'll
+try to
+to apply this function
+so we add and add one so we get one and
+zero
+and then
+we want to check
+if it divides
+division remainder so let's let's try
+that so we can we can just do it like
+this
+right here
+so if we start with uh with zero here
+and say we have two and and
+then
+we get
+zero and
+then
+we want to stop however once we
+increment it
+then we get the full remainder because 0
+doesn't add up to anything
+in effect
+what happens is that
+if we try to run this with a
+with a zero
+then
+we'll go into an infinite iteration
+we'll never get there
+so let's interrupt that
+and then we can and we can redefine i
+to have the same kind of stop guard as
+we did with the recursive version so if
+there's a zero on the left then we stop
+with a zero right away otherwise we can
+start iterating
+okay how do they compare in performance
+to each other the iterative version and
+the recursive version
+let's copy in cmpx
+from defense
+and then and we can compare them we can
+make the table a little bit bigger and
+try them so let's say the stationary one
+is zero and all the numbers up to 100
+and then the mobile one are all the
+numbers up to 100
+and then we can compare
+all the possibilities the requested
+version
+and all the possibilities with iterative
+version
+and the iterative version is much faster
+and that's probably because
+we're not entering into any new uh
+functions trying calling again and again
+not binding together an operand with
+with the operator over and over again
+which is staying in the same place just
+running
+the power operator
+but we can do much better than this by
+using some number theory because
+think about the way that
+we're describing this if
+this multiple
+divides so really and what we want to
+find out
+is
+what is the
+um
+what is the smallest number
+that we can multiply with
+to
+um to end to be divisible
+and so we can express this in terms of
+the greatest common denominator or
+least common multiple it actually comes
+out very much the same
+so
+um
+we want to divide so let's say again we
+have 10 on the left
+and then
+on the right we have five
+and so
+the least common uh sorry the greatest
+common denominator between the two
+is
+five so that means we can uh divide both
+of them by five
+and then uh we can see well if if that's
+the case then how many times five do we
+need to get in order to get all the way
+around the
+stationary one so we just divide
+the left argument by that
+so that's one way
+to state it
+using the greatest common denominator
+what's greatest common divisor
+opposite we can also look at
+look at the least
+common multiple so here we are asking um
+what is the
+um what's the smallest number that we
+can multiply up with these two numbers
+in order to
+to match each other so that's 10 that
+would be 1 times 10 gives 10 and 2 times
+5 gives
+10 as well
+and then we can
+divide that by the right organ so so
+this is saying that in order for these
+to match up then we need to have
+traversed 10 or to go all the way around
+and since the right argument is this
+actual size that of the moving circle
+then the total distance divided by its
+circumference will give us how many
+times we need to go around
+and so we can define this using the
+least common multiple as well now
+there's an interesting thing about these
+two functions g and l here and that is
+they are really really amenable to write
+in a tacit
+version
+why is that
+because let's look at g
+we if we think of things in terms of
+functions then here we have a function
+application between the arguments
+and
+then we have a function that
+takes that result as its argument now
+the only problem is here on the left we
+don't there's no function being applied
+between the left and right arguments
+giving us a full fork
+however we could say there is one namely
+the density function
+of the left argument
+so if we wrote it like this instead
+then effectively this function would
+select the left argument which means all
+this we can
+um we can remove all mention of our
+arguments making everything point free
+or tested
+like this
+oops
+and then a parenthesis function it is
+just the function itself and then we
+have parenthesis around the fork that
+gives us
+this fork as well and we can do exactly
+the same thing for the function l
+here again it's
+there's an
+implicit and
+identity function that selects the right
+argument so we can remove all the
+mentions of arguments and then we're
+done
+and now if we
+compare these so we know that i was the
+fastest one of two before the iterative
+version so let's
+compare
+the fastest of
+of those of
+r and i
+with
+these two number theoretical functions
+g
+and l
+and we should see that these sort of say
+built-in functions where pretty much
+everything we need to do is always built
+into the language are going to be much
+faster
+if we try to just raise them against
+each other
+then we'll find that
+it doesn't really make a difference
+which ones
+they that we use
+they are all built on the same exact
+principle thank you for watching

@@ -1,0 +1,405 @@
+welcome to the epl quest capl wiki for
+details
+today's quest is the fifth problem from
+the 2014 round of the appeal problem
+solving competition
+it's a pretty simple problem we're just
+to find out whether a given text is a
+palindrome slight complication is that
+we need to make sure to ignore things
+like case and punctuation
+let's start with some test data
+okay
+so we need to get rid of
+of case differences so that for example
+the first a and the last a in panama
+match each other
+and we can use quad c which is
+case fold for that
+now and
+we just need to sort out the
+characters that we need to compare and
+get rid of those that we don't want to
+look at at all and one way we can do
+this is let's uh let's put this into a
+function so we can try this
+this is the case folded one and then we
+should look
+which characters are members of the case
+folded alphabet
+oops
+uh
+yeah of course it should be
+omega here there we go
+okay
+and then and
+we can
+filter by that boolean vector
+let's call this
+just the letters
+the last step is to see if the letters
+match themselves when they are reversed
+we can see that amanda plan and so on is
+a palindrome whereas hello world is not
+this works
+but we can do it a little bit more
+elegantly by making some observations
+about what we've got here
+firstly
+filtering by membership
+is the same thing as intersection so we
+can actually substitute this whole thing
+in
+and say
+then the intersection
+between
+the case folded
+argument and the case folded alphabet
+notice that we are applying intersection
+after preprocessing both arguments with
+case folding this calls fun over
+finally we are comparing
+this l to its reverse
+an operation between
+um the identity of some value and
+some pre-processed
+value and that we could call that a hook
+construct
+but really what is
+another way to think about it
+is that we are applying
+the match function between l and l it on
+itself
+so that means we're doing a selfie
+only that before we apply match we
+preprocess the right argument of match
+with
+reverse
+and then since we're only using this
+variable once there's really no point in
+assigning it so we can just put it in
+line
+there's also possibility of making this
+a fully tested and function
+it's quite simple here because we just
+have a dyadic function applied between
+the argument
+and a constant
+and then we apply another function
+magnetically on that so clearly this
+whole thing is in the top
+one thing applied and another thing
+applied
+only that we have here a dynamic
+function where the one argument is
+constant so we can bind the alphabet as
+a constant right argument to it
+and that gives us
+a very neat tested solution
+let's call this a
+it does have however a little bit of a
+performance issue namely that we are
+case folding a potentially very large
+argument
+all we need to do is we want to see
+to to
+only keep those characters which are
+uppercase and lowercase letters and the
+whole reason we're case folding the
+whole argument is just so that we can
+take the intersection with the letters
+now
+the input might be of an unknown size
+but the alphabet is of a known size
+and so and we can optimize this a little
+bit by simply keeping
+the intersection but instead of case
+folding both arguments we only
+case fold
+the alphabet now this is a problem of
+course because
+this only gives us lowercase letters and
+that we might also have uppercase
+letters so let's just supply the
+uppercase letters as well this is a
+one-time operation when we define the
+function generating an uppercase and
+lowercase alphabet and then we just do
+the intersection on that so that might
+that saves us from doing the case
+folding on the entire argument and that
+might speed up things a little bit
+so these are the basic solutions but we
+could actually go a whole different
+route and that is to compare ranges
+so instead of looking for intersection
+which is a set function
+we can look at where in the unicode
+character said
+do the characters fall because all the
+um in unicode and ascii all the
+uppercase letters are contiguous and all
+the lowercase letters are also
+contiguous
+and so if we look at
+the values for the beginning of the
+uppercase alphabet the end of the
+uppercase alphabet and also
+the
+beginning of the lowercase alphabet
+and
+the end of the low case alphabet
+oops sorry we need an each there
+okay so we can see from 65 to 90 from 97
+to 122. now interval index is what we're
+going to use for looking up ranges and
+it
+made it is inclusive on the left and the
+beginning and exclusive on the end so we
+need to go one up at the end and then we
+can look at what
+what those characters are so this is the
+these are the characters that we want to
+use for cutoffs
+and so we can see that um some
+characters fall
+inside this interval here that's number
+one between these two and then zero is
+before the first one and then some fall
+um over here and then there might also
+be something that falls in punctuation
+the force here but that's pretty rare
+um which means that it's every other
+interval which
+we want if it's zero it's outside we
+don't want it if it's one it's it's an
+uppercase letter if it's two it's
+lowercase if a it's it's some
+punctuation and it's if it's three it's
+uh lowercase i mean if it's four uh then
+it's beyond the lowercase and small
+punctuation that we don't want so we can
+take the division remainder when
+dividing by two
+and that gives us a
+a one for all the odd ones which is
+exactly where we have uppercase and
+lowercase letters
+and that is what we need to use to uh to
+filter with
+so that's another way of
+of doing the filtering and then we can
+apply uh
+the actual
+palindromic
+testing uh as we've done before
+oops
+oh and we've of course been missing the
+case folding that's once we're done with
+that
+there we go
+let's call the c actually we can we can
+make this one and test it as well
+um
+before before we give it a name let's
+just try that
+so there's an interesting problem here
+with uh
+with the slash which is a hybrid
+operator function
+we can we can begin by fixing that
+within a top and then we have a dyadic
+function with a constant left argument
+so we can just bind that over here
+and then we have
+the argument over here
+case folding
+and then
+comparison
+so we could we could write all of it
+like this
+see
+but since we are anyway post-processing
+the result from uh the replicate or
+compress
+here then we don't actually need to use
+an identity function to do uh
+with the top to force it to be a
+function we could take this whole thing
+and move it in here as well
+so let's call this c
+but this whole business of uh case
+folding and that means that you need to
+consider every character whether that
+needs to be case folded that is
+potentially expensive and if we can
+operate on raw code points we might get
+a significant
+performance advantage now how is that
+going to work
+so if we start immediately by converting
+all the characters
+to code points if they are all ascii
+then that's really cheap because that
+means we can we can because the code
+points are
+essentially
+unsigned
+um byte values on-site integers
+if there are some characters that are
+outside of ascii then we'll end up
+having in
+values larger than 127 and we'll have to
+go to two byte integers because the
+integers internally are
+um are signed but still is going to be
+pretty uh pretty cheap operation to
+switch to code points
+like this
+and then uh we need to check whether
+they are in this range that we used
+before
+and we can we can write this in a tested
+way that i i really like for uh for
+ranges
+um so there are two ranges we're looking
+at
+and we want to know if it's in either
+those ranges and so the way we can api
+doesn't allow you to write
+x uh or something like a a is less than
+x is less than b because
+less than is just
+a function and it would bind wrong but
+we can write
+that
+65
+is
+less than or equal to
+and
+the value is also less than or equal to
+90 so that's the upper bound and this
+kind of reads nicely right 65 is less
+than or equal to and it's less than
+equal to and to 90. so that's the upper
+case and then lowercase is 97 is less
+than or equal to and it's less than or
+equal to
+122. so this i like writing ranges in
+apl like this
+so this again gives us um
+the
+elements that we're interested in
+and then we need to use that to filter
+but we're not filtering the characters
+now we are filtered because then
+uh we need to case fold we're filtering
+the code points so we give this a name u
+and then we'll
+filter you with that and that gives us
+all these uh values now it might not be
+easy to see what's going on here but if
+we just temporarily apply
+quad ucs to it we can
+do each again
+then we can see all letters that we
+interested in
+now here's the thing ascii and then by
+extension unicode
+because it's just a superset is
+constructed in such a way that there's a
+single bit difference between uppercase
+and lowercase and that's the
+that means that we can do a
+division remainder with 32
+and that since we're not it's it doesn't
+matter that there are many other values
+that would collapse to the same division
+remainder with 32 because we only look
+at uppercase and lowercase letters so
+anything we need to do to know is like
+the offset from the beginning of the
+alphabet and 32 gives us exactly that
+now this these aren't useful byte values
+but we're not interested in byte values
+we're just interested in these um should
+we say labels on the characters and see
+if they are
+the same
+and then we can
+check using the exact same thing as
+before whether or not we've got a
+palindrome
+so by working on on code points the
+codis is significantly more involved
+but we might potentially avoid some
+expensive operations there
+okay let's have a look at the
+performance
+we're copying cmpx from defense
+and then we're going to uh
+we need to
+create some test data of course
+so let's uh let's create some test data
+say
+we overtake from the upper case and the
+lowercase alphabet much like we did we
+let the application look
+alphabet before
+um followed by a little bit of
+punctuation that might happen there so
+because this adds up to to much less
+than 70 that means we'll get some um
+some spaces uh as well so it kind of
+looks like natural text
+and there are obviously 70 here and
+let's just to do 50 of them for now just
+to see what what this looks like
+so this kind of looks like natural text
+with a little bit of punctuation there
+it's not really very important
+and
+so let's so this is a case so let's
+let's put it over here
+one
+five should be enough
+and then so this isn't obviously isn't a
+uh a palindrome but we can we can create
+one that that is a palindrome
+uh and we can do that simply by let's
+take
+take half of this so this is
+five e4
+and then we can
+just so it's the same kind of construct
+this the hook contrast we are
+self-concatenating it
+um and then we are reversing it and
+before we concatenate one of them so
+this
+concatenated to its reverse could be
+read as competition it's reversed and
+this is obviously a palindrome
+and now we can say cmpx
+on
+a b c and d
+each one of them
+with the entire argument of t
+so this is on a nonpalindromic
+case
+and we can see that um
+our solution where we avoid case folding
+the input instead of instead having a
+both application lowercase alphabet for
+the intersection that did save us
+significantly and doing the intervals
+with raw characters that's not worth it
+however switching to code points gives
+us a significant speed up in this case
+and we can just for good measure you can
+try this with the palindrome as well
+we'll probably see similar
+results
+yeah that looks very much the same
+so that's all for checking for
+palindromes thank you for watching

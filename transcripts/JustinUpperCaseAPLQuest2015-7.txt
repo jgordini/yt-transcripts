@@ -1,0 +1,152 @@
+welcome to the apl quest cip wiki for
+details
+today's problem is the seventh from the
+2015 round of the apl problem solver
+competition
+it's very simple we just are to extend
+membership a bit so that it is case
+insensitive
+now let's start with two arrays let's
+just take the first six letters of the
+alphabet and also
+some random four letters here
+and if we try to do a membership here um
+it doesn't work it says that none of
+these members are none of these letters
+are members even though clearly c and d
+are and that's because they have
+different
+letter case
+so
+what we need to do is we have our two
+arguments and we need to
+case fold them which is a normalization
+procedure done so that we can compare
+kins insensitively
+and so we
+apply quad c which is case fault on
+the left argument and also on
+the right argument and now we can see
+that c and d are indeed
+members
+but we can
+make this look a whole lot nicer
+let's start by
+converting this to a tested function
+so instead of using omega we're using
+write tech instead of using alpha we're
+using
+left tech and that still works
+but
+this is a 2 train those are our tops and
+we can then use the top operator instead
+now we can observe that we are
+we are
+pre-processing
+the left argument and the right argument
+in exactly the same way
+instead of doing of using the function
+called c twice you can do it once just
+using the over operator
+so that's on the right and on the left
+we don't need to state that
+and we don't even need any parentheses
+because this isn't a train anymore it's
+a simple derived
+function
+however
+the
+problem statement says that
+we should also it should also work for
+high rank arrays
+and that
+doesn't work here
+let's make this into a high rank array
+here
+three rows two columns and we also over
+here two rows two columns
+and now we should say that these rows
+here are members
+so the cd row is indeed a member of
+the
+matrix on the right and we should get 0
+1
+0
+but if we try it
+then we get a strange result
+and that is because
+membership works on element by element
+basis so it says is a a member of this
+matrix over here is b a member of the
+matrix is c a member and it's d a member
+and that's not what we wanted even
+though we might think we could do an n
+reduction across but that
+and that doesn't work though because
+that
+would give us the elements even though
+they're in this wrong order it would say
+they're members
+and that's we need the entire row to
+match
+what we want to do is we want to do a
+membership between the major cells and
+we can do that by
+starting off
+in isolating the members
+the major cells with it over again so
+we can say um membership
+of
+uh
+case insensitively
+on the enclosed major cells
+and that works and there are different
+ways that we could mix and match this
+and
+however
+they're actually
+a better way to do it and that is by not
+using membership at all
+instead
+let's look at the result of tyadik iota
+which is index off
+with opposite
+argument order
+what this is saying is where do we find
+the major cells from the right that is
+now left on in the other argument and so
+what it's saying here is that a b is
+found in position three on the right
+that is the next available index after
+the last one meaning it isn't found and
+cd is found in the first one and ef is
+found well it's not found so three again
+and
+that means since we're not interested in
+the actual position
+only whether or not it's there then
+if it's within the range that means it's
+a member if it's outside of the range
+then it's not a member and we're
+interested in whether it is a
+in the range what does it mean in the
+range that means uh no more than the
+length of
+and of the element that we're looking
+for so this is the length of the right
+argument that's 2.
+and so we can put this in and we can say
+if
+the index
+of each one
+done case insensitively is less than or
+equal to
+the maximum
+then we know it's a member
+and that gives us
+our solution
+we can give it a name
+then we don't need parentheses
+and then we can use the name in here
+that's our solution thank you for
+watching

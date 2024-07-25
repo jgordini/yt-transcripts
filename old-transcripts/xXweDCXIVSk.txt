@@ -1,0 +1,157 @@
+hi
+we're going to check if a particular set
+of bits are set in a given state of bits
+this would be really trivial if not for
+the fact that we're given our query bits
+and our state bits as integers
+so we have some conversion to do
+let's take the bits that we're asking
+about
+um as three
+and the state as 10. it'll be apparent
+in a moment why I want these particular
+example arguments
+now these are then encoded
+as normal numbers but we need to know
+what the individual bits are in the
+binary representation
+in order for all the bits to line up
+being that 10 would otherwise be a wider
+number than three it's important that we
+convert them together so
+together let's concatenate them together
+and now we can convert them to binary
+we could
+take a fixed with representation
+and convert them to that but we can also
+let APL determine how many bits are
+necessary for the widest one of the two
+bit patterns
+we do that by using the opposite
+function the the one that would converge
+from the bit patterns two numbers and
+running it in reverse that is applying
+it negative one times so this is the
+power operator applies functions
+n times and this is applying it negative
+one times
+and we are and the way this parses out
+is it's a called a fork
+it means we apply this function to the
+arguments 3 and 10 that gives us the
+vector 3 10. and then we are applying
+this function
+which is the inverse base evaluation
+that is an encoding two base
+two
+and what we get here
+is one column per number so this is our
+three which fits this is one times one
+plus one times
+two
+that's three and ten is one is zero
+times one plus one times two plus zero
+times four plus one times eight so two
+plus eight is ten
+and now you can see why I chose these
+particular arguments it's because then
+we have all the different combinations
+of bits on the left and bits on the
+right represented
+here we have zero with one and zero with
+zero one will one and one with zero
+and what does this mean that we're
+querying whether these bits are set
+it means we aren't interested in all the
+bits on the right
+we're only interested in the bits that
+have a one on the left
+and in that case we must also have a one
+on the right
+so if we go through all these these
+possibilities we can see that a zero on
+the left and a one on the right that is
+fine that is okay
+a zero on the left and a zero on the
+right that is also okay
+because it doesn't matter if there is
+more State than what we are querying
+and one on the left and one on the right
+that is also okay
+but a one on the left and a zero on the
+right that's not okay because that means
+we're querying a bit and the bit isn't
+set so the answer is no
+our requirements haven't been met
+so
+now we need to find some way to
+process this Matrix
+to figure out if our requirements are
+met
+and I think maybe the easiest way to
+reason about this is to do the opposite
+and say let's
+look at when our requirements are not
+met and that was only in this case
+so being that our domain is restricted
+to the booleans ones and zero
+this is the only case where the left
+side is greater than the right side see
+here they're equal to each other and
+here they're equal to each other and
+here the left is less than the right
+so it's only the case where the left is
+greater than the right that is
+problematic
+which means conversely that
+all the cases where it's not less than
+sorry when it's not greater than and
+so all the cases where left is not
+greater than the right those are okay so
+what is not greater than
+that is less than or equal to
+um let's verify this zero is less than
+one
+zero is well not less than but equal to
+zero one is equal to one right but one
+is not
+less than or equal to zero it's not less
+than zero it's not equal to zero
+so the next step is going to be to
+reduce over these rows that is we are
+inserting and less than or equal to
+between
+the elements on each row
+and we can do that with a last axis
+reduction so we have less than or equal
+to reduction
+and this tells us that for the first
+three bits our conditions have been met
+Zone actually only a condition in the
+third bit here
+but the last one is a failure
+that doesn't really matter here because
+all we need to do now is to check if
+they are all met we're not interested in
+the individual bits so instead of doing
+a single reduction we're doing two
+reductions
+an end reduction after we've done the
+less than reduction
+that tells us that the requirements are
+not fully met here
+okay
+um this is our solution let's give it a
+name
+and now we can try it
+do is three myth in 11.
+yes it is and that's because 11 is just
+like 10 but with an extra 1 bit at the
+end so both of these required bits
+I'm at what about 4 and 11
+nope because well we have a one here
+we now have in four we have one zero
+zero here so that one lines up with zero
+over here and then it isn't true
+and that's all
+thank you for watching

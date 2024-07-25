@@ -1,0 +1,263 @@
+hi
+so this time we are going to emulate
+some behavior in an APL interpreter
+which is to print out
+um arrays
+but instead of printing them out one by
+one we're going to combine them into a
+single array which will look the same
+that's the point
+so here's some sample data
+and well if we print it out we get them
+next to each other but if we print them
+out one by one
+instead then they end up on top of each
+other like this and so the idea is we
+need to generate an array which looks
+like this when we print it out
+and there are a few different approaches
+to that I'll just show a few but when we
+had the chat session then we had a lot
+of different ways to do it including
+some very silly ones
+okay so
+um maybe
+the simplest way to do this
+is to split the display of each one into
+separate rows and then
+combine all the rows into a single list
+of rows and then combine them all into a
+single Matrix and that's basically it
+and there are a couple of things we need
+to watch out for that so here is a a
+different Lambda and we take this data
+and there are some issues with
+um with simple scalars that mess up our
+algorithms we can take that in a moment
+so we'll start off by
+formatting each element of the right
+argument so this doesn't actually change
+how they look at first but this makes
+them into character
+um arrays they might be scalars vectors
+or matrices because we don't have any
+higher rank elements specification
+so this will look much the same now when
+we and we can split each one into its
+constituent
+Parts into its rows
+which for vector and scalar is not going
+to do anything significant just try to
+enclose it
+so we split each and this gives us all
+these rows so now we can see that if we
+were to combine
+all these arrays here then we're going
+to get the rows of our final result so
+this is exactly what we're going to do
+we're going to do a concatenation
+reduction
+and now they've been combined but
+they're also enclosed because a
+reduction reduces the rank and we had
+here a list that's rank one so we have
+to reduce it to rank 0 which we need to
+unpack so that we do a disclose
+and finally we mix to make this Vector
+vectors into a matrix
+and we get this result
+and that is in fact a matrix we can see
+if we select this and there are a bunch
+of headed spaces at the end this is why
+it's important for us to
+um so format it otherwise we might get
+padding with numbers instead
+one little thing kind of style thing we
+have two Loops here two eaches we can
+merge them to a single Loop by doing an
+a top instead so every time we format we
+finish off post processing with the
+split and then we go to the next element
+however there are some issues here and
+there is if we have
+um
+just simple character scalars
+then we get the wrong result this is
+supposed to be stacked on top of each
+other remember
+if we output each one separately then
+they go like this
+and the problem is that this gives us a
+scalar and it doesn't change the format
+doesn't have a character doesn't change
+and so when we split that nothing
+changes and then we just merge them all
+together and basically there's no change
+all the way through all no apps we can
+fix this by making each one into a
+vector
+how do we make a scalar into a vector
+without making uh any effect on any
+other arrays and there is a trick
+and that is to do a replicate so
+replicate takes
+a um an array on the right
+and a some multiplication Factor on on
+the left and then it it replicates the
+elements here if we do a one
+then we see no change but the important
+thing is that it needs an axis so if we
+ask what is the shape of this it is
+three what is the shape of a scalar is
+an empty Vector it has no X's
+um but if we do a replicate on it then
+this has to return a
+um a vector because if the number was
+higher we'd have to have a vector if
+we're replicating along this axis the
+single axis that it has so this became
+but on any other array then a scalar
+this has no effect whatsoever
+so we can go up here and do a one
+replicate on each and that gives us our
+result and if we try to do it on our
+test data then it looks just the same
+because one replicate does not have an
+effect on any other arrays
+okay this was one way and to do it
+another way to do it is to take
+advantage of apl's default display
+and the way we're going to do that is
+again we start off by making sure that
+our arrays are not scalar so we don't
+end up any any problems with that and
+then
+instead of just formatting them right
+away we're going to stack them on top of
+each other so we have a vector
+of vectors and matrices now
+and if we use the magnetic comma bar and
+that is a table function it makes sure
+that that the argument becomes a table
+so if it's a vector it becomes a column
+Matrix instead
+and if we then do a format on this
+then API will transform this nested
+array with various data types into a
+uniform character array and there's
+going to be a matrix in this case
+because nothing has higher rank
+and well look we almost got where we
+wanted
+there's just one issue there's one space
+too much on the left and one space too
+much on the right but that's easy to fix
+and there are a couple different ways
+maybe the most straightforward way if
+but not most efficient
+is to do a transpose so put the whole
+array on its side that looks all very
+silly drop the first row and drop the
+last row so that's negative one drop
+drops from the from the rear and then we
+transpose back again
+and now we've got the right result so
+this is one way to do it another way to
+do it would be with the rank operator
+and so we could say here uh
+rank drop rank run one that means drop
+on each row and we also need this one
+we can also combine them
+into a single thing so if we make a
+little tested function here and we can
+write it like this so this is saying the
+argument and one drop from that negative
+one drop from that all of that is rank
+one
+and that also solves the problem
+finally we can kind of sidestep this
+whole issue of
+um combining the arrays into a single
+array and making them match in the width
+and so on
+and we can do that
+simply by formatting them and then uh
+concatenating and
+Carriage returns or new lines to them
+so how do we do that this time we're
+going to go test it right from the
+outset we'll start off by formatting
+each one and this time we're not worried
+about and about making them into
+vectors
+or higher rank because we're going to
+concatenate a new line to them and then
+the result is going to be exactly the
+same becomes a vector at that point
+anyway
+so
+here we have formatted each one of
+course this looks much the same so these
+are now character matrices we can see
+the
+um that if you try to add a number to
+them but trust me from this
+and then we want to have a concatenation
+on each of each one
+with a new line so how do we write a new
+line in a tested function and we're
+going to use the Unicode character set
+on universal capture set system function
+and with an argument of 10 for a line
+feed you could also use 13 for character
+turn
+problem is this messes up our tested
+function a bit really we want a fork we
+want a left iron here which is the
+formatted thing and we want the new line
+on the right and this is a constant and
+we could parenthesize this
+and may use the constant operator so
+this derives a constant function and
+this adds then a new line to the right
+on each one
+and this will look very silly
+spaced out this is because we added an
+extra new line after each row but they
+are also already matrices so we get this
+double spacing
+okay slightly more elegant and less
+efficient but it looks cool
+um is to
+compose these two functions together
+they concatenate each with the UCS
+and then we have the the 10 as the
+constant function so now the fork looks
+like this we have the left line the
+format each the right time is the
+constant 10 and
+and the middle time is the concatenate
+each with the Unicode value of and then
+we get that 10 in so this gives us
+exactly the same effect and we don't
+actually need spaces and space there
+okay so now that all of this is in in
+place we don't need the structure
+anymore we don't use these matrices we
+can just make everything flattened out
+enlisted and we can do that with the
+inlist function
+and well there we are this one issue is
+that training line break here because we
+added one to each
+so we just need to drop the last one so
+negative one drop and then because this
+is a magnetic function and we again need
+this everything to be a fork so this is
+one function which is a forking itself
+and this is a left eye in here so we
+need this to be a function we compose
+them together so pre-process the drop
+with the list
+and there we have it a third solution to
+the problem thank you for watching

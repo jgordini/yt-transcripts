@@ -1,0 +1,116 @@
+hi
+we have to move elements of a numeric
+Vector that have a certain value to the
+front of that vector
+a traditional way to do this in APL
+is to use sorting
+but not sorting the vector itself that
+wouldn't work rather sorting by a
+certain criteria
+let's have a little Lambda here
+and compare the left argument to the
+right argument
+now we have indication of where the
+threes are
+and if it were to sort so all the zeros
+came first well all the numbers that
+correspond to zeros then
+we would have all the threes at the rear
+let's
+flip the ones and zeros by using unequal
+instead
+now if we were to sort such that the
+numbers corresponding to zeros came
+first
+then the threes would come first
+how can we do that
+the grade function
+gives us the indices that we would need
+to select elements from such that the
+argument would be sorted
+this says in order for it to sort this
+numeric Vector we need to get element
+number three first that's the zero then
+element number six that's the other zero
+and then one two four five and so on all
+the ones of course we don't want to sort
+the Boolean Vector we want to sort the
+corresponding numbers in the actual data
+Vector but this will still work because
+the third element is the 3 and the Sixth
+Element is three and then comes element
+number one two four and so on
+so instead of reordering the Boolean
+Vector we are reordering the right
+argument
+this indexing square bracket can take
+multiple indices and then we just get
+all the elements selected by those
+integers
+and this solves the problem using
+grading and reordering based on that
+grade
+this might seem like a very neat
+solution but there's actually something
+even shorter and I like this one better
+and that's using set functions
+let's think of these two arguments here
+as sets
+what we want to do
+is to find the intersection of these
+sets that would be those two threes
+and the set difference that's all the
+other elements
+if we can then
+put together the intersection and the
+set difference
+after each other then we have solved the
+problem
+and this isn't very hard let's start
+with
+the set difference but that we use the
+without function you can hear the name
+that it takes the data on the left
+without the data on the right which is
+the opposite of what we want
+luckily we have the higher order
+function or magnetic operator which can
+flip the arguments of these two
+functions
+of these flip the arguments of this
+function
+so here are all the numbers from the
+right except the numbers from left or
+without the numbers on the left
+there's only one number but you can
+still be seen as a set
+similarly we can take the intersection
+that's those two threes
+notice how this deals with kind of
+multi-sets and then we're allowed to
+have duplicates and that's exactly what
+we want here
+okay then we just need this intersection
+followed by
+the set difference
+and that solves the problem as well
+note how we are commuting
+both of these are the functions and this
+is actually a fork construct this means
+that the outer functions these two are
+applied to the arguments
+and then the results are combined using
+the concatenation function
+we could also just flip the arguments of
+the outer function and then the inner
+functions wouldn't need to flip too much
+another thing we could do but that
+doesn't really make a difference is to
+replace the concatenation with a union
+being that the intersection and the set
+difference cannot share any elements
+then that's effectively a concatenation
+it's just kind of cute that we are only
+using set functions to solve this
+problem
+thank you for watching

@@ -1,0 +1,249 @@
+hi
+we're going to generate inclusive
+integer ranges which might be ascending
+or descending
+there are many different ways to attack
+this and I'm not going to go through all
+of them
+in the chat event
+we did have a lot of different
+approaches taken up and I encourage you
+to follow the link in the video
+description to go to the chat log and
+see what they all were
+for now I'm just going to go through the
+shortest solution we came up with
+and the faster solution we came up with
+so the problem specification is such
+that we have both the beginning number
+and the end number in the right argument
+the normal thing for an APL function
+would probably be to take one on each
+side or a function probably the
+beginning on the left and the end on the
+right
+but because of another follow-up problem
+that was in the same competition that
+this problem comes from they elected to
+have both ends on the same argument so
+given as a two element vector
+and that influences a bit how we're
+going to form our function let's say we
+have we want to go from 3 to 10.
+so the method we're now going to use is
+that we're going to use the three
+and then we're going to have a bunch of
+ones
+and then we're going to have those ones
+added sequentially to the three until we
+reach 10. so this would need 7
+ones
+doing a cumulative sum over those ones
+starting with the three gives us the
+sequence from 3 to 10.
+if we wanted to go from say 10 to 3
+instead then we would do the cumulative
+sum beginning with uh with the 10 and
+then we would have negative one seven
+times
+and that would give us a sequence from
+10 down to 3.
+so we're not going to figure out how to
+generate these ones and append them to
+the beginning value
+so that we get the sequence that we want
+first let's find out what the difference
+is between those two values that we are
+working with so let's say we have
+3 and 10.
+we write this initially as a does it
+function
+so here is a minus reduction that is
+we're reducing over this Vector of
+length two to get a single number
+that just is the same as inserting the
+minus between the two elements so this
+is three minus 10.
+there's a problem here with the sign if
+you're going from 3 to 10 we want
+something positive so really we want to
+subtract in the opposite order once we
+subtract the left element from the right
+element
+we can have a modified version of minus
+which is the commuted minus I'm reduced
+using that to and then we get a positive
+7.
+next up is to reshape A1
+we could do this by again commuting the
+arguments of the reshape function and
+user 1.
+however in the case where
+we want to get negative ones this is not
+going to work and we can't use a
+negative number to do a reshape either
+instead we'll apply another function
+the number of elements that we want is
+the absolute value of this
+and the numbers that we want in our
+sequence
+is the sine
+of the difference
+if we were to have 10 3 then
+the sign would be negative one now we
+can take the absolute value and use it
+to reshape the sign
+finally we want to
+be pinned the first element 10 in this
+case
+we cannot just say the first function
+with concatenation
+because we're getting out of sync with
+how our Fork works
+for this to work we want to apply this
+function to the entire argument and this
+function to the entire argument and then
+we want all of this as a sort of
+secondary step
+the base function here is concatenation
+before we apply the concatenation we
+want to pre-process the right argument
+to the concatenation which is going to
+be
+something based on this subtraction
+and we can do that with the beside
+operator the chart
+this is pre-processing the argument the
+right argument to the function on the
+left with the function on the right
+here we have a descending sequence from
+10 down to 3 and here we have an
+ascending sequence from 3 to 10.
+the only thing that's missing is the
+cumulative reduction
+and this solves the problem
+in the zero case that is when the
+beginning and ending points are the same
+this subtraction gives zero the absolute
+value is zero the sine is also zero that
+doesn't actually matter because we're
+reshaving the length zero that's an
+empty Vector concatenating the first
+element that would in this case be just
+10 as a vector
+and then we're doing a cumulative sum of
+that which just remains with 10 and
+that's the result that we want when the
+beginning and ending points are the same
+so this solves the problem very neatly
+but maybe most not the most efficient
+manner
+and the reason for that is that
+we are generating a sequence here that
+is not the
+full length that we want so we are
+prepending
+another element that means that in
+memory we have to rewrite all of this
+data just pushed one step to the right
+okay
+furthermore if we are generating a
+sequence of all ones then it would
+probably be represented internally as a
+bit Vector that is packed bit booleans
+and then we are prepending an integer
+value we would have to convert all these
+bits to integers again
+and then of course we're doing the
+summation but we can probably not really
+get around
+doing is one addition for every element
+let's look at a more efficient way of
+doing this and when dealing with offsets
+like this it's a really good idea to use
+zero based indexing API uses one based
+indexing by default so let's create a
+little Lambda a function where we assign
+to the special syntax uh a system
+variable which determines what all
+ranges are indexed from one or zero so
+we assign a zero to that then it's going
+to be indexing from zero
+here's the index generator
+let's do the indices for an array of
+length of the argument
+you can see it begins with zero if I
+switch this to a one it begins with a
+one so let's switch that back again
+right what kind of sequence is it we're
+looking for we actually have a beginning
+point and an end point if we do this
+subtraction then we get a range
+of course it could be negative so let's
+throw in the absolute value
+oops we're missing the right argument
+here
+we're short by one it's the fence post
+problem we have an inclusive range in
+both ends and so the actual range is one
+larger than this
+let's add one
+now the only thing that's missing is we
+need to adjust we again want to start
+with the first value and then we want to
+add these offsets
+but in the case of this ending we want
+the offsets to be negative so how can we
+selectively
+change this to negative numbers
+we could of course use a conditional
+but really want to avoid branches and
+all the problems that come with Branch
+prediction
+instead let's take a mathematical
+approach that's the traditional way to
+do it in APL
+okay
+let's look at these numbers again
+we can see whether or not one is greater
+than the other by inserting a greater
+than function between them so this is a
+greater than reduction
+if they're the same we get a zero and so
+too if the first one is actually less
+than the second one
+so we now have these two numbers
+one and zero one for when we need to
+reverse the sign
+how can we map a 1 and a 0 to
+a
+negative value negative one and a
+positive value one
+a trick that I think a lot of people
+Miss is that you can use power or
+exponentiation
+if you use negative one that the base
+and raise it to the power of one well
+any number raised to the power of one
+is itself so that gives us negative one
+raising report to a power of zero for
+any number
+gives us a one
+so now we can use this in our function
+if we use negative one to the power of
+the greater than reduction of the
+argument
+multiplied by the sequence we had before
+then we get negative offsets when the
+sequence is supposed to be descending
+and positive offsets when the sequence
+is 2.
+and to be ascending and if they're the
+same then we get a single zero no offset
+from the starting point
+all the remains is to add the first
+value
+to the sequence
+and so this is our very efficient
+solution
+thank you for watching

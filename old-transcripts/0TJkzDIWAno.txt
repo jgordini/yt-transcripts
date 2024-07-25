@@ -1,0 +1,145 @@
+hi
+we're going to count how many of each of
+a given set of letters appear in a given
+string
+so let's start with some sample data
+and we can see here that there are three
+A's
+two C's no G's and two T's so let's see
+how we can compute this
+because we're only returning the numbers
+for each letter one number for each
+letter and not say some kind of
+dictionary that Maps the letter to its
+count then it's very important that we
+preserve the ordering
+of the letters
+so we want first the count of the A's
+then the C's then the G's and then the
+t's
+and the way we can do this is with an
+outer product an outer product Compares
+and or combines
+every element from the array on the left
+with every element from array on the
+right using
+a given function
+in this case it is equality that we want
+to use
+so we write this in a special syntax jut
+Dot and then we put the function on the
+right
+and this gives us a table and we can see
+how the a c g t formed our the
+individual rows and then the letters of
+a t t a c c a formed the columns and we
+get true which is one in APL whenever
+they are equal to each other so the
+first one is an A and then we get a t
+and another T and an a
+in order to find out how many there are
+of each all we need to know is how many
+ones are there
+in each row and we can do that by
+summation
+so
+this is the reduction operator
+also known as reduce and when it's
+written like this then it reduces along
+the rows which is exactly what we want
+here
+we can see that this gives us the right
+numbers that we have three A's
+twozies no G's and two T's
+this is an expression for the solution
+but we want to package this up as a
+function and there are a couple of ways
+we can do that the simplest way to do it
+would be to
+take the formula itself substitute an
+Omega with the hard-coded value and that
+represents the argument and then the
+braces are the function definition
+now we can apply F directly to the
+argument
+however
+since we're only referring to the
+argument here
+so the at the very right
+and only once it's very simple to
+convert this to a so-called tested or
+point-free function
+that is one where we don't mention the
+argument specifically
+however
+um there is a system to this if we
+remove the braces and the Omega then we
+end up with a new derived function which
+is the outer
+equality or out of product equality
+with
+a left argument but no right argument
+and that's a bit of a problem
+so we really want a placeholder for the
+argument here and that we can do by
+putting in
+the
+density function so in a tested function
+we always refer to the arguments in
+terms of function applications and in
+this case we just want the value of the
+argument itself so that is the density
+function applied to the argument
+so this works exactly the same
+we could also combine things in other
+ways in order to show kind of the
+grouping between things
+so the summation here is really
+it really forms a pair to go with the
+outer product
+to form this sum of the equality table
+and if you want to indicate that then we
+can put it over here and group them
+together with parenthesis and this will
+work as well
+whereas before this whole part formed a
+single derived function
+and then its result was being fed to
+this derived function the summation now
+it is
+a combination of these two functions the
+table and the summation and this whole
+new derived function which is the sum of
+the equality table gets as left argument
+these four letters and as right argument
+the identity the result of the identity
+function applied to the argument
+instead of doing that we could also bind
+or Curry an argument
+using the bind operator which uses the
+same symbol as the outer product but
+they're not always related
+and this binds a left argument to this
+General function which is just the sum
+of the equality table
+so we can
+use this function as well it gives the
+same result
+we could also Define a general purpose
+function say counts
+which we'll just Define as that middle
+part
+and now we don't need any parenthesis
+because it's just the two functions with
+no arguments or anything else around
+them
+and this would be a general purpose
+function in that we have to give it the
+vocabulary as left argument
+and then
+the main data argument on the right
+and we can then use that in turn
+to create a derived function based on
+the general accounts function
+then we can then apply
+thank you for watching
